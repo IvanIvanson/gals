@@ -1,0 +1,11 @@
+$mainFontSize: 14px;
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html,
+body{
+    font-size: $mainFontSize;
+    height: 100%;
+}

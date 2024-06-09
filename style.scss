@@ -1,0 +1,22 @@
+@import 'module/fonts';
+@import 'module/globalstyle';
+@import 'module/mixins';
+@import 'module/vars';
+
+.wrapper{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    .content{
+    flex: 1 0 auto;
+   @import 'module/header';
+    }
+@import 'module/main';  
+@import 'module/footer';
+}
+
+
+
+
+
+

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW X8 -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="380px" height="538px" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 380 537"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .str3 {stroke:lime;stroke-width:3.61905}
+    .str0 {stroke:royalblue;stroke-width:3.61905}
+    .str2 {stroke:red;stroke-width:3.61905}
+    .str1 {stroke:fuchsia;stroke-width:3.61905}
+    .str4 {stroke:yellow;stroke-width:3.61905}
+    .fil0 {fill:none}
+   ]]>
+  </style>
+ </defs>
+ <g id="Слой_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <line class="fil0 str0" x1="171" y1="112" x2="171" y2= "278" stroke:"royalblue;" stroke-width:"3"/>
+  <path class="fil0 str1" d="M146 123c0,19 -2,50 13,66 6,6 36,37 36,37l0 52" stroke:"fuchsia;" stroke-width:"3"/>
+  <path class="fil0 str2" d="M213 112l0 63 -40 44c-20,20 -25,25 -30,55" stroke:"red;" stroke-width:"3"/>
+  <path class="fil0 str3" d="M122 173l10 9 73 1c0,0 16,-1 16,15 0,16 0,77 0,77" stroke:"lime;" stroke-width:"3"/>
+  <path class="fil0 str4" d="M142 199l79 -1c9,0 15,-2 15,11 0,7 0,14 0,21" stroke:"yellow;" stroke-width:"3"/>
+ </g>
+</svg>
