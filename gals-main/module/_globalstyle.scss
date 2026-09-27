@@ -1,0 +1,24 @@
+@use 'vars' as *;
+@use 'mixins' as *;
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html,
+body{
+    font-size: $mainFontSize;
+    height: 100%;
+}
+
+// Якоря «On this page» не должны прятаться под липкой шапкой:
+// высота шапки (меню + поиск) на десктопе ~190px.
+html{
+    scroll-padding-top: 190px;
+}
+
+// Подпись поиска видна только скринридерам.
+.visually-hidden{
+    @include visually-hidden;
+}

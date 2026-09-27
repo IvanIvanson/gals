@@ -1,0 +1,26 @@
+{
+  "name": "gals",
+  "version": "1.0.0",
+  "description": "GALS — lightweight flex grid frontend toolkit and its documentation site.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:css": "sass --style=expanded --source-map --no-charset style.scss style.css && postcss style.css --map --use autoprefixer --replace",
+    "build": "npm run build:css",
+    "test": "node --test \"tests/**/*.test.mjs\""
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "jsdom": "^25.0.1",
+    "postcss-cli": "^11.0.0",
+    "sass": "^1.79.0"
+  },
+  "browserslist": [
+    "> 0.5%",
+    "last 2 versions",
+    "Firefox ESR",
+    "not dead",
+    "Safari >= 12",
+    "iOS >= 12"
+  ]
+}

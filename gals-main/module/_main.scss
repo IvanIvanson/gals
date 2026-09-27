@@ -1,0 +1,535 @@
+@use 'vars' as *;
+@use 'mixins' as *;
+
+/// Список «On this page»: заголовок, разделитель и ссылки.
+/// Используется и правой колонкой, и блоком внутри контента на узких экранах.
+@mixin on-this-page-list($h4-size, $h4-lh, $li-size, $li-lh) {
+  h4 {
+    font-size: $h4-size;
+    line-height: $h4-lh;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    color: #333;
+  }
+
+  hr {
+    border: none;
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  ul {
+    list-style: none;
+    @include flex-center-start;
+
+    li {
+      display: inline-block;
+      font-size: $li-size;
+      line-height: $li-lh;
+      padding-top: 20px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300;
+      cursor: pointer;
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+    }
+
+    li:hover {
+      border-bottom: #777 solid 1px;
+    }
+
+    // Активный раздел от scrollspy ([data-scrollspy] + gals.js)
+    li a[aria-current="true"] {
+      font-weight: 700;
+      color: $mainColorLight;
+      border-bottom: $mainColorLight solid 1px;
+    }
+  }
+}
+
+/// Кнопка «Copy» и всплывающее подтверждение.
+@mixin copy-block {
+  position: relative;
+  background-color: #ececec;
+  padding: 20px 10px;
+
+  // Код не должен наезжать на кнопку копирования и вылезать
+  // за экран на телефоне: режем ширину и включаем прокрутку.
+  code {
+    display: block;
+    max-width: calc(100% - 70px);
+
+    pre {
+      overflow-x: auto;
+    }
+  }
+
+  // Базовый вид кнопки-иконки: генерик-стилей button в центре
+  // больше нет, поэтому кнопка несёт свои стили сама.
+  .copy {
+    position: absolute;
+    top: 25px;
+    right: 45px;
+    padding: 4px;
+    font: inherit;
+    color: #333;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .copy:hover {
+    color: $mainColorLight;
+    border-color: $mainColorLight;
+  }
+
+  .textarea {
+    position: absolute;
+    top: 0;
+    color: white;
+    border: none;
+    z-index: -1;
+    outline: none;
+  }
+
+  // Подтверждение «Copied!». Класс переименован из .alert:
+  // фреймворк теперь поставляет компонент .alert, и попап
+  // копирования не должен получать его рамку и отступы.
+  .copy-alert {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    transform: scale(0.5);
+    top: 10%;
+    left: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(241, 238, 239);
+    color: rgb(197, 9, 9);
+    font-weight: 700;
+    font-size: 30px;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 5px;
+    box-shadow: 0 0 3px #cecece;
+    animation: animate 0.3s linear forwards;
+  }
+}
+
+@mixin tooltip {
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    display: none;
+    position: absolute;
+    width: 0px;
+    opacity: 0;
+    font-size: 14px;
+    color: #333;
+    top: -25px;
+    left: -55px;
+    transition: 1s;
+    pointer-events: none;
+  }
+
+  [data-tooltip]:hover::after {
+    display: block;
+    width: 150px;
+    opacity: 1;
+  }
+}
+
+@keyframes animate {
+  100% {
+    transform: scale(1);
+    visibility: hidden;
+  }
+}
+
+/// Элементы страниц документации, которые рендерит script/docs:
+/// статус-бейдж, плашка «нет в сборке», живой пример и таблица.
+@mixin docs-blocks {
+  .badge {
+    display: inline-block;
+    font-size: 14px;
+    font-family: $headingFont;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 12px;
+    border: 1px solid $borderColor;
+    color: $textColorMuted;
+    vertical-align: middle;
+  }
+
+  .badge-stable {
+    border-color: #2a9d4a;
+    color: #2a9d4a;
+  }
+
+  .badge-partial {
+    border-color: #e0a11a;
+    color: #b57d0a;
+  }
+
+  .badge-planned {
+    border-color: #d1495b;
+    color: #d1495b;
+  }
+
+  .badge-draft {
+    border-color: $mainColorLight;
+    color: $mainColorLight;
+  }
+
+  .notice {
+    background: #f7f0e0;
+    border-left: 4px solid #e0a11a;
+    border-radius: 0 5px 5px 0;
+    padding: 10px 20px;
+    margin: 10px 0;
+
+    strong {
+      font-family: $headingFont;
+      font-size: var(--fs-body);
+      line-height: var(--lh-body);
+    }
+
+    p {
+      font-size: var(--fs-body);
+      line-height: var(--lh-body);
+      padding-top: 5px;
+    }
+  }
+
+  .demo {
+    border: 1px solid $borderColor;
+    border-radius: 7px;
+    margin: 10px 0;
+    overflow: hidden;
+
+    // Широкие примеры (таблицы, карусели) прокручиваются,
+    // а не растягивают колонку на телефоне.
+    .demo-body {
+      padding: 20px;
+      background: #fafafa;
+      overflow-x: auto;
+    }
+
+    .demo-caption {
+      font-size: 14px;
+      line-height: var(--lh-body);
+      padding: 10px 20px;
+      border-top: 1px solid $borderColor;
+      background: $surfaceColor;
+      margin: 0;
+    }
+
+    // Ячейка живого примера: колонка снаружи, окраска внутри (см. page.js).
+    .demo-cell {
+      background: rgba(133, 18, 209, 0.08);
+      border: 1px dashed rgba(133, 18, 209, 0.35);
+      border-radius: 5px;
+      min-height: 40px;
+      padding: 10px;
+      text-align: center;
+    }
+  }
+
+  .doc-table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th,
+    td {
+      border: 1px solid $borderColor;
+      padding: 8px 12px;
+      text-align: left;
+      font-size: var(--fs-body);
+      line-height: var(--lh-body);
+    }
+
+    th {
+      background: $surfaceColor;
+      font-family: $headingFont;
+    }
+  }
+}
+
+/// Область документации: сайдбар, контент, «On this page».
+///
+/// Подключается внутри .wrapper, см. style.scss.
+/// Типографика вынесена в CSS-переменные и переопределяется в медиазапросах —
+/// раньше весь блок повторялся четырежды и разъезжался при правке.
+@mixin main-layout {
+  main {
+    z-index: -1;
+
+    --fs-h1: 58px;
+    --lh-h1: 58px;
+    --fs-h3: 38px;
+    --lh-h3: 38px;
+    --fs-lead: 28px;
+    --lh-lead: 40px;
+    --fs-body: 18px;
+    --lh-body: 36px;
+    --fs-btn: 18px;
+    --pad-btn: 10px;
+
+    .container {
+      .wrap-containerleft {
+        position: relative;
+
+        .container-left {
+          position: sticky;
+          top: 160px;
+          // auto вместо scroll: полоса прокрутки не занимает место,
+          // когда её не на чем показывать.
+          overflow-y: auto;
+          font-size: 14px;
+          height: calc(100vh - 200px);
+
+          details {
+            padding: 10px 35px;
+            border: none;
+            outline: none;
+
+            summary {
+              padding: 5px 0px 5px 20px;
+              color: #777;
+              font-family: 'Montserrat', sans-serif;
+              font-size: 18px;
+              font-weight: 700;
+            }
+
+            summary:hover {
+              box-shadow: 0 1px 2px #888;
+              background-color: #ececec;
+              border-radius: 5px;
+            }
+
+            ul {
+              list-style: none;
+              padding-top: 10px;
+              width: 100%;
+
+              li {
+                font-size: 14px;
+                padding-top: 10px;
+                font-family: 'Montserrat', sans-serif;
+                cursor: pointer;
+              }
+
+              li:hover {
+                font-weight: 700;
+              }
+
+              .active-list {
+                font-weight: 700;
+                font-size: 15px;
+              }
+            }
+          }
+
+          .details-active {
+            border: solid $mainColorLight 2px;
+            border-radius: 5px;
+            background: #ececec;
+          }
+        }
+      }
+
+      .container-center {
+        padding: 20px;
+        @include docs-blocks;
+
+        h1 {
+          font-size: var(--fs-h1);
+          line-height: var(--lh-h1);
+          padding-top: 20px;
+          font-family: 'Montserrat', sans-serif;
+          font-weight: 600;
+          color: #333;
+        }
+
+        // Только размерная подгонка: рамку, фон и цвета кнопке
+        // теперь даёт фреймворк (.btn / .btn-primary в gals.css),
+        // поэтому центр колонки их не перекрывает — иначе живые
+        // примеры в документации показывали бы стиль сайта, а не GALS.
+        .btn {
+          font-family: 'Montserrat', sans-serif;
+          font-size: var(--fs-btn);
+          padding: var(--pad-btn);
+        }
+
+        .inthisPage {
+          display: none;
+        }
+
+        p {
+          font-size: var(--fs-lead);
+          line-height: var(--lh-lead);
+          padding-top: 20px;
+          font-family: 'Montserrat', sans-serif;
+          font-weight: 300;
+        }
+
+        .quick-start {
+          @include tooltip;
+
+          h3 {
+            font-size: var(--fs-h3);
+            line-height: var(--lh-h3);
+            padding-top: 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            color: #333;
+          }
+
+          p {
+            font-size: var(--fs-body);
+            line-height: var(--lh-body);
+            padding-top: 10px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+          }
+
+          .contents-group {
+            ul {
+              padding: 10px 0 0 25px;
+
+              li {
+                font-size: var(--fs-body);
+                line-height: var(--lh-body);
+                font-family: 'Montserrat', sans-serif;
+                font-weight: 400;
+              }
+            }
+          }
+
+          .copy-block {
+            @include copy-block;
+          }
+        }
+      }
+
+      .wrap-containerright {
+        position: relative;
+
+        .container-right {
+          position: sticky;
+          top: 160px;
+          padding: 20px;
+          @include on-this-page-list(28px, 28px, 20px, 30px);
+        }
+      }
+    }
+  }
+
+  @media (max-width: 1024px) {
+    main {
+      --fs-h1: 48px;
+      --lh-h1: 48px;
+      --fs-h3: 35px;
+      --lh-h3: 35px;
+      --fs-lead: 22px;
+      --lh-lead: 36px;
+      --fs-btn: 16px;
+      --pad-btn: 8px;
+
+      .container {
+        .wrap-containerleft {
+          .container-left {
+            padding-left: 5px;
+
+            details {
+              padding: 10px 0px;
+              width: 90%;
+
+              summary {
+                padding: 5px 0px 5px 10px;
+                font-size: 14px;
+                font-weight: 600;
+              }
+            }
+          }
+        }
+
+        .wrap-containerright {
+          .container-right {
+            @include on-this-page-list(22px, 22px, 18px, 25px);
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 770px) {
+    main {
+      // Сайдбар и правая колонка скрыты (pt-s-d_n), контент один
+      // во всю ширину — подгоняем типографику под узкий экран.
+      --fs-h1: 42px;
+      --lh-h1: 46px;
+      --fs-h3: 30px;
+      --lh-h3: 34px;
+      --fs-lead: 20px;
+      --lh-lead: 32px;
+      --fs-body: 17px;
+      --lh-body: 30px;
+      --fs-btn: 16px;
+
+      .container {
+        .container-center {
+          padding: 10px;
+
+          // Правая колонка на этой ширине скрыта классом pt-s-d_n,
+          // поэтому «On this page» показываем внутри контента.
+          .inthisPage {
+            display: block;
+            @include on-this-page-list(28px, 28px, 20px, 30px);
+          }
+
+          .quick-start {
+            .copy-block {
+              code {
+                span {
+                  font-size: 9px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 425px) {
+    main {
+      --fs-h1: 38px;
+      --lh-h1: 38px;
+      --fs-h3: 38px;
+      --lh-h3: 38px;
+      --fs-lead: 20px;
+      --lh-lead: 30px;
+      --fs-btn: 16px;
+      --pad-btn: 10px;
+
+      .container {
+        .container-center {
+          .quick-start {
+            .copy-block {
+              code {
+                font-size: 10px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+

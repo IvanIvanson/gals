@@ -1,0 +1,20 @@
+$mainFontSize: 14px;
+$buttonPadding: 1px 1px 1px 1px;
+$mainColorLight: rgb(133, 18, 209);
+$mainColorDark: rgb(83, 6, 84);
+$paddingLg: 10px 20px 10px 20px;
+$paddingMd: 10px 30px 10px 30px;
+$paddingSm: 5px 10px 5px 10px;
+
+// Текст и подложки, которые раньше были продублированы литералами.
+$textColor: #333;
+$textColorMuted: #777;
+$borderColor: #cecece;
+$surfaceColor: #ececec;
+$headingFont: 'Montserrat', sans-serif;
+
+// Брейкпоинты совпадают с префиксами сетки в gals/gals.css:
+// xl 1440, l 1440, m 1025, s 770, xs 425, xxs 375.
+$bp-lg: 1024px;
+$bp-md: 770px;
+$bp-sm: 425px;

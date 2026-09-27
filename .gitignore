@@ -1,0 +1,4 @@
+node_modules/
+*.zip
+.tmp-diff/
+gals-main.zip

@@ -1,0 +1,23 @@
+@use 'module/fonts';
+@use 'module/globalstyle';
+@use 'module/header' as *;
+@use 'module/main' as *;
+@use 'module/footer' as *;
+
+// Шапка, контент и подвал подключаются миксинами: раньше они импортировались
+// прямо внутрь .wrapper, а вложенный @import в Sass устарел.
+.wrapper{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .content{
+        flex: 1 0 auto;
+        @include header-layout;
+    }
+
+    @include main-layout;
+    @include footer-layout;
+}
+
+
