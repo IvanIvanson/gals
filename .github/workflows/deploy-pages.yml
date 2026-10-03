@@ -26,7 +26,7 @@ jobs:
       - name: Prepare site files
         run: |
           mkdir -p _site
-          cp -r gals/* _site/     # ← замените "gals" на нужную папку
+          cp -r gals-main/* _site/     # ← замените "gals" на нужную папку
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
