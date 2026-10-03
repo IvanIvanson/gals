@@ -136,11 +136,68 @@
         background: #fff;
 
         .left {
+          // Точка отсчёта для выпадающего списка результатов поиска.
+          position: relative;
+
           .inp-search {
             padding: 10px 15px;
             border: solid #777 1px;
             border-radius: 5px;
             outline: none;
+          }
+
+          .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 1000;
+            width: 100%;
+            max-height: 60vh;
+            overflow-y: auto;
+            margin-top: 5px;
+            padding: 5px;
+            background: #fff;
+            border: solid $borderColor 1px;
+            border-radius: 5px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+          }
+
+          .search-result {
+            display: block;
+            padding: 8px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+          }
+
+          .search-result:hover,
+          .search-result.is-active {
+            background: $surfaceColor;
+          }
+
+          .search-result-title {
+            display: block;
+            font-family: $headingFont;
+            font-weight: 700;
+            font-size: 15px;
+            color: $textColor;
+          }
+
+          .search-result-snippet {
+            display: block;
+            font-size: 13px;
+            line-height: 1.4;
+            color: $textColorMuted;
+          }
+
+          .search-result mark {
+            background: rgba(133, 18, 209, 0.15);
+            color: inherit;
+          }
+
+          .search-empty {
+            padding: 8px 10px;
+            font-size: 13px;
+            color: $textColorMuted;
           }
         }
 
@@ -323,6 +380,9 @@
       .header {
         padding: $paddingSm;
         justify-content: space-between;
+        // Меню-оверлей позиционируется от самой шапки, поэтому top: 100%
+        // всегда встаёт точно под неё, а не под всю липкую область.
+        position: relative;
 
         .menu-collapse {
           display: flex;
@@ -331,12 +391,16 @@
           top: -150px;
           left: 0px;
           opacity: 0;
-          transition: top 0.5s, opacity 0.5s;
+          // visibility убирает невидимое меню из кликов и таб-фокуса,
+          // иначе оно перехватывало нажатия поверх шапки и поиска.
+          visibility: hidden;
+          transition: top 0.5s, opacity 0.5s, visibility 0.5s;
         }
 
         .menu-show {
-          top: 55px;
+          top: 100%;
           opacity: 1;
+          visibility: visible;
           z-index: 1000;
           width: 100%;
         }
@@ -413,72 +477,87 @@
             outline: none;
           }
         }
+      }
 
-        .right {
-          display: flex;
-          justify-content: start;
+      // Блок версий на телефоне переезжает в меню-оверлей
+      // (script/moveVersionIntoMenu.js), поэтому стили нужны для обоих
+      // мест: в .container — до переноса, в .menu — после.
+      .container .right,
+      .menu .right {
+        display: flex;
+        justify-content: start;
+        width: 100%;
 
-          details {
+        details {
+          // На десктопе версия висит absolute поверх строки поиска;
+          // на телефоне это накрывало весь экран, поэтому возвращаем
+          // блок в поток и растягиваем на всю ширину.
+          position: static;
+          top: auto;
+          width: 100%;
+          padding: 10px 35px;
+          outline: none;
+          border: solid #cecece 4px;
+          border-radius: 10px;
+          background: #ffffff;
+
+          summary {
+            display: block;
             width: 100%;
-            padding: 10px 35px;
-            outline: none;
-            border: solid #cecece 4px;
-            border-radius: 10px;
-            background: #ffffff;
+            padding: 5px 65px 5px 5px;
+            color: #777;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
 
-            summary {
-              display: block;
-              width: 100%;
-              padding: 5px 65px 5px 5px;
-              color: #777;
-              font-family: 'Montserrat', sans-serif;
-              font-size: 18px;
-              font-weight: 700;
-
-              span {
-                font-size: 24px;
-                font-weight: 500;
-                font-family: 'Gill Sans', sans-serif;
-              }
+            span {
+              font-size: 24px;
+              font-weight: 500;
+              font-family: 'Gill Sans', sans-serif;
             }
+          }
 
-            summary::-webkit-details-marker {
-              display: none;
+          summary::-webkit-details-marker {
+            display: none;
+          }
+
+          summary::after {
+            content: '\25BC';
+            margin-left: 15px;
+            font-size: 16px;
+          }
+
+          h4 {
+            padding-top: 10px;
+            font-size: 16px;
+            font-weight: 800;
+            font-family: 'Montserrat', sans-serif;
+
+            span {
+              font-size: 20px;
+              font-weight: 400;
+              font-family: 'Gill Sans', sans-serif;
             }
+          }
 
-            summary::after {
-              content: '\25BC';
-              margin-left: 15px;
-              font-size: 16px;
-            }
+          ul {
+            list-style: none;
+            padding-top: 10px;
+            width: 100%;
 
-            h4 {
+            li {
+              font-size: 14px;
               padding-top: 10px;
-              font-size: 16px;
-              font-weight: 800;
               font-family: 'Montserrat', sans-serif;
-
-              span {
-                font-size: 20px;
-                font-weight: 400;
-                font-family: 'Gill Sans', sans-serif;
-              }
-            }
-
-            ul {
-              list-style: none;
-              padding-top: 10px;
-              width: 100%;
-
-              li {
-                font-size: 14px;
-                padding-top: 10px;
-                font-family: 'Montserrat', sans-serif;
-                cursor: pointer;
-              }
+              cursor: pointer;
             }
           }
         }
+      }
+
+      // Небольшой отступ, чтобы версия не липла к краям меню.
+      .menu .right {
+        padding: 0 10px 10px;
       }
     }
   }

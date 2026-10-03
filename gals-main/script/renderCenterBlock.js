@@ -24,9 +24,10 @@ const renderCenterBlock = function () {
   const containerCenter = document.querySelector('.container-center');
   const containerRight = document.querySelector('.container-right');
   const sidebar = document.querySelector('.container-left');
+  const headerMenu = document.querySelector('.menu-ul');
 
   if (!containerCenter || !containerRight || !sidebar) {
-    return;
+    return null;
   }
 
   const show = (page) => {
@@ -35,8 +36,16 @@ const renderCenterBlock = function () {
     copyBlock(containerCenter);
   };
 
-  // Один делегирующий слушатель на весь сайдбар: пункт без страницы
-  // игнорируется, а не роняет обработчик.
+  // Пункт без страницы игнорируется, а не роняет обработчик.
+  const open = (key) => {
+    const page = Object.prototype.hasOwnProperty.call(pages, key) ? pages[key] : null;
+
+    if (page) {
+      show(page);
+    }
+  };
+
+  // Один делегирующий слушатель на весь сайдбар.
   sidebar.addEventListener('click', (event) => {
     const item = event.target.closest('.menu-item');
 
@@ -44,15 +53,38 @@ const renderCenterBlock = function () {
       return;
     }
 
-    const key = item.dataset.action || slug(item.textContent);
-    const page = Object.prototype.hasOwnProperty.call(pages, key) ? pages[key] : null;
-
-    if (page) {
-      show(page);
-    }
+    open(item.dataset.action || slug(item.textContent));
   });
 
+  // Вкладки шапки переключают тот же центр, что и левый сайдбар.
+  if (headerMenu) {
+    headerMenu.addEventListener('click', (event) => {
+      const link = event.target.closest('a[data-action]');
+
+      if (!link || !headerMenu.contains(link)) {
+        return;
+      }
+
+      event.preventDefault();
+
+      headerMenu
+        .querySelectorAll('a')
+        .forEach((other) => other.classList.toggle('active', other === link));
+
+      open(link.dataset.action);
+      window.scrollTo(0, 0);
+
+      // На телефоне навигация — выезжающий оверлей: после выбора
+      // вкладки его надо закрыть, иначе он остаётся поверх контента.
+      headerMenu.closest('.menu')?.classList.remove('menu-show');
+      document.querySelector('.icon-menu')?.setAttribute('aria-expanded', 'false');
+    });
+  }
+
   show(pages[DEFAULT_PAGE]);
+
+  // Наружу отдаём реестр и открытие страницы — ими пользуется поиск.
+  return { pages, open };
 };
 
 export default renderCenterBlock;

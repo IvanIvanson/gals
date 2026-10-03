@@ -22,19 +22,19 @@
                         </a>
                    
                     </div>
-                    <div class="menu menu-425">
+                    <div class="menu menu-425 menu-collapse" id="header-menu">
                         <ul class="menu-ul">
                             <li>
-                                <a class="active" href="#">HOME</a>
+                                <a class="active" href="#" data-action="showIntrodaction">HOME</a>
                             </li>
                             <li>
-                                <a href="#">DOC`S</a>
+                                <a href="#" data-action="showContents">DOC`S</a>
                             </li>
                             <li>
-                                <a href="#">ABOUT</a>
+                                <a href="#" data-action="history">ABOUT</a>
                             </li>
                             <li>
-                                <a href="#">HELPERS</a>
+                                <a href="#" data-action="colors-collection">HELPERS</a>
                             </li>
                             </ul>
                             
@@ -87,15 +87,16 @@
                         </ul>
                     </div>
 
-                    <div class="icon-menu visible-425">
+                    <button type="button" class="icon-menu menu-toggle" aria-expanded="false" aria-controls="header-menu">
                         &#8801;
-                    </div>
+                    </button>
                 </div>
 
                 
 
 <div class="container space-beetween">
     <div class="pt-6 pt-xs12 left">
+        <label class="visually-hidden" for="inp-search">Search documentation</label>
         <input class="inp-search" type="search" name="inp-search" id="inp-search" placeholder="Search docs...">
     </div>
     <div class="pt-6 pt-xs12 right">
@@ -105,9 +106,7 @@
             <ul class="version">
                 <li>V1.0 ultra-light</li>
                 <li>V1.0 light</li>
-                <br>
-                <hr>
-                <li>V1.0 optimus</li>
+                <li class="version-separator">V1.0 optimus</li>
             </ul>
         </details>
     </div>
@@ -120,7 +119,7 @@
    
             <main>
                 <div class="container space-beetween">
-                    <div class="pt-2  pt-s-d_n  borderBlue wrap-containerleft">
+                    <div class="pt-2  wrap-containerleft">
                         <div class="container-left">
                             <details>
                                 <summary class="details-item">Gettid started</summary>
@@ -135,7 +134,7 @@
                                 <ul class="list">
                                     <li class="menu-item">CSS variables</li>
                                     <li class="menu-item">JS modules</li>
-                                    <li class="menu-item">Componets</li>
+                                    <li class="menu-item">Components</li>
                                 </ul>
                             </details>
                             <details>
@@ -190,7 +189,7 @@
                             <details>
                                 <summary class="details-item">Helpers</summary>
                                 <ul class="list">
-                                    <li class="menu-item">Colors colection</li>
+                                    <li class="menu-item">Colors collection</li>
                                     <li class="menu-item">Classes</li>
                                     <li class="menu-item">Controls Audio</li>
                                     <li class="menu-item">Controls Video</li>
@@ -210,12 +209,12 @@
                         </div>
                     </div>
 
-                    <div class="pt-8 container-fluid borderBlue  container-center">
+                    <div class="pt-8 container-fluid  container-center">
                     <!-- this place rander content from js -->
              
                     </div>
                   
-                    <div class="pt-2  pt-s-d_n  borderBlue wrap-containerright">
+                    <div class="pt-2  pt-s-d_n  wrap-containerright">
                         <div class="container-right">
                     <!-- this place rander content from js -->  
                     

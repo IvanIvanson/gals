@@ -146,11 +146,61 @@ html {
   align-items: center;
   background: #fff;
 }
+.wrapper .content .wrapper-header header .container .left {
+  position: relative;
+}
 .wrapper .content .wrapper-header header .container .left .inp-search {
   padding: 10px 15px;
   border: solid #777 1px;
   border-radius: 5px;
   outline: none;
+}
+.wrapper .content .wrapper-header header .container .left .search-results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  width: 100%;
+  max-height: 60vh;
+  overflow-y: auto;
+  margin-top: 5px;
+  padding: 5px;
+  background: #fff;
+  border: solid #cecece 1px;
+  border-radius: 5px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+.wrapper .content .wrapper-header header .container .left .search-result {
+  display: block;
+  padding: 8px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.wrapper .content .wrapper-header header .container .left .search-result:hover,
+.wrapper .content .wrapper-header header .container .left .search-result.is-active {
+  background: #ececec;
+}
+.wrapper .content .wrapper-header header .container .left .search-result-title {
+  display: block;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  color: #333;
+}
+.wrapper .content .wrapper-header header .container .left .search-result-snippet {
+  display: block;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #777;
+}
+.wrapper .content .wrapper-header header .container .left .search-result mark {
+  background: rgba(133, 18, 209, 0.15);
+  color: inherit;
+}
+.wrapper .content .wrapper-header header .container .left .search-empty {
+  padding: 8px 10px;
+  font-size: 13px;
+  color: #777;
 }
 .wrapper .content .wrapper-header header .container .right {
   display: flex;
@@ -285,6 +335,7 @@ html {
   .wrapper .content .wrapper-header header .header {
     padding: 5px 10px 5px 10px;
     justify-content: space-between;
+    position: relative;
   }
   .wrapper .content .wrapper-header header .header .menu-collapse {
     display: flex;
@@ -293,11 +344,13 @@ html {
     top: -150px;
     left: 0px;
     opacity: 0;
-    transition: top 0.5s, opacity 0.5s;
+    visibility: hidden;
+    transition: top 0.5s, opacity 0.5s, visibility 0.5s;
   }
   .wrapper .content .wrapper-header header .header .menu-show {
-    top: 55px;
+    top: 100%;
     opacity: 1;
+    visibility: visible;
     z-index: 1000;
     width: 100%;
   }
@@ -362,11 +415,16 @@ html {
     border-radius: 5px;
     outline: none;
   }
-  .wrapper .content .wrapper-header header .container .right {
+  .wrapper .content .wrapper-header header .container .right,
+  .wrapper .content .wrapper-header header .menu .right {
     display: flex;
     justify-content: start;
+    width: 100%;
   }
-  .wrapper .content .wrapper-header header .container .right details {
+  .wrapper .content .wrapper-header header .container .right details,
+  .wrapper .content .wrapper-header header .menu .right details {
+    position: static;
+    top: auto;
     width: 100%;
     padding: 10px 35px;
     outline: none;
@@ -374,7 +432,8 @@ html {
     border-radius: 10px;
     background: #ffffff;
   }
-  .wrapper .content .wrapper-header header .container .right details summary {
+  .wrapper .content .wrapper-header header .container .right details summary,
+  .wrapper .content .wrapper-header header .menu .right details summary {
     display: block;
     width: 100%;
     padding: 5px 65px 5px 5px;
@@ -383,40 +442,50 @@ html {
     font-size: 18px;
     font-weight: 700;
   }
-  .wrapper .content .wrapper-header header .container .right details summary span {
+  .wrapper .content .wrapper-header header .container .right details summary span,
+  .wrapper .content .wrapper-header header .menu .right details summary span {
     font-size: 24px;
     font-weight: 500;
     font-family: "Gill Sans", sans-serif;
   }
-  .wrapper .content .wrapper-header header .container .right details summary::-webkit-details-marker {
+  .wrapper .content .wrapper-header header .container .right details summary::-webkit-details-marker,
+  .wrapper .content .wrapper-header header .menu .right details summary::-webkit-details-marker {
     display: none;
   }
-  .wrapper .content .wrapper-header header .container .right details summary::after {
+  .wrapper .content .wrapper-header header .container .right details summary::after,
+  .wrapper .content .wrapper-header header .menu .right details summary::after {
     content: "▼";
     margin-left: 15px;
     font-size: 16px;
   }
-  .wrapper .content .wrapper-header header .container .right details h4 {
+  .wrapper .content .wrapper-header header .container .right details h4,
+  .wrapper .content .wrapper-header header .menu .right details h4 {
     padding-top: 10px;
     font-size: 16px;
     font-weight: 800;
     font-family: "Montserrat", sans-serif;
   }
-  .wrapper .content .wrapper-header header .container .right details h4 span {
+  .wrapper .content .wrapper-header header .container .right details h4 span,
+  .wrapper .content .wrapper-header header .menu .right details h4 span {
     font-size: 20px;
     font-weight: 400;
     font-family: "Gill Sans", sans-serif;
   }
-  .wrapper .content .wrapper-header header .container .right details ul {
+  .wrapper .content .wrapper-header header .container .right details ul,
+  .wrapper .content .wrapper-header header .menu .right details ul {
     list-style: none;
     padding-top: 10px;
     width: 100%;
   }
-  .wrapper .content .wrapper-header header .container .right details ul li {
+  .wrapper .content .wrapper-header header .container .right details ul li,
+  .wrapper .content .wrapper-header header .menu .right details ul li {
     font-size: 14px;
     padding-top: 10px;
     font-family: "Montserrat", sans-serif;
     cursor: pointer;
+  }
+  .wrapper .content .wrapper-header header .menu .right {
+    padding: 0 10px 10px;
   }
 }
 .wrapper main {
@@ -822,7 +891,19 @@ html {
     --lh-body: 30px;
     --fs-btn: 16px;
   }
+  .wrapper main .container .wrap-containerleft {
+    width: 100%;
+    order: 1;
+  }
+  .wrapper main .container .wrap-containerleft .container-left {
+    position: static;
+    height: auto;
+    max-height: 40vh;
+    padding: 0 5px;
+  }
   .wrapper main .container .container-center {
+    width: 100%;
+    order: 2;
     padding: 10px;
   }
   .wrapper main .container .container-center .inthisPage {
