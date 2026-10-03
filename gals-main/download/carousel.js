@@ -8,12 +8,17 @@
  * Разметка (всё опционально — чего нет, то и не создаётся):
  *
  *   <div class="carousel" data-carousel data-carousel-autoplay="4000">
- *     <div class="carousel-slide">…</div>
- *     <div class="carousel-slide">…</div>
+ *     <div class="carousel-track">
+ *       <div class="carousel-slide">…</div>
+ *       <div class="carousel-slide">…</div>
+ *     </div>
  *     <button type="button" data-carousel-prev aria-label="Previous slide">‹</button>
  *     <button type="button" data-carousel-next aria-label="Next slide">›</button>
  *     <div data-carousel-dots></div>
  *   </div>
+ *
+ * Если .carousel-track отсутствует, треком считается сам [data-carousel]
+ * (обратная совместимость с плоской разметкой).
  *
  * data-carousel-autoplay — пауза между слайдами в мс (без атрибута автоплея
  * нет). Автоплей встаёт на паузу при наведении, фокусе внутри и в скрытой
@@ -34,7 +39,10 @@
   const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
   const initCarousel = function (root) {
-    const slides = Array.from(root.children).filter((el) =>
+    // Трек — либо .carousel-track внутри root, либо сам root (обратная совместимость).
+    const track = root.querySelector(".carousel-track") || root;
+
+    const slides = Array.from(track.children).filter((el) =>
       el.classList.contains("carousel-slide")
     );
 
@@ -53,22 +61,23 @@
     let timer = null;
 
     const scrollToSlide = function (index) {
+      // Смещение слайда относительно левого края трека.
       const delta =
-        slides[index].getBoundingClientRect().left - root.getBoundingClientRect().left;
-      const left = root.scrollLeft + delta;
+        slides[index].getBoundingClientRect().left - track.getBoundingClientRect().left;
+      const left = track.scrollLeft + delta;
       const behavior = prefersReducedMotion() ? "auto" : "smooth";
 
-      if (typeof root.scrollTo === "function") {
-        root.scrollTo({ left: left, behavior: behavior });
+      if (typeof track.scrollTo === "function") {
+        track.scrollTo({ left: left, behavior: behavior });
       } else {
         // Фолбэк для сред без Element.scrollTo (в т.ч. тестовый JSDOM).
-        root.scrollLeft = left;
+        track.scrollLeft = left;
       }
     };
 
     // Активный слайд — тот, чей центр ближе всего к центру трека.
     const activeIndex = function () {
-      const box = root.getBoundingClientRect();
+      const box = track.getBoundingClientRect();
       const center = box.left + box.width / 2;
       let best = 0;
       let bestDistance = Infinity;
@@ -136,9 +145,10 @@
 
     // Синхронизация точек с ручной прокруткой. rAF-троттлинг: событие scroll
     // летит десятки раз за кадр, пересчёт геометрии на каждое — лишняя работа.
+    // Слушаем именно track, потому что скроллится он, а не root.
     let frame = null;
 
-    root.addEventListener(
+    track.addEventListener(
       "scroll",
       function () {
         if (frame) {
