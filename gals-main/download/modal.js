@@ -1,226 +1,130 @@
 /**
- * GALS carousel: стрелки, точки и автоплей для CSS-карусели из gals.css.
+ * GALS modal: декларативное открытие нативного <dialog class="modal">.
  *
- * Дополняет нативную карусель (.carousel + scroll-snap), а не заменяет её:
- * трек остаётся обычным overflow-x контейнером, поэтому без JS он
- * по-прежнему листается пальцем и колесом. Никаких зависимостей и сборки.
+ * Ловушку фокуса, Escape и ::backdrop даёт сам <dialog> — этот модуль только
+ * связывает кнопки с диалогом и возвращает фокус на инициатора.
  *
- * Разметка (всё опционально — чего нет, то и не создаётся):
+ * Разметка:
  *
- *   <div class="carousel" data-carousel data-carousel-autoplay="4000">
- *     <div class="carousel-track">
- *       <div class="carousel-slide">…</div>
- *       <div class="carousel-slide">…</div>
- *     </div>
- *     <button type="button" data-carousel-prev aria-label="Previous slide">‹</button>
- *     <button type="button" data-carousel-next aria-label="Next slide">›</button>
- *     <div data-carousel-dots></div>
- *   </div>
+ *   <button data-modal-target="#confirm">Delete</button>
  *
- * Если .carousel-track отсутствует, треком считается сам [data-carousel]
- * (обратная совместимость с плоской разметкой).
+ *   <dialog id="confirm" class="modal">
+ *     <form method="dialog">
+ *       <h2>Delete the draft?</h2>
+ *       <div class="card-footer">
+ *         <button data-modal-close>Cancel</button>
+ *         <button class="btn btn-primary" value="confirm">Delete</button>
+ *       </div>
+ *     </form>
+ *   </dialog>
  *
- * data-carousel-autoplay — пауза между слайдами в мс (без атрибута автоплея
- * нет). Автоплей встаёт на паузу при наведении, фокусе внутри и в скрытой
- * вкладке, а при prefers-reduced-motion не запускается вовсе; прокрутка
- * в этом случае тоже идёт без анимации.
+ * Поведение:
+ *   - data-modal-target="<селектор>" на любом элементе открывает диалог
+ *     через showModal(); в значении можно указать CSS-селектор или просто id;
+ *   - data-modal-close внутри диалога закрывает его;
+ *   - клик по подложке закрывает;
+ *   - фокус возвращается на элемент, открывший диалог.
  *
- * Подключение: <script src="carousel.js" defer></script>
+ * Подключение: <script src="modal.js" defer></script>
  */
 (function () {
   "use strict";
 
-  const REDUCED = "(prefers-reduced-motion: reduce)";
+  // Селектор или голый id: "#confirm" и "confirm" равнозначны.
+  const resolve = function (value) {
+    if (!value) {
+      return null;
+    }
 
-  const prefersReducedMotion = function () {
-    return typeof window.matchMedia === "function" && window.matchMedia(REDUCED).matches;
+    try {
+      const found = document.querySelector(value);
+
+      if (found) {
+        return found;
+      }
+    } catch (error) {
+      // Не селектор — ниже попробуем как id.
+    }
+
+    return document.getElementById(value);
   };
 
-  const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+  const isDialog = (node) => Boolean(node) && node.tagName === "DIALOG";
 
-  const initCarousel = function (root) {
-    // Трек — либо .carousel-track внутри root, либо сам root (обратная совместимость).
-    const track = root.querySelector(".carousel-track") || root;
-
-    const slides = Array.from(track.children).filter((el) =>
-      el.classList.contains("carousel-slide")
-    );
-
-    // Один слайд листать некуда — фича молчит.
-    if (slides.length < 2) {
+  const open = function (dialog, trigger) {
+    // showModal нет только в очень старых браузерах — тогда молчим.
+    if (!isDialog(dialog) || typeof dialog.showModal !== "function" || dialog.open) {
       return;
     }
 
-    const prev = root.querySelector("[data-carousel-prev]");
-    const next = root.querySelector("[data-carousel-next]");
-    const dotsBox = root.querySelector("[data-carousel-dots]");
-    const autoplayDelay = Number(root.dataset.carouselAutoplay) || 0;
+    dialog.galsTrigger = trigger || document.activeElement;
+    dialog.showModal();
+  };
 
-    const dots = [];
-    let current = 0;
-    let timer = null;
+  const close = function (dialog) {
+    if (isDialog(dialog) && dialog.open) {
+      dialog.close();
+    }
+  };
 
-    const scrollToSlide = function (index) {
-      // Смещение слайда относительно левого края трека.
-      const delta =
-        slides[index].getBoundingClientRect().left - track.getBoundingClientRect().left;
-      const left = track.scrollLeft + delta;
-      const behavior = prefersReducedMotion() ? "auto" : "smooth";
+  document.addEventListener("click", function (event) {
+    const target = event.target;
 
-      if (typeof track.scrollTo === "function") {
-        track.scrollTo({ left: left, behavior: behavior });
-      } else {
-        // Фолбэк для сред без Element.scrollTo (в т.ч. тестовый JSDOM).
-        track.scrollLeft = left;
-      }
-    };
-
-    // Активный слайд — тот, чей центр ближе всего к центру трека.
-    const activeIndex = function () {
-      const box = track.getBoundingClientRect();
-      const center = box.left + box.width / 2;
-      let best = 0;
-      let bestDistance = Infinity;
-
-      slides.forEach(function (slide, index) {
-        const rect = slide.getBoundingClientRect();
-        const distance = Math.abs(rect.left + rect.width / 2 - center);
-
-        if (distance < bestDistance) {
-          bestDistance = distance;
-          best = index;
-        }
-      });
-
-      return best;
-    };
-
-    const paint = function () {
-      dots.forEach(function (dot, index) {
-        dot.setAttribute("aria-current", String(index === current));
-      });
-
-      if (prev) {
-        prev.disabled = current === 0;
-      }
-
-      if (next) {
-        next.disabled = current === slides.length - 1;
-      }
-    };
-
-    const goTo = function (index) {
-      current = clamp(index, 0, slides.length - 1);
-      scrollToSlide(current);
-      paint();
-    };
-
-    if (dotsBox) {
-      slides.forEach(function (_, index) {
-        const dot = document.createElement("button");
-
-        dot.type = "button";
-        dot.className = "carousel-dot";
-        dot.setAttribute("aria-label", "Go to slide " + (index + 1));
-        dot.addEventListener("click", function () {
-          goTo(index);
-        });
-
-        dotsBox.appendChild(dot);
-        dots.push(dot);
-      });
+    if (!target || typeof target.closest !== "function") {
+      return;
     }
 
-    if (prev) {
-      prev.addEventListener("click", function () {
-        goTo(current - 1);
-      });
-    }
+    const opener = target.closest("[data-modal-target]");
 
-    if (next) {
-      next.addEventListener("click", function () {
-        goTo(current + 1);
-      });
-    }
+    if (opener) {
+      const dialog = resolve(opener.getAttribute("data-modal-target"));
 
-    // Синхронизация точек с ручной прокруткой. rAF-троттлинг: событие scroll
-    // летит десятки раз за кадр, пересчёт геометрии на каждое — лишняя работа.
-    // Слушаем именно track, потому что скроллится он, а не root.
-    let frame = null;
-
-    track.addEventListener(
-      "scroll",
-      function () {
-        if (frame) {
-          return;
-        }
-
-        if (typeof requestAnimationFrame !== "function") {
-          current = activeIndex();
-          paint();
-          return;
-        }
-
-        frame = requestAnimationFrame(function () {
-          frame = null;
-          current = activeIndex();
-          paint();
-        });
-      },
-      { passive: true }
-    );
-
-    const stop = function () {
-      if (timer) {
-        clearInterval(timer);
-        timer = null;
+      if (dialog) {
+        event.preventDefault();
+        open(dialog, opener);
       }
-    };
 
-    const start = function () {
-      if (!autoplayDelay || timer || prefersReducedMotion()) {
+      return;
+    }
+
+    const closer = target.closest("[data-modal-close]");
+
+    if (closer) {
+      const dialog = closer.closest("dialog");
+
+      if (dialog) {
+        event.preventDefault();
+        close(dialog);
+      }
+
+      return;
+    }
+
+    // Клик по подложке: у .modal нет padding, содержимое лежит внутри формы,
+    // поэтому цель клика вне контента — сам <dialog>.
+    if (isDialog(target)) {
+      close(target);
+    }
+  });
+
+  // Событие close не всплывает — слушаем на capture (как gals.js для toggle).
+  document.addEventListener(
+    "close",
+    function (event) {
+      const dialog = event.target;
+
+      if (!isDialog(dialog)) {
         return;
       }
 
-      timer = setInterval(function () {
-        goTo(current + 1 >= slides.length ? 0 : current + 1);
-      }, autoplayDelay);
-    };
+      const trigger = dialog.galsTrigger;
+      dialog.galsTrigger = null;
 
-    if (autoplayDelay) {
-      root.addEventListener("mouseenter", stop);
-      root.addEventListener("mouseleave", start);
-
-      // Пауза, пока фокус внутри карусели; focusout срабатывает и при
-      // переходе между детьми, поэтому стартуем только когда фокус ушёл наружу.
-      root.addEventListener("focusin", stop);
-      root.addEventListener("focusout", function (event) {
-        if (!root.contains(event.relatedTarget)) {
-          start();
-        }
-      });
-
-      document.addEventListener("visibilitychange", function () {
-        if (document.hidden) {
-          stop();
-        } else {
-          start();
-        }
-      });
-    }
-
-    current = activeIndex();
-    paint();
-    start();
-  };
-
-  const init = function () {
-    document.querySelectorAll("[data-carousel]").forEach(initCarousel);
-  };
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
-  } else {
-    init();
-  }
+      // Возврат фокуса инициатору: браузер отдаёт фокус body, если не помочь.
+      if (trigger && document.contains(trigger) && typeof trigger.focus === "function") {
+        trigger.focus();
+      }
+    },
+    true
+  );
 })();
