@@ -4,6 +4,7 @@ import content from './content.js';
 import forms from './forms.js';
 import components from './components.js';
 import helpers from './helpers.js';
+import features from './features.js';
 import about from './about.js';
 
 /**
@@ -13,7 +14,7 @@ import about from './about.js';
  * (см. page.js), поэтому сорок атрибутов data-action в разметке не нужны.
  * Пересечение ключей между модулями считаем ошибкой сборки и падаем громко.
  */
-const SOURCES = [settings, layout, content, forms, components, helpers, about];
+const SOURCES = [settings, layout, content, forms, components, helpers, features, about];
 
 const buildRegistry = () => {
   const registry = {};
