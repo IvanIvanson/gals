@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>График квадратного уравнения</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 20px;
+        }
+        .canvas-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        canvas {
+            border: 2px solid #0d6efd;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            aspect-ratio: 1;
+        }
+        .img-container {
+            margin-top: 20px;
+        }
+        .img-preview {
+            border: 2px solid #0d6efd;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            aspect-ratio: 1;
+        }
+        .controls {
+            margin-bottom: 20px;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .form-range::-webkit-slider-runnable-track {
+            background: #dee2e6;
+            height: 0.5rem;
+            border-radius: 0.25rem;
+        }
+        .form-range::-moz-range-track {
+            background: #dee2e6;
+            height: 0.5rem;
+            border-radius: 0.25rem;
+        }
+        .equation-inputs input {
+            width: 70px;
+            display: inline-block;
+            text-align: center;
+        }
+        .results {
+            margin: 20px 0;
+        }
+        @media (max-width: 768px) {
+            .img-container {
+                margin-top: 30px;
+            }
+            .equation-inputs input {
+                width: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mb-4">График квадратного уравнения</h1>
+        
+        <div class="controls">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label for="speed" class="form-label">Скорость построения</label>
+                    <input type="range" class="form-range mb-2" id="speed" min="1" max="10" value="5">
+                    <div class="d-flex justify-content-between">
+                        <small>Медленно</small>
+                        <small>Быстро</small>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label for="step" class="form-label">Плотность точек</label>
+                    <input type="range" class="form-range mb-2" id="step" min="1" max="10" value="8">
+                    <div class="d-flex justify-content-between">
+                        <small>Редко</small>
+                        <small>Часто</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="equation-inputs mb-3">
+            <h5>Введите коэффициенты уравнения:</h5>
+            <div class="d-flex align-items-center flex-wrap gap-2">
+                <input type="number" class="form-control" id="a" placeholder="a" value="1">
+                <span class="fs-5">x<sup>2</sup> +</span>
+                <input type="number" class="form-control" id="b" placeholder="b" value="0">
+                <span class="fs-5">x +</span>
+                <input type="number" class="form-control" id="c" placeholder="c" value="0">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="canvas-container">
+                    <canvas id="canvas"></canvas>
+                </div>
+                <div class="d-flex flex-wrap gap-2 mt-3">
+                    <button type="button" id="draw" class="btn btn-primary">Построить график</button>
+                    <button type="button" id="btnClear" class="btn btn-danger">Очистить</button>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="img-container">
+                    <h5>Превью изображения:</h5>
+                    <img src="" id="imgConverted" class="img-preview" alt="График уравнения">
+                    <div class="d-flex flex-wrap gap-2 mt-3">
+                        <button type="button" id="btnDisplay" class="btn btn-success">Показать изображение</button>
+                        <button type="button" id="btnDownload" class="btn btn-warning">Скачать изображение</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="results alert alert-info mt-4">
+            <div id="outX1"></div>
+            <div id="outX2"></div>
+        </div>
+        
+        <div class="link-area mt-3">
+            <label for="text" class="form-label">Ссылка на изображение:</label>
+            <textarea id="text" class="form-control" rows="3" placeholder="Здесь появится ссылка на изображение"></textarea>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Получаем элементы DOM
+            const btnDisplay = document.querySelector("#btnDisplay");
+            const btnDownload = document.querySelector("#btnDownload");
+            const btnClear = document.querySelector("#btnClear");
+            const imgConverted = document.querySelector("#imgConverted");
+            const canvas = document.querySelector("#canvas");
+            const ctx = canvas.getContext("2d");
+            const speedControl = document.querySelector("#speed");
+            const stepControl = document.querySelector("#step");
+            
+            // Устанавливаем размеры canvas
+            function resizeCanvas() {
+                const container = canvas.parentElement;
+                const size = Math.min(container.clientWidth, 600);
+                const DPI_WIDTH = size * 2;
+                const DPI_HEIGHT = size * 2;
+                
+                canvas.style.width = size + 'px';
+                canvas.style.height = size + 'px';
+                canvas.width = DPI_WIDTH;
+                canvas.height = DPI_HEIGHT;
+                
+                return { DPI_WIDTH, DPI_HEIGHT };
+            }
+            
+            let { DPI_WIDTH, DPI_HEIGHT } = resizeCanvas();
+            
+            // Масштаб для осей
+            const scaleX = DPI_WIDTH / 8;
+            const scaleY = DPI_HEIGHT / 8;
+            const shiftNumberNames = 5;
+            const shiftAxisNames = 20;
+            
+            // Вычисляем положение осей (центр canvas)
+            const xAxis = Math.round(DPI_WIDTH / 2 / scaleX) * scaleX;
+            const yAxis = Math.round(DPI_HEIGHT / 2 / scaleY) * scaleY;
+            
+            // Устанавливаем шрифт для подписей
+            ctx.font = `${Math.round(scaleX / 4)}px Arial`;
+            
+            // Переменные для анимации
+            let animationId = null;
+            let isDrawing = false;
+            let lastPoint = null;
+            
+            // Функция для рисования сетки и осей
+            function drawGridAndAxes() {
+                // Очищаем canvas
+                ctx.clearRect(0, 0, DPI_WIDTH, DPI_HEIGHT);
+                
+                // Рисуем сетку
+                ctx.beginPath();
+                ctx.strokeStyle = '#e9ecef';
+                ctx.lineWidth = 1;
+                
+                // Вертикальные линии сетки
+                for (let i = 0; i <= DPI_WIDTH; i += scaleX) {
+                    ctx.moveTo(i, 0);
+                    ctx.lineTo(i, DPI_HEIGHT);
+                    ctx.fillStyle = "#6c757d";
+                    ctx.fillText(Math.round((i - xAxis) / scaleX * 10) / 10, i + shiftNumberNames, yAxis + shiftNumberNames + 15);
+                }
+                
+                // Горизонтальные линии сетки
+                for (let i = 0; i <= DPI_HEIGHT; i += scaleY) {
+                    ctx.moveTo(0, i);
+                    ctx.lineTo(DPI_WIDTH, i);
+                    ctx.fillText(Math.round((yAxis - i) / scaleY * 10) / 10, xAxis + shiftNumberNames, i + shiftNumberNames + 10);
+                }
+                
+                ctx.stroke();
+                ctx.closePath();
+                
+                // Рисуем главные оси
+                ctx.beginPath();
+                ctx.strokeStyle = '#0d6efd';
+                ctx.lineWidth = 2;
+                ctx.fillStyle = "#0d6efd";
+                
+                // Ось Y (вертикальная)
+                ctx.moveTo(xAxis, 0);
+                ctx.lineTo(xAxis, DPI_HEIGHT);
+                ctx.fillText('Y', xAxis - shiftAxisNames, 15);
+                
+                // Ось X (горизонтальная)
+                ctx.moveTo(0, yAxis);
+                ctx.lineTo(DPI_WIDTH, yAxis);
+                ctx.fillText('X', DPI_WIDTH - shiftAxisNames, yAxis - shiftAxisNames + 10);
+                
+                ctx.stroke();
+                ctx.closePath();
+            }
+            
+            // Инициализация - рисуем сетку и оси при загрузке
+            drawGridAndAxes();
+            
+            // Функция для анимированного рисования графика
+            function animateGraph() {
+                if (!isDrawing) return;
+                
+                // Получаем коэффициенты уравнения
+                const a = parseFloat(document.getElementById("a").value) || 0;
+                const b = parseFloat(document.getElementById("b").value) || 0;
+                const c = parseFloat(document.getElementById("c").value) || 0;
+                
+                // Настройки анимации из элементов управления
+                const speed = parseInt(speedControl.value);
+                const step = 0.05 / (parseInt(stepControl.value) / 2); // Меньший шаг для большей плотности
+                
+                // Вычисляем дискриминант
+                const d = Math.pow(b, 2) - 4 * a * c;
+                
+                // Очищаем предыдущие результаты
+                document.querySelector("#outX1").innerHTML = '';
+                document.querySelector("#outX2").innerHTML = '';
+                
+                // Если уравнение квадратное
+                if (a !== 0) {
+                    if (d >= 0) {
+                        const sqrtD = Math.sqrt(d);
+                        const x1 = (-b + sqrtD) / (2 * a);
+                        const x2 = (-b - sqrtD) / (2 * a);
+                        document.querySelector("#outX1").innerHTML = 'Корень уравнения x<sub>1</sub> = ' + x1.toFixed(2);
+                        document.querySelector("#outX2").innerHTML = 'Корень уравнения x<sub>2</sub> = ' + x2.toFixed(2);
+                    } else {
+                        document.querySelector("#outX1").innerHTML = 'Нет действительных корней уравнения';
+                    }
+                } 
+                // Если уравнение линейное (a = 0)
+                else if (b !== 0) {
+                    const x = -c / b;
+                    document.querySelector("#outX1").innerHTML = 'Корень линейного уравнения x = ' + x.toFixed(2);
+                }
+                // Если уравнение вырожденное (a = 0, b = 0)
+                else {
+                    document.querySelector("#outX1").innerHTML = 'Уравнение не имеет решений или имеет бесконечно много решений';
+                }
+                
+                // Начальные параметры для рисования
+                let x = -xAxis / scaleX;
+                
+                // Функция для отрисовки одного кадра анимации
+                function drawFrame() {
+                    if (!isDrawing) return;
+                    
+                    ctx.beginPath();
+                    ctx.strokeStyle = '#fd7e14';
+                    ctx.lineWidth = 3; // Более толстая линия
+                    ctx.lineJoin = 'round'; // Сглаживание соединений
+                    ctx.lineCap = 'round'; // Сглаживание концов
+                    
+                    // Если это первая точка или был разрыв
+                    if (!lastPoint) {
+                        const y = a * Math.pow(x, 2) + b * x + c;
+                        const canvasX = x * scaleX + xAxis;
+                        const canvasY = yAxis - scaleY * y;
+                        ctx.moveTo(canvasX, canvasY);
+                        lastPoint = { x: canvasX, y: canvasY };
+                    } else {
+                        ctx.moveTo(lastPoint.x, lastPoint.y);
+                    }
+                    
+                    // Рисуем несколько точек за один кадр
+                    for (let i = 0; i < speed && x <= (DPI_WIDTH - xAxis) / scaleX; i++) {
+                        const y = a * Math.pow(x, 2) + b * x + c;
+                        const canvasX = x * scaleX + xAxis;
+                        const canvasY = yAxis - scaleY * y;
+                        
+                        ctx.lineTo(canvasX, canvasY);
+                        lastPoint = { x: canvasX, y: canvasY };
+                        x += step;
+                    }
+                    
+                    ctx.stroke();
+                    
+                    // Продолжаем анимацию, если не дошли до конца
+                    if (x <= (DPI_WIDTH - xAxis) / scaleX) {
+                        animationId = requestAnimationFrame(drawFrame);
+                    } else {
+                        isDrawing = false;
+                        lastPoint = null;
+                    }
+                }
+                
+                // Начинаем анимацию
+                drawFrame();
+            }
+            
+            // Назначаем функцию рисования на кнопку
+            document.querySelector("#draw").addEventListener('click', function() {
+                if (isDrawing) {
+                    cancelAnimationFrame(animationId);
+                }
+                isDrawing = true;
+                lastPoint = null;
+                drawGridAndAxes();
+                animateGraph();
+            });
+            
+            // Кнопка "Очистить"
+            btnClear.addEventListener('click', function() {
+                if (animationId) {
+                    cancelAnimationFrame(animationId);
+                    isDrawing = false;
+                }
+                drawGridAndAxes();
+                document.querySelector("#outX1").innerHTML = '';
+                document.querySelector("#outX2").innerHTML = '';
+                document.querySelector("#text").value = '';
+                imgConverted.src = '';
+                lastPoint = null;
+            });
+            
+            // Кнопка "Показать изображение"
+            btnDisplay.addEventListener("click", function() {
+                const dataURI = canvas.toDataURL("image/png");
+                imgConverted.src = dataURI;
+                document.querySelector("#text").value = dataURI;
+            });
+            
+            // Кнопка "Скачать изображение"
+            btnDownload.addEventListener("click", function() {
+                const a = document.createElement("a");
+                document.body.appendChild(a);
+                a.href = canvas.toDataURL("image/png");
+                a.download = "график-уравнения.png";
+                a.click();
+                document.body.removeChild(a);
+            });
+            
+            // Обработчик изменения размера окна
+            window.addEventListener('resize', function() {
+                const newSizes = resizeCanvas();
+                DPI_WIDTH = newSizes.DPI_WIDTH;
+                DPI_HEIGHT = newSizes.DPI_HEIGHT;
+                if (!isDrawing) {
+                    drawGridAndAxes();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

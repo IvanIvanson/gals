@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Адаптивное модальное окно</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Адаптивное модальное окно</h1>
+        <p>Нажмите на кнопку, чтобы открыть модальное окно:</p>
+        
+        <button class="btn-open" data-modal="modal1">
+            Открыть модальное окно
+        </button>
+    </div>
+
+    <!-- Модальное окно -->
+    <div id="modal1" class="modal" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
+        <div class="modal-overlay" data-close></div>
+        <div class="modal-content">
+            <button class="modal-close" data-close aria-label="Закрыть">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            
+            <div class="modal-header">
+                <h2 id="modal-title">Заголовок модального окна</h2>
+            </div>
+            
+            <div class="modal-body">
+                <p>Это адаптивное модальное окно, которое отлично работает на всех устройствах — от мобильных телефонов до десктопов.</p>
+                
+                <p>Особенности:</p>
+                <ul>
+                    <li>✅ Полностью адаптивный дизайн</li>
+                    <li>✅ Плавные анимации</li>
+                    <li>✅ Закрытие по клику на оверлей</li>
+                    <li>✅ Закрытие по клавише ESC</li>
+                    <li>✅ Блокировка прокрутки body</li>
+                    <li>✅ Доступность (ARIA атрибуты)</li>
+                </ul>
+                
+                <div class="form-group">
+                    <label for="name">Ваше имя:</label>
+                    <input type="text" id="name" name="name" placeholder="Введите ваше имя">
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" placeholder="your@email.com">
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-close>Отмена</button>
+                <button class="btn btn-primary">Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

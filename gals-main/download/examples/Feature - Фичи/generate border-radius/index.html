@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Page Title</title>
+    </head>
+    <body>
+        <div id="square"></div>
+        <input type = "range" id="rng" min="0" max="100">
+         <input type = "range" id="rng2" min="0" max="100">
+          <input type = "range" id="rng3" min="0" max="100">
+          <input type = "range" id="rng4" min="0" max="100">
+          
+          <input type = "range" id="rng5" min="0" max="100">
+          <input type = "range" id="rng6" min="0" max="100">
+           <input type = "range" id="rng7" min="0" max="100">
+          <input type = "range" id="rng8" min="0" max="100">
+          <div id="cssCode">
+          <h2>css code:</h2>
+              <div class="out" id="out1"></div>
+              <div class="out" id="out2"></div>
+              <div class="out" id="out3"></div>
+              <div class="out" id="out4"></div>
+              <div class="out" id="out5"></div>
+              <div class="out" id="out6"></div>
+              <div class="out" id="out7"></div>
+              <div class="out" id="out8"></div>
+          </div>
+        <script>
+            
+            rng.onchange = function(){
+          let rng = +document.querySelector("#rng").value;
+          let rng2 = +document.querySelector("#rng2").value;
+          let rng3 = +document.querySelector("#rng3").value;
+          let rng4 = +document.querySelector("#rng4").value;
+          
+          let rng5 = +document.querySelector("#rng5").value;
+          let rng6 = +document.querySelector("#rng6").value;
+          let rng7 = +document.querySelector("#rng7").value;
+          let rng8 = +document.querySelector("#rng8").value;
+      document.querySelector("#out1").innerHTML= "border-radius:  " + rng + "%  ";   
+            let square = document.querySelector("#square");  
+            
+          let radius = 0;  
+                square.style.borderRadius= rng + "%" + rng2 + "%" + rng3 + "%" + rng4 + "%" + "/" + rng5 + "%" + rng6 + "%" + rng7 + "%" + rng8 + "%";
+            }
+            
+            
+       rng2.onchange = function(){
+          let rng = +document.querySelector("#rng").value;
+          let rng2 = +document.querySelector("#rng2").value;
+          let rng3 = +document.querySelector("#rng3").value;
+          let rng4 = +document.querySelector("#rng4").value;
+          
+          let rng5 = +document.querySelector("#rng5").value;
+          let rng6 = +document.querySelector("#rng6").value;
+          let rng7 = +document.querySelector("#rng7").value;
+          let rng8 = +document.querySelector("#rng8").value;
+    document.querySelector("#out2").innerHTML=rng2 + "%";        
+            let square = document.querySelector("#square");  
+            
+          let radius = 0;  
+                square.style.borderRadius= rng + "%" + rng2 + "%" + rng3 + "%" + rng4 + "%" + "/" + rng5 + "%" + rng6 + "%" + rng7 + "%" + rng8 + "%";
+            }     
+            
+     rng3.onchange = function(){
+          let rng = +document.querySelector("#rng").value;
+          let rng2 = +document.querySelector("#rng2").value;
+          let rng3 = +document.querySelector("#rng3").value;
+          let rng4 = +document.querySelector("#rng4").value;
+          
+          let rng5 = +document.querySelector("#rng5").value;
+          let rng6 = +document.querySelector("#rng6").value;
+          let rng7 = +document.querySelector("#rng7").value;
+          let rng8 = +document.querySelector("#rng8").value;
+       document.querySelector("#out3").innerHTML= rng3 + "% ";     
+            let square = document.querySelector("#square");  
+            
+          let radius = 0;  
+                square.style.borderRadius= rng + "%" + rng2 + "%" + rng3 + "%" + rng4 + "%" + "/" + rng5 + "%" + rng6 + "%" + rng7 + "%" + rng8 + "%";
+            }       
+            rng4.onchange = function(){
+          let rng = +document.querySelector("#rng").value;
+          let rng2 = +document.querySelector("#rng2").value;
+          let rng3 = +document.querySelector("#rng3").value;
+          let rng4 = +document.querySelector("#rng4").value;
+          
+          let rng5 = +document.querySelector("#rng5").value;
+          let rng6 = +document.querySelector("#rng6").value;
+          let rng7 = +document.querySelector("#rng7").value;
+          let rng8 = +document.querySelector("#rng8").value;
+          document.querySelector("#out4").innerHTML= rng4 + "% " + " / ";     
+            let square = document.querySelector("#square");  
+            
+          let radius = 0;  
+                square.style.borderRadius= rng + "%" + rng2 + "%" + rng3 + "%" + rng4 + "%" + "/" + rng5 + "%" + rng6 + "%" + rng7 + "%" + rng8 + "%";
+            }
+            
+            rng5.onchange = function(){
+          let rng = +document.querySelector("#rng").value;
+          let rng2 = +document.querySelector("#rng2").value;
+          let rng3 = +document.querySelector("#rng3").value;
+          let rng4 = +document.querySelector("#rng4").value;
+          
+          let rng5 = +document.querySelector("#rng5").value;
+          let rng6 = +document.querySelector("#rng6").value;
+          let rng7 = +document.querySelector("#rng7").value;
+          let rng8 = +document.querySelector("#rng8").value;
+          document.querySelector("#out5").innerHTML= rng5 + "% ";     
+            let square = document.querySelector("#square");  
+            
+          let radius = 0;  
+                square.style.borderRadius= rng + "%" + rng2 + "%" + rng3 + "%" + rng4 + "%" + "/" + rng5 + "%" + rng6 + "%" + rng7 + "%" + rng8 + "%";
+                square.style.borderBottomColor= "orange";
+            }
+            
+            rng6.onchange = function(){
+          let rng = +document.querySelector("#rng").value;
+          let rng2 = +document.querySelector("#rng2").value;
+          let rng3 = +document.querySelector("#rng3").value;
+          let rng4 = +document.querySelector("#rng4").value;
+          
+          let rng5 = +document.querySelector("#rng5").value;
+          let rng6 = +document.querySelector("#rng6").value;
+          let rng7 = +document.querySelector("#rng7").value;
+          let rng8 = +document.querySelector("#rng8").value;
+       document.querySelector("#out6").innerHTML= rng6 + "% ";        
+            let square = document.querySelector("#square");  
+            
+          let radius = 0;  
+                square.style.borderRadius= rng + "%" + rng2 + "%" + rng3 + "%" + rng4 + "%" + "/" + rng5 + "%" + rng6 + "%" + rng7 + "%" + rng8 + "%";
+                
+       square.style.borderTopColor= "green"         
+            }
+            
+            rng7.onchange = function(){
+          let rng = +document.querySelector("#rng").value;
+          let rng2 = +document.querySelector("#rng2").value;
+          let rng3 = +document.querySelector("#rng3").value;
+          let rng4 = +document.querySelector("#rng4").value;
+          
+          let rng5 = +document.querySelector("#rng5").value;
+          let rng6 = +document.querySelector("#rng6").value;
+          let rng7 = +document.querySelector("#rng7").value;
+          let rng8 = +document.querySelector("#rng8").value;
+         document.querySelector("#out7").innerHTML= rng7 + "% ";     
+            let square = document.querySelector("#square");  
+            
+          let radius = 0;  
+                square.style.borderRadius= rng + "%" + rng2 + "%" + rng3 + "%" + rng4 + "%" + "/" + rng5 + "%" + rng6 + "%" + rng7 + "%" + rng8 + "%";
+                
+          square.style.borderRightColor= "blue";
+            }
+            
+         rng8.onchange = function(){
+          let rng = +document.querySelector("#rng").value;
+          let rng2 = +document.querySelector("#rng2").value;
+          let rng3 = +document.querySelector("#rng3").value;
+          let rng4 = +document.querySelector("#rng4").value;
+          
+          let rng5 = +document.querySelector("#rng5").value;
+          let rng6 = +document.querySelector("#rng6").value;
+          let rng7 = +document.querySelector("#rng7").value;
+          let rng8 = +document.querySelector("#rng8").value;
+          document.querySelector("#out8").innerHTML= rng8 + "% ";     
+            let square = document.querySelector("#square");  
+            
+          let radius = 0;  
+                square.style.borderRadius= rng + "%" + rng2 + "%" + rng3 + "%" + rng4 + "%" + "/" + rng5 + "%" + rng6 + "%" + rng7 + "%" + rng8 + "%";
+                
+          square.style.borderLeftColor= "red";
+                
+            }   
+            
+        </script>
+    </body>
+</html>

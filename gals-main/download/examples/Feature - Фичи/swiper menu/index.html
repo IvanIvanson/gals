@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Page Title</title>
+    </head>
+    <body>
+        <nav class="nav">
+  <a href="#" target="_blank" class="nav__logo">
+  
+    <!------logo------>
+    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20%" height="20%" viewBox="0 0 47.4 47.7" > 
+        
+        <style type="text/css"> 
+        .st0 { fill:none; stroke:#FEC558; stroke-width:0.5; } 
+        .st1{fill:#FFC656;} 
+        </style> 
+        <defs>
+         
+         
+        </defs> 
+        <rect width="100%" height="100%" fill="url(#grad)"/> 
+        <path id="circle" class="st0" stroke-dashoffset="138" stroke-dasharray="138" d="M23.7,45.8c12.1,0,22-9.9,22-22c0-12.1-9.9-22-22-22c-12.1,0-22,9.9-22,22C1.7,35.9,11.6,45.8,23.7,45.8z"> 
+        <animate id="an_circle" attributeName="stroke-dashoffset" values="138;0" dur="2s" fill="freeze" /> 
+        </path> 
+        <g stroke-width="0.5">
+         <path id="trap" class="st1" stroke-dashoffset="60" stroke-dasharray="60" style="fill:none; stroke:#FEC558;" d="M14.1,17.9 14.1,20.2 14.1,22.2 14.1,23.4 14.1,24.7 14.1,27.6 32.7,35.2 32.7,32.5 32.7,30.7 32.7,29.7 32.7,28.5 32.7,25.2z">
+         
+          <animate id="an_trap" attributeName="stroke-dashoffset" values="60;0" dur="1s" fill="freeze" /> <animate id="fill_trap" attributeName="fill" values="#33363D;#FEC558" begin="an_circle.end" dur="1s" fill="freeze" /> 
+          </path>
+           <path id="triangle" class="st1" stroke-dashoffset="35" stroke-dasharray="35" style="fill:none; stroke:#FEC558;" d="M19.2,18.7 24.3,20.6 27.5,21.9 27.5,21.2 27.5,19.4 27.5,17.5 27.5,16.3 27.5,15.2 27.5,12.5 15.5,17.2 19.2,18.7"> 
+           <animate id="an_triangle" attributeName="stroke-dashoffset" begin="an_trap.end" values="35;0" dur="1s" fill="freeze" /> 
+           
+           <animate id="fill_triangle" attributeName="fill" values="#33363D;#FEC558" begin="fill_trap.end-0.5s" dur="1s" fill="freeze" /> 
+           
+           </path> 
+           </g>
+        </svg>
+     
+    <!------------->
+      </a>
+
+  <button id="btn-menu" class="nav__toggler" easy-add="#swipeMenu" easy-class="swipe-menu--show">
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="28" fill="white" class="bi bi-list" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/> </svg>
+  </button>
+</nav>
+
+<nav id="swipeMenu" class="swipe-menu">
+  <button id="btn-close" class="swipe-menu__close" easy-remove="#swipeMenu" easy-class="swipe-menu--show">
+  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="black" class="bi bi-x" viewBox="0 0 16 16"> <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/> </svg>
+  </button>
+</nav>
+
+<div class="swipe-menu-overlay" easy-remove="#swipeMenu" easy-class="swipe-menu--show"></div>
+    </body>
+</html>

@@ -1,0 +1,35 @@
+body {
+    
+}
+.canvas{
+    border:solid blue 0.5px;
+    border-left:solid black 2px;
+    border-bottom:solid black 2px;
+    
+}
+input{
+    
+}
+.input{
+    
+    width:250px;
+    margin-top:20px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    
+}
+.container{
+    position:relative;
+    width:300px;
+    height:200px;
+    display:flex;
+    align-items:center;
+    margin:0 auto;
+    flex-direction:column;
+    
+}
+.option, button{
+    margin-top:10px;
+}

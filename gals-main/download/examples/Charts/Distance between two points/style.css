@@ -1,0 +1,90 @@
+body {
+    background-color:#f0f0f0;
+}
+.inputBlock{
+    
+    box-shadow:0 0 5px 2px grey;
+    display:flex;
+}
+.inputBlockRight{
+    position:relative;
+    margin-left:30px;
+    width:220px;
+}
+.sqrt{
+    position:absolute;
+    left:10px;
+    top:30px;
+    width:150px;
+    height:50px;
+    background:transparent;
+}
+.formulText{
+    font-size:14px;
+    font-style:italic;
+}
+.dist{
+    position:absolute;
+    display:block;
+    top:45px;
+    left:0;
+    
+}
+.formula{
+    position:absolute;
+    display:inline-block;
+    top:40px;
+    left:40px;
+    width:190px;
+    background:transparent;
+}
+
+p{
+    font-size:0.7em;
+    
+}
+
+.inp{
+    width:50px;
+    text-align:center;
+    margin-top:10px;
+}
+.resultBlock{
+    margin-top:20px;
+    margin-bottom:20px;
+    display:flex;
+    justify-content:center;
+}
+.resultChart{
+    position:relative;
+    width:200px;
+    height:200px;
+    margin:0 auto;
+}
+canvas{
+    position:absolute;
+    display:block;
+    box-shadow: 2px  5px  10px 0px grey;
+    border:solid black 1px;
+    
+}
+#svg{
+    position:absolute;
+    width:200px;
+    height:200px;
+    transform:rotateX(180deg);
+    
+    background-color:transparent;
+    
+}
+ .small{
+    fill:red;
+    transform: rotateX(150deg);
+    font-size:10px;
+}
+ .smallD{
+    fill:red;
+    position:absolute;
+    transform: rotateX(180deg);
+    font-size:10px;
+}

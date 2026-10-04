@@ -1,0 +1,28 @@
+     
+input::placeholder{
+    font-family:sans-serif;
+   /* background: url(img/icon.svg) no-repeat; */
+}
+.wrap-search{
+    display:flex;
+    justify-content:space-between;
+}
+.wrapper input{
+    width:60%;
+    padding:7px 7px;
+    border-radius:3px;
+    border:solid #201d2e 1px;
+}
+.wrapper button{
+    width:30%;
+    background:#201d2e;
+    cursor:pointer;
+    outline:none;
+    border:none;
+    color:#fff;
+    border-radius:3px;
+}
+ 
+mark{
+    background-color:#ffdd4b;
+}

@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Graph with Plotly.js</title>
+    <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .app-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .input-section {
+            margin-bottom: 20px;
+        }
+        
+        .data-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr auto;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: end;
+        }
+        
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        input {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background: #5a67d8;
+        }
+        
+        .btn-danger {
+            background: #e53e3e;
+        }
+        
+        .btn-danger:hover {
+            background: #c53030;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        
+        .graph-container {
+            width: 100%;
+            height: 600px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #ddd;
+        }
+        
+        @media (max-width: 768px) {
+            .data-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .graph-container {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 3D Graph Builder (Plotly.js)</h1>
+        
+        <div class="app-card">
+            <div class="input-section">
+                <h2>Введите данные</h2>
+                <div id="data-container">
+                    <!-- Строки будут добавляться здесь -->
+                </div>
+                
+                <div class="controls">
+                    <button onclick="addRow()">➕ Добавить точку</button>
+                    <button onclick="generateSample()">🎲 Пример данных</button>
+                    <button onclick="clearAll()" class="btn-danger">🗑️ Очистить всё</button>
+                    <button onclick="buildGraph()" style="background: #10b981;">📈 Построить график</button>
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <label>Тип графика:</label>
+                    <select id="graph-type" style="padding: 10px; border-radius: 5px; margin-left: 10px;">
+                        <option value="scatter3d">Точечный</option>
+                        <option value="surface">Поверхность</option>
+                        <option value="mesh3d">Сетка</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div style="margin-top: 30px;">
+                <h2>3D График</h2>
+                <div class="graph-container" id="graph"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Инициализация данных
+        let dataPoints = [
+            { x: -2, y: -2, z: 4 },
+            { x: -1, y: -1, z: 1 },
+            { x: 0, y: 0, z: 0 },
+            { x: 1, y: 1, z: 1 },
+            { x: 2, y: 2, z: 4 }
+        ];
+        
+        // Инициализация интерфейса
+        function initUI() {
+            const container = document.getElementById('data-container');
+            container.innerHTML = '';
+            
+            dataPoints.forEach((point, index) => {
+                const row = document.createElement('div');
+                row.className = 'data-row';
+                row.innerHTML = `
+                    <div class="input-group">
+                        <label>X ${index + 1}</label>
+                        <input type="number" class="x-input" value="${point.x}" step="0.1">
+                    </div>
+                    <div class="input-group">
+                        <label>Y ${index + 1}</label>
+                        <input type="number" class="y-input" value="${point.y}" step="0.1">
+                    </div>
+                    <div class="input-group">
+                        <label>Z ${index + 1}</label>
+                        <input type="number" class="z-input" value="${point.z}" step="0.1">
+                    </div>
+                    <button onclick="removeRow(${index})" class="btn-danger">Удалить</button>
+                `;
+                container.appendChild(row);
+            });
+        }
+        
+        // Добавить строку
+        function addRow() {
+            dataPoints.push({ x: 0, y: 0, z: 0 });
+            initUI();
+        }
+        
+        // Удалить строку
+        function removeRow(index) {
+            dataPoints.splice(index, 1);
+            initUI();
+        }
+        
+        // Очистить всё
+        function clearAll() {
+            if (confirm('Удалить все точки?')) {
+                dataPoints = [{ x: 0, y: 0, z: 0 }];
+                initUI();
+            }
+        }
+        
+        // Сгенерировать пример данных
+        function generateSample() {
+            dataPoints = [];
+            for (let i = -3; i <= 3; i += 0.5) {
+                for (let j = -3; j <= 3; j += 0.5) {
+                    const z = Math.sin(i) * Math.cos(j) * 2;
+                    dataPoints.push({ x: i, y: j, z: z });
+                }
+            }
+            initUI();
+        }
+        
+        // Получить данные из формы
+        function getDataFromForm() {
+            const rows = document.querySelectorAll('.data-row');
+            const newData = [];
+            
+            rows.forEach(row => {
+                const x = parseFloat(row.querySelector('.x-input').value) || 0;
+                const y = parseFloat(row.querySelector('.y-input').value) || 0;
+                const z = parseFloat(row.querySelector('.z-input').value) || 0;
+                newData.push({ x, y, z });
+            });
+            
+            return newData;
+        }
+        
+        // Построить график
+        function buildGraph() {
+            dataPoints = getDataFromForm();
+            
+            if (dataPoints.length === 0) {
+                alert('Добавьте хотя бы одну точку!');
+                return;
+            }
+            
+            const graphType = document.getElementById('graph-type').value;
+            
+            let trace;
+            
+            if (graphType === 'surface') {
+                // Для поверхности нужны данные в виде сетки
+                trace = createSurfaceTrace(dataPoints);
+            } else if (graphType === 'mesh3d') {
+                trace = createMeshTrace(dataPoints);
+            } else {
+                // Точечный график по умолчанию
+                trace = createScatterTrace(dataPoints);
+            }
+            
+            const layout = {
+                title: '3D График',
+                scene: {
+                    xaxis: { title: 'Ось X' },
+                    yaxis: { title: 'Ось Y' },
+                    zaxis: { title: 'Ось Z' },
+                    camera: {
+                        eye: { x: 1.5, y: 1.5, z: 1.5 }
+                    }
+                },
+                margin: { l: 0, r: 0, b: 0, t: 50 },
+                paper_bgcolor: 'white',
+                plot_bgcolor: 'white'
+            };
+            
+            Plotly.newPlot('graph', [trace], layout, { responsive: true });
+        }
+        
+        // Создать точечный график
+        function createScatterTrace(points) {
+            const x = points.map(p => p.x);
+            const y = points.map(p => p.y);
+            const z = points.map(p => p.z);
+            
+            return {
+                type: 'scatter3d',
+                mode: 'markers',
+                x: x,
+                y: y,
+                z: z,
+                marker: {
+                    size: 8,
+                    color: z,
+                    colorscale: 'Viridis',
+                    opacity: 0.8,
+                    colorbar: {
+                        title: 'Значение Z',
+                        thickness: 20
+                    }
+                },
+                name: 'Точки данных'
+            };
+        }
+        
+        // Создать график поверхности (если данные образуют сетку)
+        function createSurfaceTrace(points) {
+            // Простая реализация - создаем сетку из точек
+            const x = points.map(p => p.x);
+            const y = points.map(p => p.y);
+            const z = points.map(p => p.z);
+            
+            // Для поверхности нужно преобразовать данные в 2D массивы
+            // В реальном приложении здесь была бы логика проверки и преобразования данных
+            
+            // Простой пример: если точек достаточно много, строим поверхность
+            if (points.length > 20) {
+                // Создаем регулярную сетку для демонстрации
+                const size = Math.floor(Math.sqrt(points.length));
+                const xGrid = [], yGrid = [], zGrid = [];
+                
+                for (let i = 0; i < size; i++) {
+                    xGrid[i] = [];
+                    yGrid[i] = [];
+                    zGrid[i] = [];
+                    for (let j = 0; j < size; j++) {
+                        const idx = i * size + j;
+                        if (idx < points.length) {
+                            xGrid[i][j] = points[idx].x;
+                            yGrid[i][j] = points[idx].y;
+                            zGrid[i][j] = points[idx].z;
+                        }
+                    }
+                }
+                
+                return {
+                    type: 'surface',
+                    x: xGrid,
+                    y: yGrid,
+                    z: zGrid,
+                    colorscale: 'Rainbow',
+                    opacity: 0.8,
+                    contours: {
+                        z: {
+                            show: true,
+                            usecolormap: true
+                        }
+                    }
+                };
+            } else {
+                // Если точек мало, строим точечный график вместо поверхности
+                alert('Для построения поверхности нужно больше точек. Используется точечный график.');
+                return createScatterTrace(points);
+            }
+        }
+        
+        // Создать 3D mesh
+        function createMeshTrace(points) {
+            const x = points.map(p => p.x);
+            const y = points.map(p => p.y);
+            const z = points.map(p => p.z);
+            
+            return {
+                type: 'mesh3d',
+                x: x,
+                y: y,
+                z: z,
+                color: z,
+                colorscale: 'Jet',
+                opacity: 0.7,
+                intensity: z,
+                flatshading: true
+            };
+        }
+        
+        // Инициализация при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            initUI();
+            setTimeout(() => {
+                generateSample();
+                setTimeout(() => buildGraph(), 100);
+            }, 500);
+        });
+    </script>
+</body>
+</html>

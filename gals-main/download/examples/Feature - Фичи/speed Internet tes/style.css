@@ -1,0 +1,221 @@
+body {
+    background-color:#dff0d8;
+}
+.container{
+    position:relative;
+    width:250px;
+    height:150px;
+    border:solid #888888 1px;
+    box-shadow:0px 0px 5px #333;
+    border-bottom:solid white 0px;
+    margin:50px auto;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius: 200px 200px 0px 0px/ 200px 200px 0 0px;
+    overflow:hidden;
+}
+.conic-bg{
+    position:absolute;
+    top:0;
+    width:100%;
+    height:250px;
+    background: conic-gradient( red -20deg, yellow 60deg -120deg, yellow -40deg 100deg, #1272eb 180deg 240deg); 
+    transform:rotate(-90deg);
+}
+
+.inner{
+    position:absolute;
+    width:190px;
+    height:100px;
+    background-color:#dff0d8;
+    /*border:solid black 1px;*/
+    margin:50px auto;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius: 200px 200px 0px 0px/ 200px 200px 0 0px;
+    z-index:1;
+    box-shadow:inset -7px 8px 10px rgb(179, 176, 176),
+               inset 7px 8px 10px rgb(197, 196, 196);
+    
+
+}
+.inner-down{
+    position:absolute;
+    bottom:-8px;
+    width:100%; 
+    height:34px;
+    display:flex;
+    justify-content:space-between;
+    background:#dff0d8;
+    border-bottom:0px solid white;
+   /* background:linear-gradient(90deg, white, #ccc);*/
+    z-index:2;
+   /* box-shadow:inset -10px -10px 10px #777,
+               inset 10px -10px 10px #777; */
+}
+.inner-left{
+    width:30px;
+    height:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:rgb(75, 72, 72);
+    /* background:rgb(240, 79, 16); */
+    background-color: #dff0d8;
+    /* box-shadow:15px -5px 25px #999, */
+    /* 55px 0px 35px #888; */
+}
+.inner-right{
+    width:30px;
+    height:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:rgb(75, 72, 72);
+    /* background:#1272eb; */
+    background-color: #dff0d8;
+    /* box-shadow:-15px -5px 25px #999, */
+    /* -55px 0px 35px #888; */
+}
+.bar{
+    width:3px;
+    height:120px;
+    border-radius:100%;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border:solid white 1px;
+    background:silver;
+    box-shadow:-6px 5px 6px #888,
+    inset -2px 1px 1px #000;
+    position:relative;
+    transform-origin: 0 90%;
+    transform:rotate(-90deg);
+    z-index:2;
+    transition:0.7s ease;
+}
+.bar::before{
+    content:"";
+    width:10px;
+    height:10px;
+    outline:solid black 2px;
+    border-radius:50%;
+    
+
+    position:absolute;
+    bottom:9px;
+    left:-4px;
+    background:#ccc;
+    box-shadow:inset -1px -4px 2px #333,
+               -1px 5px 4px #333;
+}
+input{
+    margin-top:50px;
+}
+
+
+
+.wrapper{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    
+    
+    width:90px;
+}
+
+p{
+    color:#777;
+    
+}
+span{
+    color:red;
+    
+}
+#out {
+    
+    letter-spacing:2px;
+    color:#777;
+    
+}
+
+
+.circle{
+    
+    width:10px;
+    height:10px;
+    background:rgba(255,20,0,1);
+    box-shadow:0px 0px 5px tomato;
+    border-radius:50%;
+    animation:animate 2.8s ease-in-out infinite;
+}
+@keyframes animate{
+    0%{
+        transform:scale(0.8);
+        box-shadow: inset 0px 0px 2px rgba(255,0,0, 1),
+        
+    }
+    100%{
+        transform:scale(1.1);
+        box-shadow:0px 0px 2px tomato;
+    }
+}
+#icon{
+    position:absolute;
+    top:5px;
+    right:5px;
+    color:#777;
+}
+.status{
+    color:red;
+}
+
+#mbs{
+    margin-top:8px;
+    color:#111;
+    font-weight:300;
+    font-size: 1rem;
+    font-family: sans-serif;
+}
+
+.line{
+    position: absolute;
+    background: #333;
+   width: 15px;
+   height: 1px;
+}
+
+.line1{
+    top: 40px;
+    right: 45px;
+    background: #333;
+    transform: rotate(-50deg);
+}
+.line2{
+    top: 125px;
+    right: 5px;
+    transform: rotate(180deg);
+}
+.line3{
+    top: 210px;
+    right: 45px;
+    transform: rotate(50deg);
+}
+
+.inner-text{
+font-size:1.2rem;
+    /*font-family: 'Alex Brush', cursive;*/
+font-family: 'Allura', cursive;
+/*font-family: 'Bad Script', cursive;
+font-family: 'Cookie', cursive;
+font-family: 'Great Vibes', cursive;
+font-family: 'Italianno', cursive;
+font-family: 'Marck Script', cursive;
+font-family: 'Niconne', cursive;
+font-family: 'Nosifer', cursive;
+font-family: 'Rubik Mono One', sans-serif;
+font-family: 'Sacramento', cursive;
+font-family: 'Tangerine', cursive;
+font-family: 'Tapestry', cursive;*/
+}

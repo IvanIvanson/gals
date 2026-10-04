@@ -1,0 +1,42 @@
+body {
+    background:#28c999;
+}
+.container{
+    max-width:300px;
+    height:300px;
+    margin-top:50px;
+    border-radius:2%;
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    flex-direction:column;
+}
+.out{
+    width:25px;
+    height:25px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.alert{
+    position:absolute;
+    top:50px;
+    left:50%;
+    transform:translate(-50%,-50%);
+    display:none;
+    width:340px;
+    
+    z-index:200;
+}
+.btnClose{
+    position:absolute;
+    top:0;
+    right:0;
+}
+.alertText{
+    padding:10px;
+    font-size:0.8rem;
+}
+.btn-basket{
+    padding: 5px 25px 7px 25px;
+}

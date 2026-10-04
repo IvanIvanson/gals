@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Page Title</title>
+    </head>
+    <body>
+    
+   
+    
+    <div class="container">
+  <div class="scene">
+  <svg>
+            <filter id="gooey">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="7"/>
+                <feColorMatrix values="
+                1 0 0 0 -10
+                0 1 0 10 -5
+                0 0 0 0 0
+                0 0 0 20 -10
+                "/>
+            </filter>
+        </svg>
+ 
+   </div>   
+  
+
+            </div>
+      
+        
+        
+        <!--Box -->
+     
+            <div id="square" class="square-animate">
+   
+    <span></span>
+    <span></span>
+    <span></span>
+    
+     <p id="battery-digit"></p>
+    <p id="result"></p>
+    </div>
+    
+    <!--Box -->
+    
+        
+        
+        <script>
+        function sayHi() { alert('Hi, plug in your charger to see the charging effect'); 
+        } 
+        setTimeout(sayHi, 2500);
+        
+            function liquid(){
+            
+            /*------- */
+           
+         let color ="fff";
+            
+            
+            /*------- */
+            
+                let count = 20;
+                let scene = document.querySelector('.scene');
+                let z = 0;
+                while (z < count){
+                    let liquids = document.createElement('z');
+              
+                    let x = Math.floor(Math.random() * window.innerWidth);
+          let duration = Math.random() * 1;
+          let h = Math.random() * 100;
+            liquids.style.left = x + 'px';
+           liquids.style.width = 10 + 'px';
+            liquids.style.background="#"+ color;        
+      liquids.style.height =300 + h + 'px';
+                     liquids.style.animationDuration = h + 's';
+                     scene.appendChild(liquids);
+                     z++;
+                }
+            }
+            liquid();
+            
+          
+       
+                 
+            
+        </script>
+    </body>
+</html>
+

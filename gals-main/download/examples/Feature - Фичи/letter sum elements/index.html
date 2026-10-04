@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+        <title>Page Title</title>
+          
+    </head>
+    <body>
+    
+    <!----translate block--->
+    
+    <div>
+                <input type="checkbox" class="checkbox" id="themeToggle">
+                <label for="themeToggle" class="label">
+                    <span class="ball"></span>
+                </label>
+            </div> 
+            <p></p>
+    
+    <!--end translate block-->
+    
+    
+    <textarea id="inp" name="comment" class="textInput" cols="80" rows="10"></textarea>
+    <button id="btn">Расчитать кол-во букв</button>
+        <div id="outA"></div>
+        <div id="outB"></div>
+        <div id="outC"></div>
+        <div id="outD"></div>
+        <div id="outE"></div>
+        <div id="outF"></div>
+        <div id="outG"></div>
+        <div id="outH"></div>
+        <div id="outI"></div>
+        <div id="outJ"></div>
+        <div id="outK"></div>
+        <div id="outL"></div>
+        <div id="outM"></div>
+        <div id="outN"></div>
+        <div id="outO"></div>
+        <div id="outP"></div>
+        <div id="outR"></div>
+        <div id="outQ"></div>
+        <div id="outS"></div>
+        <div id="outT"></div>
+        <div id="outU"></div>
+        <div id="outV"></div>
+        <div id="outW"></div>
+        <div id="outX"></div>
+        <div id="outY"></div>
+        <div id="outZ"></div>
+        <div id="outSum"></div>
+        
+        <div id="container"></div>
+        <script>
+            /* translate function*/
+            
+            const theme = document.getElementById("themeToggle");
+    let p = document.querySelector("p"); 
+    let span = document.querySelector("span");
+    p.innerHTML="Это приложения для подсчёта количества каждой буквы в тексте и вычисления в процентах от количества всех введённых букв. Введите любой текст в поле.";
+    let ball = document.querySelector(".ball");
+    let btnText = document.querySelector("#btn");
+    let togg =  "dark";
+    theme.addEventListener("change", ()=>{
+        
+         
+       document.body.classList.toggle(togg);
+       if(togg=="dark"){
+          
+           p.innerHTML="Это приложения для подсчёта количества каждой буквы в тексте и вычисления в процентах от количества всех введённых букв. Введите любой текст в поле.";
+           
+           span.innerHTML = "ru";
+           btnText.innerHTML = "Расчитать кол-во букв";
+           togg="dontDark";
+           ball.classList.remove("ballEn");
+           
+       }else{
+            p.innerHTML="These are applications for counting the number of each letter in the text of the calculation as a percentage of the number of all entered letters.  Enter any text in the field.";
+           btnText.innerHTML = "Count the number of letters"
+           span.innerHTML = "en";
+           togg="dark";
+           ball.classList.add("ballEn");
+           
+       }
+    })
+            
+        </script>
+    </body>
+</html>

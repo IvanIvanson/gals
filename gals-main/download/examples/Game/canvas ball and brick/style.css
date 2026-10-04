@@ -1,0 +1,31 @@
+body {
+    background:#f1f1f1;
+}
+.container{
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    width:340px;
+    height:360px;
+    margin:0 auto;
+    
+}
+canvas{
+    position:absolute;
+    border:solid black 2px;
+    background:#444;
+}
+.btn{
+    display:flex;
+    gap:250px;
+    margin-top:450px;
+}
+button{
+    text-transform:uppercase;
+    background:#333;
+    color:white;
+    border:none;
+    box-shadow:0 0 5px #2196f3;
+}

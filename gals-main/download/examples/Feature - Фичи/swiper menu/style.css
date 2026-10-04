@@ -1,0 +1,102 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+--white: #fff;
+--black: #161616;
+--primary: #888;
+}
+body {
+  min-height: 100vh;
+}
+a{
+    z-index:100;
+}
+.nav {
+  background:linear-gradient(#33363D, #5B5D5A);
+  box-shadow: 0 5px 10px rgba(0,0,0, .2);
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px;
+  font-size: 20px;
+  }
+  .nav__logo {
+    text-decoration: none;
+    color: var(--black);
+    font-weight: bold;
+  }
+  
+  .nav__toggler {
+    background-color: transparent;
+    border: none;
+     cursor: pointer;
+    transition: color 100ms ease-out;
+    }
+    svg:hover{
+      fill: var(--primary);
+    
+  }
+
+.swipe-menu {
+  background-color: var(--white);
+  box-shadow: 8px 5px 7px rgba(0,0,0, .8);
+  position: fixed;
+  z-index: 2;
+  bottom: 0;
+  left: 0;
+  top: 0;
+  width: 320px;
+  max-width: 100%;
+  transition: all 190ms ease-out;
+  opacity: 0;
+  left: -320px;
+  visibility: hidden;
+  }
+  .swipe-menu ~ .swipe-menu-overlay {
+    width: 0;
+  }
+ .swipe-menu--show {
+    visibility: visible;
+    opacity: 1;
+    left: 0;
+    z-index:100;
+    }
+    .swipe-menu ~ .swipe-menu-overlay {
+      width: 100%;
+    }
+  
+  .swipe-menu__close {
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    font-size: 24px;
+    opacity: 0.3;
+    cursor: pointer;
+    transition: opacity 100ms ease-out;
+    }
+   .swipe-menu:hover {
+      opacity: .7;
+    }
+  
+.swipe-menu-overlay {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(var(--black), .9);
+    transition: all 290ms ease-out;
+  }
+button{
+    z-index:10;
+    outline:none;
+}

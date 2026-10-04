@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SVG Circle Drag</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f4f4f4;
+    }
+
+    svg {
+      border: 1px solid #ccc;
+    }
+
+    #info {
+      margin-top: 20px;
+      font-family: Arial, sans-serif;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <svg id="circleSvg" width="300" height="300" xmlns="http://www.w3.org/2000/svg">
+      <!-- Основной круг -->
+      <circle cx="150" cy="150" r="100" fill="none" stroke="#000" stroke-width="2" />
+      <!-- Шарик -->
+      <circle id="dot" cx="250" cy="150" r="10" fill="red" />
+    </svg>
+    <div id="info">
+      Угол: <span id="angleDisplay">0</span>°
+    </div>
+  </div>
+
+  <script>
+    const circle = document.querySelector('#circleSvg circle');
+    const dot = document.getElementById('dot');
+    const angleDisplay = document.getElementById('angleDisplay');
+
+    const circleCenterX = 150; // Центральный X круга
+    const circleCenterY = 150; // Центральный Y круга
+    const radius = 100; // Радиус основного круга
+
+    let isDragging = false;
+
+    // Функция для вычисления угла между точками
+    function calculateAngle(x, y) {
+      const dx = x - circleCenterX;
+      const dy = y - circleCenterY;
+      let angle = Math.atan2(dy, dx) * (180 / Math.PI);
+      return angle < 0 ? angle + 360 : angle; // Преобразование в диапазон [0, 360]
+    }
+
+    // Функция для позиционирования шарика на окружности
+    function positionDot(angle) {
+      const radian = (angle * Math.PI) / 180;
+      const newX = circleCenterX + radius * Math.cos(radian);
+      const newY = circleCenterY + radius * Math.sin(radian);
+      dot.setAttribute('cx', newX);
+      dot.setAttribute('cy', newY);
+      
+      angleDisplay.textContent = Math.round(angle); // Обновление отображаемого угла
+      
+    }
+
+    // Обработчик нажатия на шарик
+    dot.addEventListener('touchstart', (event) => {
+      event.preventDefault();
+      isDragging = true;
+    });
+
+    // Обработчик перемещения по экрану
+    document.addEventListener('touchmove', (event) => {
+      if (!isDragging) return;
+
+      const touch = event.touches[0];
+      const x = touch.clientX - circle.getBoundingClientRect().left;
+      const y = touch.clientY - circle.getBoundingClientRect().top+70;
+
+      const angle = calculateAngle(x, y);
+      positionDot(angle);
+    });
+
+    // Обработчик окончания перетаскивания
+    document.addEventListener('touchend', () => {
+      isDragging = false;
+    });
+  </script>
+</body>
+</html>

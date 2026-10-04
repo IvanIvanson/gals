@@ -1,0 +1,199 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:700,300); 
+@import url(http://weloveiconfonts.com/api/?family=fontawesome);
+
+body{
+    animation-name:ScrollEffect_2;
+    animation-duration:2.5s;
+    animation-iteration-count:1;
+    user-select:none;
+    
+}
+
+#main_heading{
+    z-index:1;
+    width:100%;
+    height:40px;
+    top:0px;
+    left:0px;
+    position:fixed;
+    text-align:center;
+    font-size:2em;
+    background-color:#f0f0f0;
+    box-shadow:0px 1px 5px 1px rgba(0,0,0,0.5);
+    padding:15px 0px 2px 0px;
+    color:rgba(0,0,0,0.7);
+    font-weight:300;
+}
+.side_access{
+    display:block;
+    position:absolute ;
+    right:15px;
+    margin-left:10px;
+    float:right;
+    top:15px;
+    z-index:1;
+    margin-bottom:0px;
+    background:transparent;
+}
+
+#op_one,#op_two,#op_three{
+    width:25px;
+    height:2px;
+    margin:3px 0px 0px 0px;
+    background-color:rgba(0,0,0,1);
+    display:block;
+    transition:0.8s;
+}
+#op_two{
+    transition:0.5s!important;
+}
+.additional1{
+    transform:rotate(-45deg) translate(0px,6px);
+}
+.additional2{
+    opacity:0;
+}
+.additional3{
+    transform:rotate(45deg) translate(0px,-8px);
+}
+
+#sideDrawer{
+    height:100%;
+    background-opacity:0;
+    width:90%;
+    position:fixed;
+    float:left;
+    top:0px;
+    z-index:1;
+    margin-left:-80%;
+    transition:0.8s;
+    transition-timing-function:cubic-bezier(0.6,0.2);
+}
+
+.sideOpen{
+box-shadow:3px 0px 10px 0px rgba(0,0,0,0.3);
+background-opacity:1;
+background-color:#fff;
+margin-left:-5% !important;
+}
+
+/*================================================================*/
+
+
+
+ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video { margin: 0; padding: 0; border: 0; font: inherit; font-size: 100%; 
+  vertical-align: baseline;
+ } html { line-height: 1; } ol, ul { list-style: none; } table { border-collapse: collapse; border-spacing: 0; } 
+ caption, th, td { text-align: left; font-weight: normal; vertical-align: middle; } q, blockquote { quotes: none; } q:before, q:after, blockquote:before, blockquote:after { content: ""; content: none; } a img { border: none; } article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary { display: block;
+  } 
+  [class*="fa-"]:before { font-family: 'FontAwesome', sans-serif; 
+  } 
+  
+  body { 
+  
+  font-family: 'Open Sans', sans-serif;
+   font-size: 16px;
+    font-weight: 300;
+     line-height: 1em; 
+     text-align: center; color: #444444;
+      background-color: #d0d0d0;
+      
+   }
+   
+    h1 { font-size: 2.5em; margin: 2em 0 1em; } h2 { margin-bottom: 3em; } em, strong { font-weight: 700; } input { display: none; } header p { margin-bottom: 2em; } section { margin-bottom: 2em; padding: 0; } section:last-of-type { margin-bottom: 0; } p { line-height: 1.5em; } .container { z-index: 1; margin-bottom: 4em; } .pure-tree { text-align: left; display: block; }
+     .pure-tree.main-tree {
+     width: 80%; 
+    
+    display: inline-block;
+     } 
+     .pure-tree:not(.main-tree) { padding-left: 1.2em; } .pure-tree:not(.main-tree) li { overflow: hidden; height: 0; display: block; }
+     .pure-tree label { 
+     display: block; 
+     cursor: pointer;
+    color: #717780; border-bottom: 1px dashed #B0B9C5; padding: 1.125em 1.125em 1.125em 0; 
+ }
+  .pure-tree label:before { 
+  width: 1em; 
+  height: 1em;
+   line-height: 1em;
+    display: inline-block;
+     font-family: 'FontAwesome', sans-serif; 
+     content: "\f114";
+      padding-right: .75em;
+       } 
+       .pure-tree label:hover { color: #434a58; border-bottom-color: #434a58; } .pure-tree .pure-tree_link a { padding: 1.500em 1.125em 0.750em 0; display: block; border-radius: .2em; color: #717780; text-decoration: none; } .pure-tree .pure-tree_link a:hover { color: #434a58; } .pure-tree.nested { padding-left: 1.7em; } .pure-tree [type="checkbox"] { display: none; } .pure-tree [type="checkbox"]:checked + label { color: #434a58; border-bottom-color: #434a58; } .pure-tree [type="checkbox"]:checked ~ ul > li { height: auto; }
+
+/*======================================================================== */
+.accordion {
+ font-family:Arial, Helvetica, sans-serif;
+ margin:50px auto; 
+ font-size:14px;
+  border:1px solid #542437;
+   border-radius:10px;
+    
+   padding:10px;
+    background:#fff;
+    }
+     .accordion ul {
+      list-style:none;
+       margin:0;
+       padding:0; 
+       }
+        .accordion li { 
+       margin:0; 
+       padding:0;
+        }
+         .accordion [type=radio], .accordion [type=checkbox] {
+          display:none; 
+          } 
+          .accordion label {
+           display:block;
+            font-size:16px;
+             line-height:16px;
+              background:#f0f0f0; 
+              border:1px solid #542437;
+               color:#484848; 
+               text-shadow:1px 1px 1px rgba(255,255,255,0.3);
+                cursor:pointer;
+                 text-transform:uppercase; 
+                 } 
+                 .accordion ul li label:hover, .accordion [type=radio]:checked ~ label, .accordion [type=checkbox]:checked ~ label {
+                  background:#f0f0f0; 
+                  color:#898989; 
+                  text-shadow:1px 1px 1px rgba(0,0,0,0.5) } 
+                  .accordion .content {
+                   padding:0 10px;
+                    overflow:hidden;      border:1px solid #fff;
+ -webkit-transition: all .5s ease-out;
+  -moz-transition: all .5s ease-out; 
+  } 
+  .accordion p {
+   color:#333;
+    margin:0 0 10px;
+     }
+                     .accordion h4 { 
+                     color:#c0c0c0; 
+                     padding:0; margin:10px 0;
+                      } .vertical ul li {
+                       overflow:hidden; margin:0 0 1px; 
+                       } .vertical ul li label { 
+            padding:10px;
+                        } 
+           .vertical [type=radio]:checked ~ label, .vertical [type=checkbox]:checked ~ label { 
+            border-bottom:0; 
+            } 
+            .vertical ul li label:hover { 
+               border:1px solid #542437;
+                        } 
+           .vertical ul li .content {
+           height:0px; border-top:0; 
+           transition: all .5s ease-out;
+                          }
+          .vertical [type=checkbox]:checked ~ label ~ .content { 
+                  height:170px;
+                  border:1px solid #542437; 
+                  }
+                  
+                  
+            
+     

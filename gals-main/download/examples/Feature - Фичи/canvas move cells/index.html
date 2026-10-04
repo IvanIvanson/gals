@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Настраиваемая сетка с перемещением</title>
+        <style>
+            canvas {
+                display: block;
+                margin: 20px auto;
+                border: solid #333 1px;
+                image-rendering: -moz-crisp-edges;
+                image-rendering: -webkit-optimize-contrast;
+                image-rendering: pixelated;
+                cursor: grab;
+                touch-action: none;
+            }
+            canvas:active {
+                cursor: grabbing;
+            }
+            .controls {
+                text-align: center;
+                margin: 10px auto;
+                width: 300px;
+            }
+            label {
+                display: inline-block;
+                margin: 0 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="controls">
+            <label>
+                Размер ячейки:
+                <input type="range" id="cellSize" min="10" max="100" value="30" step="5">
+                <span id="sizeValue">30</span>px
+            </label>
+            <label>
+                <input type="checkbox" id="showVertical" checked>
+                Вертикальные линии
+            </label>
+        </div>
+        
+        <canvas id="canvas" width="300" height="300"></canvas>
+        
+        <script>
+            const canvas = document.getElementById("canvas");
+            const ctx = canvas.getContext("2d");
+            const cellSizeInput = document.getElementById("cellSize");
+            const sizeValue = document.getElementById("sizeValue");
+            const showVerticalCheckbox = document.getElementById("showVertical");
+           ctx.translate(0.5, 0.5);
+            
+            // Настройки сетки
+            let cellSize = 30;
+            let showVertical = true;
+            let offsetX = 0;
+            let offsetY = 0;
+            
+            // Перетаскивание
+            let isDragging = false;
+            let lastX = 0;
+            let lastY = 0;
+            
+            // Обработчики событий
+            cellSizeInput.addEventListener("input", updateGrid);
+            showVerticalCheckbox.addEventListener("change", updateGrid);
+            
+            // События для перетаскивания
+            canvas.addEventListener("mousedown", startDrag);
+            canvas.addEventListener("mousemove", drag);
+            canvas.addEventListener("mouseup", endDrag);
+            canvas.addEventListener("mouseleave", endDrag);
+            
+            // Для сенсорных устройств
+            canvas.addEventListener("touchstart", handleTouchStart, {passive: false});
+            canvas.addEventListener("touchmove", handleTouchMove, {passive: false});
+            canvas.addEventListener("touchend", handleTouchEnd);
+            
+            function startDrag(e) {
+                isDragging = true;
+                const clientX = e.clientX ?? e.touches?.[0].clientX;
+                const clientY = e.clientY ?? e.touches?.[0].clientY;
+                
+                if (clientX === undefined || clientY === undefined) return;
+                
+                lastX = clientX;
+                lastY = clientY;
+                
+                if (e.cancelable) e.preventDefault();
+            }
+            
+            function drag(e) {
+                if (!isDragging) return;
+                
+                const clientX = e.clientX ?? e.touches?.[0].clientX;
+                const clientY = e.clientY ?? e.touches?.[0].clientY;
+                
+                if (clientX === undefined || clientY === undefined) return;
+                
+                // Изменено направление перемещения (убрано отрицание)
+                offsetX -= clientX - lastX;
+                offsetY -= clientY - lastY;
+                
+                lastX = clientX;
+                lastY = clientY;
+                
+                updateGrid();
+                if (e.cancelable) e.preventDefault();
+            }
+            
+            function endDrag() {
+                isDragging = false;
+            }
+            
+            // Обработчики для тач-устройств
+            function handleTouchStart(e) {
+                if (e.cancelable) e.preventDefault();
+                startDrag(e);
+            }
+            
+            function handleTouchMove(e) {
+                if (e.cancelable) e.preventDefault();
+                drag(e);
+            }
+            
+            function handleTouchEnd(e) {
+                if (e.cancelable) e.preventDefault();
+                endDrag();
+            }
+            
+            function updateGrid() {
+                cellSize = parseInt(cellSizeInput.value);
+                sizeValue.textContent = cellSize;
+                showVertical = showVerticalCheckbox.checked;
+                drawGrid();
+            }
+            
+            function drawGrid() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.save();
+                ctx.translate(0.5, 0.5); // Для чёткости линий
+                
+                // Горизонтальные линии
+                const startY = Math.floor(offsetY / cellSize) * cellSize - (offsetY % cellSize);
+                for(let y = startY; y < canvas.height; y += cellSize) {
+                    const lineIndex = Math.round((y + offsetY) / cellSize);
+                    ctx.lineWidth = (lineIndex === 5) ? 3 : 1;
+                    ctx.strokeStyle = (lineIndex % 2 === 0) ? "red" : "green";
+                    ctx.beginPath();
+                    ctx.moveTo(0, y);
+                    ctx.lineTo(canvas.width, y);
+                    ctx.stroke();
+                }
+                
+                // Вертикальные линии (если включены)
+                if(showVertical) {
+                    const startX = Math.floor(offsetX / cellSize) * cellSize - (offsetX % cellSize);
+                    for(let x = startX; x < canvas.width; x += cellSize) {
+                        const lineIndex = Math.round((x + offsetX) / cellSize);
+                        ctx.lineWidth = (lineIndex === 5) ? 3 : 1;
+                        ctx.strokeStyle = (lineIndex % 2 === 0) ? "red" : "green";
+                        ctx.beginPath();
+                        ctx.moveTo(x, 0);
+                        ctx.lineTo(x, canvas.height);
+                        ctx.stroke();
+                    }
+                }
+                
+                ctx.restore();
+            }
+            
+            // Инициализация
+            updateGrid();
+        </script>
+    </body>
+</html>

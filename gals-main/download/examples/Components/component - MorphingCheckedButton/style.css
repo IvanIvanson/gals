@@ -1,0 +1,119 @@
+ body{ 
+background-color: #ececec;
+ padding: 0; 
+ margin: 0; 
+ display: flex; 
+  justify-content:center;
+  align-items: center;
+  text-align:center;
+  min-height:100vh;
+ }
+#on{
+    position:absolute;
+    margin-left: -65px;
+    margin-top: 0px;
+    font-weight:100;
+    font-size:25px;
+    
+}
+#off{
+    position:absolute;
+   margin-left:60px;
+   margin-top: 2px;
+    font-weight:100;
+    font-size:25px;
+    
+}
+.button1{
+  display: flex; 
+  justify-content:center;
+  align-items: center;
+  text-align:center;
+  height: 120px; 
+  width: 250px; 
+  position: absolute; 
+  box-shadow: -7px -7px 15px rgba(255,255,255,0.65), 7px 7px 15px rgba(70,70,70,0.12); 
+  border-radius: 5px; 
+  
+  } 
+
+
+.button2{
+  position:absolute;
+  display: flex; 
+  justify-content:center;
+  align-items: center;
+  text-align:center;
+  margin-left:-10px;
+  
+}
+.button1:hover{
+    text-shadow:5px 3px 2px #888888;
+    color:red;
+}
+
+.button2:hover{
+    text-shadow:5px 3px 2px #888888;
+    color:blue;
+}
+ .container{
+  position: relative; 
+  display: flex; 
+  justify-content:center;
+  align-items: center;
+  text-align:center;
+  height: 120px; 
+  width: 250px; 
+  margin-left: 0px;
+  
+  } 
+ 
+ 
+  input[type="checkbox"]{
+  position: absolute; -webkit-appearance:none; 
+ height:80px; 
+ width: 80px; 
+ border: 5px solid #ececec; 
+ box-shadow: -7px -7px 15px rgba(255,255,255,0.65), 7px 7px 15px rgba(70,70,70,0.12), inset -7px -7px 15px rgba(255,255,255,0.65), inset 7px 7px 15px rgba(70,70,70,0.12) ; 
+ outline: none; 
+ cursor: pointer; 
+ left:15px; 
+ border-radius: 10px; 
+ } 
+ input[type="checkbox"]:before, input[type="checkbox"]:after{ 
+  content: "";
+  position: absolute; 
+  margin:auto; 
+  top: 0; 
+  bottom: 0; 
+  transition: 0.3s; 
+  } 
+  
+ input[type="checkbox"]:after{ 
+   height: 15px;
+    width: 15px; 
+    background-color: #7a7a7a; border-radius: 50%; 
+    right: 30px; 
+    top: -190px;
+    } 
+    
+
+input[type="checkbox"]:checked{ 
+    box-shadow: -7px -7px 15px rgba(255,255,255,0.65), 7px 7px 15px rgba(70,70,70,0.12), inset 7px 7px 15px rgba(255,255,255,0.65), inset 7px 7px 15px rgba(70,70,70,0.12) ; 
+    
+    }
+   input[type="checkbox"]:checked:after{
+      background-color: #55f696; 
+    } 
+    
+  
+   div:nth-child(2)
+       input[type="checkbox"]:checked:after{
+      background-color: #55f696; 
+   }
+   
+   div:nth-child(2)
+       input[type="checkbox"]:after{
+      background-color: #f00; 
+      
+   }

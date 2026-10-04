@@ -1,0 +1,94 @@
+body {
+    margin:0;
+    padding:0;
+}
+.container{
+    min-width:300;
+    max-width:500px;
+    border:solid silver 1px;
+    border-radius:10px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    gap:50px;
+    padding:15px;
+    box-shadow:0 4px 8px #ccc;
+    margin:0 auto;
+}
+#out{
+    height:20px;
+}
+#btn{
+    background:#efe;
+    padding:6px 20px;
+    border-radius:5px;
+    border:solid lightgreen 1px;
+    color:green;
+    font-size:1.5em;
+    
+}
+#name{
+    border:solid lightblue 1px;
+    padding:5px 2px;
+    border-radius:5px;
+    background-color:#eff;
+    box-shadow:0 4px 8px rgba(0,100,250,0.4);
+    
+}
+#btn:active{
+    transform:scale(1.2);
+}
+
+ /* Скрываем модальное окно */
+.modal {
+    display: none;
+    
+    position:absolute;
+    z-index: 1;
+    top: 40%; 
+    left: 50%;
+   /* коррекция положения элемента */ 
+    transform: translate(-50%, -50%); 
+    width: 90%;
+    height: 200px;
+ }  
+.window {
+    width: 100%;
+    height: 100vh;
+    overflow: auto;
+    position:relative;
+
+}
+.active{
+    background-color: rgba(0,0,0,0.3);
+    
+}
+/* Контент внутри модального окна */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    max-width: 500px;
+    text-align:center;
+}
+
+/* Крестик закрытия */
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+.disable{
+    z-index:-1;
+}

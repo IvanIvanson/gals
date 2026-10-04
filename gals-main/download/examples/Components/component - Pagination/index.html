@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Page Title</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></link> 
+         <!--Fonts -->
+         <link href="https://fonts.googleapis.com/css?family=Baloo&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">       
+ <link href="https://fonts.googleapis.com/css?family=Bigelow+Rules&display=swap" rel="stylesheet">     
+          
+         
+    <link href="https://fonts.googleapis.com/css?family=Baloo&display=swap" rel="stylesheet">    
+        
+         
+    </head>
+    <body>
+    <ul class="pagination">
+     <li><a href="#" class="prev"> < Prev</a></li>
+        <li class="pageNumber active"><a href="https://fonts.google.com/"> <i class="fa fa-home"> </i></a></li>
+        <li class="pageNumber"><a href="#"><i class="fa fa-users"></i></a></li>
+        <li class="pageNumber"><a href="#"><i class="fa fa-book"></i></a></li>
+        <li class="pageNumber"><a href="#"><i class="fa fa-file-o"></i></a></li>
+        <li class="pageNumber"><a href="#"><i class="fa fa-phone"></i></a>   </li>
+       
+     <li><a  id="home" href="#"; return false; class="next">Next ></a></li>
+     
+    </ul>
+    
+    
+          <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+          <script type="text/javascript">
+   $(document).ready(function(){
+   $('.next').click(function(){
+    $('.pagination').find('.pageNumber.active').next().addClass('active');
+                  $('.pagination').find('.pageNumber.active').prev().removeClass('active');
+              })
+              
+              
+              $('.prev').click(function(){
+    $('.pagination').find('.pageNumber.active').prev().addClass('active');
+                  $('.pagination').find('.pageNumber.active').next().removeClass('active');
+              })
+          })
+          </script>
+          
+           
+          
+    </body>
+</html>

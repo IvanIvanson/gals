@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Page Title</title>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"> 
+        
+    </head>
+    <body>
+    
+     <a href="https://codepen.io/IvanIvan/pen/LYVMxGp"><i class="fab fa-codepen" aria-hidden="true"></i>&nbspCodePen</a>
+     
+    <div class="container">
+         <input type="range" min="0" max="10" list="rangeList1" value="0" onchange="document.getElementById('rangeValue').innerHTML = this.value;"> 
+        <datalist id="rangeList1"> <option value="0" label="0"> <option value="5" label="5"> <option value="10" label="10"> </datalist>
+        <span id="rangeValue">0</span>
+        
+     <form onsubmit="return false" oninput="level.value = flevel.valueAsNumber">
+      <input name="flevel" id="flying" type="range" min="0" max="100" value="0" step="1"> <output for="flying" name="level">0</output> </form>  
+      </div> 
+    </body>
+</html>

@@ -1,0 +1,16 @@
+.box {
+	width: 400px;
+	height: 200px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-left: -200px;
+	margin-top: -100px;
+	background-color: #212121;
+	border-radius: 20px;
+	transition: all 400ms cubic-bezier(.47,1.64,.41,.8);
+
+}
+	.box:hover {
+		transform: scale(1.5);
+	}

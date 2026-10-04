@@ -1,0 +1,115 @@
+body {
+    
+}
+*{
+   margin:0;
+   padding:0;
+   font-family: 'Poppins', sans-serif; 
+}
+.banner{
+    position:absolute;
+    width:100%;
+    height:100vh;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.banner .bg_img{
+   position:absolute; background:url("https://images.pexels.com/photos/2174656/pexels-photo-2174656.jpeg?cs=srgb&dl=coconut-trees-couple-daylight-2174656.jpg&fm=jpg");
+    background-repeat:repeat-x;
+    background-size:cover;
+    top:0;
+    left:0;
+    width:360px;
+    height:100vh;
+    animation:animate 15s linear infinite;
+}
+@keyframes animate{
+    from{
+        background-position:0 0;
+    }
+    to{
+        background-position:100% 0;
+    }
+}
+
+.banner h2{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+     height:100%;
+    background:#fff;
+    font-size:30vw;
+    text-align:center;
+    text-transform:uppercase;
+    color:#000;
+    line-height:100vh;
+    mix-blend-mode:screen;
+}
+@media(min-width:700px){
+  .banner .bg_img{
+    position:absolute;
+    background-repeat:repeat-x;
+    background-size:cover;
+    top:0;
+    left:0;
+    width:750px;
+    height:180vw;
+    animation:animate2 5s linear infinite;
+}
+@keyframes animate2{
+   from{
+        background-position:0 0;
+    }
+    to{
+        background-position:700px 0;
+    }
+}
+}
+@media(min-width:500px){
+  .banner .bg_img{
+    position:absolute;
+    background-repeat:repeat-x;
+    background-size:cover;
+    top:0;
+    left:0;
+    width:600px;
+    height:100vw;
+    animation:animate2 5s linear infinite;
+}
+@keyframes animate2{
+   from{
+        background-position:0 0;
+    }
+    to{
+        background-position:600px 0;
+    }
+}
+}
+
+@media(min-width:1250px){
+  .banner .bg_img{
+    position:absolute;
+    background-repeat:repeat-x;
+    background-size:cover;
+    top:0;
+    left:0;
+    width:1250px;
+    height:150vw;
+    animation:animate2 5s linear infinite;
+}
+@keyframes animate2{
+   from{
+        background-position:0 0;
+    }
+    to{
+        background-position:1250px 0;
+    }
+}
+.bg_img{
+    top:50%;
+}
+}
+

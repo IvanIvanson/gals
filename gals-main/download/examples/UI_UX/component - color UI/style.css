@@ -1,0 +1,13 @@
+body {
+    background:#e8e9ec;
+}
+.box{
+    width:100px;
+    height:100px;
+    background:#9bcfbd;
+    color:#339754;
+    text-transform:uppercase;
+    padding:80px;
+    font-size:34px;
+    font-weight:bold;
+}

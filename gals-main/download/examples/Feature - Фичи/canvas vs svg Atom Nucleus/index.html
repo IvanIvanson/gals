@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Page Title</title>
+    </head>
+    <body>
+    <div class="container">
+    
+        <p class="logo">Logo Atom Nucleus.</p> 
+  <canvas width="600" height="400"></canvas>
+   
+  
+  
+  <!-- Atom -->
+  <svg  xmlns="http://www.w3.org/2000/svg" id="svg" class="svg" width ="350" height = "350" 0 600 600">
+   
+   <path id="motionPath1" fill="none" stroke="deepskyblue" stroke-width=".5" d="M 180, 150 a 80,30 60 1,0 1,0" /> 
+       
+        <path id="motionPath2" fill="none" stroke="deepskyblue" stroke-width=".5" d="M 250, 150 a 80,30 -60 1,0 1,0" />   
+        
+        <path id="motionPath3" fill="none" stroke="deepskyblue" stroke-width=".5" d="M 215, 190 a 80,30 0 1,0 1,0" />   
+        
+        
+        <circle id="circle1"   cx="0" cy="0" r="2" fill="white"/>   
+        <circle id="circle2"   cx="0" cy="0" r="2" fill="white"/>   
+        <circle id="circle3"   cx="0" cy="0" r="2" fill="white"/>   
+        
+        
+        
+        <animateMotion xlink:href="#circle1" dur="1.2s" begin="0s" fill="freeze" repeatCount="indefinite"> <mpath xlink:href="#motionPath1" /> 
+        </animateMotion>
+        
+        <animateMotion xlink:href="#circle2" dur="1.6s" begin="0s" fill="freeze" repeatCount="indefinite"> <mpath xlink:href="#motionPath2" /> 
+        </animateMotion>
+        
+        <animateMotion xlink:href="#circle3" dur="2s" begin="0s" fill="freeze" repeatCount="indefinite"> <mpath xlink:href="#motionPath3" /> 
+        </animateMotion>
+        
+        
+           
+        <circle class="atomNucleus" id="nucleus"   cx="215" cy="220" r="15" fill="deepskyblue"/>     
+           
+           <defs>
+               
+              <linearGradient id="Gradient" x1="0" x2="2" y1="0" y2="2"> 
+              <stop offset="0%" stop-color="red"/> 
+              <stop offset="50%" stop-color="black" stop-opacity="0"/> 
+              
+              </linearGradient> 
+               
+           </defs>
+           
+           
+       </svg>    
+           
+  <!-- -->
+  
+       
+        </div>
+        
+        
+        
+        
+          <script>
+       
+        function draw() {
+        
+          let canvas = document.querySelector("canvas");
+     cx = canvas.getContext("2d");
+          
+          const WIDTH = 300;
+    const HEIGHT = 300;
+    const PADDING = 40;
+    const DPI_WIDTH = WIDTH*4;
+    const DPI_HEIGHT = HEIGHT*4;
+    canvas.style.width = WIDTH + 'px';
+    canvas.style.height = HEIGHT + 'px';
+    canvas.width = DPI_WIDTH;
+    canvas.height = DPI_HEIGHT;
+          
+          
+           cx.beginPath(); 
+           cx.strokeStyle = "orange";
+           cx.lineWidth = 2;
+           
+        /*  for (let y = 0; y < canvas.height; y += 60) { 
+           cx.moveTo(0, y);
+           cx.lineTo(canvas.width, y); 
+          }*/
+           
+          for (let x = 0; x < canvas.width; x += 60) { 
+           cx.moveTo(0, x);
+           cx.lineTo(x, canvas.height); 
+          }
+          
+          
+          /*for (let x = 0; x < canvas.width; x += 60) { 
+           cx.moveTo(x, 0);
+           cx.lineTo(x, canvas.height); 
+          }*/
+          
+          for (let x = 0; x < canvas.height; x += 60) { 
+           cx.moveTo(x, 0);
+           cx.lineTo(canvas.width, x); 
+          }
+          
+           cx.stroke(); 
+           
+           
+           }
+            draw();
+            </script>
+    </body>
+</html>

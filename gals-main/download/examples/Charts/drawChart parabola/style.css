@@ -1,0 +1,57 @@
+body {
+    background:#f8f8f8;
+}
+.container{
+    width:100%;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+}
+.textBlock{
+    text-align:center;
+}
+.text{
+    font-size:14px;
+}
+.inp{
+    width:20px;
+    text-align:center;
+    font-family:cursive;
+    font-size:18px;
+}
+#canvas{
+    border:solid black 1px;
+    margin-top:10px;
+    background:#333;
+}
+.outBlock{
+    display:flex;
+    width:100vw;
+     
+}
+.button{
+    width:30vw;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    
+}
+.btn{
+    font-family:cursive;
+    font-size:18px;
+}
+.result{
+    display:flex;
+    width:70vw;
+    flex-direction:column;
+    
+}
+.out{
+    height:30px;
+    text-align:center;
+    color:red;
+    
+}
+.x2{
+    margin-top:10px;
+}

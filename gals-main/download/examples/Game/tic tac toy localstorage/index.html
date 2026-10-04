@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лазерные крестики-нолики</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --computer-color: #e74c3c;
+            --background-color: #f8f9fa;
+            --cell-size: min(28vw, 120px);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        
+        .score-board {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 15px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .score {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 15px;
+        }
+        
+        .score-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+        
+        .score-label {
+            font-size: 1rem;
+            margin-top: 5px;
+        }
+        
+        .player-score .score-value {
+            color: var(--primary-color);
+        }
+        
+        .computer-score .score-value {
+            color: var(--computer-color);
+        }
+        
+        .vs {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .game-info {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 15px;
+            width: 100%;
+            backdrop-filter: blur(5px);
+        }
+        
+        .difficulty-selector {
+            margin: 15px 0;
+            width: 100%;
+        }
+        
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 8px;
+        }
+        
+        input[type="range"] {
+            flex-grow: 1;
+            height: 8px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            outline: none;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .speed-value {
+            min-width: 80px;
+            font-weight: bold;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 5px 10px;
+            border-radius: 10px;
+        }
+        
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(3, var(--cell-size));
+            grid-template-rows: repeat(3, var(--cell-size));
+            gap: 6px;
+            margin: 10px 0;
+            position: relative;
+        }
+        
+        .cell {
+            width: var(--cell-size);
+            height: var(--cell-size);
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+        }
+        
+        .cell:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .cell.player {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .cell.computer {
+            background-color: var(--computer-color);
+            color: white;
+        }
+        
+        .cell.win-cell {
+            box-shadow: 0 0 15px 5px gold;
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 10px 3px gold; }
+            50% { box-shadow: 0 0 20px 7px gold; }
+            100% { box-shadow: 0 0 10px 3px gold; }
+        }
+        
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        #startBtn {
+            background-color: #2ecc71;
+            color: white;
+        }
+        
+        #resetBtn {
+            background-color: #e74c3c;
+            color: white;
+        }
+        
+        #resetScoreBtn {
+            background-color: #f39c12;
+            color: white;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .status {
+            margin-top: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            min-height: 30px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .instructions {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 15px;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            backdrop-filter: blur(5px);
+        }
+        
+        @media (max-width: 400px) {
+            :root {
+                --cell-size: 26vw;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            button {
+                padding: 10px 20px;
+            }
+            
+            .score-value {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Лазерные крестики-нолики</h1>
+        
+        <div class="score-board">
+            <div class="score player-score">
+                <div class="score-value" id="playerScore">0</div>
+                <div class="score-label">Игрок</div>
+            </div>
+            <div class="vs">VS</div>
+            <div class="score computer-score">
+                <div class="score-value" id="computerScore">0</div>
+                <div class="score-label">Компьютер</div>
+            </div>
+        </div>
+        
+        <div class="game-info">
+            <p>Заполните ряд быстрее компьютера!</p>
+            
+            <div class="difficulty-selector">
+                <p>Скорость компьютера:</p>
+                <div class="slider-container">
+                    <input type="range" id="speedSlider" min="200" max="1000" step="100" value="500">
+                    <span class="speed-value" id="speedValue">500 мс</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="game-board" id="gameBoard">
+            <div class="cell" data-index="0"></div>
+            <div class="cell" data-index="1"></div>
+            <div class="cell" data-index="2"></div>
+            <div class="cell" data-index="3"></div>
+            <div class="cell" data-index="4"></div>
+            <div class="cell" data-index="5"></div>
+            <div class="cell" data-index="6"></div>
+            <div class="cell" data-index="7"></div>
+            <div class="cell" data-index="8"></div>
+        </div>
+        
+        <div class="status" id="status">Нажмите "Старт" чтобы начать!</div>
+        
+        <div class="controls">
+            <button id="startBtn">Старт</button>
+            <button id="resetBtn">Новая игра</button>
+            <button id="resetScoreBtn">Сбросить счёт</button>
+        </div>
+        
+        <div class="instructions">
+            <p>Цель: первым заполнить любую горизонтальную, вертикальную или диагональную линию своим цветом.</p>
+            <p>Вы - синий цвет, компьютер - красный. Клетку нельзя перекрасить после закрашивания.</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Элементы DOM
+            const gameBoard = document.getElementById('gameBoard');
+            const cells = document.querySelectorAll('.cell');
+            const status = document.getElementById('status');
+            const startBtn = document.getElementById('startBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const resetScoreBtn = document.getElementById('resetScoreBtn');
+            const speedSlider = document.getElementById('speedSlider');
+            const speedValue = document.getElementById('speedValue');
+            const playerScoreElement = document.getElementById('playerScore');
+            const computerScoreElement = document.getElementById('computerScore');
+            
+            // Состояние игры
+            let gameState = Array(9).fill(null);
+            let gameActive = false;
+            let computerInterval = null;
+            let computerSpeed = 500; // по умолчанию 500 мс
+            let playerScore = 0;
+            let computerScore = 0;
+            
+            // Загрузка счёта из localStorage
+            function loadScores() {
+                const savedPlayerScore = localStorage.getItem('playerScore');
+                const savedComputerScore = localStorage.getItem('computerScore');
+                
+                if (savedPlayerScore !== null) playerScore = parseInt(savedPlayerScore);
+                if (savedComputerScore !== null) computerScore = parseInt(savedComputerScore);
+                
+                updateScoreDisplay();
+            }
+            
+            // Сохранение счёта в localStorage
+            function saveScores() {
+                localStorage.setItem('playerScore', playerScore);
+                localStorage.setItem('computerScore', computerScore);
+            }
+            
+            // Обновление отображения счёта
+            function updateScoreDisplay() {
+                playerScoreElement.textContent = playerScore;
+                computerScoreElement.textContent = computerScore;
+            }
+            
+            // Обновление отображения скорости компьютера
+            speedSlider.addEventListener('input', () => {
+                computerSpeed = parseInt(speedSlider.value);
+                speedValue.textContent = `${computerSpeed} мс`;
+                
+                if (gameActive) {
+                    // Перезапускаем интервал с новой скоростью
+                    clearInterval(computerInterval);
+                    computerInterval = setInterval(computerMove, computerSpeed);
+                }
+            });
+            
+            // Обработка клика по клетке
+            cells.forEach(cell => {
+                cell.addEventListener('click', () => {
+                    if (!gameActive) return;
+                    
+                    const index = parseInt(cell.getAttribute('data-index'));
+                    
+                    // Проверяем, свободна ли клетка
+                    if (gameState[index] === null) {
+                        // Занимаем клетку игроком
+                        gameState[index] = 'player';
+                        cell.classList.add('player');
+                        cell.textContent = '●';
+                        
+                        // Проверяем победу
+                        if (checkWin('player')) {
+                            endGame('player');
+                            return;
+                        }
+                        
+                        // Проверяем ничью
+                        if (checkDraw()) {
+                            endGame('draw');
+                            return;
+                        }
+                    }
+                });
+            });
+            
+            // Ход компьютера
+            function computerMove() {
+                if (!gameActive) return;
+                
+                // Находим свободные клетки
+                const availableCells = gameState
+                    .map((value, index) => value === null ? index : null)
+                    .filter(index => index !== null);
+                
+                if (availableCells.length === 0) return;
+                
+                // Выбираем случайную свободную клетку
+                const randomIndex = availableCells[Math.floor(Math.random() * availableCells.length)];
+                
+                // Занимаем клетку компьютером
+                gameState[randomIndex] = 'computer';
+                const cell = cells[randomIndex];
+                cell.classList.add('computer');
+                cell.textContent = '●';
+                
+                // Проверяем победу
+                if (checkWin('computer')) {
+                    endGame('computer');
+                    return;
+                }
+                
+                // Проверяем ничью
+                if (checkDraw()) {
+                    endGame('draw');
+                    return;
+                }
+            }
+            
+            // Проверка победы
+            function checkWin(player) {
+                const winPatterns = [
+                    [0, 1, 2], [3, 4, 5], [6, 7, 8], // Горизонтальные
+                    [0, 3, 6], [1, 4, 7], [2, 5, 8], // Вертикальные
+                    [0, 4, 8], [2, 4, 6]             // Диагональные
+                ];
+                
+                for (const pattern of winPatterns) {
+                    const [a, b, c] = pattern;
+                    if (gameState[a] === player && 
+                        gameState[b] === player && 
+                        gameState[c] === player) {
+                        
+                        // Подсвечиваем выигрышную комбинацию
+                        highlightWinCells(pattern);
+                        return true;
+                    }
+                }
+                
+                return false;
+            }
+            
+            // Подсветка выигрышных клеток
+            function highlightWinCells(pattern) {
+                pattern.forEach(index => {
+                    cells[index].classList.add('win-cell');
+                });
+            }
+            
+            // Проверка ничьей
+            function checkDraw() {
+                return !gameState.includes(null) && 
+                      !checkWin('player') && 
+                      !checkWin('computer');
+            }
+            
+            // Завершение игры
+            function endGame(winner) {
+                gameActive = false;
+                clearInterval(computerInterval);
+                
+                if (winner === 'player') {
+                    status.textContent = 'Вы выиграли! 🎉';
+                    status.style.color = 'gold';
+                    playerScore++;
+                } else if (winner === 'computer') {
+                    status.textContent = 'Компьютер выиграл! 🤖';
+                    status.style.color = '#ff6b6b';
+                    computerScore++;
+                } else {
+                    status.textContent = 'Ничья! 😐';
+                    status.style.color = '#feca57';
+                }
+                
+                // Сохраняем счёт и обновляем отображение
+                saveScores();
+                updateScoreDisplay();
+            }
+            
+            // Начало игры
+            startBtn.addEventListener('click', () => {
+                if (gameActive) return;
+                
+                resetGame();
+                gameActive = true;
+                status.textContent = 'Игра началась! Ваш ход.';
+                status.style.color = 'white';
+                
+                computerInterval = setInterval(computerMove, computerSpeed);
+            });
+            
+            // Сброс игры
+            resetBtn.addEventListener('click', resetGame);
+            
+            function resetGame() {
+                gameState = Array(9).fill(null);
+                gameActive = false;
+                clearInterval(computerInterval);
+                
+                cells.forEach(cell => {
+                    cell.classList.remove('player', 'computer', 'win-cell');
+                    cell.textContent = '';
+                });
+                
+                status.textContent = 'Нажмите "Старт" чтобы начать!';
+                status.style.color = 'white';
+            }
+            
+            // Сброс счёта
+            resetScoreBtn.addEventListener('click', () => {
+                playerScore = 0;
+                computerScore = 0;
+                saveScores();
+                updateScoreDisplay();
+                
+                // Показываем подтверждение сброса
+                status.textContent = 'Счёт сброшен!';
+                status.style.color = '#f39c12';
+                
+                setTimeout(() => {
+                    status.textContent = 'Нажмите "Старт" чтобы начать!';
+                    status.style.color = 'white';
+                }, 1500);
+            });
+            
+            // Инициализация при загрузке
+            loadScores();
+        });
+    </script>
+</body>
+</html>

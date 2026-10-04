@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Динамический график с Chart.js</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h2>Таблица данных</h2>
+    <table border="1" id="dataTable">
+        <thead>
+            <tr>
+                <th>Месяц</th>
+                <th>Линейный график 1</th>
+                <th>Линейный график 2</th>
+                <th>Столбчатый график</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Январь</td>
+                <td contenteditable="true">65</td>
+                <td contenteditable="true">28</td>
+                <td contenteditable="true">47</td>
+            </tr>
+            <tr>
+                <td>Февраль</td>
+                <td contenteditable="true">59</td>
+                <td contenteditable="true">48</td>
+                <td contenteditable="true">38</td>
+            </tr>
+            <tr>
+                <td>Март</td>
+                <td contenteditable="true">80</td>
+                <td contenteditable="true">40</td>
+                <td contenteditable="true">29</td>
+            </tr>
+            <tr>
+                <td>Апрель</td>
+                <td contenteditable="true">81</td>
+                <td contenteditable="true">19</td>
+                <td contenteditable="true">20</td>
+            </tr>
+            <tr>
+                <td>Май</td>
+                <td contenteditable="true">56</td>
+                <td contenteditable="true">86</td>
+                <td contenteditable="true">15</td>
+            </tr>
+            <tr>
+                <td>Июнь</td>
+                <td contenteditable="true">55</td>
+                <td contenteditable="true">27</td>
+                <td contenteditable="true">10</td>
+            </tr>
+            <tr>
+                <td>Июль</td>
+                <td contenteditable="true">40</td>
+                <td contenteditable="true">90</td>
+                <td contenteditable="true">5</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>График</h2>
+    <div style="width: 75%;">
+        <canvas width="340" height="300" id="mixedChart"></canvas>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('mixedChart').getContext('2d');
+        let mixedChart;
+
+        // Функция для обновления данных графика
+        function updateChart() {
+            const table = document.getElementById('dataTable');
+            const rows = table.querySelectorAll('tbody tr');
+            const labels = [];
+            const line1Data = [];
+            const line2Data = [];
+            const barData = [];
+
+            rows.forEach(row => {
+                labels.push(row.cells[0].textContent);
+                line1Data.push(parseInt(row.cells[1].textContent));
+                line2Data.push(parseInt(row.cells[2].textContent));
+                barData.push(parseInt(row.cells[3].textContent));
+            });
+
+            if (mixedChart) {
+                mixedChart.destroy(); // Удаляем старый график
+            }
+
+            mixedChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Линейный график 1',
+                        type: 'line',
+                        data: line1Data,
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 2,
+                        fill: false
+                    }, {
+                        label: 'Линейный график 2',
+                        type: 'line',
+                        data: line2Data,
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 2,
+                        fill: false
+                    }, {
+                        label: 'Столбчатый график',
+                        type: 'bar',
+                        data: barData,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Инициализация графика при загрузке страницы
+        updateChart();
+
+        // Обновление графика при изменении данных в таблице
+        const table = document.getElementById('dataTable');
+        table.querySelectorAll('td[contenteditable="true"]').forEach(cell => {
+            cell.addEventListener('input', updateChart);
+        });
+    </script>
+</body>
+</html>

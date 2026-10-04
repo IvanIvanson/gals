@@ -1,0 +1,12 @@
+body {
+    
+}
+.gradient-text{
+    font-family:Arial, sans-serif;
+    font-size:3.0em;
+    font-weight:800;
+    text-align:center; background:linear-gradient(120deg,yellow, rgb(236, 7, 7));
+    -webkit-text-fill-color:transparent;
+    -webkit-background-clip:text;
+    background-clip:text;
+}

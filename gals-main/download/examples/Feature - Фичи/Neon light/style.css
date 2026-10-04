@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Allura&family=Bad+Script&family=Cookie&family=Great+Vibes&family=Italianno&family=Marck+Script&family=Niconne&family=Nosifer&family=Rubik+Mono+One&family=Sacramento&family=Tangerine:wght@400;700;800&family=Tapestry&display=swap');
+
+body{
+    background-color:#222;
+}
+h1{
+    text-align:center;
+    margin:50px auto;
+    font-size:60px;
+    font-weight:800;
+    font-family:'Rubik Mono One', sans-serif;
+    color:transparent;
+    letter-spacing:4px;
+      -webkit-text-stroke: 1px #444;
+        -webkit-text-fill-color:#111;
+        text-shadow:1px -1px 1px #666;
+        transition: 0.2s ease-in-out;
+}
+
+/*h1:hover{
+    text-shadow: 10px 10px 30px #2400ff, 10px 10px 30px #7e2bd9;
+    -webkit-text-stroke: 2px #fc78ff;
+    -webkit-text-fill-color:transparent;
+    
+}*/
+span.number{
+    font-size:80px;
+    font-weight:200;
+}
+
+.container{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    
+}
+.input{
+    display:none;
+}
+.tab{
+    margin-top:30px;
+    font-size:30px;
+    color:white;
+    font-weight:200;
+}
+.tab:hover{
+    font-weight:600;
+}
+
+#tab-1:checked ~ h1 {
+    text-shadow: 10px 10px 30px #2400ff, 10px 10px 30px #7e2bd9;
+    -webkit-text-stroke: 2px #fc78ff;
+    -webkit-text-fill-color:transparent;
+}

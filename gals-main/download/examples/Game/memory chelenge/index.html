@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Challenge</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        .game-section {
+            margin-bottom: 30px;
+        }
+        .sequence-display {
+            font-size: 24px;
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #eee;
+            border-radius: 5px;
+            min-height: 40px;
+        }
+        .input-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        input {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        button:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+        .stats {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .chart-container {
+            margin-top: 30px;
+            position: relative;
+            height: 300px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Memory Challenge</h1>
+        
+        <div class="game-section">
+            <div class="sequence-display" id="sequenceDisplay"></div>
+            
+            <div class="input-section">
+                <input type="text" id="userInput" placeholder="Введите запомненную последовательность">
+                <button id="startBtn">Начать тест</button>
+                <button id="checkBtn" disabled>Проверить</button>
+            </div>
+            
+            <div class="stats">
+                <p>Текущий результат: <span id="currentScore">0</span></p>
+                <p>Лучший результат: <span id="bestScore">0</span></p>
+                <p>Длина последовательности: <span id="sequenceLength">3</span></p>
+            </div>
+        </div>
+        
+        <div class="chart-container">
+            <canvas id="progressChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Элементы DOM
+            const sequenceDisplay = document.getElementById('sequenceDisplay');
+            const userInput = document.getElementById('userInput');
+            const startBtn = document.getElementById('startBtn');
+            const checkBtn = document.getElementById('checkBtn');
+            const currentScoreElem = document.getElementById('currentScore');
+            const bestScoreElem = document.getElementById('bestScore');
+            const sequenceLengthElem = document.getElementById('sequenceLength');
+            
+            // Переменные игры
+            let sequence = [];
+            let score = 0;
+            let bestScore = 0;
+            let sequenceLength = 3;
+            let results = [];
+            
+            // Инициализация Chart.js
+            const ctx = document.getElementById('progressChart').getContext('2d');
+            const progressChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Результаты тестов',
+                        data: [],
+                        borderColor: '#3498db',
+                        tension: 0.1,
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            suggestedMax: 10
+                        }
+                    }
+                }
+            });
+            
+            // Загрузка данных из LocalStorage
+            function loadFromLocalStorage() {
+                const savedResults = localStorage.getItem('memoryTestResults');
+                const savedBestScore = localStorage.getItem('memoryTestBestScore');
+                
+                if (savedResults) {
+                    results = JSON.parse(savedResults);
+                    updateChart();
+                }
+                
+                if (savedBestScore) {
+                    bestScore = parseInt(savedBestScore);
+                    bestScoreElem.textContent = bestScore;
+                }
+            }
+            
+            // Сохранение данных в LocalStorage
+            function saveToLocalStorage() {
+                localStorage.setItem('memoryTestResults', JSON.stringify(results));
+                localStorage.setItem('memoryTestBestScore', bestScore);
+            }
+            
+            // Обновление графика
+            function updateChart() {
+                const labels = results.map(result => {
+                    const date = new Date(result.date);
+                    return date.toLocaleDateString();
+                });
+                
+                const data = results.map(result => result.score);
+                
+                progressChart.data.labels = labels;
+                progressChart.data.datasets[0].data = data;
+                progressChart.update();
+            }
+            
+            // Генерация последовательности
+            function generateSequence(length) {
+                const newSequence = [];
+                for (let i = 0; i < length; i++) {
+                    newSequence.push(Math.floor(Math.random() * 10));
+                }
+                return newSequence;
+            }
+            
+            // Начало раунда
+            function startRound() {
+                sequence = generateSequence(sequenceLength);
+                sequenceDisplay.textContent = sequence.join(' ');
+                userInput.value = '';
+                userInput.disabled = true;
+                startBtn.disabled = true;
+                checkBtn.disabled = true;
+                
+                setTimeout(() => {
+                    sequenceDisplay.textContent = '';
+                    userInput.disabled = false;
+                    checkBtn.disabled = false;
+                    userInput.focus();
+                }, 2000); // Последовательность показывается 2 секунды
+            }
+            
+            // Проверка ввода пользователя
+            function checkAnswer() {
+                const userSequence = userInput.value.replace(/\s/g, '').split('').map(Number);
+                let correct = true;
+                
+                if (userSequence.length !== sequence.length) {
+                    correct = false;
+                } else {
+                    for (let i = 0; i < sequence.length; i++) {
+                        if (userSequence[i] !== sequence[i]) {
+                            correct = false;
+                            break;
+                        }
+                    }
+                }
+                
+                if (correct) {
+                    score++;
+                    currentScoreElem.textContent = score;
+                    
+                    if (score > bestScore) {
+                        bestScore = score;
+                        bestScoreElem.textContent = bestScore;
+                    }
+                    
+                    // Увеличиваем сложность после каждых 3 правильных ответов
+                    if (score % 3 === 0) {
+                        sequenceLength++;
+                        sequenceLengthElem.textContent = sequenceLength;
+                    }
+                    
+                    // Сохраняем результат
+                    const result = {
+                        date: new Date().toISOString(),
+                        score: score,
+                        sequenceLength: sequenceLength
+                    };
+                    
+                    results.push(result);
+                    saveToLocalStorage();
+                    updateChart();
+                    
+                    startRound();
+                } else {
+                    alert(`Игра окончена! Ваш результат: ${score}`);
+                    score = 0;
+                    sequenceLength = 3;
+                    currentScoreElem.textContent = score;
+                    sequenceLengthElem.textContent = sequenceLength;
+                    startBtn.disabled = false;
+                    checkBtn.disabled = true;
+                }
+            }
+            
+            // Обработчики событий
+            startBtn.addEventListener('click', startRound);
+            checkBtn.addEventListener('click', checkAnswer);
+            userInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && !checkBtn.disabled) {
+                    checkAnswer();
+                }
+            });
+            
+            // Инициализация
+            loadFromLocalStorage();
+        });
+    </script>
+</body>
+</html>

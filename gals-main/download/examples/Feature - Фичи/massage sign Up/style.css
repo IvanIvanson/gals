@@ -1,0 +1,114 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+body {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    background:#81f6ff;
+}
+.mail{
+    font-size:70px;
+    
+}
+.btn{
+    position:relative;
+    padding:15px 20px;
+    background:#fee;
+    outline:none;
+    font-size:16px;
+    display:inline-block;
+    text-decoration:none;
+    color:hotpink;
+    cursor:pointer;
+    font-weight:500;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    transition:0.5s;
+    
+}
+.btnUp{
+    border:solid pink .5px;
+    box-shadow:inset 0 0 20px .5px white;
+}
+.btn:hover{
+    letter-spacing:4px;
+}
+#popup{
+    position:fixed;
+    top:-100%;
+    left:50%;
+    transform:translate(-50%, -50%);
+    z-index:1000;
+    background:#fff;
+    width:300px;
+    padding:60px 40px 40px;
+    box-shadow:0 15px 30px rgba(0,0,0, 0.2);
+    transition:0.9s ease-in-out;
+    visibility:hidden;
+}
+#popup.active{
+    visibility:visible;
+    top:50%;
+}
+#popup .content{
+    position:relative;
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+}
+#popup .content .mail{
+   max-width:80px;
+}
+#popup .content h2{
+   font-size:24px;
+   font-weight:500;
+   color:#333;
+   margin:20px 0 10px;
+}
+#popup .content p{
+   text-align:center;
+   font-size:16px;
+   color:#333;
+}
+#popup .content .inputBox{
+   
+    position:relative;
+    width:100%;
+    margin-top:20px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+#popup .content .inputBox input{
+    width:100%;
+    border:1px solid rgba(0,0,0, 0.2);
+    padding:10px;
+    outline:none;
+    font-size:18px;
+}
+#popup .content .inputBox input[type='supmit']{
+    max-width:150px;
+    background:#03a9f4;
+    color:red;
+    border:none;
+}
+.close{
+    position:absolute;
+    
+    top:20px;
+    right:20px;
+    font-size:30px;
+    font-weight:100;
+    cursor:pointer;
+    
+}
+.signUp{
+    text-decoration:none;
+    color:hotpink;
+}

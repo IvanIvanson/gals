@@ -1,0 +1,25 @@
+body {
+    
+}
+
+  table{
+    border-collapse:collapse;
+    width:150px;
+}
+td, tr{
+    border:solid black 1px;
+    text-align:center;
+    padding:5px;
+}
+input{
+    width:20px;
+    margin-bottom:20px;
+}
+
+.create-table{
+    margin:0 auto;
+    max-width:300px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}  

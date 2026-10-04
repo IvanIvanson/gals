@@ -1,0 +1,60 @@
+body {
+    
+}
+#battery{
+    position:relative;
+    
+    width:100px;
+    height:50px;
+    border:solid #555 1px;
+    background-size:25px 100%;
+    border-radius:3px 3px 3px 3px;
+    z-index:222;
+}
+
+.level{
+    position:absolute;
+    width:25px;
+    height:48px;
+    border:solid white 0.5px;
+}
+#battery-digit{
+    position:absolute;
+    margin-left:40px;
+    z-index:222;
+}
+#two{
+    margin-left:50px;
+}
+
+#battery-right{
+    position:absolute;
+    width:7px;
+    height:36px;
+    border:solid #555 1px;
+    border-radius:0 3px 3px 0;
+    border-left-color:white;
+    background:#888;
+    top:6px;
+    left:100px;
+}
+#battery-level{
+    position:absolute;
+    top:1px;
+    width:100px;
+    height:48px;
+    
+    background:linear-gradient(0deg, green 40%, lightgreen);
+    
+}
+.battery-animation{
+    animation:animate 4s linear infinite;
+}
+@keyframes animate{
+    0%{
+        width:0px;
+    }
+     100%{
+        width:100px;
+    }
+}

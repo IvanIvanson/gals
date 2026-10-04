@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Page Title</title>
+        
+    <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+     </script>    
+        
+    </head>
+    <body>
+    <div class="textBlock">
+    <p class="text">При \(a \ne 0\) получается два корня уравнения <br>
+    <input type="text" class="inp" id="a" size="2" placeholder="a">
+    \(*x^2 +\) 
+    <input type="text" class="inp" id="b" size="2" placeholder="b">
+    \(*x + \)
+    <input type="text" class="inp" id="c" size="2" placeholder="c">
+     \(= 0\), для нахождения которых используют формулу $${x}_{1,2} = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$</p> 
+    </div>
+    
+    <div class="outBlock">
+    <div class="button">
+    <button class="btn" id="draw">draw chart</button>
+    
+    </div>
+    <div class="result">
+      <div id="out" class="out x1"></div>
+      <div id="out2" class="out x2"></div>
+           </div>
+        </div>
+    
+    
+    <div class="container">
+        <canvas id="canvas" width="600" height="400"></canvas>
+    </div>
+        
+        
+    </body>
+</html>

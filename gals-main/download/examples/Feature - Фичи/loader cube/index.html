@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <canvas id="myCanvas" width="400" height="400"></canvas>
+</body>
+<script>
+const canvas = document.getElementById('myCanvas');
+const ctx = canvas.getContext('2d');
+
+// Параметры куба
+const cube = {
+    size: 50,
+    vertices: [
+        {x: -1, y: -1, z: -1},
+        {x: 1, y: -1, z: -1},
+        {x: 1, y: 1, z: -1},
+        {x: -1, y: 1, z: -1},
+        {x: -1, y: -1, z: 1},
+        {x: 1, y: -1, z: 1},
+        {x: 1, y: 1, z: 1},
+        {x: -1, y: 1, z: 1}
+    ],
+    edges: [
+        [0,1], [1,2], [2,3], [3,0],
+        [4,5], [5,6], [6,7], [7,4],
+        [0,4], [1,5], [2,6], [3,7]
+    ]
+};
+
+// Углы вращения
+let angleX = 0;
+let angleY = 0;
+let angleZ = 0;
+
+// Проекция 3D в 2D
+function project(point) {
+    const fov = 300;
+    const scale = fov / (fov + point.z);
+    return {
+        x: point.x * scale * cube.size + canvas.width/2,
+        y: point.y * scale * cube.size + canvas.height/2
+    };
+}
+
+// Поворот точки
+function rotate(point) {
+    let x = point.x;
+    let y = point.y;
+    let z = point.z;
+
+    // Вращение вокруг X
+    let y1 = y * Math.cos(angleX) - z * Math.sin(angleX);
+    let z1 = y * Math.sin(angleX) + z * Math.cos(angleX);
+    y = y1;
+    z = z1;
+
+    // Вращение вокруг Y
+    let x1 = x * Math.cos(angleY) + z * Math.sin(angleY);
+    z1 = -x * Math.sin(angleY) + z * Math.cos(angleY);
+    x = x1;
+    z = z1;
+
+    // Вращение вокруг Z
+    x1 = x * Math.cos(angleZ) - y * Math.sin(angleZ);
+    y1 = x * Math.sin(angleZ) + y * Math.cos(angleZ);
+    x = x1;
+    y = y1;
+
+    return {x, y, z};
+}
+
+// Отрисовка
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Обновление углов
+    angleX += 0.02;
+    angleY += 0.03;
+    angleZ += 0.01;
+
+    // Проецируем и рисуем рёбра
+    cube.edges.forEach(edge => {
+        const p1 = project(rotate(cube.vertices[edge[0]]));
+        const p2 = project(rotate(cube.vertices[edge[1]]));
+        
+        ctx.beginPath();
+        ctx.moveTo(p1.x, p1.y);
+        ctx.lineTo(p2.x, p2.y);
+        ctx.stroke();
+    });
+
+    requestAnimationFrame(draw);
+}
+
+draw();
+</script>
+</html>

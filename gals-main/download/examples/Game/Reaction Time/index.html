@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест на скорость реакции</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 900px;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(90deg, #3498db, #2c3e50);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .content {
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+        
+        @media (min-width: 768px) {
+            .content {
+                flex-direction: row;
+            }
+        }
+        
+        .game-section {
+            flex: 1;
+            padding: 15px;
+        }
+        
+        .info-section {
+            flex: 1;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 15px;
+        }
+        
+        .instructions {
+            color: #555;
+            margin-bottom: 25px;
+            line-height: 1.5;
+            text-align: center;
+        }
+        
+        .game-area {
+            position: relative;
+            height: 300px;
+            background: linear-gradient(to bottom, #e6e9f0, #eef1f5);
+            border-radius: 15px;
+            margin-bottom: 25px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .target {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.1s;
+            display: none;
+            z-index: 10;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .target:hover {
+            transform: translate(-50%, -50%) scale(1.05);
+        }
+        
+        .target:active {
+            transform: translate(-50%, -50%) scale(0.95);
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #3498db, #2c3e50);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: block;
+            margin: 0 auto;
+            width: 200px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .btn:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            background-color: white;
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin: 5px;
+            min-width: 100px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .progress {
+            height: 10px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(135deg, #3498db, #2c3e50);
+            border-radius: 5px;
+            width: 0%;
+            transition: width 0.5s;
+        }
+        
+        .waiting {
+            color: #666;
+            font-style: italic;
+            text-align: center;
+        }
+        
+        .info-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .info-card h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .info-card h3 i {
+            margin-right: 10px;
+            color: #3498db;
+        }
+        
+        .reaction-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .reaction-item {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .reaction-value {
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 18px;
+        }
+        
+        .recommendations {
+            margin-top: 20px;
+        }
+        
+        .recommendation {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .recommendation i {
+            font-size: 24px;
+            color: #3498db;
+            margin-right: 15px;
+        }
+        
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .result h3 {
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        .history {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+            justify-content: center;
+        }
+        
+        .history-item {
+            background: #3498db;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 767px) {
+            .stats {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .stat-item {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            
+            .reaction-info {
+                grid-template-columns: 1fr;
+            }
+            
+            .target {
+                width: 70px;
+                height: 70px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-brain"></i> Тест на скорость реакции</h1>
+            <p>Проверьте свою реакцию и сравните с нормой</p>
+        </div>
+        
+        <div class="content">
+            <div class="game-section">
+                <div class="instructions">
+                    <p>Нажимайте на кружок как можно быстрее, когда он появляется. Тест состоит из 10 попыток.</p>
+                </div>
+                
+                <div class="progress">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                
+                <div class="game-area" id="gameArea">
+                    <div class="target" id="target"></div>
+                    <div class="waiting" id="waitingText">Нажмите "Начать", чтобы начать тест</div>
+                </div>
+                
+                <div class="stats">
+                    <div class="stat-item">
+                        <div>Текущее</div>
+                        <div class="stat-value" id="currentTime">-</div>
+                    </div>
+                    <div class="stat-item">
+                        <div>Среднее</div>
+                        <div class="stat-value" id="averageTime">-</div>
+                    </div>
+                    <div class="stat-item">
+                        <div>Попытки</div>
+                        <div class="stat-value" id="attempts">0/10</div>
+                    </div>
+                </div>
+                
+                <button class="btn" id="startButton">Начать</button>
+                
+                <div class="result" id="resultContainer" style="display: none;">
+                    <h3>Результаты теста</h3>
+                    <p>Ваше среднее время реакции: <span id="finalResult"></span> мс</p>
+                    <div class="history" id="historyContainer"></div>
+                </div>
+            </div>
+            
+            <div class="info-section">
+                <div class="info-card">
+                    <h3><i class="fas fa-info-circle"></i> О времени реакции</h3>
+                    <p>Время реакции - это промежуток времени между появлением стимула и началом ответной реакции на него.</p>
+                    
+                    <div class="reaction-info">
+                        <div class="reaction-item">
+                            <div>Обычная реакция</div>
+                            <div class="reaction-value">250-300 мс</div>
+                        </div>
+                        <div class="reaction-item">
+                            <div>Водители</div>
+                            <div class="reaction-value">150-200 мс</div>
+                        </div>
+                        <div class="reaction-item">
+                            <div>Спортсмены</div>
+                            <div class="reaction-value">100-150 мс</div>
+                        </div>
+                        <div class="reaction-item">
+                            <div>Профессиональные геймеры</div>
+                            <div class="reaction-value">80-120 мс</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-tachometer-alt"></i> Ваши показатели</h3>
+                    <div id="userStats">
+                        <p>Пройдите тест, чтобы увидеть ваши показатели</p>
+                    </div>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-lightbulb"></i> Как улучшить реакцию?</h3>
+                    <div class="recommendations">
+                        <div class="recommendation">
+                            <i class="fas fa-coffee"></i>
+                            <div>Умеренное потребление кофеина может временно улучшить реакцию</div>
+                        </div>
+                        <div class="recommendation">
+                            <i class="fas fa-bed"></i>
+                            <div>Хорошо высыпайтесь - недосып замедляет реакцию</div>
+                        </div>
+                        <div class="recommendation">
+                            <i class="fas fa-running"></i>
+                            <div>Регулярные физические упражнения улучшают когнитивные функции</div>
+                        </div>
+                        <div class="recommendation">
+                            <i class="fas fa-gamepad"></i>
+                            <div>Тренируйтесь с помощью специальных упражнений и игр</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const gameArea = document.getElementById('gameArea');
+            const target = document.getElementById('target');
+            const startButton = document.getElementById('startButton');
+            const currentTimeElement = document.getElementById('currentTime');
+            const averageTimeElement = document.getElementById('averageTime');
+            const attemptsElement = document.getElementById('attempts');
+            const resultContainer = document.getElementById('resultContainer');
+            const finalResultElement = document.getElementById('finalResult');
+            const progressBar = document.getElementById('progressBar');
+            const waitingText = document.getElementById('waitingText');
+            const historyContainer = document.getElementById('historyContainer');
+            const userStats = document.getElementById('userStats');
+            
+            let reactionTimes = [];
+            let startTime;
+            let timeoutId;
+            let attempts = 0;
+            let isTesting = false;
+            
+            // Функция для показа цели в центре экрана
+            function showTarget() {
+                waitingText.style.display = 'none';
+                target.style.display = 'block';
+                
+                // Запоминаем время появления цели
+                startTime = new Date().getTime();
+            }
+            
+            // Функция для скрытия цели
+            function hideTarget() {
+                target.style.display = 'none';
+                waitingText.style.display = 'block';
+                waitingText.textContent = 'Приготовьтесь...';
+                
+                // Показываем следующую цель через случайное время (1-3 секунды)
+                const delay = getRandomNumber(1000, 3000);
+                timeoutId = setTimeout(showTarget, delay);
+            }
+            
+            // Функция для обработки клика по цели
+            function targetClick() {
+                if (!isTesting || target.style.display !== 'block') return;
+                
+                const endTime = new Date().getTime();
+                const reactionTime = endTime - startTime;
+                
+                // Добавляем время реакции в массив
+                reactionTimes.push(reactionTime);
+                
+                // Обновляем интерфейс
+                currentTimeElement.textContent = `${reactionTime} мс`;
+                updateStats();
+                
+                // Увеличиваем счетчик попыток
+                attempts++;
+                attemptsElement.textContent = `${attempts}/10`;
+                
+                // Обновляем прогресс-бар
+                progressBar.style.width = `${attempts * 10}%`;
+                
+                // Добавляем в историю
+                const historyItem = document.createElement('div');
+                historyItem.classList.add('history-item');
+                historyItem.textContent = `${reactionTime} мс`;
+                historyContainer.appendChild(historyItem);
+                
+                // Скрываем цель
+                target.style.display = 'none';
+                
+                // Проверяем, завершен ли тест
+                if (attempts >= 10) {
+                    endTest();
+                } else {
+                    // Показываем следующую цель после небольшой паузы
+                    waitingText.style.display = 'block';
+                    waitingText.textContent = 'Приготовьтесь...';
+                    
+                    setTimeout(() => {
+                        hideTarget();
+                    }, 500);
+                }
+            }
+            
+            // Функция для получения случайного числа в диапазоне
+            function getRandomNumber(min, max) {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+            
+            // Функция для обновления статистики
+            function updateStats() {
+                if (reactionTimes.length > 0) {
+                    const sum = reactionTimes.reduce((a, b) => a + b, 0);
+                    const average = Math.round(sum / reactionTimes.length);
+                    averageTimeElement.textContent = `${average} мс`;
+                }
+            }
+            
+            // Функция для обновления информационной панели
+            function updateUserStats() {
+                if (reactionTimes.length > 0) {
+                    const sum = reactionTimes.reduce((a, b) => a + b, 0);
+                    const average = Math.round(sum / reactionTimes.length);
+                    
+                    let reactionLevel = "";
+                    let reactionColor = "";
+                    
+                    if (average < 150) {
+                        reactionLevel = "Отличная реакция!";
+                        reactionColor = "#27ae60";
+                    } else if (average < 200) {
+                        reactionLevel = "Хорошая реакция";
+                        reactionColor = "#2ecc71";
+                    } else if (average < 250) {
+                        reactionLevel = "Средняя реакция";
+                        reactionColor = "#f39c12";
+                    } else if (average < 300) {
+                        reactionLevel = "Реакция ниже среднего";
+                        reactionColor = "#e67e22";
+                    } else {
+                        reactionLevel = "Медленная реакция";
+                        reactionColor = "#e74c3c";
+                    }
+                    
+                    userStats.innerHTML = `
+                        <p>Ваше время реакции: <strong style="color: ${reactionColor}">${average} мс</strong></p>
+                        <p>Уровень: <strong style="color: ${reactionColor}">${reactionLevel}</strong></p>
+                    `;
+                }
+            }
+            
+            // Функция для начала теста
+            function startTest() {
+                isTesting = true;
+                reactionTimes = [];
+                attempts = 0;
+                historyContainer.innerHTML = '';
+                
+                // Обновляем интерфейс
+                startButton.textContent = 'Идет тест...';
+                startButton.disabled = true;
+                currentTimeElement.textContent = '-';
+                averageTimeElement.textContent = '-';
+                attemptsElement.textContent = '0/10';
+                resultContainer.style.display = 'none';
+                progressBar.style.width = '0%';
+                waitingText.style.display = 'block';
+                waitingText.textContent = 'Приготовьтесь...';
+                target.style.display = 'none';
+                
+                // Начинаем тест с задержки
+                const initialDelay = getRandomNumber(1000, 3000);
+                timeoutId = setTimeout(showTarget, initialDelay);
+            }
+            
+            // Функция для завершения теста
+            function endTest() {
+                isTesting = false;
+                
+                // Вычисляем среднее время реакции
+                const sum = reactionTimes.reduce((a, b) => a + b, 0);
+                const average = Math.round(sum / reactionTimes.length);
+                
+                // Показываем результаты
+                finalResultElement.textContent = `${average} мс`;
+                resultContainer.style.display = 'block';
+                
+                // Обновляем интерфейс
+                startButton.textContent = 'Начать заново';
+                startButton.disabled = false;
+                waitingText.textContent = 'Тест завершен';
+                target.style.display = 'none';
+                
+                // Обновляем статистику пользователя
+                updateUserStats();
+            }
+            
+            // Обработчик клика по кнопке начала
+            startButton.addEventListener('click', startTest);
+            
+            // Обработчик клика по цели
+            target.addEventListener('click', targetClick);
+            
+            // Обработчик клика по игровой области (если пользователь кликает раньше времени)
+            gameArea.addEventListener('click', function(e) {
+                if (e.target === gameArea && isTesting && target.style.display !== 'block') {
+                    waitingText.textContent = 'Слишком рано! Ждите появления кружка';
+                    
+                    // Сбрасываем таймер, если он активен
+                    if (timeoutId) {
+                        clearTimeout(timeoutId);
+                    }
+                    
+                    // Перезапускаем ожидание
+                    const delay = getRandomNumber(1000, 3000);
+                    timeoutId = setTimeout(showTarget, delay);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

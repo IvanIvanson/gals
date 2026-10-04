@@ -1,0 +1,77 @@
+*, *::before, *::after { box-sizing: border-box; }
+ html { height: 100%; } /* center stuff */ body, .modal { 
+ display: grid; 
+ align-items: center; 
+ justify-items: center;
+  height: 100%; }
+body { margin: 0; color: #555; background-color: #fff; font: 1.25rem/1.5 'Lato', serif; }
+ /* hide checkbox, but still expose it to screen readers */
+  input { 
+  position: absolute; width: 1px;
+   clip: rect(0 0 0 0); 
+   overflow: hidden; white-space: nowrap;
+    } 
+   .page-content {
+    max-width: 750px; 
+    margin: 0 auto;
+     padding: 20px; 
+     
+    }
+     h1 { margin: 0 0 1rem; font-size: 2rem; } 
+     p { margin: 0 0 1.5rem; }
+   /* the "dismiss" and "show again" buttons are actually labels that toggle the checkbox */ label { 
+  display: block; 
+  
+  padding: 20px; 
+  color: #f0f;
+   
+  text-align: center; 
+  cursor: pointer; 
+  }
+  #sh1{
+      position:absolute;
+      top:0;
+      right:0;
+  }
+   .modal {
+    position: absolute; 
+    top: 0; 
+    right: 0; 
+    bottom: 0;
+     left: 0; 
+     background-color: #0009; 
+     visibility:hidden;
+     
+     } 
+     /* when checkbox is toggled off, dismiss modal */ 
+     #toggle-modal:not(:checked) ~ .modal {
+      animation: dismiss 1s forwards; 
+      } 
+      
+      @keyframes dismiss {
+       to {
+        opacity: 1;
+      
+      
+       /* full fade out, but even an invisible element blocks stuff behind it... */
+       visibility: visible; 
+       }}
+     
+     h1:hover{
+         color:red;
+     }
+     
+     
+       /* ...which is where visibility comes in, to get the modal out of the way */ } } /* also when checkbox is toggled off, hide dismiss button to prevent rapid clicks */
+       
+  #toggle-modal:not(:checked) ~ .modal label { 
+  visibility: hidden; 
+ 
+       }
+        .modal-box {
+         max-width: 600px;
+          margin: 20px 40px;
+           padding: 20px; background-color: #fff; } 
+           /* user smaller font sizes on smaller screens */
+           @media (max-width: 380px) { 
+           body { font-size: 1rem; } h1 { font-size: 1.5rem; } }

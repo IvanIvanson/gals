@@ -1,0 +1,21 @@
+body {
+    
+}
+.container{
+    width:300px;
+    margin:0 auto;
+    
+}
+#translate{
+    border:solid silver;
+    border-radius:5px;
+    float:right;
+    color: #777;
+    background:transparent;
+    font-size:18px;
+    padding:5px;
+}
+#random{
+    display:inline-block;
+    margin-top:20px;
+}

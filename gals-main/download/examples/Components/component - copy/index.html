@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Page Title</title>
+    </head>
+    <body>
+        
+      <p id="content">Lorem ipsum dolor sit amet consectetur adipisicing</p>  
+        <button id="btn">copy</button>
+        
+        <script>
+            function copyToClipboard(text) {
+             navigator.clipboard.writeText(text).then(() => {
+      console.log('Текст скопирован в буфер обмена'); }).catch(err => { console.error('Ошибка при копировании текста: ', err);
+       });
+       }
+    
+    const btn = document.getElementById("btn");
+    let p = document.getElementById("content");
+    let content = p.textContent;
+   
+    btn.addEventListener("click", function(){
+        copyToClipboard(content)
+    })        
+            
+        </script>
+    </body>
+    
+</html>

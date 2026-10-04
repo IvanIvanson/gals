@@ -1,0 +1,41 @@
+body {
+    
+}
+.container{
+    
+    margin:0 auto;
+}
+.awesome-block {
+box-sizing: border-box;
+width: 200px;
+height: 200px;
+border: 1px solid;
+position: relative;
+margin:0 auto;
+}
+
+.awesome-block::before {
+content: "";
+width: 30px;
+height: 30px;
+background-color: lightblue;
+}
+.awesome-block::before {
+/* Оставшиеся стили */
+
+position: absolute;
+top: 50%;
+left: 50%;
+
+animation: rotating 1500ms alternate infinite both;
+}
+
+@keyframes rotating {
+0%, 30% {
+transform: translate(-50%, -50%) rotate(0);
+}
+	
+70%, 100% {
+transform: translate(-50%, -50%) rotate(360deg);
+}	
+}

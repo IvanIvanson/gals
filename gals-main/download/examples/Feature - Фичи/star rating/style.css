@@ -1,0 +1,26 @@
+body {
+    
+}
+.star{
+    font-size:30px;
+}
+.rated{
+    color:yellow;
+    
+}
+.bar{
+    margin:50px auto;
+    width:300px;
+    height:300px;
+    border-radius:25px;
+    background:silver;
+    overflow-x:hidden;
+    
+    clip-path:polygon(50% 0%,61% 35%,98% 35%,68%  57%,79% 91%,50% 70%,21% 91%,32% 57%, 3% 35%,39% 35%);
+}
+.bar-inner{
+    width:0px;
+    height:100%;
+    transition:0.3s;
+    background:yellow;
+}

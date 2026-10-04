@@ -1,0 +1,96 @@
+:root {
+    --ambrosia: #FCDBBA;
+    --apricot: #FF8652;                        
+    --aubergine: #6A2352;                 
+    --auburn: #A12F2F;                        
+    --banana: #FEE694;                          
+    --beetroot: #7F0421;                      
+    --berry: #461234;                           
+    --blue-tack: #82BFE0;                   
+    --blue-gray: #91A2C2;                  
+    --blush: #D67B71;                          
+    --bronze:  #C27940;                         
+    --bud:  #94C15C;                              
+    --burnt-orange:  #FF5F00;
+    --butter:  #F2C94C;                          
+    --camo:  #AAA843;                              
+    --cappuccino: #C9B092;                  
+    --carmine: #9A133E;                      
+    --cerise:  #FF0F63;                          
+    --champagne: #FCEBD5;                    
+    --charcoal: #4F4450;
+    --chestnut: #81291F;
+    --chocolate: #8F5D38;                   
+    --clay: #7D6050;                           
+  --cloud: #F2EFE3;                     
+  --coffee:  #624739;
+    --conker: #6F3131;                        
+    --coral: #EB4444;                            
+    --dove:  #C9C5CB;                             
+    --dusty-purple: #7D6391;          
+    --dusty-pink: #E4ADAD;               
+    --emerald: #55B95F;                        
+}
+
+body {
+    background-color:var(--cloud);
+}
+#btn{
+    margin-top:20px;
+}
+.textInput{
+    width:300px;
+    height:100px;
+    margin:0 auto;
+    display:block;
+}
+
+/*translate block*/
+
+.checkbox{
+    opacity:0;
+    top:5px;
+    right:5px;
+    position:absolute;
+}
+.label{
+    background-color:var(--blue-gray);
+    border-radius:50px;
+    cursor:pointer;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:3px;
+    position:relative;
+    hight:18px;
+    width:58px;
+    transform:scale(1.15);
+}
+.ball{
+    
+    border-radius:50%;
+    color:white; 
+    line-height:4px; background-image:url(https://upload.wikimedia.org/wikipedia/commons/f/f3/Flag_of_Russia.svg);
+    background-size:contain;
+    background-repeat:no-repeat;
+    background-position:center bottom;
+    top:3px;
+    left:3px;
+    width:20px;
+    height:20px;
+    transform:translateX(0px);
+    transition:transform 0.2s linear;
+}
+.checkbox:checked + .label .ball{
+    transform:translateX(38px);
+}
+span{
+    text-align:center;
+}
+.ballEn{
+   color:white; 
+   line-height:5px; background-image:url(https://upload.wikimedia.org/wikipedia/commons/a/ae/Flag_of_the_United_Kingdom.svg); 
+    background-size:contain;
+    background-repeat:no-repeat;
+    background-position:center bottom;
+}

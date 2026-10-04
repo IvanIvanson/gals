@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Page Title</title>
+    </head>
+    <body>
+        <div class="screen">
+        
+     <!--modal -->
+     
+     <input type="checkbox" id="toggle-modal" checked> 
+     
+        <div class="page-content">
+         <label class="labelModal" id="sh1" for="toggle-modal">Show rules</label>
+                          
+          </div>
+                   
+        <div class="modal"> 
+        <div class="modal-box"> 
+        <h2>Rules of the Game</h2>
+         <p class="note">
+         Press start and select time, press laps as fast as possible!
+         </p>
+         <label class="labelModal" for="toggle-modal">Dismiss Rules</label> 
+         </div>
+          </div>
+     
+     <!--end modal-->   
+        
+        
+            <h1>Aim Training</h1>
+            <a href="#" class="start" id="start">Start game</a>
+        </div>
+        <div class="screen">
+            <h1>Choose the time</h1>
+            <ul class="time-list" id="time-list">
+            
+                <li>
+                    <button class="time-btn" data-time="10">10 sec</button>
+                </li>
+                
+                 <li>
+                    <button class="time-btn" data-time="20">20 sec</button>
+                </li>
+                
+                 <li>
+                    <button class="time-btn" data-time="30">30 sec</button>
+                </li>
+                
+             <li>
+                    <button class="time-btn" data-time="40">40 sec</button>
+                </li>    
+                
+            </ul>
+            </div>
+        
+        <div class="screen">
+            <h3>Time left <span id="time">00:00</span></h3>
+            <div class="board" id="board"></div>
+        </div>
+        <script src="app.js"></script>
+        
+                
+    </body>
+</html>

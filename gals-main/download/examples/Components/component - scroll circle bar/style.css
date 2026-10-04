@@ -1,0 +1,29 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+body {
+    background-color:#333;
+}
+.content{
+    position:relative;
+    padding:30px;
+    
+}
+.content h2{
+    color:#fff;
+    font-size:2em;
+}
+.content p{
+    color:#555;
+    font-size:1.25em;
+}
+#circleindicator{
+    position:fixed;
+    top:0;
+    right:0;
+    width:100px;
+    height:100px;
+    pointer-events:none;
+}

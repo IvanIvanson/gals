@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Координатная сетка и парабола</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        canvas {
+            border: 1px solid #000;
+            margin: 20px 0;
+            image-rendering: -moz-crisp-edges;         
+     /* Firefox */
+            image-rendering: -webkit-optimize-contrast; 
+                /* Safari */
+            image-rendering: pixelated;  
+        }
+        .input-group {
+            margin: 10px 0;
+        }
+        button {
+            padding: 8px 16px;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+        .result {
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        input{
+            width:20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Координатная сетка и парабола</h1>
+        
+        <canvas id="gridCanvas" width="300" height="300"></canvas>
+        
+        <h2>Расстояние между точками</h2>
+        <div class="input-group">
+            <label>Точка A (x, y): </label>
+            <input type="number" id="pointAx" placeholder="x">
+            <input type="number" id="pointAy" placeholder="y">
+        </div>
+        <div class="input-group">
+            <label>Точка B (x, y): </label>
+            <input type="number" id="pointBx" placeholder="x">
+            <input type="number" id="pointBy" placeholder="y">
+        </div>
+        <button id="calculateDistance">Рассчитать расстояние</button>
+        <div id="distanceResult" class="result"></div>
+        
+        <h2>Построение параболы</h2>
+        <div class="input-group">
+            <label>y = </label>
+            <input type="number" id="a" placeholder="a" size="2">x² + 
+            <input type="number" id="b" placeholder="b" size="2">x + 
+            <input type="number" id="c" placeholder="c" size="2">
+        </div>
+        <button id="drawParabola">Построить параболу</button>
+        <div id="rootsResult" class="result"></div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gridCanvas');
+        const ctx = canvas.getContext('2d');
+        const scale = 20; // Масштаб
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        
+        // Инициализация координатной сетки
+        function drawGrid() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Оси координат
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 1;
+            ctx.translate(0.5, 0.5);
+            // Ось X
+            ctx.beginPath();
+            ctx.moveTo(0, centerY);
+            ctx.lineTo(canvas.width, centerY);
+            ctx.stroke();
+            
+            // Ось Y
+            ctx.beginPath();
+            ctx.moveTo(centerX, 0);
+            ctx.lineTo(centerX, canvas.height);
+            ctx.stroke();
+            
+            // Стрелки
+            // Стрелка оси X
+            ctx.beginPath();
+            ctx.moveTo(canvas.width - 10, centerY - 5);
+            ctx.lineTo(canvas.width, centerY);
+            ctx.lineTo(canvas.width - 10, centerY + 5);
+            ctx.stroke();
+            
+            // Стрелка оси Y
+            ctx.beginPath();
+            ctx.moveTo(centerX - 5, 10);
+            ctx.lineTo(centerX, 0);
+            ctx.lineTo(centerX + 5, 10);
+            ctx.stroke();
+            
+            // Подписи осей
+            ctx.font = '14px Arial';
+            ctx.fillText('X', canvas.width - 15, centerY - 10);
+            ctx.fillText('Y', centerX + 10, 15);
+            
+            // Деления и подписи
+            ctx.strokeStyle = '#ccc';
+            ctx.lineWidth = 1;
+            ctx.font = '10px Arial';
+            
+            // Деления по X
+            for (let x = 0; x < canvas.width; x += scale) {
+                ctx.beginPath();
+                ctx.moveTo(x, centerY - 5);
+                ctx.lineTo(x, centerY + 5);
+                ctx.stroke();
+                
+                if (x !== centerX) {
+                    const value = (x - centerX) / scale;
+                    ctx.fillText(value.toString(), x - 5, centerY + 20);
+                }
+            }
+            
+            // Деления по Y
+            for (let y = 0; y < canvas.height; y += scale) {
+                ctx.beginPath();
+                ctx.moveTo(centerX - 5, y);
+                ctx.lineTo(centerX + 5, y);
+                ctx.stroke();
+                
+                if (y !== centerY) {
+                    const value = (centerY - y) / scale;
+                    ctx.fillText(value.toString(), centerX + 10, y + 5);
+                }
+            }
+        }
+        
+        // Рисование точки
+        function drawPoint(x, y, color = 'red', size = 5) {
+            const canvasX = centerX + x * scale;
+            const canvasY = centerY - y * scale;
+            
+            ctx.fillStyle = color;
+            ctx.beginPath();
+            ctx.arc(canvasX, canvasY, size, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Подпись точки
+            ctx.fillStyle = 'black';
+            ctx.font = '12px Arial';
+            ctx.fillText(`(${x}, ${y})`, canvasX + 10, canvasY - 10);
+        }
+        
+        // Рисование линии между точками
+        function drawLine(x1, y1, x2, y2, color = 'blue') {
+            const canvasX1 = centerX + x1 * scale;
+            const canvasY1 = centerY - y1 * scale;
+            const canvasX2 = centerX + x2 * scale;
+            const canvasY2 = centerY - y2 * scale;
+            
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(canvasX1, canvasY1);
+            ctx.lineTo(canvasX2, canvasY2);
+            ctx.stroke();
+        }
+        
+        // Расчет расстояния между точками
+        function calculateDistance(x1, y1, x2, y2) {
+            return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)).toFixed(2);
+        }
+        
+        // Построение параболы
+        function drawParabola(a, b, c) {
+            // Очищаем только область графика, оставляя сетку и точки
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawGrid();
+            
+            // Рисуем точки и линии, если они есть
+            if (window.pointA && window.pointB) {
+                drawPoint(window.pointA.x, window.pointA.y);
+                drawPoint(window.pointB.x, window.pointB.y);
+                drawLine(window.pointA.x, window.pointA.y, window.pointB.x, window.pointB.y);
+            }
+            
+            // Анимация параболы
+            let startX = -canvas.width / scale;
+            let endX = canvas.width / scale;
+            let step = 0.1;
+            let currentX = startX;
+            
+            function animate() {
+                if (currentX > endX) {
+                    calculateRoots(a, b, c);
+                    return;
+                }
+                
+                // Рисуем небольшую часть параболы
+                ctx.strokeStyle = 'red';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                
+                // Начинаем с предыдущей точки
+                let prevX = currentX - step;
+                let prevY = a * Math.pow(prevX, 2) + b * prevX + c;
+                
+                // Переводим в координаты canvas
+                let prevCanvasX = centerX + prevX * scale;
+                let prevCanvasY = centerY - prevY * scale;
+                
+                ctx.moveTo(prevCanvasX, prevCanvasY);
+                
+                // Текущая точка
+                let y = a * Math.pow(currentX, 2) + b * currentX + c;
+                let canvasX = centerX + currentX * scale;
+                let canvasY = centerY - y * scale;
+                
+                ctx.lineTo(canvasX, canvasY);
+                ctx.stroke();
+                
+                currentX += step;
+                requestAnimationFrame(animate);
+            }
+            
+            animate();
+        }
+        
+        // Вычисление корней квадратного уравнения
+        function calculateRoots(a, b, c) {
+            const discriminant = b * b - 4 * a * c;
+            const rootsResult = document.getElementById('rootsResult');
+            
+            if (discriminant > 0) {
+                const x1 = (-b + Math.sqrt(discriminant)) / (2 * a);
+                const x2 = (-b - Math.sqrt(discriminant)) / (2 * a);
+                rootsResult.textContent = `Корни уравнения: x₁ = ${x1.toFixed(2)}, x₂ = ${x2.toFixed(2)}`;
+                
+                // Отмечаем корни на графике
+                drawPoint(x1, 0, 'green');
+                drawPoint(x2, 0, 'green');
+            } else if (discriminant === 0) {
+                const x = -b / (2 * a);
+                rootsResult.textContent = `Уравнение имеет один корень: x = ${x.toFixed(2)}`;
+                
+                // Отмечаем корень на графике
+                drawPoint(x, 0, 'green');
+            } else {
+                rootsResult.textContent = 'Нет действительных корней';
+            }
+        }
+        
+        // Инициализация
+        drawGrid();
+        
+        // Обработчики событий
+        document.getElementById('calculateDistance').addEventListener('click', function() {
+            const pointAx = parseFloat(document.getElementById('pointAx').value) || 0;
+            const pointAy = parseFloat(document.getElementById('pointAy').value) || 0;
+            const pointBx = parseFloat(document.getElementById('pointBx').value) || 0;
+            const pointBy = parseFloat(document.getElementById('pointBy').value) || 0;
+            
+            // Сохраняем точки для перерисовки
+            window.pointA = { x: pointAx, y: pointAy };
+            window.pointB = { x: pointBx, y: pointBy };
+            
+            // Перерисовываем сетку
+            drawGrid();
+            
+            // Рисуем точки и линию
+            drawPoint(pointAx, pointAy);
+            drawPoint(pointBx, pointBy);
+            drawLine(pointAx, pointAy, pointBx, pointBy);
+            
+            // Вычисляем и выводим расстояние
+            const distance = calculateDistance(pointAx, pointAy, pointBx, pointBy);
+            document.getElementById('distanceResult').textContent = `Расстояние между точками: ${distance}`;
+        });
+        
+        document.getElementById('drawParabola').addEventListener('click', function() {
+            const a = parseFloat(document.getElementById('a').value) || 0;
+            const b = parseFloat(document.getElementById('b').value) || 0;
+            const c = parseFloat(document.getElementById('c').value) || 0;
+            
+            drawParabola(a, b, c);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+body {
+    
+}
+canvas{
+    border:solid black 1px;
+    background:#333;
+}
+.container{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+}
+.svg{
+    position:absolute;
+   
+}
+.logo{
+    
+}
+#nucleus {
+ fill: url(#Gradient);
+}

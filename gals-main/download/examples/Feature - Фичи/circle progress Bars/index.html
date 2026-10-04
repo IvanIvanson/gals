@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Page Title</title>
+    </head>
+    <body>
+        <h1 class="title">Circle progress Bars</h1>
+        <div class="tabContainer">
+        
+       
+        
+        
+            <div class="buttonContainer">
+                <button onclick="showPanel(0, '#c1edf7');">CVG</button>
+                 <button id="btn2" onclick="showPanel(1, '#444');">Canvas</button>
+<button onclick="showPanel(2, '#2196f3');">Div css</button>    
+               <button onclick="showPanel(3, '#ff5722');">Div js</button>
+            </div>
+            
+       <div class="tabPanel">
+   <!------------svg----------------->    
+   <div class="panel1">
+           <div class="skill">
+               <div class="outer">
+                   <div class="inner">
+                       <div id="numb" class="numb">
+                           0%
+                       </div>
+                   </div>
+                   <input type="range" id="rng_1" min="-472" max="0" value="0">
+                   
+               </div>
+           <svg xmlns="http://www.w3.org/2000/svg"  version="1.1" width="160px" height="160px">
+           <defs>
+               <linearGradient id="GradientColor">
+                 <stop offset="0%"  stop-color="deepskyblue"/>
+                 <stop offset="100%"  stop-color="skyblue"/>
+               </linearGradient>
+           </defs>
+      <circle   cx="80"  cy="80" r="70" stroke-linecup="round"/>
+           
+           </svg>
+              </div>                             
+           </div>
+                    
+           
+    <!----------------------------->      
+           
+       </div>    
+       <div class="tabPanel" id="panel2">
+       
+    <!-------canvas------------> 
+        <canvas id="canvas"></canvas>
+        <input type="range" id="rng" min="0" max="360" step="5" value="0"> 
+       
+       </div>
+       
+   <!---------------div css-------------->
+          
+       <div class="tabPanel">
+       
+       <div class="wrapper">
+            <div class="timer">
+            <div class="timer__line"></div>
+            <div class="timer__body">
+                <div class="timer__counter">
+                    <span>10%</span>
+                    <span>20%</span>
+                    <span>30%</span>
+                    <span>40%</span>
+                    <span>50%</span>
+                    <span>60%</span>
+                    <span>70%</span>
+                    <span>80%</span>
+                    <span>90%</span>
+                    <span>100%</span>
+                </div>
+            </div>
+            </div>
+        </div>
+        
+             
+       
+       </div>    
+   <!---div and js --------->       
+      <div class="tabPanel">
+    <div class="tabCircular">
+      <div class="circular"> 
+        <div class="inner"></div>
+         <div class="number">100%</div> 
+         <div class="circle"> 
+         <div class="bar left"> 
+         <div class="progress"></div> 
+         </div> <div class="bar right"> 
+         <div class="progress"></div> 
+         </div> 
+         </div>
+          </div>
+          
+      </div>
+      
+      
+      
+      
+      </div>        
+        </div>
+        
+        
+      <script>
+          
+        var tabButtons = document.querySelectorAll(".tabContainer .buttonContainer button");
+    var tabPanel = document.querySelectorAll(".tabContainer .tabPanel");
+    
+    function showPanel(panelIndex, colorCode){
+        tabButtons.forEach(function(node){
+            node.style.backgroundColor = "";
+            node.style.color = "";
+             
+        });
+        
+        tabButtons[panelIndex].style.backgroundColor = colorCode;
+        tabButtons[panelIndex].style.color = "white";
+        
+        tabPanel.forEach(function(node){
+            node.style.display = "none";
+            
+                       
+        });
+        
+     tabPanel[panelIndex].style.display="block";
+tabPanel[panelIndex].style.backgroundColor=colorCode;     
+  
+    }
+    //-------------------------
+ 
+
+      </script>  
+        
+    </body>
+</html>

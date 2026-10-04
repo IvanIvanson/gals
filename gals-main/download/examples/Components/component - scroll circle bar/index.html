@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Page Title</title>
+    </head>
+    <body>
+        <div class="content">
+            <h2>Scroll dawn</h2>
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit Flow SwiftKey display block input-box-sizing body gguye Flow span class Ball Flow span style SwiftKey Flow Flow SwiftKey display SwiftKey Flow Flow Flow SwiftKey display block input box-sizing body margin zip SwiftKey Flow Flow
+     Lorem ipsum dolor sit amet consectetur adipisicing elit Flow SwiftKey display block input-box-sizing body gguye Flow span class Ball Flow span style SwiftKey Flow Flow SwiftKey display SwiftKey Flow Flow Flow SwiftKey display block input box-sizing body margin zip SwiftKey Flow Flow
+        Lorem ipsum dolor sit amet consectetur adipisicing elit Flow SwiftKey display block input-box-sizing body gguye Flow span class Ball Flow span style SwiftKey Flow Flow SwiftKey display SwiftKey Flow Flow Flow SwiftKey display block input box-sizing body margin zip SwiftKey Flow Flow        
+            </p>
+   <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit Flow SwiftKey display block input-box-sizing body gguye Flow span class Ball Flow span style SwiftKey Flow Flow SwiftKey display SwiftKey Flow Flow Flow SwiftKey display block input box-sizing body margin zip SwiftKey Flow Flow
+     Lorem ipsum dolor sit amet consectetur adipisicing elit Flow SwiftKey display block input-box-sizing body gguye Flow span class Ball Flow span style SwiftKey Flow Flow SwiftKey display SwiftKey Flow Flow Flow SwiftKey display block input box-sizing body margin zip SwiftKey Flow Flow
+        Lorem ipsum dolor sit amet consectetur adipisicing elit Flow SwiftKey display block input-box-sizing body gguye Flow span class Ball Flow span style SwiftKey Flow Flow SwiftKey display SwiftKey Flow Flow Flow SwiftKey display block input box-sizing body margin zip SwiftKey Flow Flow        
+            </p>         
+        </div>
+        <svg id="circleindicator" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="25" stroke="#3498db" stroke-width="4" fill="none"></circle>
+            <text id="scrollPercentText" x="50" y="50" text-anchor="middle" dominant-baseline="middle" fill="#fff" font-size="16">0%</text>
+        </svg>
+        
+ <script>
+     let circleIndicator = document.getElementById("circleindicator");
+     let circle = circleIndicator.querySelector("circle");
+     let textElement = document.getElementById("scrollPercentText");
+     
+     let radius = circle.getAttribute("r");
+     let circumference = 2*Math.PI*radius;
+     circle.style.strokeDasharray = circumference;
+     
+     function setProgress(percent){
+         let offset = circumference *(1-percent/100);
+       circle.style.strokeDashoffset = offset;
+      textElement.textContent = Math.round(percent)+'%';
+         
+     }
+  
+window.addEventListener("scroll", ()=>{
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight- document.documentElement.clientHeight;
+    const scrollPercent = (scrollTop/ scrollHeight)*100;
+    setProgress(scrollPercent);
+})  
+     window.addEventListener("mousemove", (e)=>{
+      circleIndicator.style.left = e.clientX + 'px';  
+      circleIndicator.style.top = e.clientY + 'px';  
+      
+     });
+     setProgress(0);
+ </script>       
+        
+    </body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Настраиваемая сетка</title>
+        <style>
+            canvas {
+                display: block;
+                margin: 20px auto;
+                border: solid #333 1px;
+                image-rendering: -moz-crisp-edges;
+                image-rendering: -webkit-optimize-contrast;
+                image-rendering: pixelated;
+            }
+            .controls {
+                text-align: center;
+                margin: 10px auto;
+                width: 300px;
+            }
+            label {
+                display: inline-block;
+                margin: 0 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="controls">
+            <label>
+                Размер ячейки:
+                <input type="range" id="cellSize" min="10" max="100" value="30" step="5">
+                <span id="sizeValue">30</span>px
+            </label>
+            <label>
+                <input type="checkbox" id="showVertical" checked>
+                Вертикальные линии
+            </label>
+        </div>
+        
+        <canvas id="canvas" width="300" height="300"></canvas>
+        
+        <script>
+            const canvas = document.getElementById("canvas");
+            const ctx = canvas.getContext("2d");
+            const cellSizeInput = document.getElementById("cellSize");
+            const sizeValue = document.getElementById("sizeValue");
+            const showVerticalCheckbox = document.getElementById("showVertical");
+            
+            let cellSize = 30; // Начальный размер ячейки
+            let showVertical = true; // Показывать вертикальные линии
+            
+            // Обработчики событий
+            cellSizeInput.addEventListener("input", updateGrid);
+            showVerticalCheckbox.addEventListener("change", updateGrid);
+            
+            function updateGrid() {
+                cellSize = parseInt(cellSizeInput.value);
+                sizeValue.textContent = cellSize;
+                showVertical = showVerticalCheckbox.checked;
+                drawGrid();
+            }
+            
+            function drawGrid() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.translate(0.5, 0.5); // Для чёткости линий
+                
+                // Горизонтальные линии
+                const horizontalLines = Math.floor(canvas.height / cellSize);
+                for(let i = 0; i <= horizontalLines; i++) {
+                    const y = i * cellSize;
+                    ctx.lineWidth = (i === 5) ? 3 : 1; // 5-я линия толще
+                    ctx.strokeStyle = (i % 2 === 0) ? "red" : "green";
+                    ctx.beginPath();
+                    ctx.moveTo(0, y);
+                    ctx.lineTo(canvas.width, y);
+                    ctx.stroke();
+                }
+                
+                // Вертикальные линии (если включены)
+                if(showVertical) {
+                    const verticalLines = Math.floor(canvas.width / cellSize);
+                    for(let i = 0; i <= verticalLines; i++) {
+                        const x = i * cellSize;
+                        ctx.lineWidth = (i === 5) ? 3 : 1; // 5-я линия толще
+                        ctx.strokeStyle = (i % 2 === 0) ? "red" : "green";
+                        ctx.beginPath();
+                        ctx.moveTo(x, 0);
+                        ctx.lineTo(x, canvas.height);
+                        ctx.stroke();
+                    }
+                }
+                
+                ctx.translate(-0.5, -0.5); // Возвращаем смещение
+            }
+            
+            // Инициализация
+            updateGrid();
+        </script>
+    </body>
+</html>

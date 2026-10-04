@@ -1,0 +1,53 @@
+body {
+    
+}
+#square{
+    width:50px;
+    height:50px;
+    border:solid black 1px;
+    border-radius:38% 62% 63% 37% / 41% 44% 56% 59%;
+    transition:0.4s;
+}
+#cssCode{
+    position:relative;
+    background:#2c3e50;
+    width:350px;
+    height:100px;
+    display:flex;
+    font-size:14px;
+    
+}
+.out{
+    margin-top:50px;
+    
+}
+h2{
+   position:absolute;
+   font-size:25px;
+   color:red;
+}
+.out:nth-child(2){
+    color:pink;
+}
+
+.out:nth-child(3){
+    color:tomato;
+}
+.out:nth-child(4){
+    color:lightblue;
+}
+.out:nth-child(5){
+    color:green;
+}
+.out:nth-child(6){
+    color:orange;
+}
+.out:nth-child(7){
+    color:deepskyblue;
+}
+.out:nth-child(8){
+    color:lightgreen;
+}
+.out:nth-child(9){
+    color:white;
+}

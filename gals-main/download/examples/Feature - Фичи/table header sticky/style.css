@@ -1,0 +1,21 @@
+body {
+    
+}
+table { 
+position: relative;
+border-collapse:collapse;
+ } 
+ tr:nth-child(even) { 
+ background-color: #c0c0c0;
+  }
+ 
+tbody tr,td{
+     border:solid black 1px;
+     padding:5px;
+ }
+ thead th { 
+ position: sticky;
+  position: -webkit-sticky; 
+  top: 0; 
+  z-index: 1; 
+  }

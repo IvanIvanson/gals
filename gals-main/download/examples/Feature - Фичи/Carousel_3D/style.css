@@ -1,0 +1,36 @@
+body{ 
+ margin: 0;
+ padding: 0; 
+ background: #3E3B43;
+  } 
+  .carousel{ 
+  height: 350px; 
+  perspective: 250px; 
+  
+  } 
+  .carousel .carousel-item{
+   width: 300px;
+   
+    } 
+    .carousel .carousel-item img{
+     width: 100%; 
+     border-radius: 5px 5px 2px 2px;
+     box-shadow:0 0 0 .5px #000, 0 20px 35px rgba(0,0,0,1);
+      } 
+  /*   .carousel .carousel-item h5{
+      margin: -5px 0 0;
+       padding: 0;
+        background: #fff;
+         color:#000;
+         box-sizing: border-box;
+         padding: 10px 5px; 
+         font-weight: bold; 
+         font-size:2em;
+          text-align: center;
+         
+           }
+           */
+h5{
+    text-align:center;
+     text-shadow:0   10px 15px rgba(0,0,0,1);
+}

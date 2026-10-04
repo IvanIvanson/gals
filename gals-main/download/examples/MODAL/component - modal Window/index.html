@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Пример модального окна</title>
+  <style>
+    /* Стили страницы */
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      margin: 0;
+      padding: 2rem;
+      background:#f6f7fb;
+      color:#111;
+    }
+
+    /* Кнопка открытия */
+    .btn {
+      display:inline-block;
+      padding:.6rem 1rem;
+      background:#2563eb;
+      color:#fff;
+      border-radius:6px;
+      text-decoration:none;
+      border:0;
+      cursor:pointer;
+      font-size:1rem;
+    }
+
+    /* Оверлей и модал */
+    .overlay {
+      position:fixed;
+      inset:0;
+      background: rgba(0,0,0,0.5);
+      display:none; /* скрыт по умолчанию */
+      align-items:center;
+      justify-content:center;
+      z-index:1000;
+      padding:1rem;
+    }
+    .overlay.is-open { display:flex; }
+
+    .modal {
+      background:#fff;
+      width:100%;
+      max-width:540px;
+      border-radius:10px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.2);
+      overflow:hidden;
+      transform:translateY(8px);
+      opacity:0;
+      transition: transform .18s ease, opacity .18s ease;
+    }
+    .overlay.is-open .modal {
+      transform:none;
+      opacity:1;
+    }
+
+    .modal-header, .modal-footer {
+      padding:1rem;
+      background:#f3f4f6;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .modal-body { padding:1rem; }
+
+    .close-btn {
+      background:transparent;
+      border:0;
+      font-size:1.1rem;
+      cursor:pointer;
+    }
+
+    /* Немного адаптивности */
+    @media (max-width:480px) {
+      .modal { max-width: 95%; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Демо: Модальное окно</h1>
+  <p>Нажмите кнопку, чтобы открыть модальное окно.</p>
+  <button id="openModal" class="btn">Открыть модальное окно</button>
+
+  <!-- Модальное окно -->
+  <div id="overlay" class="overlay" role="presentation">
+    <div id="modal"
+         class="modal"
+         role="dialog"
+         aria-modal="true"
+         aria-labelledby="modalTitle"
+         aria-hidden="true"
+         tabindex="-1">
+      <div class="modal-header">
+        <h2 id="modalTitle" style="margin:0; font-size:1.1rem;">Заголовок модального окна</h2>
+        <button id="closeModal" class="close-btn" aria-label="Закрыть">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>Это пример содержимого модального окна. Здесь может быть текст, форма или любой другой HTML.</p>
+        <label>
+          Поле ввода:
+          <input type="text" id="sampleInput" />
+        </label>
+      </div>
+      <div class="modal-footer">
+        <button id="okBtn" class="btn">Ок</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Простая логика открытия/закрытия + focus trap
+    (function() {
+      const openBtn = document.getElementById('openModal');
+      const overlay = document.getElementById('overlay');
+      const modal = document.getElementById('modal');
+      const closeBtn = document.getElementById('closeModal');
+      const okBtn = document.getElementById('okBtn');
+
+      let lastFocused = null;
+
+      // Список селекторов для фокусируемых элементов
+      const focusableSelectors = [
+        'a[href]',
+        'area[href]',
+        'input:not([disabled])',
+        'select:not([disabled])',
+        'textarea:not([disabled])',
+        'button:not([disabled])',
+        'iframe',
+        '[tabindex]:not([tabindex^="-"])',
+        '[contenteditable]'
+      ].join(',');
+
+      function openModal() {
+        lastFocused = document.activeElement;
+        overlay.classList.add('is-open');
+        modal.setAttribute('aria-hidden', 'false');
+        // ПОМНИТЕ: tabindex="-1" позволяет программно фокусировать элемент
+        modal.focus();
+        document.addEventListener('keydown', onKeyDown);
+      }
+
+      function closeModal() {
+        overlay.classList.remove('is-open');
+        modal.setAttribute('aria-hidden', 'true');
+        document.removeEventListener('keydown', onKeyDown);
+        if (lastFocused) lastFocused.focus();
+      }
+
+      function onKeyDown(e) {
+        if (e.key === 'Escape') {
+          closeModal();
+          return;
+        }
+        if (e.key === 'Tab') {
+          // простой focus trap
+          const focusable = Array.from(modal.querySelectorAll(focusableSelectors))
+                                 .filter(el => el.offsetParent !== null); // видимые
+          if (focusable.length === 0) {
+            e.preventDefault();
+            return;
+          }
+          const first = focusable[0];
+          const last = focusable[focusable.length - 1];
+          if (e.shiftKey) {
+            if (document.activeElement === first) {
+              last.focus();
+              e.preventDefault();
+            }
+          } else {
+            if (document.activeElement === last) {
+              first.focus();
+              e.preventDefault();
+            }
+          }
+        }
+      }
+
+      // Открытие
+      openBtn.addEventListener('click', openModal);
+
+      // Закрытие кнопкой внутри модала
+      closeBtn.addEventListener('click', closeModal);
+
+      // Закрытие кнопкой OK (можно добавить обработку)
+      okBtn.addEventListener('click', closeModal);
+
+      // Закрытие при клике по оверлею (но не при клике внутри модала)
+      overlay.addEventListener('click', function(e) {
+        if (e.target === overlay) {
+          closeModal();
+        }
+      });
+
+      // Предотвращаем случайный фокус на элементы вне модала при открытом состоянии
+      // (дополнительно можно применять inert/polyfill для полностью блокировки, но это базовый пример)
+    })();
+  </script>
+</body>
+</html>

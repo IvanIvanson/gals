@@ -1,0 +1,47 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+input, button {
+            padding: 8px;
+            margin-right: 10px;
+        }
+canvas{
+    display:block;
+    margin:50px auto;
+     border: 1px solid #ccc;
+}
+.container{
+    max-width: 500px;
+    margin: 50px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.controls {
+            margin-bottom: 15px;
+        }
+input{
+    width:50px;
+    border:none;
+    border-bottom:solid #ccc 1px;
+    margin-top:20px;
+    text-align:center;
+    background-color:transparent;
+}
+button{
+    margin-top:30px;
+}
+@media (max-width: 368px) {
+h1 {
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+}
+h3 {
+    font-size: 15px;
+    font-weight: 400;
+    text-align: center;
+}
+}
