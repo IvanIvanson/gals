@@ -65,13 +65,13 @@ ${demo(
     <div class="container-block pt-6 pt-xs12">
       <div class="field">
         <label for="demo-city">City</label>
-        <input class="input" id="demo-city" value="Kharkiv">
+        <input class="input" id="demo-city" value="London">
       </div>
     </div>
     <div class="container-block pt-6 pt-xs12">
       <div class="field">
         <label for="demo-code">Postal code</label>
-        <input class="input" id="demo-code" value="61…" aria-invalid="true">
+        <input class="input" id="demo-code" value="81…" aria-invalid="true">
         <p class="field-hint">A postal code is five digits.</p>
       </div>
     </div>

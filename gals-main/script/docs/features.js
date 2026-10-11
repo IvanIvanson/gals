@@ -56,6 +56,76 @@ const loadChartJs = () =>
     document.head.appendChild(s);
   });
 
+/**
+ * Вращающийся wireframe-куб для страницы Loaders (Components).
+ * innerHTML не исполняет <script>, поэтому анимация стартует кнопкой.
+ */
+const startCubeLoader = () => {
+  const canvas = document.getElementById('demo-cube-loader');
+  if (!canvas || canvas.dataset.running) return;
+  canvas.dataset.running = '1';
+
+  const ctx = canvas.getContext('2d');
+  const size = 50;
+  const vertices = [
+    { x: -1, y: -1, z: -1 }, { x: 1, y: -1, z: -1 },
+    { x: 1, y: 1, z: -1 },   { x: -1, y: 1, z: -1 },
+    { x: -1, y: -1, z: 1 },  { x: 1, y: -1, z: 1 },
+    { x: 1, y: 1, z: 1 },    { x: -1, y: 1, z: 1 },
+  ];
+  const edges = [
+    [0, 1], [1, 2], [2, 3], [3, 0],
+    [4, 5], [5, 6], [6, 7], [7, 4],
+    [0, 4], [1, 5], [2, 6], [3, 7],
+  ];
+  let angleX = 0;
+  let angleY = 0;
+  let angleZ = 0;
+
+  const project = (p) => {
+    const fov = 300;
+    const scale = fov / (fov + p.z);
+    return {
+      x: p.x * scale * size + canvas.width / 2,
+      y: p.y * scale * size + canvas.height / 2,
+    };
+  };
+
+  const rotate = (p) => {
+    let { x, y, z } = p;
+    [y, z] = [y * Math.cos(angleX) - z * Math.sin(angleX),
+              y * Math.sin(angleX) + z * Math.cos(angleX)];
+    [x, z] = [x * Math.cos(angleY) + z * Math.sin(angleY),
+             -x * Math.sin(angleY) + z * Math.cos(angleY)];
+    [x, y] = [x * Math.cos(angleZ) - y * Math.sin(angleZ),
+              x * Math.sin(angleZ) + y * Math.cos(angleZ)];
+    return { x, y, z };
+  };
+
+  const draw = () => {
+    // Канвас ушёл из DOM (переключили страницу) — останавливаем цикл.
+    if (!canvas.isConnected) return;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    angleX += 0.02;
+    angleY += 0.03;
+    angleZ += 0.01;
+
+    edges.forEach(([a, b]) => {
+      const p1 = project(rotate(vertices[a]));
+      const p2 = project(rotate(vertices[b]));
+      ctx.beginPath();
+      ctx.moveTo(p1.x, p1.y);
+      ctx.lineTo(p2.x, p2.y);
+      ctx.stroke();
+    });
+
+    requestAnimationFrame(draw);
+  };
+
+  draw();
+};
+
 const drawChartJs = async (canvasId, tableId) => {
   const Chart = await loadChartJs();
   const table = document.getElementById(tableId);
@@ -335,6 +405,183 @@ const resetIcPoints = () => {
   drawIcCanvas();
 };
 
+/* ---------- Battery indicator ---------- */
+const initBattery = () => {
+  const levelEl = document.getElementById('demo-battery-level');
+  const digitEl = document.getElementById('demo-battery-digit');
+  const statusEl = document.getElementById('demo-battery-status');
+  if (!levelEl || !digitEl || !statusEl) return;
+
+  if (!navigator.getBattery) {
+    statusEl.textContent = 'Battery Status API is not supported in this browser.';
+    digitEl.textContent = 'N/A';
+    return;
+  }
+
+  navigator.getBattery().then((battery) => {
+    const render = () => {
+      const pct = Math.round(battery.level * 100);
+      digitEl.textContent = pct + '%';
+      digitEl.style.color = battery.level <= 0.2 ? '#d1495b' : '#2a7d2a';
+      levelEl.style.width = pct + '%';
+      levelEl.classList.toggle('demo-battery-anim', battery.charging);
+      statusEl.textContent = battery.charging ? 'Battery is charging' : 'Battery is discharging';
+    };
+
+    render();
+    // Исправлены опечатки в именах событий из исходного примера:
+    // charginchange → chargingchange, chargintimechange → chargingtimechange,
+    // dischargintimechange → dischargingtimechange.
+    battery.addEventListener('chargingchange', render);
+    battery.addEventListener('levelchange', render);
+  });
+};
+
+/* ---------- Box size indicator ---------- */
+const initBoxIndicator = () => {
+  const arrows = document.getElementById('demo-ind-arrows');
+  if (!arrows || arrows.dataset.bound) return;
+  arrows.dataset.bound = '1';
+
+  const boxes = document.querySelectorAll('.demo-ind-box');
+  const line = document.createElement('div');
+  line.className = 'demo-ind-line';
+
+  boxes.forEach((box) => {
+    box.addEventListener('mousemove', (e) => {
+      const el = e.currentTarget;
+      arrows.style.top = el.offsetTop + 'px';
+      arrows.style.width = el.offsetWidth + 'px';
+      arrows.textContent = el.offsetWidth + 'px';
+      line.style.width = el.offsetWidth + 'px';
+      line.style.height = el.offsetHeight / 2 + 'px';
+      el.appendChild(line);
+    });
+  });
+};
+
+/* ---------- Configurable grid canvas ---------- */
+const drawDemoGrid = () => {
+  const canvas = document.getElementById('demo-grid-canvas');
+  const sizeInput = document.getElementById('demo-grid-size');
+  const sizeOut = document.getElementById('demo-grid-size-out');
+  const vertInput = document.getElementById('demo-grid-vertical');
+  if (!canvas || !sizeInput || !sizeOut || !vertInput) return;
+
+  const ctx = canvas.getContext('2d');
+  const cellSize = parseInt(sizeInput.value, 10);
+  sizeOut.textContent = cellSize;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.save();
+  ctx.translate(0.5, 0.5); // crisp 1px lines
+
+  const rows = Math.floor(canvas.height / cellSize);
+  for (let i = 0; i <= rows; i += 1) {
+    const y = i * cellSize;
+    ctx.lineWidth = i === 5 ? 3 : 1;
+    ctx.strokeStyle = i % 2 === 0 ? '#d1495b' : '#2a9d4a';
+    ctx.beginPath();
+    ctx.moveTo(0, y);
+    ctx.lineTo(canvas.width, y);
+    ctx.stroke();
+  }
+
+  if (vertInput.checked) {
+    const cols = Math.floor(canvas.width / cellSize);
+    for (let i = 0; i <= cols; i += 1) {
+      const x = i * cellSize;
+      ctx.lineWidth = i === 5 ? 3 : 1;
+      ctx.strokeStyle = i % 2 === 0 ? '#d1495b' : '#2a9d4a';
+      ctx.beginPath();
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, canvas.height);
+      ctx.stroke();
+    }
+  }
+
+  ctx.restore();
+};
+
+/* ---------- Sliding color palette ---------- */
+const setPaletteColor = (color) => {
+  const stage = document.getElementById('demo-palette-stage');
+  if (stage) stage.style.background = color;
+};
+
+const togglePalette = () => {
+  const panel = document.getElementById('demo-palette');
+  const btn = document.getElementById('demo-palette-btn');
+  if (!panel || !btn) return;
+
+  const open = panel.classList.toggle('demo-palette-open');
+  // Исправлено сравнение строки стиля из исходного примера:
+  // вместо cnt.style.left == 0 + 'px' — класс-тоггл.
+  btn.innerHTML = open ? '&#127912;&#128194;' : '&#128193;';
+};
+
+/* ---------- Person cards + modal ---------- */
+const initPersonCards = () => {
+  const app = document.getElementById('demo-pcards');
+  if (!app || app.dataset.filled) return;
+  app.dataset.filled = '1';
+
+  const people = [
+    { id: 1, name: 'Tommy',  age: 23, color: '#8512d1' },
+    { id: 2, name: 'John',   age: 26, color: '#2a9d4a' },
+    { id: 3, name: 'Rachel', age: 28, color: '#d1495b' },
+  ];
+
+  const avatar = (color, letter) =>
+    'data:image/svg+xml;utf8,' + encodeURIComponent(
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60">' +
+      '<circle cx="30" cy="30" r="30" fill="' + color + '"/>' +
+      '<text x="30" y="38" text-anchor="middle" fill="#fff" ' +
+      'font-size="24" font-family="sans-serif">' + letter + '</text>' +
+      '</svg>'
+    );
+
+  // Исправлено: пустой объект {} в массиве из исходного примера
+  // ронял рендер (undefined полей) — убран; карточки собираются
+  // через map().join('') вместо innerHTML += в цикле.
+  app.innerHTML = people.map((p) =>
+    '<div class="demo-pcard" tabindex="0">' +
+      '<img src="' + avatar(p.color, p.name[0]) + '" alt="">' +
+      '<h3>' + p.name + '</h3>' +
+      '<div class="demo-pcard-age"><span>age:</span> <span>' + p.age + '</span></div>' +
+      '<div class="demo-pcard-id"><span>ID: </span><span>' + p.id + '</span></div>' +
+    '</div>'
+  ).join('');
+
+  const cancelBtn = document.getElementById('demo-pcards-cancel');
+  app.querySelectorAll('.demo-pcard').forEach((card) => {
+    card.addEventListener('click', () => cancelBtn?.classList.add('demo-pcards-cancel-show'));
+  });
+  cancelBtn?.addEventListener('click', () => cancelBtn.classList.remove('demo-pcards-cancel-show'));
+
+  const modal = document.getElementById('demo-pcards-modal');
+  const fade = document.getElementById('demo-pcards-fade');
+  modal?.classList.add('demo-pcards-modal-open');
+  fade?.classList.add('demo-pcards-fade-show');
+  document.getElementById('demo-pcards-close')?.addEventListener('click', () => {
+    modal?.classList.remove('demo-pcards-modal-open');
+    fade?.classList.remove('demo-pcards-fade-show');
+  });
+};
+
+/* ---------- Star rating ---------- */
+const setStarRating = (root, rating) => {
+  const bar = root.querySelector('.demo-star-bar-inner');
+  const stars = [...root.querySelectorAll('.demo-star')];
+  const full = root.querySelector('.demo-star-bar').clientWidth;
+  const step = full / stars.length;
+
+  stars.forEach((star) => {
+    star.classList.toggle('demo-star-rated', Number(star.dataset.rating) <= rating);
+  });
+  if (bar) bar.style.width = step * rating + 'px';
+};
+
 window.__galsFeatures = {
   drawLineChart,
   drawChartJs,
@@ -347,6 +594,14 @@ window.__galsFeatures = {
   toggleReadMore,
   addIcPoint,
   resetIcPoints,
+  startCubeLoader,
+  initBattery,
+  initBoxIndicator,
+  drawDemoGrid,
+  setPaletteColor,
+  togglePalette,
+  initPersonCards,
+  setStarRating,
 };
 
 /* ============================================================
@@ -1544,6 +1799,446 @@ if (disc >= 0) {
       'Раньше в коде была <code>ctx.fillStyle</code> с non-breaking space — современный парсер такое не принимает. Заменено на обычные пробелы.',
       'Рисование одним <code>path</code> по 600 точкам работает быстрее, чем 600 отдельных <code>fillRect</code>.',
       'При <code>a = 0</code> функция перестаёт быть квадратичной — об этом честно сообщаем текстом.',
+    ],
+  },
+
+  /* ---------- Новые примеры ---------- */
+
+  {
+    slug: 'battery-indicator',
+    title: 'Battery indicator',
+    lead: 'Индикатор заряда батареи на Battery Status API: уровень, статус зарядки и анимация заполнения.',
+    markup: `<div class="battery">
+  <div class="battery-level"></div>
+  <p class="battery-digit">—</p>
+  <div class="battery-cap"></div>
+</div>
+<p class="battery-status"></p>
+
+navigator.getBattery().then((battery) => {
+  const render = () => {
+    digit.textContent = Math.round(battery.level * 100) + '%';
+    level.style.width = battery.level * 100 + '%';
+    level.classList.toggle('charging', battery.charging);
+  };
+  render();
+  battery.addEventListener('chargingchange', render);
+  battery.addEventListener('levelchange', render);
+});`,
+    demo: `<style>
+  .demo-battery {
+    position: relative; width: 100px; height: 50px;
+    border: 1px solid #555; border-radius: 3px; margin: 1em auto;
+  }
+  .demo-battery-level {
+    position: absolute; top: 1px; left: 1px; height: 46px; width: 0;
+    background: linear-gradient(0deg, #2a9d4a 40%, #7fd67f);
+    transition: width .3s;
+  }
+  .demo-battery-anim { animation: demo-battery-fill 4s linear infinite; }
+  @keyframes demo-battery-fill { 0% { width: 0; } 100% { width: 98px; } }
+  .demo-battery-digit {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    margin: 0; font: 700 14px/1 system-ui; z-index: 1;
+  }
+  .demo-battery-cap {
+    position: absolute; top: 6px; left: 100px; width: 7px; height: 36px;
+    border: 1px solid #555; border-left-color: #fff; border-radius: 0 3px 3px 0; background: #888;
+  }
+  .demo-battery-status { text-align: center; color: #555; font-size: 14px; }
+</style>
+<div class="demo-battery">
+  <div class="demo-battery-level" id="demo-battery-level"></div>
+  <p class="demo-battery-digit" id="demo-battery-digit">—</p>
+  <div class="demo-battery-cap"></div>
+</div>
+<p class="demo-battery-status" id="demo-battery-status" role="status"></p>
+<p style="text-align:center">
+  <button class="btn btn-primary" type="button"
+          onclick="window.__galsFeatures.initBattery()">Read battery</button>
+</p>`,
+    caption: 'Battery Status API работает только в Chromium и по https/localhost.',
+    notes: [
+      'В исходном примере были опечатки в именах событий: <code>charginchange</code>, <code>chargintimechange</code>, <code>dischargintimechange</code> — исправлены на <code>chargingchange</code>, <code>chargingtimechange</code>, <code>dischargingtimechange</code>.',
+      'Ветки <code>if (chargingTime == Infinity)</code> в оригинале выводили одинаковый текст — здесь логика упрощена до одного render().',
+      'API недоступен в Firefox и Safari — всегда показывайте заглушку, как в демо.',
+    ],
+  },
+  {
+    slug: 'gradient-text',
+    title: 'Gradient text',
+    lead: 'Текст, залитый градиентом: <code>background-clip: text</code> и прозрачная заливка. Только CSS.',
+    markup: `<h2 class="gradient-text">Lorem ipsum</h2>
+
+<style>
+.gradient-text {
+  font-size: 3em;
+  font-weight: 800;
+  text-align: center;
+  background: linear-gradient(120deg, yellow, #ec0707);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+</style>`,
+    demo: `<style>
+  .demo-gradient-text {
+    font-family: Arial, sans-serif;
+    font-size: 3em; font-weight: 800; text-align: center;
+    background: linear-gradient(120deg, #b57d0a, #ec0707);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    margin: .5em 0;
+  }
+</style>
+<div class="demo-gradient-text">Lorem ipsum</div>`,
+    notes: [
+      'Чистый <code>yellow</code> на белом не читается — в демо жёлтый затемнён до охры. Проверяйте контраст.',
+      'Пара <code>-webkit-text-fill-color</code> + <code>background-clip: text</code> нужна обоим движкам: и Chromium, и Firefox.',
+      'Без <code>background-clip: text</code> градиент зальёт весь прямоугольник, а не буквы.',
+    ],
+  },
+  {
+    slug: 'box-size-indicator',
+    title: 'Box size indicator',
+    lead: 'Стрелки-индикаторы следуют за курсором и показывают ширину блока под ним — наглядный урок про <code>offsetWidth</code>.',
+    markup: `<div class="stage">
+  <span class="arrows"></span>
+  <div class="box"></div>
+  <div class="box"></div>
+  <div class="box"></div>
+</div>
+
+boxes.forEach((box) => {
+  box.addEventListener('mousemove', (e) => {
+    const el = e.currentTarget;
+    arrows.style.top = el.offsetTop + 'px';
+    arrows.style.width = el.offsetWidth + 'px';
+    arrows.textContent = el.offsetWidth + 'px';
+  });
+});`,
+    demo: `<style>
+  .demo-ind-stage {
+    position: relative; width: 300px; margin: 0 auto;
+    display: flex; flex-direction: column; align-items: center; gap: 20px;
+    padding: 20px; background: #333; border-radius: 7px;
+  }
+  .demo-ind-arrows {
+    position: absolute; top: 20px; left: 0; height: 50px;
+    display: flex; align-items: center; justify-content: space-between;
+    color: #fff; font: 13px system-ui; transition: top .3s, width .3s;
+    pointer-events: none; padding: 0 4px; box-sizing: border-box;
+  }
+  .demo-ind-arrows::before,
+  .demo-ind-arrows::after {
+    content: ''; width: 15px; height: 15px; flex: none;
+    border-top: 2px solid #30a3ff; border-right: 2px solid #30a3ff;
+  }
+  .demo-ind-arrows::before { transform: rotate(-135deg); }
+  .demo-ind-arrows::after { transform: rotate(45deg); }
+  .demo-ind-box {
+    position: relative; width: 100px; height: 50px; border: 1px solid #fff;
+  }
+  .demo-ind-box:nth-of-type(3) { width: 150px; }
+  .demo-ind-box:nth-of-type(4) { width: 250px; }
+  .demo-ind-line {
+    position: absolute; bottom: 0; left: 0;
+    display: flex; justify-content: space-between; align-items: flex-end;
+    pointer-events: none;
+  }
+  .demo-ind-line::before,
+  .demo-ind-line::after {
+    content: ''; background: #30a3ff; width: calc(40% - 11px); height: 1px;
+  }
+</style>
+<div class="demo-ind-stage">
+  <span class="demo-ind-arrows" id="demo-ind-arrows"></span>
+  <div class="demo-ind-box"></div>
+  <div class="demo-ind-box"></div>
+  <div class="demo-ind-box"></div>
+</div>
+<p style="text-align:center">
+  <button class="btn" type="button"
+          onclick="window.__galsFeatures.initBoxIndicator()">Attach indicator</button>
+</p>`,
+    caption: 'Нажмите «Attach indicator», затем водите курсором по рамкам.',
+    notes: [
+      'В исходнике слушатель вешался на <code>mousemove</code> каждого блока и читал <code>e.target</code> — при вложенной линии target «промахивался». Здесь используется <code>e.currentTarget</code>.',
+      'Стрелки из исходника поворачивались трансформами с translate — в демо заменены на простые <code>rotate(±45/−135deg)</code>, без сдвига.',
+      'Линия создаётся один раз и перекладывается <code>appendChild</code> — не плодите DOM-узлы на каждый mousemove.',
+    ],
+  },
+  {
+    slug: 'grid-canvas',
+    title: 'Configurable grid canvas',
+    lead: 'Сетка на <code>&lt;canvas&gt;</code>: размер ячейки ползунком, вертикальные линии — чекбоксом. Чёткие линии через сдвиг на 0.5px.',
+    markup: `<input type="range" id="cellSize" min="10" max="100" value="30" step="5">
+<input type="checkbox" id="showVertical" checked>
+<canvas id="canvas" width="300" height="300"></canvas>
+
+function drawGrid() {
+  ctx.clearRect(0, 0, W, H);
+  ctx.save();
+  ctx.translate(0.5, 0.5); // crisp 1px lines
+  for (let i = 0; i <= rows; i++) {
+    ctx.lineWidth = i === 5 ? 3 : 1;
+    ctx.strokeStyle = i % 2 === 0 ? 'red' : 'green';
+    line(0, i * cell, W, i * cell);
+  }
+  ctx.restore();
+}`,
+    demo: `<style>
+  .demo-grid-controls { text-align: center; margin-bottom: 10px; font: 14px system-ui; }
+  .demo-grid-controls label { display: inline-block; margin: 0 10px; }
+  .demo-grid-canvas {
+    display: block; margin: 0 auto; border: 1px solid #333;
+    image-rendering: pixelated;
+  }
+</style>
+<div class="demo-grid-controls">
+  <label>
+    Cell size:
+    <input type="range" id="demo-grid-size" min="10" max="100" value="30" step="5"
+           oninput="window.__galsFeatures.drawDemoGrid()">
+    <span id="demo-grid-size-out">30</span>px
+  </label>
+  <label>
+    <input type="checkbox" id="demo-grid-vertical" checked
+           onchange="window.__galsFeatures.drawDemoGrid()">
+    Vertical lines
+  </label>
+</div>
+<canvas class="demo-grid-canvas" id="demo-grid-canvas" width="300" height="300"></canvas>
+<p style="text-align:center">
+  <button class="btn" type="button"
+          onclick="window.__galsFeatures.drawDemoGrid()">Redraw</button>
+</p>`,
+    caption: 'Двигайте ползунок — сетка перестраивается. Пятая линия выделена толщиной.',
+    notes: [
+      'Сдвиг <code>translate(0.5, 0.5)</code> совмещает координаты с центрами физических пикселей — линии в 1px не размываются.',
+      'В исходнике сдвиг откатывался вторым <code>translate(-0.5, -0.5)</code> — надёжнее пара <code>save()/restore()</code>.',
+      '<code>parseInt(value, 10)</code> с явной системой счисления — значение из range всегда строка.',
+    ],
+  },
+  {
+    slug: 'color-palette',
+    title: 'Sliding color palette',
+    lead: 'Выезжающая панель с образцами цвета: клик по квадрату красит подложку, кнопка прячет и показывает панель.',
+    markup: `<div class="palette" id="palette">
+  <div class="swatch" style="background:red"    onclick="setColor('red')"></div>
+  <div class="swatch" style="background:blue"   onclick="setColor('blue')"></div>
+  <div class="swatch" style="background:green"  onclick="setColor('green')"></div>
+  <div class="swatch" style="background:#fffff8" onclick="setColor('transparent')"></div>
+  <button id="btn" onclick="toggle()">&#128193;</button>
+</div>
+
+/* В исходнике было: cnt.style.left == 0 + 'px' —
+   сравнение строки с числом. Надёжнее класс-тоггл. */`,
+    demo: `<style>
+  .demo-palette-stage {
+    position: relative; height: 140px; overflow: hidden;
+    background: #fff; border: 1px solid var(--line); border-radius: 7px;
+    transition: background .5s;
+  }
+  .demo-palette {
+    position: absolute; top: 20px; left: -290px;
+    display: flex; align-items: center; width: 350px; height: 100px;
+    transition: left 1.4s;
+  }
+  .demo-palette-open { left: 0; }
+  .demo-palette-swatch {
+    width: 50px; height: 50px; margin-left: 20px; cursor: pointer;
+    border: .5px solid #000; border-radius: 20px 30px 40px 25px / 20px 30px 40px 25px;
+  }
+  .demo-palette-btn {
+    font-size: 30px; margin-left: 20px; border: none; cursor: pointer;
+    color: inherit; background: transparent; outline: none;
+  }
+</style>
+<div class="demo-palette-stage" id="demo-palette-stage">
+  <div class="demo-palette" id="demo-palette">
+    <div class="demo-palette-swatch" style="background:red"    role="button" tabindex="0" aria-label="Red background"    onclick="window.__galsFeatures.setPaletteColor('red')"></div>
+    <div class="demo-palette-swatch" style="background:blue"   role="button" tabindex="0" aria-label="Blue background"   onclick="window.__galsFeatures.setPaletteColor('blue')"></div>
+    <div class="demo-palette-swatch" style="background:green"  role="button" tabindex="0" aria-label="Green background"  onclick="window.__galsFeatures.setPaletteColor('green')"></div>
+    <div class="demo-palette-swatch" style="background:#fffff8" role="button" tabindex="0" aria-label="Reset background" onclick="window.__galsFeatures.setPaletteColor('transparent')"></div>
+    <button class="demo-palette-btn" id="demo-palette-btn" type="button" aria-label="Toggle palette"
+            onclick="window.__galsFeatures.togglePalette()">&#128193;</button>
+  </div>
+</div>`,
+    caption: 'Нажмите кнопку с папкой — панель выедет. Клик по квадрату красит подложку.',
+    notes: [
+      'В исходнике проверка <code>cnt.style.left == 0 + \'px\'</code> ломалась: сначала <code>0 + \'px\' → \'0px\'</code>, но <code>style.left</code> пуст, пока не задан inline — первый клик вёл себя непредсказуемо. Заменено на <code>classList.toggle</code>.',
+      'Фон красится не в <code>body</code>, а в локальную подложку — демо не должно перекрашивать всю страницу документации.',
+      'Квадраты получили <code>role="button"</code> и <code>tabindex</code> — div без них с клавиатуры недоступен.',
+    ],
+  },
+  {
+    slug: 'clamp-font',
+    title: 'Responsive font-size with clamp()',
+    lead: 'Резиновая типографика одной строкой: <code>clamp(min, preferred, max)</code> вместо лесенки медиазапросов.',
+    markup: `<main>
+  <h2>Responsive font-size</h2>
+  <p>Example: use the <code>clamp()</code> function to make the size fluid.</p>
+</main>
+
+<style>
+main { max-width: 500px; margin: 0 auto; }
+h2 { font-size: clamp(1.5rem, 5vw, 3rem); text-align: center; color: #007bff; }
+p  { font-size: clamp(1rem, 2vw, 1.5rem); line-height: 1.6; color: #333; }
+</style>`,
+    demo: `<style>
+  .demo-clamp { max-width: 500px; margin: 0 auto; }
+  .demo-clamp h2 {
+    font-size: clamp(1.5rem, 5vw, 3rem); text-align: center; color: #007bff;
+    margin: .3em 0;
+  }
+  .demo-clamp p {
+    font-size: clamp(1rem, 2vw, 1.5rem); line-height: 1.6; color: #333;
+  }
+</style>
+<div class="demo-clamp">
+  <h2>Responsive font-size</h2>
+  <p>Example: use the <code>clamp()</code> function to make the size fluid. Resize the window — the heading scales between 1.5rem and 3rem without a single media query.</p>
+</div>`,
+    caption: 'Сожмите окно браузера: заголовок плавно уменьшится до 1.5rem.',
+    notes: [
+      'В исходнике были опечатки: «Responsiv», «Example yse», «make size» — исправлены.',
+      'Средний аргумент в <code>vw</code> — это и есть «резина»; крайние значения страхуют от слишком мелкого и слишком крупного текста.',
+      'GALS делает то же самое токенами <code>--fs-*</code> — но для разового заголовка clamp() проще.',
+    ],
+  },
+  {
+    slug: 'person-cards',
+    title: 'Person cards + modal',
+    lead: 'Карточки из массива: при клике появляется кнопка отмены, поверх — модалка с предупреждением. Всё на классах, без inline-стилей состояния.',
+    markup: `const people = [
+  { id: 1, name: 'Tommy',  age: 23 },
+  { id: 2, name: 'John',   age: 26 },
+  { id: 3, name: 'Rachel', age: 28 },
+  // В исходнике здесь был пустой объект {} —
+  // он ронял рендер (undefined полей). Убран.
+];
+
+app.innerHTML = people.map((p) => \`
+  <div class="card">
+    <img src="\${avatar(p)}" alt="">
+    <h3>\${p.name}</h3>
+    <div class="age"><span>age:</span> <span>\${p.age}</span></div>
+    <div class="id"><span>ID: </span><span>\${p.id}</span></div>
+  </div>\`).join('');`,
+    demo: `<style>
+  .demo-pcards-wrap {
+    position: relative; min-height: 260px;
+    background: linear-gradient(#fff, #34495e) no-repeat;
+    border-radius: 7px; padding: 10px; overflow: hidden;
+  }
+  .demo-pcards { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; }
+  .demo-pcard {
+    width: 110px; min-height: 125px; padding: 10px; cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: linear-gradient(#ccffee, #fff); border-radius: 2px;
+    box-shadow: 0 0 5px #2196f3; transition: transform .3s;
+  }
+  .demo-pcard:hover { transform: scale(1.15); z-index: 1; }
+  .demo-pcard:hover .demo-pcard-age,
+  .demo-pcard:hover .demo-pcard-id span { display: inline; }
+  .demo-pcard img { width: 50px; border-radius: 50%; }
+  .demo-pcard h3 { margin: 6px 0 0; font-size: 15px; color: #3d8b3d; text-shadow: 0 0 1px #2a9d4a; }
+  .demo-pcard-age { display: none; padding: 5px 0; }
+  .demo-pcard-age span:first-child { color: #d1495b; }
+  .demo-pcard-id { display: flex; gap: 4px; font-size: 13px; }
+  .demo-pcard-id span { display: none; }
+  .demo-pcard-id span:first-child { color: #2a5fd7; }
+  .demo-pcards-cancel {
+    display: none; margin: 12px auto 0; padding: 10px 0; width: 100%; max-width: 330px;
+    border: none; border-radius: 5px; background: #34446e; color: #fff;
+    text-transform: uppercase; cursor: pointer;
+  }
+  .demo-pcards-cancel-show { display: block; }
+  .demo-pcards-fade {
+    position: absolute; inset: 0; display: none; background: rgba(0,0,0,.5);
+  }
+  .demo-pcards-fade-show { display: block; }
+  .demo-pcards-modal {
+    position: absolute; left: 0; right: 0; top: 0; margin: 0 auto;
+    width: 250px; min-height: 180px; padding: 20px; box-sizing: border-box;
+    background: #fff; border: .5px solid #555; border-radius: 5px;
+    display: flex; flex-direction: column; align-items: center; justify-content: space-around;
+    transform: scale(0, 0) translateY(0); z-index: -1;
+    transition: transform 400ms cubic-bezier(.47,1.64,.41,.8);
+  }
+  .demo-pcards-modal-open { transform: scale(1, 1) translateY(40px); z-index: 2; }
+  .demo-pcards-modal p { margin: 0; text-align: center; font-size: 14px; color: #777; }
+  .demo-pcards-close { background: #d1495b; border: none; color: #fff; padding: 5px 10px; cursor: pointer; border-radius: 4px; }
+</style>
+<div class="demo-pcards-wrap">
+  <div class="demo-pcards" id="demo-pcards"></div>
+  <button class="demo-pcards-cancel" id="demo-pcards-cancel" type="button">Cancel</button>
+  <div class="demo-pcards-fade" id="demo-pcards-fade"></div>
+  <div class="demo-pcards-modal" id="demo-pcards-modal" role="dialog" aria-label="Hint">
+    <p>Click a card to see the cancel button.<br>Hover reveals age and ID.</p>
+    <button class="demo-pcards-close" id="demo-pcards-close" type="button">Close</button>
+  </div>
+</div>
+<p style="text-align:center">
+  <button class="btn btn-primary" type="button"
+          onclick="window.__galsFeatures.initPersonCards()">Render cards</button>
+</p>`,
+    caption: 'Нажмите «Render cards»: появятся карточки и модалка. Наведите на карточку — раскроются возраст и ID.',
+    notes: [
+      'Пустой объект <code>{}</code> в массиве из исходника давал карточку с <code>undefined</code> — убран.',
+      '<code>innerHTML +=</code> в цикле пересоздаёт DOM на каждой итерации — заменено на <code>map().join(\'\')</code> за одну вставку.',
+      'Опечатка «Don`t worck desktop» и логика с <code>order: 3</code> на hover убраны: масштабирование через <code>transform</code> не ломает поток flex.',
+    ],
+  },
+  {
+    slug: 'star-rating',
+    title: 'Star rating',
+    lead: 'Пять звёзд и звезда-шкала: клик окрашивает звёзды и заполняет clip-path форму пропорционально рейтингу.',
+    markup: `<div class="rating">
+  <span class="star" data-rating="1">&#9733;</span>
+  <span class="star" data-rating="2">&#9733;</span>
+  <span class="star" data-rating="3">&#9733;</span>
+  <span class="star" data-rating="4">&#9733;</span>
+  <span class="star" data-rating="5">&#9733;</span>
+</div>
+<div class="star-bar"><div class="star-bar-inner"></div></div>
+
+stars.forEach((star) => star.addEventListener('click', (e) => {
+  const rating = Number(e.currentTarget.dataset.rating);
+  stars.forEach((s) => s.classList.toggle('rated', s.dataset.rating <= rating));
+  bar.style.width = (barWidth / stars.length) * rating + 'px';
+}));`,
+    demo: `<style>
+  .demo-stars { font-size: 30px; text-align: center; cursor: pointer; user-select: none; }
+  .demo-star { color: #bbb; transition: color .2s; }
+  .demo-star-rated { color: #e6b800; }
+  .demo-star-bar {
+    margin: 30px auto 0; width: 200px; height: 200px; border-radius: 25px;
+    background: #c0c0c0; overflow: hidden;
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 3% 35%, 39% 35%);
+  }
+  .demo-star-bar-inner { width: 0; height: 100%; background: #e6b800; transition: width .3s; }
+</style>
+<div class="demo-stars" id="demo-stars">
+  <span class="demo-star" data-rating="1" role="button" tabindex="0" aria-label="1 star"
+        onclick="window.__galsFeatures.setStarRating(this.parentElement, 1)">&#9733;</span>
+  <span class="demo-star" data-rating="2" role="button" tabindex="0" aria-label="2 stars"
+        onclick="window.__galsFeatures.setStarRating(this.parentElement, 2)">&#9733;</span>
+  <span class="demo-star" data-rating="3" role="button" tabindex="0" aria-label="3 stars"
+        onclick="window.__galsFeatures.setStarRating(this.parentElement, 3)">&#9733;</span>
+  <span class="demo-star" data-rating="4" role="button" tabindex="0" aria-label="4 stars"
+        onclick="window.__galsFeatures.setStarRating(this.parentElement, 4)">&#9733;</span>
+  <span class="demo-star" data-rating="5" role="button" tabindex="0" aria-label="5 stars"
+        onclick="window.__galsFeatures.setStarRating(this.parentElement, 5)">&#9733;</span>
+  <div class="demo-star-bar"><div class="demo-star-bar-inner"></div></div>
+</div>`,
+    caption: 'Кликните по звёздам — большая звезда заполнится пропорционально рейтингу.',
+    notes: [
+      'В исходнике ширина бара считалась через <code>clientWidth</code> в момент загрузки — при ресайзе шаг «уезжал». Здесь ширина читается при каждом клике.',
+      '<code>data-rating</code> — строка; сравнение <code>&lt;=</code> работало за счёт приведения типов. Заменено на явный <code>Number()</code>.',
+      'Чистый <code>yellow</code> на сером не проходит контраст — заменён на <code>#e6b800</code>. Звёзды получили <code>role="button"</code> и <code>aria-label</code>.',
     ],
   },
 ];

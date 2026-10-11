@@ -1,7 +1,7 @@
 {
   "name": "gals",
   "version": "1.0.0",
-  "description": "GALS — lightweight flex grid frontend toolkit and its documentation site.",
+  "description": "GALS (Grid Application Layout Systems) — lightweight flex grid frontend toolkit and its documentation site.",
   "private": true,
   "type": "module",
   "scripts": {

@@ -386,6 +386,247 @@ const DEF = [
       'Announce completion, not just the wait: <code>role="status"</code> with the final count.',
       'The spinner keeps spinning under <code>prefers-reduced-motion</code> — it is information; the skeleton shimmer stops.',
     ],
+    gallery: [
+      {
+        title: 'Sweep ring',
+        lead: 'A rotating half-gradient sweep with a glowing dot, masked by a dark inner disc. Pure CSS.',
+        markup: `<div class="loader-sweep">
+  <span></span>
+</div>
+
+<style>
+.loader-sweep {
+  position: relative;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: #0d2323;
+  animation: sweep-spin 2s linear infinite;
+}
+@keyframes sweep-spin { to { transform: rotate(360deg); } }
+.loader-sweep::before {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 50%; height: 100%;
+  background: linear-gradient(to top, transparent, rgba(0, 255, 249, .4));
+  background-size: 100px 180px;
+  background-repeat: no-repeat;
+  border-top-left-radius: 100px;
+  border-bottom-left-radius: 100px;
+}
+.loader-sweep::after {
+  content: '';
+  position: absolute; top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 20px; height: 20px;
+  background: #00fff9;
+  border-radius: 50%;
+  box-shadow: 0 0 20px #00fff9, 0 0 40px #00fff9, 0 0 60px #00fff9;
+}
+.loader-sweep span {
+  position: absolute;
+  inset: 20px;
+  border-radius: 50%;
+  background: #102626;
+}
+</style>`,
+        demo: `<style>
+  .demo-sweep-stage { display: flex; justify-content: center; padding: 2em 0; background: #102626; border-radius: 7px; }
+  .demo-sweep {
+    position: relative; width: 200px; height: 200px;
+    border-radius: 50%; background: #0d2323;
+    animation: demo-sweep-spin 2s linear infinite;
+  }
+  @keyframes demo-sweep-spin { to { transform: rotate(360deg); } }
+  .demo-sweep::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 50%; height: 100%;
+    background: linear-gradient(to top, transparent, rgba(0, 255, 249, .4));
+    background-size: 100px 180px; background-repeat: no-repeat;
+    border-top-left-radius: 100px; border-bottom-left-radius: 100px;
+  }
+  .demo-sweep::after {
+    content: ''; position: absolute; top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 20px; height: 20px;
+    background: #00fff9; border-radius: 50%;
+    box-shadow: 0 0 20px #00fff9, 0 0 40px #00fff9, 0 0 60px #00fff9;
+  }
+  .demo-sweep span {
+    position: absolute; inset: 20px;
+    border-radius: 50%; background: #102626;
+  }
+</style>
+<div class="demo-sweep-stage">
+  <div class="demo-sweep" role="status" aria-label="Loading"><span></span></div>
+</div>`,
+      },
+      {
+        title: 'Spinning square',
+        lead: 'One pseudo-element rotating in steps — the lightest possible loader: no extra markup at all.',
+        markup: `<div class="loader-square"></div>
+
+<style>
+.loader-square {
+  box-sizing: border-box;
+  width: 200px; height: 200px;
+  position: relative;
+}
+.loader-square::before {
+  content: '';
+  width: 30px; height: 30px;
+  background-color: lightblue;
+  position: absolute; top: 50%; left: 50%;
+  animation: square-rotating 1500ms alternate infinite both;
+}
+@keyframes square-rotating {
+  0%, 30%   { transform: translate(-50%, -50%) rotate(0); }
+  70%, 100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+</style>`,
+        demo: `<style>
+  .demo-square {
+    box-sizing: border-box;
+    width: 200px; height: 200px;
+    position: relative; margin: 0 auto;
+  }
+  .demo-square::before {
+    content: '';
+    width: 30px; height: 30px;
+    background-color: lightblue;
+    position: absolute; top: 50%; left: 50%;
+    animation: demo-square-rotating 1500ms alternate infinite both;
+  }
+  @keyframes demo-square-rotating {
+    0%, 30%   { transform: translate(-50%, -50%) rotate(0); }
+    70%, 100% { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+</style>
+<div class="demo-square" role="status" aria-label="Loading"></div>`,
+      },
+      {
+        title: 'Ripple rings',
+        lead: 'Twelve nested rings pulsing along the Z axis under a tilted perspective — a 3D wave made of borders.',
+        markup: `<div class="loader-ripple">
+  <span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span>
+</div>
+
+<style>
+.loader-ripple {
+  position: relative;
+  width: 250px; height: 250px;
+  transform-style: preserve-3d;
+  transform: perspective(500px) rotateX(60deg);
+}
+.loader-ripple span {
+  position: absolute;
+  display: block;
+  border: 5px solid #fff;
+  box-shadow: 0 5px 0 #ccc, inset 0 5px 0 #ccc;
+  box-sizing: border-box;
+  border-radius: 50%;
+  animation: ripple 3s ease-in-out infinite;
+}
+@keyframes ripple {
+  0%, 100% { transform: translateZ(-100px); opacity: .1; }
+  50%      { transform: translateZ(100px);  opacity: 1; }
+}
+/* each ring is inset by 10px more and starts .2s later */
+.loader-ripple span:nth-child(1)  { inset: 0;                   animation-delay: 2.4s; }
+.loader-ripple span:nth-child(2)  { inset: 10px;                 animation-delay: 2.2s; }
+/* …and so on up to span:nth-child(12) { inset: 110px; animation-delay: .2s; } */
+</style>`,
+        demo: `<style>
+  .demo-ripple-stage { display: flex; justify-content: center; padding: 1em 0 2em; background: #c0c0f0; border-radius: 7px; }
+  .demo-ripple {
+    position: relative; width: 250px; height: 250px;
+    transform-style: preserve-3d;
+    transform: perspective(500px) rotateX(60deg);
+  }
+  .demo-ripple span {
+    position: absolute; display: block;
+    border: 5px solid #fff;
+    box-shadow: 0 5px 0 #ccc, inset 0 5px 0 #ccc;
+    box-sizing: border-box; border-radius: 50%;
+    animation: demo-ripple-wave 3s ease-in-out infinite;
+  }
+  @keyframes demo-ripple-wave {
+    0%, 100% { transform: translateZ(-100px); opacity: .1; }
+    50%      { transform: translateZ(100px);  opacity: 1; }
+  }
+  .demo-ripple span:nth-child(1)  { inset: 0;     animation-delay: 2.4s; }
+  .demo-ripple span:nth-child(2)  { inset: 10px;  animation-delay: 2.2s; }
+  .demo-ripple span:nth-child(3)  { inset: 20px;  animation-delay: 2s; }
+  .demo-ripple span:nth-child(4)  { inset: 30px;  animation-delay: 1.8s; }
+  .demo-ripple span:nth-child(5)  { inset: 40px;  animation-delay: 1.6s; }
+  .demo-ripple span:nth-child(6)  { inset: 50px;  animation-delay: 1.4s; }
+  .demo-ripple span:nth-child(7)  { inset: 60px;  animation-delay: 1.2s; }
+  .demo-ripple span:nth-child(8)  { inset: 70px;  animation-delay: 1s; }
+  .demo-ripple span:nth-child(9)  { inset: 80px;  animation-delay: .8s; }
+  .demo-ripple span:nth-child(10) { inset: 90px;  animation-delay: .6s; }
+  .demo-ripple span:nth-child(11) { inset: 100px; animation-delay: .4s; }
+  .demo-ripple span:nth-child(12) { inset: 110px; animation-delay: .2s; }
+</style>
+<div class="demo-ripple-stage">
+  <div class="demo-ripple" role="status" aria-label="Loading">
+    <span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span>
+  </div>
+</div>`,
+      },
+      {
+        title: 'Wireframe cube (canvas)',
+        lead: 'A rotating 3D cube projected onto 2D canvas — for dashboards that want a heavier, sci-fi loading state.',
+        markup: `<canvas id="cube" width="400" height="400"></canvas>
+
+<script>
+const ctx = document.getElementById('cube').getContext('2d');
+const vertices = [
+  {x:-1,y:-1,z:-1}, {x:1,y:-1,z:-1}, {x:1,y:1,z:-1}, {x:-1,y:1,z:-1},
+  {x:-1,y:-1,z:1},  {x:1,y:-1,z:1},  {x:1,y:1,z:1},  {x:-1,y:1,z:1},
+];
+const edges = [
+  [0,1],[1,2],[2,3],[3,0], [4,5],[5,6],[6,7],[7,4], [0,4],[1,5],[2,6],[3,7],
+];
+let angleX = 0, angleY = 0, angleZ = 0;
+
+function project(p) {
+  const fov = 300;
+  const scale = fov / (fov + p.z);
+  return { x: p.x * scale * 50 + 200, y: p.y * scale * 50 + 200 };
+}
+function rotate(p) {
+  let { x, y, z } = p;
+  [y, z] = [y * Math.cos(angleX) - z * Math.sin(angleX),
+            y * Math.sin(angleX) + z * Math.cos(angleX)];
+  [x, z] = [x * Math.cos(angleY) + z * Math.sin(angleY),
+           -x * Math.sin(angleY) + z * Math.cos(angleY)];
+  [x, y] = [x * Math.cos(angleZ) - y * Math.sin(angleZ),
+            x * Math.sin(angleZ) + y * Math.cos(angleZ)];
+  return { x, y, z };
+}
+function draw() {
+  ctx.clearRect(0, 0, 400, 400);
+  angleX += .02; angleY += .03; angleZ += .01;
+  edges.forEach(([a, b]) => {
+    const p1 = project(rotate(vertices[a]));
+    const p2 = project(rotate(vertices[b]));
+    ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
+  });
+  requestAnimationFrame(draw);
+}
+draw();
+</\u0073cript>`,
+        demo: `<div style="display:flex;justify-content:center">
+  <canvas id="demo-cube-loader" width="400" height="400"
+          style="width:100%;max-width:320px;height:auto;border:1px solid var(--line);border-radius:7px"
+          role="status" aria-label="Loading"></canvas>
+</div>`,
+        run: 'startCubeLoader',
+      },
+    ],
   },
 ];
 
@@ -401,6 +642,18 @@ const makePage = (d, extraBlocks = []) =>
         label: 'Notes',
         html: d.notes.map((n) => `<p>${n}</p>`).join('\n'),
       },
+      ...(d.gallery || []).map((item, i) => ({
+        id: `example-${i + 1}`,
+        label: item.title,
+        html:
+          `<p>${item.lead}</p>\n` +
+          codeBlock(item.markup) +
+          demo(item.demo, item.caption || '') +
+          (item.run
+            ? `<p><button class="btn btn-primary" type="button"
+                onclick="window.__galsFeatures.${item.run}()">Run animation</button></p>`
+            : ''),
+      })),
       ...extraBlocks,
     ],
   });

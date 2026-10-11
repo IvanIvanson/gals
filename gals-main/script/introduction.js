@@ -13,7 +13,7 @@ const introductionHTML = `
     <button class="btn" type="button">View on GitHub</button>
 </div>
 
-<div><p>GALS is a powerful, feature-packed frontend toolkit. Build anything—from prototype to production—in minutes.</p>
+<div><p><strong>GALS</strong> (Grid Application Layout Systems) is a powerful, feature-packed frontend toolkit. Build anything—from prototype to production—in minutes.</p>
 </div>
 ${onThisPage(sections)}
 <div class="quick-start">
