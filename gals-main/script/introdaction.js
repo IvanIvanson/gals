@@ -4,6 +4,7 @@ export const sections = [
   { id: 'start', label: 'Quick start' },
   { id: 'css', label: 'CSS' },
   { id: 'js', label: 'JS' },
+  { id: 'ai-prompt', label: 'AI prompt' },
 ];
 
 const introdactionHTML = `
@@ -91,6 +92,36 @@ ${onThisPage(sections)}
         </svg></button>
 </div>
 <!--  -->
+
+<h3 id="ai-prompt">Ask AI the right way</h3>
+<p>Copy this prompt template, paste it into ChatGPT, Claude, GitHub Copilot or Cursor, and replace the text in <code>[SQUARE BRACKETS]</code> with your task.</p>
+
+<div class="copy-block copy-block4">
+    <code><pre>Act as an experienced frontend developer specializing in the GALS framework.
+
+Task:
+Create a [COMPONENT / PAGE / LAYOUT] that does the following: [DESCRIBE THE FUNCTIONALITY, e.g. "a responsive product card with an image, title, price and a 'Buy' button"].
+
+Strict constraints and rules:
+1. Framework: use ONLY GALS classes and grid. Do not use Bootstrap, Tailwind or other libraries.
+2. Grid: use the .container &gt; .row &gt; .col structure.
+3. Responsiveness: always use GALS breakpoints: xxs (375px), xs (425px), s (770px), m (1025px), l (1439.98px), xl (1440px+). Example: class="col-s-12 col-m-6".
+4. Spacing: use GALS utility classes for spacing (e.g. pt-3, mb-4, px-2).
+5. Styles: if custom styles are needed, use GALS CSS variables (e.g. var(--fs-body), var(--lh-body)).
+6. Output: provide ONLY valid HTML. Include &lt;link rel="stylesheet" href="style.css"&gt; in the &lt;head&gt;. Make sure all tags are closed and accessibility (ARIA) attributes are used.
+
+Context:
+[OPTIONAL: add specific requirements here, e.g. "Use the .badge-stable class for the 'New' label"].</pre>
+    </code>
+
+    <button class="copy" type="button" data-tooltip="Copy to clipboard" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+            fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+            <path
+                d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
+            <path
+                d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
+        </svg></button>
+</div>
 </div>
 `;
 
