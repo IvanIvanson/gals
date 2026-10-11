@@ -44,7 +44,7 @@ describe('левое меню', () => {
   test('клик по каждому пункту не бросает исключение', async () => {
     const { dom, document } = await boot();
 
-    for (const item of document.querySelectorAll('#introdaction .menu-item')) {
+    for (const item of document.querySelectorAll('#introduction .menu-item')) {
       assert.doesNotThrow(() => click(dom, item), `action=${item.dataset.action}`);
     }
   });
@@ -54,7 +54,7 @@ describe('левое меню', () => {
     const center = document.querySelector('.container-center');
     const seen = new Set();
 
-    for (const item of document.querySelectorAll('#introdaction .menu-item')) {
+    for (const item of document.querySelectorAll('#introduction .menu-item')) {
       click(dom, item);
       assert.ok(center.querySelector('h1'), `пусто после ${item.dataset.action}`);
       seen.add(center.innerHTML);
@@ -112,7 +112,7 @@ describe('реестр страниц документации', () => {
     // 45 пунктов меню минус 3 страницы Getting started с data-action
     assert.equal(Object.keys(docPages).length, 42, 'часть страниц потерялась при слиянии');
 
-    for (const reserved of ['showIntrodaction', 'showDownload', 'showContents']) {
+    for (const reserved of ['showIntroduction', 'showDownload', 'showContents']) {
       assert.equal(Object.hasOwn(docPages, reserved), false, `${reserved} занят в docPages`);
     }
   });

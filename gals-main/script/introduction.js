@@ -7,7 +7,7 @@ export const sections = [
   { id: 'ai-prompt', label: 'AI prompt' },
 ];
 
-const introdactionHTML = `
+const introductionHTML = `
 <div class="content-between align-center">
     <h1>Get started with GALS</h1>
     <button class="btn" type="button">View on GitHub</button>
@@ -125,4 +125,4 @@ Context:
 </div>
 `;
 
-export default { sections, html: introdactionHTML };
+export default { sections, html: introductionHTML };

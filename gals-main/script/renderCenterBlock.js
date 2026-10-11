@@ -1,4 +1,4 @@
-import introdaction from './introdaction.js';
+import introduction from './introduction.js';
 import download from './download.js';
 import contents from './contents.js';
 import copyBlock from './copyBlock.js';
@@ -12,13 +12,13 @@ import { slug } from './docs/page.js';
  * из текста пункта меню (см. docs/index.js).
  */
 const pages = {
-  showIntrodaction: introdaction,
+  showIntroduction: introduction,
   showDownload: download,
   showContents: contents,
   ...docPages,
 };
 
-const DEFAULT_PAGE = 'showIntrodaction';
+const DEFAULT_PAGE = 'showIntroduction';
 
 const renderCenterBlock = function () {
   const containerCenter = document.querySelector('.container-center');
