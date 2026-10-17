@@ -66,6 +66,22 @@ describe('CDN-файлы', () => {
     assert.equal(pkg.style, 'cdn/gals.min.css');
     assert.ok(pkg.files.includes('cdn/'), 'cdn/ не в files[]');
   });
+
+  test('min-файлы не содержат CRLF (защита от core.autocrlf)', () => {
+    for (const f of ['cdn/gals.min.css', 'cdn/gals.min.js']) {
+      const bytes = readFileSync(`${ROOT}/${f}`);
+      const cr = bytes.reduce((sum, b) => sum + (b === 13 ? 1 : 0), 0);
+      assert.equal(cr, 0, `${f} содержит ${cr} байт 0x0D (CRLF) — git autocrlf мог испортить`);
+    }
+  });
+
+  test('.gitattributes существует с правилами eol=lf и -text', () => {
+    const attrsPath = `${ROOT}/../.gitattributes`;
+    assert.ok(existsSync(attrsPath), 'нет .gitattributes в корне репозитория');
+    const content = readFileSync(attrsPath, 'utf8');
+    assert.match(content, /eol=lf/, 'нет правила eol=lf');
+    assert.match(content, /-text/, 'нет правила -text для CDN-файлов');
+  });
 });
 
 describe('jsDelivr CDN в документации', () => {
