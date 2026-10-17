@@ -1,0 +1,2597 @@
+{
+  "name": "gals",
+  "version": "1.0.0",
+  "description": "GALS (Grid Application Layout Systems) — лёгкий flexbox-тулкит. Machine-readable справочник классов: сгенерирован из gals/gals.css, поэтому не расходится со сборкой.",
+  "generatedFrom": {
+    "css": "gals/gals.css",
+    "js": "gals/gals.js"
+  },
+  "docs": "https://ivanivanson.github.io/gals/",
+  "repository": "https://github.com/IvanIvanson/gals",
+  "cdn": {
+    "css": "https://cdn.jsdelivr.net/gh/IvanIvanson/gals@main/gals-main/cdn/gals.min.css",
+    "js": "https://cdn.jsdelivr.net/gh/IvanIvanson/gals@main/gals-main/cdn/gals.min.js"
+  },
+  "grid": {
+    "model": "flex",
+    "container": ".container",
+    "columnUnit": "var(--gridmultiplyConst) = 8.325% (1/12)",
+    "rule": "Классы pt-* действуют ТОЛЬКО внутри .container: селектор в CSS — \".container .pt-3\".",
+    "gutter": ".container padding 5px + .container-block padding 5px",
+    "columns": 12,
+    "doesNotExist": [
+      ".row",
+      ".col",
+      ".col-{breakpoint}-{n}",
+      "mt-*/mb-*/px-*/py-* (в GALS нет утилит отступов кроме .padding-lg)"
+    ]
+  },
+  "breakpoints": [
+    {
+      "name": "xl",
+      "prefix": "pt-xl*",
+      "condition": "min-width 1440px"
+    },
+    {
+      "name": "l",
+      "prefix": "pt-l*",
+      "condition": "max-width 1439.98px"
+    },
+    {
+      "name": "m",
+      "prefix": "pt-m*",
+      "condition": "max-width 1025px"
+    },
+    {
+      "name": "s",
+      "prefix": "pt-s*",
+      "condition": "max-width 770px"
+    },
+    {
+      "name": "xs",
+      "prefix": "pt-xs*",
+      "condition": "max-width 425px"
+    },
+    {
+      "name": "xxs",
+      "prefix": "pt-xxs*",
+      "condition": "max-width 375px"
+    }
+  ],
+  "tokens": {
+    "--gridmultiplyConst": "8.325%",
+    "--accent": "#8512d1",
+    "--ink": "#222222",
+    "--paper": "#ffffff",
+    "--ok": "#2a9d4a",
+    "--warn": "#b57d0a",
+    "--err": "#d1495b",
+    "--line": "#cecece"
+  },
+  "runtime": {
+    "file": "gals/gals.js",
+    "note": "Каждая фича опциональна: нет хука в разметке — код молчит.",
+    "hooks": [
+      {
+        "name": "icon-menu",
+        "kind": "class",
+        "marker": "icon-menu",
+        "description": "Кнопка-гамбургер. gals.js вешает на неё клик и обновляет aria-expanded. Нужна вместе с .menu."
+      },
+      {
+        "name": "menu-show",
+        "kind": "class",
+        "marker": "menu-show",
+        "description": "Навешается на .menu при открытии и снимается при закрытии. В CSS фреймворка не объявлен — styling на стороне проекта."
+      },
+      {
+        "name": "accordion-group",
+        "kind": "class",
+        "marker": "accordion-group",
+        "description": "Родитель для группы details.accordion: открытие одного элемента закрывает остальные."
+      },
+      {
+        "name": "img.container-fluid",
+        "kind": "class + tag",
+        "marker": "container-fluid",
+        "description": "Когда <img class=\"container-fluid\"> лежит внутри .container-block, gals.js пересчитывает width/height по родителю."
+      },
+      {
+        "name": "data-scrollspy",
+        "kind": "attribute",
+        "marker": "data-scrollspy",
+        "description": "Ставится на <nav>. Ссылка a[href=\"#id\"] заголовка в середине окна получает aria-current=\"true\"."
+      }
+    ]
+  },
+  "counts": {
+    "classes": 183,
+    "tokens": 8
+  },
+  "classes": [
+    {
+      "name": "accordion",
+      "description": "Стилизация родного <details>. summary получает стрелку ▸ через ::after, при [open] поворот на 90°.",
+      "variants": [
+        {
+          "css": "border: 1px solid var(--line); border-radius: 7px; background: var(--paper)"
+        },
+        {
+          "css": "margin-top: 8px",
+          "selector": ".accordion + .accordion"
+        },
+        {
+          "css": "display: flex; justify-content: space-between; align-items: center; gap: 0.5em; padding: 0.75em 1em; cursor: pointer; font-weight: 600; list-style: none",
+          "selector": ".accordion summary"
+        },
+        {
+          "css": "display: none",
+          "selector": ".accordion summary::-webkit-details-marker"
+        },
+        {
+          "css": "content: \"\\25B8\"; transition: transform 0.2s",
+          "selector": ".accordion summary::after"
+        },
+        {
+          "css": "transform: rotate(90deg)",
+          "selector": ".accordion[open] summary::after"
+        }
+      ]
+    },
+    {
+      "name": "accordion-body",
+      "description": "Внутренний паддинг раскрытой части.",
+      "css": "padding: 0 1em 0.75em"
+    },
+    {
+      "name": "alert",
+      "description": "Блок с боковой полосой 4px и серым фоном.",
+      "css": "padding: 0.75em 1em; border: 1px solid var(--line); border-left-width: 4px; border-radius: 5px; background: #f6f6f6"
+    },
+    {
+      "name": "alert-error",
+      "description": "Полоса var(--err) — ошибка.",
+      "css": "border-left-color: var(--err)"
+    },
+    {
+      "name": "alert-info",
+      "description": "Полоса var(--accent) — информация.",
+      "css": "border-left-color: var(--accent)"
+    },
+    {
+      "name": "alert-ok",
+      "description": "Полоса var(--ok) — успех.",
+      "css": "border-left-color: var(--ok)"
+    },
+    {
+      "name": "alert-warn",
+      "description": "Полоса var(--warn) — предупреждение.",
+      "css": "border-left-color: var(--warn)"
+    },
+    {
+      "name": "align-center",
+      "description": "align-items:center.",
+      "css": "align-items: center"
+    },
+    {
+      "name": "align-flexEnd",
+      "description": "align-items:flex-end.",
+      "css": "align-items: flex-end"
+    },
+    {
+      "name": "align-flexStart",
+      "description": "align-items:flex-start.",
+      "css": "align-items: flex-start"
+    },
+    {
+      "name": "alignSelf-baseline",
+      "description": "align-self:baseline.",
+      "css": "align-self:baseline"
+    },
+    {
+      "name": "alignSelf-center",
+      "description": "align-self:center — переопределяет выравнивание одного элемента.",
+      "css": "align-self: center"
+    },
+    {
+      "name": "alignSelf-end",
+      "description": "align-self:flex-end.",
+      "css": "align-self:flex-end"
+    },
+    {
+      "name": "alignSelf-start",
+      "description": "align-self:flex-start.",
+      "css": "align-self:flex-start"
+    },
+    {
+      "name": "audio",
+      "description": "display:block, width:100%.",
+      "css": "display: block; width: 100%"
+    },
+    {
+      "name": "border",
+      "description": "outline solid #333 1px — контур не влияет на layout.",
+      "css": "outline: solid #333 1px"
+    },
+    {
+      "name": "borderBlue",
+      "description": "outline solid blue 1px — отладка.",
+      "css": "outline: solid blue 1px"
+    },
+    {
+      "name": "borderGreen",
+      "description": "outline solid green 2px — отладка.",
+      "css": "outline: solid green 2px"
+    },
+    {
+      "name": "borderRed",
+      "description": "outline solid red 3px — отладка.",
+      "css": "outline: solid red 3px"
+    },
+    {
+      "name": "btn",
+      "description": "Базовая кнопка: inline-flex, паддинги, рамка, border-radius:7px. Работает и на <a>.",
+      "variants": [
+        {
+          "css": "display: inline-flex; align-items: center; justify-content: center; gap: 0.5em; padding: 0.55em 1em; font: inherit; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 7px; cursor: pointer; text-decoration: none"
+        },
+        {
+          "css": "border-color: var(--accent); color: var(--accent)",
+          "selector": ".btn:hover"
+        },
+        {
+          "css": "opacity: 0.5; pointer-events: none",
+          "selector": ".btn[disabled]"
+        },
+        {
+          "css": "opacity: 0.5; pointer-events: none",
+          "selector": ".btn[aria-disabled=\"true\"]"
+        }
+      ]
+    },
+    {
+      "name": "btn-primary",
+      "description": "Заливка var(--accent). Кладётся рядом с .btn.",
+      "variants": [
+        {
+          "css": "background: var(--accent); border-color: var(--accent); color: var(--paper)"
+        },
+        {
+          "css": "filter: brightness(1.12); color: var(--paper)",
+          "selector": ".btn-primary:hover"
+        }
+      ]
+    },
+    {
+      "name": "card",
+      "description": "flex-column, height:100%, рамка, border-radius:7px. Дочерние блоки — ниже.",
+      "css": "display: flex; flex-direction: column; gap: 0.5em; height: 100%; padding: 1em; background: var(--paper); border: 1px solid var(--line); border-radius: 7px"
+    },
+    {
+      "name": "card-body",
+      "description": "flex:1 0 auto — тянется и прижимает футер вниз.",
+      "css": "flex: 1 0 auto"
+    },
+    {
+      "name": "card-footer",
+      "description": "margin-top:auto + flex с gap:0.5em.",
+      "css": "margin-top: auto; display: flex; gap: 0.5em"
+    },
+    {
+      "name": "card-title",
+      "description": "Заголовок карточки: margin:0, font-size:1.2em.",
+      "css": "margin: 0; font-size: 1.2em"
+    },
+    {
+      "name": "carousel",
+      "description": "flex + overflow-x:auto + scroll-snap-type:x mandatory — лента без JS.",
+      "css": "display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 5px"
+    },
+    {
+      "name": "carousel-slide",
+      "description": "flex:0 0 80% + scroll-snap-align:center. Картинка внутри — cover на 100%.",
+      "variants": [
+        {
+          "css": "flex: 0 0 80%; scroll-snap-align: center"
+        },
+        {
+          "css": "width: 100%; height: 100%; object-fit: cover; border-radius: 7px",
+          "selector": ".carousel-slide img"
+        }
+      ]
+    },
+    {
+      "name": "checkbox",
+      "description": "Обёртка label: flex, gap. Родный input скрыт, визуал рисует .checkbox-box через ::after (галочка).",
+      "variants": [
+        {
+          "css": "display: flex; align-items: flex-start; gap: 0.5em; cursor: pointer"
+        },
+        {
+          "css": "position: absolute; opacity: 0; pointer-events: none",
+          "selector": ".checkbox input"
+        },
+        {
+          "css": "background: var(--accent); border-color: var(--accent)",
+          "selector": ".checkbox input:checked + .checkbox-box"
+        },
+        {
+          "css": "content: \"\"; display: block; width: 0.3em; height: 0.55em; margin: 0.12em auto 0; border: solid var(--paper); border-width: 0 2px 2px 0; transform: rotate(45deg)",
+          "selector": ".checkbox input:checked + .checkbox-box::after"
+        },
+        {
+          "css": "outline: 2px solid var(--accent); outline-offset: 2px",
+          "selector": ".checkbox input:focus-visible + .checkbox-box"
+        }
+      ]
+    },
+    {
+      "name": "checkbox-box",
+      "description": "Квадратик 1.15em, border-radius:3px. Идёт СРАЗУ после input.",
+      "variants": [
+        {
+          "css": "flex: none; box-sizing: border-box; width: 1.15em; height: 1.15em; margin-top: 0.15em; border: 1px solid #767676; background: var(--paper)"
+        },
+        {
+          "css": "border-radius: 3px"
+        },
+        {
+          "css": "background: var(--accent); border-color: var(--accent)",
+          "selector": ".checkbox input:checked + .checkbox-box"
+        },
+        {
+          "css": "content: \"\"; display: block; width: 0.3em; height: 0.55em; margin: 0.12em auto 0; border: solid var(--paper); border-width: 0 2px 2px 0; transform: rotate(45deg)",
+          "selector": ".checkbox input:checked + .checkbox-box::after"
+        },
+        {
+          "css": "outline: 2px solid var(--accent); outline-offset: 2px",
+          "selector": ".checkbox input:focus-visible + .checkbox-box"
+        }
+      ]
+    },
+    {
+      "name": "container",
+      "description": "Flex-обёртка сетки: display:flex, flex-wrap:wrap, padding:5px. Обязательный родитель для классов pt-*.",
+      "variants": [
+        {
+          "css": "display: flex; flex-wrap: wrap; align-items: stretch; gap:0px; padding: 5px"
+        },
+        {
+          "css": "padding: 5px",
+          "needs": ".container",
+          "selector": ".container .container-block"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*1)",
+          "needs": ".container",
+          "selector": ".container .pt-1"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*2)",
+          "needs": ".container",
+          "selector": ".container .pt-2"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*3)",
+          "needs": ".container",
+          "selector": ".container .pt-3"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*4)",
+          "needs": ".container",
+          "selector": ".container .pt-4"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*5)",
+          "needs": ".container",
+          "selector": ".container .pt-5"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*6)",
+          "needs": ".container",
+          "selector": ".container .pt-6"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*7)",
+          "needs": ".container",
+          "selector": ".container .pt-7"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*8)",
+          "needs": ".container",
+          "selector": ".container .pt-8"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*9)",
+          "needs": ".container",
+          "selector": ".container .pt-9"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*10)",
+          "needs": ".container",
+          "selector": ".container .pt-10"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*11)",
+          "needs": ".container",
+          "selector": ".container .pt-11"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*12)",
+          "needs": ".container",
+          "selector": ".container .pt-12"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*1)",
+          "at": "xl",
+          "needs": ".container",
+          "selector": ".container .pt-xl1"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*2)",
+          "at": "xl",
+          "needs": ".container",
+          "selector": ".container .pt-xl2"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*3)",
+          "at": "xl",
+          "needs": ".container",
+          "selector": ".container .pt-xl3"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*4)",
+          "at": "xl",
+          "needs": ".container",
+          "selector": ".container .pt-xl4"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*5)",
+          "at": "xl",
+          "needs": ".container",
+          "selector": ".container .pt-xl5"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*6)",
+          "at": "xl",
+          "needs": ".container",
+          "selector": ".container .pt-xl6"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*7)",
+          "at": "xl",
+          "needs": ".container",
+          "selector": ".container .pt-xl7"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*8)",
+          "at": "xl",
+          "needs": ".container",
+          "selector": ".container .pt-xl8"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*9)",
+          "at": "xl",
+          "needs": ".container",
+          "selector": ".container .pt-xl9"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*10)",
+          "at": "xl",
+          "needs": ".container",
+          "selector": ".container .pt-xl10"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*11)",
+          "at": "xl",
+          "needs": ".container",
+          "selector": ".container .pt-xl11"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*12)",
+          "at": "xl",
+          "needs": ".container",
+          "selector": ".container .pt-xl12"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*1)",
+          "at": "l",
+          "needs": ".container",
+          "selector": ".container .pt-l1"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*2)",
+          "at": "l",
+          "needs": ".container",
+          "selector": ".container .pt-l2"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*3)",
+          "at": "l",
+          "needs": ".container",
+          "selector": ".container .pt-l3"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*4)",
+          "at": "l",
+          "needs": ".container",
+          "selector": ".container .pt-l4"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*5)",
+          "at": "l",
+          "needs": ".container",
+          "selector": ".container .pt-l5"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*6)",
+          "at": "l",
+          "needs": ".container",
+          "selector": ".container .pt-l6"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*7)",
+          "at": "l",
+          "needs": ".container",
+          "selector": ".container .pt-l7"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*8)",
+          "at": "l",
+          "needs": ".container",
+          "selector": ".container .pt-l8"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*9)",
+          "at": "l",
+          "needs": ".container",
+          "selector": ".container .pt-l9"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*10)",
+          "at": "l",
+          "needs": ".container",
+          "selector": ".container .pt-l10"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*11)",
+          "at": "l",
+          "needs": ".container",
+          "selector": ".container .pt-l11"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*12)",
+          "at": "l",
+          "needs": ".container",
+          "selector": ".container .pt-l12"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*1)",
+          "at": "m",
+          "needs": ".container",
+          "selector": ".container .pt-m1"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*2)",
+          "at": "m",
+          "needs": ".container",
+          "selector": ".container .pt-m2"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*3)",
+          "at": "m",
+          "needs": ".container",
+          "selector": ".container .pt-m3"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*4)",
+          "at": "m",
+          "needs": ".container",
+          "selector": ".container .pt-m4"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*5)",
+          "at": "m",
+          "needs": ".container",
+          "selector": ".container .pt-m5"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*6)",
+          "at": "m",
+          "needs": ".container",
+          "selector": ".container .pt-m6"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*7)",
+          "at": "m",
+          "needs": ".container",
+          "selector": ".container .pt-m7"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*8)",
+          "at": "m",
+          "needs": ".container",
+          "selector": ".container .pt-m8"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*9)",
+          "at": "m",
+          "needs": ".container",
+          "selector": ".container .pt-m9"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*10)",
+          "at": "m",
+          "needs": ".container",
+          "selector": ".container .pt-m10"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*11)",
+          "at": "m",
+          "needs": ".container",
+          "selector": ".container .pt-m11"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*12)",
+          "at": "m",
+          "needs": ".container",
+          "selector": ".container .pt-m12"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*1)",
+          "at": "s",
+          "needs": ".container",
+          "selector": ".container .pt-s1"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*2)",
+          "at": "s",
+          "needs": ".container",
+          "selector": ".container .pt-s2"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*3)",
+          "at": "s",
+          "needs": ".container",
+          "selector": ".container .pt-s3"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*4)",
+          "at": "s",
+          "needs": ".container",
+          "selector": ".container .pt-s4"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*5)",
+          "at": "s",
+          "needs": ".container",
+          "selector": ".container .pt-s5"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*6)",
+          "at": "s",
+          "needs": ".container",
+          "selector": ".container .pt-s6"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*7)",
+          "at": "s",
+          "needs": ".container",
+          "selector": ".container .pt-s7"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*8)",
+          "at": "s",
+          "needs": ".container",
+          "selector": ".container .pt-s8"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*9)",
+          "at": "s",
+          "needs": ".container",
+          "selector": ".container .pt-s9"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*10)",
+          "at": "s",
+          "needs": ".container",
+          "selector": ".container .pt-s10"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*11)",
+          "at": "s",
+          "needs": ".container",
+          "selector": ".container .pt-s11"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*12)",
+          "at": "s",
+          "needs": ".container",
+          "selector": ".container .pt-s12"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*1)",
+          "at": "xs",
+          "needs": ".container",
+          "selector": ".container .pt-xs1"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*2)",
+          "at": "xs",
+          "needs": ".container",
+          "selector": ".container .pt-xs2"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*3)",
+          "at": "xs",
+          "needs": ".container",
+          "selector": ".container .pt-xs3"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*4)",
+          "at": "xs",
+          "needs": ".container",
+          "selector": ".container .pt-xs4"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*5)",
+          "at": "xs",
+          "needs": ".container",
+          "selector": ".container .pt-xs5"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*6)",
+          "at": "xs",
+          "needs": ".container",
+          "selector": ".container .pt-xs6"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*7)",
+          "at": "xs",
+          "needs": ".container",
+          "selector": ".container .pt-xs7"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*8)",
+          "at": "xs",
+          "needs": ".container",
+          "selector": ".container .pt-xs8"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*9)",
+          "at": "xs",
+          "needs": ".container",
+          "selector": ".container .pt-xs9"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*10)",
+          "at": "xs",
+          "needs": ".container",
+          "selector": ".container .pt-xs10"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*11)",
+          "at": "xs",
+          "needs": ".container",
+          "selector": ".container .pt-xs11"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*12)",
+          "at": "xs",
+          "needs": ".container",
+          "selector": ".container .pt-xs12"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*1)",
+          "at": "xxs",
+          "needs": ".container",
+          "selector": ".container .pt-xxs1"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*2)",
+          "at": "xxs",
+          "needs": ".container",
+          "selector": ".container .pt-xxs2"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*3)",
+          "at": "xxs",
+          "needs": ".container",
+          "selector": ".container .pt-xxs3"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*4)",
+          "at": "xxs",
+          "needs": ".container",
+          "selector": ".container .pt-xxs4"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*5)",
+          "at": "xxs",
+          "needs": ".container",
+          "selector": ".container .pt-xxs5"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*6)",
+          "at": "xxs",
+          "needs": ".container",
+          "selector": ".container .pt-xxs6"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*7)",
+          "at": "xxs",
+          "needs": ".container",
+          "selector": ".container .pt-xxs7"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*8)",
+          "at": "xxs",
+          "needs": ".container",
+          "selector": ".container .pt-xxs8"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*9)",
+          "at": "xxs",
+          "needs": ".container",
+          "selector": ".container .pt-xxs9"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*10)",
+          "at": "xxs",
+          "needs": ".container",
+          "selector": ".container .pt-xxs10"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*11)",
+          "at": "xxs",
+          "needs": ".container",
+          "selector": ".container .pt-xxs11"
+        },
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*12)",
+          "at": "xxs",
+          "needs": ".container",
+          "selector": ".container .pt-xxs12"
+        },
+        {
+          "css": "display: none",
+          "at": "xl",
+          "needs": ".container",
+          "selector": ".container .pt-xl-d_n"
+        },
+        {
+          "css": "display: none",
+          "at": "l",
+          "needs": ".container",
+          "selector": ".container .pt-l-d_n"
+        },
+        {
+          "css": "display: none",
+          "at": "m",
+          "needs": ".container",
+          "selector": ".container .pt-m-d_n"
+        },
+        {
+          "css": "display: none",
+          "at": "s",
+          "needs": ".container",
+          "selector": ".container .pt-s-d_n"
+        },
+        {
+          "css": "display: none",
+          "at": "xs",
+          "needs": ".container",
+          "selector": ".container .pt-xs-d_n"
+        },
+        {
+          "css": "display: none",
+          "at": "xxs",
+          "needs": ".container",
+          "selector": ".container .pt-xxs-d_n"
+        }
+      ]
+    },
+    {
+      "name": "container-block",
+      "description": "Промежуточная ячейка внутри .container: добавляет padding:5px (gutter). Кладётся между .container и содержимым колонки.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "padding: 5px",
+          "selector": ".container .container-block"
+        }
+      ]
+    },
+    {
+      "name": "container-flex",
+      "description": "Просто display:flex без переноса строк.",
+      "css": "display: flex"
+    },
+    {
+      "name": "container-fluid",
+      "description": "flex-grow:1 — растягивает элемент на всё свободное место. На <img class=\"container-fluid\"> gals.js подгоняет картинку под размер родителя.",
+      "css": "flex-grow: 1"
+    },
+    {
+      "name": "content-around",
+      "description": "display:flex + justify-content:space-around.",
+      "css": "display: flex; justify-content:space-around"
+    },
+    {
+      "name": "content-between",
+      "description": "display:flex + justify-content:space-between. Самостоятельный хелпер.",
+      "css": "display: flex; justify-content: space-between"
+    },
+    {
+      "name": "content-center",
+      "description": "display:flex + justify-content:center.",
+      "css": "display: flex; justify-content: center"
+    },
+    {
+      "name": "dropdown",
+      "description": "Оформление вспывающего списка для Popover API (родной popovertarget). Кнопки внутри стилизованы.",
+      "variants": [
+        {
+          "css": "min-width: 10em; padding: 0.5em; background: var(--paper); border: 1px solid var(--line); border-radius: 7px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12)"
+        },
+        {
+          "css": "display: block; width: 100%; padding: 0.5em 0.75em; font: inherit; text-align: left; color: inherit; background: none; border: none; border-radius: 5px; cursor: pointer",
+          "selector": ".dropdown button"
+        },
+        {
+          "css": "background: #f0ecf7",
+          "selector": ".dropdown button:hover"
+        }
+      ]
+    },
+    {
+      "name": "field",
+      "description": "flex-column gap:0.35em — обёртка label + input.",
+      "css": "display: flex; flex-direction: column; gap: 0.35em; margin-bottom: 0.9em"
+    },
+    {
+      "name": "field-group",
+      "description": "Сброс fieldset: margin/padding/border в 0.",
+      "css": "margin: 0; padding: 0; border: none"
+    },
+    {
+      "name": "field-hint",
+      "description": "Подпись-подсказка: 0.85em, серый.",
+      "css": "font-size: 0.85em; color: #777"
+    },
+    {
+      "name": "flex-grow1",
+      "description": "flex-grow:1.",
+      "css": "flex-grow: 1"
+    },
+    {
+      "name": "flex-grow2",
+      "description": "flex-grow:2.",
+      "css": "flex-grow: 2"
+    },
+    {
+      "name": "header",
+      "description": "flex, flex-wrap:wrap, align-items:center, gap:10px — шапка сайта.",
+      "css": "display: flex; flex-wrap: wrap; align-items: center; gap: 10px"
+    },
+    {
+      "name": "header-actions",
+      "description": "Правый блок шапки: margin-left:auto прижимает его к краю.",
+      "css": "display: flex; align-items: center; gap: 10px; margin-left: auto"
+    },
+    {
+      "name": "header-brand",
+      "description": "Логотип/название: жирный, без подчёркивания.",
+      "css": "font-weight: 700; text-decoration: none; color: inherit"
+    },
+    {
+      "name": "header-nav",
+      "description": "Контейнер навигации; вложенный ul сбрасывается в flex-строку без буллетов.",
+      "variants": [
+        {
+          "css": "list-style: none; display: flex; flex-wrap: wrap; gap: 10px; margin: 0; padding: 0",
+          "selector": ".header-nav ul"
+        },
+        {
+          "css": "text-decoration: none; color: inherit",
+          "selector": ".header-nav a"
+        },
+        {
+          "css": "color: var(--accent)",
+          "selector": ".header-nav a:hover"
+        },
+        {
+          "css": "color: var(--accent)",
+          "selector": ".header-nav a[aria-current=\"page\"]"
+        }
+      ]
+    },
+    {
+      "name": "header-sticky",
+      "description": "position:sticky, top:0, z-index:100, фон var(--paper).",
+      "css": "position: sticky; top: 0; z-index: 100; background: var(--paper)"
+    },
+    {
+      "name": "icon",
+      "description": "fill:currentColor — SVG наследует цвет текста.",
+      "css": "fill: currentColor"
+    },
+    {
+      "name": "icon-16",
+      "description": "width/height 16px.",
+      "css": "width: 16px; height: 16px"
+    },
+    {
+      "name": "icon-24",
+      "description": "width/height 24px.",
+      "css": "width: 24px; height: 24px"
+    },
+    {
+      "name": "icon-32",
+      "description": "width/height 32px.",
+      "css": "width: 32px; height: 32px"
+    },
+    {
+      "name": "input",
+      "description": "width:100%, паддинги, рамка #767676, border-radius:4px. textarea.input — ресайз по вертикали.",
+      "variants": [
+        {
+          "css": "width: 100%; padding: 0.5em 0.75em; font: inherit; color: inherit; background: var(--paper); border: 1px solid #767676; border-radius: 4px"
+        },
+        {
+          "css": "resize: vertical; min-height: 6em",
+          "selector": "textarea.input"
+        },
+        {
+          "css": "outline: 2px solid var(--accent); outline-offset: 1px",
+          "selector": ".input:focus-visible"
+        },
+        {
+          "css": "opacity: 0.5; cursor: not-allowed",
+          "selector": ".input[disabled]"
+        },
+        {
+          "css": "border-color: var(--err)",
+          "selector": ".input[aria-invalid=\"true\"]"
+        }
+      ]
+    },
+    {
+      "name": "input-1",
+      "description": "Поле формы шириной 1/12 — та же шкала, что у колонок.",
+      "css": "width: calc(var(--gridmultiplyConst) * 1)"
+    },
+    {
+      "name": "input-10",
+      "description": "Поле формы шириной 10/12 — та же шкала, что у колонок.",
+      "css": "width: calc(var(--gridmultiplyConst) * 10)"
+    },
+    {
+      "name": "input-11",
+      "description": "Поле формы шириной 11/12 — та же шкала, что у колонок.",
+      "css": "width: calc(var(--gridmultiplyConst) * 11)"
+    },
+    {
+      "name": "input-12",
+      "description": "Поле формы шириной 12/12 — та же шкала, что у колонок.",
+      "css": "width: calc(var(--gridmultiplyConst) * 12)"
+    },
+    {
+      "name": "input-2",
+      "description": "Поле формы шириной 2/12 — та же шкала, что у колонок.",
+      "css": "width: calc(var(--gridmultiplyConst) * 2)"
+    },
+    {
+      "name": "input-3",
+      "description": "Поле формы шириной 3/12 — та же шкала, что у колонок.",
+      "css": "width: calc(var(--gridmultiplyConst) * 3)"
+    },
+    {
+      "name": "input-4",
+      "description": "Поле формы шириной 4/12 — та же шкала, что у колонок.",
+      "css": "width: calc(var(--gridmultiplyConst) * 4)"
+    },
+    {
+      "name": "input-5",
+      "description": "Поле формы шириной 5/12 — та же шкала, что у колонок.",
+      "css": "width: calc(var(--gridmultiplyConst) * 5)"
+    },
+    {
+      "name": "input-6",
+      "description": "Поле формы шириной 6/12 — та же шкала, что у колонок.",
+      "css": "width: calc(var(--gridmultiplyConst) * 6)"
+    },
+    {
+      "name": "input-7",
+      "description": "Поле формы шириной 7/12 — та же шкала, что у колонок.",
+      "css": "width: calc(var(--gridmultiplyConst) * 7)"
+    },
+    {
+      "name": "input-8",
+      "description": "Поле формы шириной 8/12 — та же шкала, что у колонок.",
+      "css": "width: calc(var(--gridmultiplyConst) * 8)"
+    },
+    {
+      "name": "input-9",
+      "description": "Поле формы шириной 9/12 — та же шкала, что у колонок.",
+      "css": "width: calc(var(--gridmultiplyConst) * 9)"
+    },
+    {
+      "name": "loader",
+      "description": "Инлайн-спиннер 1em на currentColor, анимация gals-spin .75s. Не занимает места в потоке текста.",
+      "css": "display: inline-block; width: 1em; height: 1em; vertical-align: -0.125em; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: gals-spin 0.75s linear infinite"
+    },
+    {
+      "name": "media",
+      "description": "display:block, width:100%, aspect-ratio:16/9, object-fit:cover.",
+      "css": "display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover"
+    },
+    {
+      "name": "media-1-1",
+      "description": "aspect-ratio:1/1.",
+      "css": "aspect-ratio: 1 / 1"
+    },
+    {
+      "name": "media-4-3",
+      "description": "aspect-ratio:4/3.",
+      "css": "aspect-ratio: 4 / 3"
+    },
+    {
+      "name": "menu",
+      "description": "Стилизация ul/a: flex-строка без буллетов, hover — var(--accent).",
+      "variants": [
+        {
+          "css": "list-style: none; display: flex; flex-wrap: wrap; gap: 0.75em; margin: 0; padding: 0",
+          "selector": ".menu ul"
+        },
+        {
+          "css": "color: inherit; text-decoration: none",
+          "selector": ".menu a"
+        },
+        {
+          "css": "color: var(--accent)",
+          "selector": ".menu a:hover"
+        },
+        {
+          "css": "font-weight: 700",
+          "selector": ".menu a[aria-current=\"page\"]"
+        }
+      ]
+    },
+    {
+      "name": "modal",
+      "description": "Оформление родного <dialog>: width:min(90vw,32em), ::backdrop затемнение 50%. form/.modal-body — flex-column.",
+      "variants": [
+        {
+          "css": "width: min(90vw, 32em); padding: 0; border: 1px solid var(--line); border-radius: 10px"
+        },
+        {
+          "css": "background: rgba(0, 0, 0, 0.5)",
+          "selector": ".modal::backdrop"
+        },
+        {
+          "css": "display: flex; flex-direction: column; gap: 0.75em; padding: 1.5em",
+          "selector": ".modal form"
+        }
+      ]
+    },
+    {
+      "name": "modal-body",
+      "description": "Внутреннее тело <dialog.modal>: flex-column, gap:0.75em, padding:1.5em. Кладётся рядом с .modal.",
+      "css": "display: flex; flex-direction: column; gap: 0.75em; padding: 1.5em"
+    },
+    {
+      "name": "padding-lg",
+      "description": "Горизонтальные отступы clamp(12px, 6vw, 80px) — сжимаются на мобильном вместо жёстких 80px.",
+      "css": "padding-left: clamp(12px, 6vw, 80px); padding-right: clamp(12px, 6vw, 80px)"
+    },
+    {
+      "name": "pagination",
+      "description": "flex + gap:0.25em. Дочерние элементы получают рамки; активная — [aria-current=\"page\"].",
+      "variants": [
+        {
+          "css": "display: flex; flex-wrap: wrap; gap: 0.25em"
+        },
+        {
+          "css": "padding: 0.35em 0.75em; border: 1px solid var(--line); border-radius: 5px; color: inherit; text-decoration: none",
+          "selector": ".pagination > *"
+        },
+        {
+          "css": "border-color: var(--accent); color: var(--accent)",
+          "selector": ".pagination a:hover"
+        },
+        {
+          "css": "background: var(--accent); border-color: var(--accent); color: var(--paper)",
+          "selector": ".pagination [aria-current=\"page\"]"
+        },
+        {
+          "css": "border-color: transparent",
+          "selector": ".pagination [aria-hidden=\"true\"]"
+        }
+      ]
+    },
+    {
+      "name": "popover",
+      "description": "CSS-only подсказка: текст берётся из data-popover, показ по :hover и :focus-visible. Ставится на любой элемент.",
+      "variants": [
+        {
+          "css": "position: relative"
+        },
+        {
+          "css": "content: attr(data-popover); position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); padding: 0.35em 0.6em; background: var(--ink); color: var(--paper); font-size: 0.85em; white-space: nowrap; border-radius: 5px; opacity: 0; visibility: hidden; transition: opacity 0.15s, visibility 0.15s; pointer-events: none",
+          "selector": ".popover::after"
+        },
+        {
+          "css": "opacity: 1; visibility: visible",
+          "selector": ".popover:hover::after"
+        },
+        {
+          "css": "opacity: 1; visibility: visible",
+          "selector": ".popover:focus-visible::after"
+        }
+      ]
+    },
+    {
+      "name": "progress",
+      "description": "Дорожка высотой 0.75em со скруглением.",
+      "css": "height: 0.75em; background: #e5e5e5; border-radius: 999px; overflow: hidden"
+    },
+    {
+      "name": "progress-bar",
+      "description": "Заливка var(--accent), transition:width .3s — ширина задаётся из JS/inline.",
+      "css": "height: 100%; background: var(--accent); border-radius: inherit; transition: width 0.3s"
+    },
+    {
+      "name": "pt-1",
+      "description": "Колонка сетки шириной 1/12 (8.325%). Только внутри .container.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*1)",
+          "selector": ".container .pt-1"
+        }
+      ]
+    },
+    {
+      "name": "pt-10",
+      "description": "Колонка сетки шириной 10/12 (83.250%). Только внутри .container.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*10)",
+          "selector": ".container .pt-10"
+        }
+      ]
+    },
+    {
+      "name": "pt-11",
+      "description": "Колонка сетки шириной 11/12 (91.575%). Только внутри .container.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*11)",
+          "selector": ".container .pt-11"
+        }
+      ]
+    },
+    {
+      "name": "pt-12",
+      "description": "Колонка сетки шириной 12/12 (99.900%). Только внутри .container.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*12)",
+          "selector": ".container .pt-12"
+        }
+      ]
+    },
+    {
+      "name": "pt-2",
+      "description": "Колонка сетки шириной 2/12 (16.650%). Только внутри .container.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*2)",
+          "selector": ".container .pt-2"
+        }
+      ]
+    },
+    {
+      "name": "pt-3",
+      "description": "Колонка сетки шириной 3/12 (24.975%). Только внутри .container.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*3)",
+          "selector": ".container .pt-3"
+        }
+      ]
+    },
+    {
+      "name": "pt-4",
+      "description": "Колонка сетки шириной 4/12 (33.300%). Только внутри .container.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*4)",
+          "selector": ".container .pt-4"
+        }
+      ]
+    },
+    {
+      "name": "pt-5",
+      "description": "Колонка сетки шириной 5/12 (41.625%). Только внутри .container.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*5)",
+          "selector": ".container .pt-5"
+        }
+      ]
+    },
+    {
+      "name": "pt-6",
+      "description": "Колонка сетки шириной 6/12 (49.950%). Только внутри .container.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*6)",
+          "selector": ".container .pt-6"
+        }
+      ]
+    },
+    {
+      "name": "pt-7",
+      "description": "Колонка сетки шириной 7/12 (58.275%). Только внутри .container.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*7)",
+          "selector": ".container .pt-7"
+        }
+      ]
+    },
+    {
+      "name": "pt-8",
+      "description": "Колонка сетки шириной 8/12 (66.600%). Только внутри .container.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*8)",
+          "selector": ".container .pt-8"
+        }
+      ]
+    },
+    {
+      "name": "pt-9",
+      "description": "Колонка сетки шириной 9/12 (74.925%). Только внутри .container.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*9)",
+          "selector": ".container .pt-9"
+        }
+      ]
+    },
+    {
+      "name": "pt-l-d_n",
+      "description": "display:none при max-width 1439.98px — скрыть колонку на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "display: none",
+          "at": "l",
+          "selector": ".container .pt-l-d_n"
+        }
+      ]
+    },
+    {
+      "name": "pt-l1",
+      "description": "Колонка 1/12, применяется при max-width 1439.98px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*1)",
+          "at": "l",
+          "selector": ".container .pt-l1"
+        }
+      ]
+    },
+    {
+      "name": "pt-l10",
+      "description": "Колонка 10/12, применяется при max-width 1439.98px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*10)",
+          "at": "l",
+          "selector": ".container .pt-l10"
+        }
+      ]
+    },
+    {
+      "name": "pt-l11",
+      "description": "Колонка 11/12, применяется при max-width 1439.98px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*11)",
+          "at": "l",
+          "selector": ".container .pt-l11"
+        }
+      ]
+    },
+    {
+      "name": "pt-l12",
+      "description": "Колонка 12/12, применяется при max-width 1439.98px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*12)",
+          "at": "l",
+          "selector": ".container .pt-l12"
+        }
+      ]
+    },
+    {
+      "name": "pt-l2",
+      "description": "Колонка 2/12, применяется при max-width 1439.98px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*2)",
+          "at": "l",
+          "selector": ".container .pt-l2"
+        }
+      ]
+    },
+    {
+      "name": "pt-l3",
+      "description": "Колонка 3/12, применяется при max-width 1439.98px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*3)",
+          "at": "l",
+          "selector": ".container .pt-l3"
+        }
+      ]
+    },
+    {
+      "name": "pt-l4",
+      "description": "Колонка 4/12, применяется при max-width 1439.98px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*4)",
+          "at": "l",
+          "selector": ".container .pt-l4"
+        }
+      ]
+    },
+    {
+      "name": "pt-l5",
+      "description": "Колонка 5/12, применяется при max-width 1439.98px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*5)",
+          "at": "l",
+          "selector": ".container .pt-l5"
+        }
+      ]
+    },
+    {
+      "name": "pt-l6",
+      "description": "Колонка 6/12, применяется при max-width 1439.98px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*6)",
+          "at": "l",
+          "selector": ".container .pt-l6"
+        }
+      ]
+    },
+    {
+      "name": "pt-l7",
+      "description": "Колонка 7/12, применяется при max-width 1439.98px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*7)",
+          "at": "l",
+          "selector": ".container .pt-l7"
+        }
+      ]
+    },
+    {
+      "name": "pt-l8",
+      "description": "Колонка 8/12, применяется при max-width 1439.98px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*8)",
+          "at": "l",
+          "selector": ".container .pt-l8"
+        }
+      ]
+    },
+    {
+      "name": "pt-l9",
+      "description": "Колонка 9/12, применяется при max-width 1439.98px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*9)",
+          "at": "l",
+          "selector": ".container .pt-l9"
+        }
+      ]
+    },
+    {
+      "name": "pt-m-d_n",
+      "description": "display:none при max-width 1025px — скрыть колонку на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "display: none",
+          "at": "m",
+          "selector": ".container .pt-m-d_n"
+        }
+      ]
+    },
+    {
+      "name": "pt-m1",
+      "description": "Колонка 1/12, применяется при max-width 1025px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*1)",
+          "at": "m",
+          "selector": ".container .pt-m1"
+        }
+      ]
+    },
+    {
+      "name": "pt-m10",
+      "description": "Колонка 10/12, применяется при max-width 1025px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*10)",
+          "at": "m",
+          "selector": ".container .pt-m10"
+        }
+      ]
+    },
+    {
+      "name": "pt-m11",
+      "description": "Колонка 11/12, применяется при max-width 1025px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*11)",
+          "at": "m",
+          "selector": ".container .pt-m11"
+        }
+      ]
+    },
+    {
+      "name": "pt-m12",
+      "description": "Колонка 12/12, применяется при max-width 1025px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*12)",
+          "at": "m",
+          "selector": ".container .pt-m12"
+        }
+      ]
+    },
+    {
+      "name": "pt-m2",
+      "description": "Колонка 2/12, применяется при max-width 1025px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*2)",
+          "at": "m",
+          "selector": ".container .pt-m2"
+        }
+      ]
+    },
+    {
+      "name": "pt-m3",
+      "description": "Колонка 3/12, применяется при max-width 1025px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*3)",
+          "at": "m",
+          "selector": ".container .pt-m3"
+        }
+      ]
+    },
+    {
+      "name": "pt-m4",
+      "description": "Колонка 4/12, применяется при max-width 1025px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*4)",
+          "at": "m",
+          "selector": ".container .pt-m4"
+        }
+      ]
+    },
+    {
+      "name": "pt-m5",
+      "description": "Колонка 5/12, применяется при max-width 1025px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*5)",
+          "at": "m",
+          "selector": ".container .pt-m5"
+        }
+      ]
+    },
+    {
+      "name": "pt-m6",
+      "description": "Колонка 6/12, применяется при max-width 1025px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*6)",
+          "at": "m",
+          "selector": ".container .pt-m6"
+        }
+      ]
+    },
+    {
+      "name": "pt-m7",
+      "description": "Колонка 7/12, применяется при max-width 1025px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*7)",
+          "at": "m",
+          "selector": ".container .pt-m7"
+        }
+      ]
+    },
+    {
+      "name": "pt-m8",
+      "description": "Колонка 8/12, применяется при max-width 1025px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*8)",
+          "at": "m",
+          "selector": ".container .pt-m8"
+        }
+      ]
+    },
+    {
+      "name": "pt-m9",
+      "description": "Колонка 9/12, применяется при max-width 1025px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*9)",
+          "at": "m",
+          "selector": ".container .pt-m9"
+        }
+      ]
+    },
+    {
+      "name": "pt-s-d_n",
+      "description": "display:none при max-width 770px — скрыть колонку на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "display: none",
+          "at": "s",
+          "selector": ".container .pt-s-d_n"
+        }
+      ]
+    },
+    {
+      "name": "pt-s1",
+      "description": "Колонка 1/12, применяется при max-width 770px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*1)",
+          "at": "s",
+          "selector": ".container .pt-s1"
+        }
+      ]
+    },
+    {
+      "name": "pt-s10",
+      "description": "Колонка 10/12, применяется при max-width 770px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*10)",
+          "at": "s",
+          "selector": ".container .pt-s10"
+        }
+      ]
+    },
+    {
+      "name": "pt-s11",
+      "description": "Колонка 11/12, применяется при max-width 770px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*11)",
+          "at": "s",
+          "selector": ".container .pt-s11"
+        }
+      ]
+    },
+    {
+      "name": "pt-s12",
+      "description": "Колонка 12/12, применяется при max-width 770px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*12)",
+          "at": "s",
+          "selector": ".container .pt-s12"
+        }
+      ]
+    },
+    {
+      "name": "pt-s2",
+      "description": "Колонка 2/12, применяется при max-width 770px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*2)",
+          "at": "s",
+          "selector": ".container .pt-s2"
+        }
+      ]
+    },
+    {
+      "name": "pt-s3",
+      "description": "Колонка 3/12, применяется при max-width 770px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*3)",
+          "at": "s",
+          "selector": ".container .pt-s3"
+        }
+      ]
+    },
+    {
+      "name": "pt-s4",
+      "description": "Колонка 4/12, применяется при max-width 770px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*4)",
+          "at": "s",
+          "selector": ".container .pt-s4"
+        }
+      ]
+    },
+    {
+      "name": "pt-s5",
+      "description": "Колонка 5/12, применяется при max-width 770px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*5)",
+          "at": "s",
+          "selector": ".container .pt-s5"
+        }
+      ]
+    },
+    {
+      "name": "pt-s6",
+      "description": "Колонка 6/12, применяется при max-width 770px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*6)",
+          "at": "s",
+          "selector": ".container .pt-s6"
+        }
+      ]
+    },
+    {
+      "name": "pt-s7",
+      "description": "Колонка 7/12, применяется при max-width 770px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*7)",
+          "at": "s",
+          "selector": ".container .pt-s7"
+        }
+      ]
+    },
+    {
+      "name": "pt-s8",
+      "description": "Колонка 8/12, применяется при max-width 770px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*8)",
+          "at": "s",
+          "selector": ".container .pt-s8"
+        }
+      ]
+    },
+    {
+      "name": "pt-s9",
+      "description": "Колонка 9/12, применяется при max-width 770px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*9)",
+          "at": "s",
+          "selector": ".container .pt-s9"
+        }
+      ]
+    },
+    {
+      "name": "pt-xl-d_n",
+      "description": "display:none при min-width 1440px — скрыть колонку на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "display: none",
+          "at": "xl",
+          "selector": ".container .pt-xl-d_n"
+        }
+      ]
+    },
+    {
+      "name": "pt-xl1",
+      "description": "Колонка 1/12, применяется при min-width 1440px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*1)",
+          "at": "xl",
+          "selector": ".container .pt-xl1"
+        }
+      ]
+    },
+    {
+      "name": "pt-xl10",
+      "description": "Колонка 10/12, применяется при min-width 1440px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*10)",
+          "at": "xl",
+          "selector": ".container .pt-xl10"
+        }
+      ]
+    },
+    {
+      "name": "pt-xl11",
+      "description": "Колонка 11/12, применяется при min-width 1440px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*11)",
+          "at": "xl",
+          "selector": ".container .pt-xl11"
+        }
+      ]
+    },
+    {
+      "name": "pt-xl12",
+      "description": "Колонка 12/12, применяется при min-width 1440px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*12)",
+          "at": "xl",
+          "selector": ".container .pt-xl12"
+        }
+      ]
+    },
+    {
+      "name": "pt-xl2",
+      "description": "Колонка 2/12, применяется при min-width 1440px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*2)",
+          "at": "xl",
+          "selector": ".container .pt-xl2"
+        }
+      ]
+    },
+    {
+      "name": "pt-xl3",
+      "description": "Колонка 3/12, применяется при min-width 1440px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*3)",
+          "at": "xl",
+          "selector": ".container .pt-xl3"
+        }
+      ]
+    },
+    {
+      "name": "pt-xl4",
+      "description": "Колонка 4/12, применяется при min-width 1440px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*4)",
+          "at": "xl",
+          "selector": ".container .pt-xl4"
+        }
+      ]
+    },
+    {
+      "name": "pt-xl5",
+      "description": "Колонка 5/12, применяется при min-width 1440px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*5)",
+          "at": "xl",
+          "selector": ".container .pt-xl5"
+        }
+      ]
+    },
+    {
+      "name": "pt-xl6",
+      "description": "Колонка 6/12, применяется при min-width 1440px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*6)",
+          "at": "xl",
+          "selector": ".container .pt-xl6"
+        }
+      ]
+    },
+    {
+      "name": "pt-xl7",
+      "description": "Колонка 7/12, применяется при min-width 1440px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*7)",
+          "at": "xl",
+          "selector": ".container .pt-xl7"
+        }
+      ]
+    },
+    {
+      "name": "pt-xl8",
+      "description": "Колонка 8/12, применяется при min-width 1440px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*8)",
+          "at": "xl",
+          "selector": ".container .pt-xl8"
+        }
+      ]
+    },
+    {
+      "name": "pt-xl9",
+      "description": "Колонка 9/12, применяется при min-width 1440px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*9)",
+          "at": "xl",
+          "selector": ".container .pt-xl9"
+        }
+      ]
+    },
+    {
+      "name": "pt-xs-d_n",
+      "description": "display:none при max-width 425px — скрыть колонку на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "display: none",
+          "at": "xs",
+          "selector": ".container .pt-xs-d_n"
+        }
+      ]
+    },
+    {
+      "name": "pt-xs1",
+      "description": "Колонка 1/12, применяется при max-width 425px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*1)",
+          "at": "xs",
+          "selector": ".container .pt-xs1"
+        }
+      ]
+    },
+    {
+      "name": "pt-xs10",
+      "description": "Колонка 10/12, применяется при max-width 425px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*10)",
+          "at": "xs",
+          "selector": ".container .pt-xs10"
+        }
+      ]
+    },
+    {
+      "name": "pt-xs11",
+      "description": "Колонка 11/12, применяется при max-width 425px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*11)",
+          "at": "xs",
+          "selector": ".container .pt-xs11"
+        }
+      ]
+    },
+    {
+      "name": "pt-xs12",
+      "description": "Колонка 12/12, применяется при max-width 425px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*12)",
+          "at": "xs",
+          "selector": ".container .pt-xs12"
+        }
+      ]
+    },
+    {
+      "name": "pt-xs2",
+      "description": "Колонка 2/12, применяется при max-width 425px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*2)",
+          "at": "xs",
+          "selector": ".container .pt-xs2"
+        }
+      ]
+    },
+    {
+      "name": "pt-xs3",
+      "description": "Колонка 3/12, применяется при max-width 425px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*3)",
+          "at": "xs",
+          "selector": ".container .pt-xs3"
+        }
+      ]
+    },
+    {
+      "name": "pt-xs4",
+      "description": "Колонка 4/12, применяется при max-width 425px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*4)",
+          "at": "xs",
+          "selector": ".container .pt-xs4"
+        }
+      ]
+    },
+    {
+      "name": "pt-xs5",
+      "description": "Колонка 5/12, применяется при max-width 425px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*5)",
+          "at": "xs",
+          "selector": ".container .pt-xs5"
+        }
+      ]
+    },
+    {
+      "name": "pt-xs6",
+      "description": "Колонка 6/12, применяется при max-width 425px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*6)",
+          "at": "xs",
+          "selector": ".container .pt-xs6"
+        }
+      ]
+    },
+    {
+      "name": "pt-xs7",
+      "description": "Колонка 7/12, применяется при max-width 425px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*7)",
+          "at": "xs",
+          "selector": ".container .pt-xs7"
+        }
+      ]
+    },
+    {
+      "name": "pt-xs8",
+      "description": "Колонка 8/12, применяется при max-width 425px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*8)",
+          "at": "xs",
+          "selector": ".container .pt-xs8"
+        }
+      ]
+    },
+    {
+      "name": "pt-xs9",
+      "description": "Колонка 9/12, применяется при max-width 425px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*9)",
+          "at": "xs",
+          "selector": ".container .pt-xs9"
+        }
+      ]
+    },
+    {
+      "name": "pt-xxs-d_n",
+      "description": "display:none при max-width 375px — скрыть колонку на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "display: none",
+          "at": "xxs",
+          "selector": ".container .pt-xxs-d_n"
+        }
+      ]
+    },
+    {
+      "name": "pt-xxs1",
+      "description": "Колонка 1/12, применяется при max-width 375px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*1)",
+          "at": "xxs",
+          "selector": ".container .pt-xxs1"
+        }
+      ]
+    },
+    {
+      "name": "pt-xxs10",
+      "description": "Колонка 10/12, применяется при max-width 375px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*10)",
+          "at": "xxs",
+          "selector": ".container .pt-xxs10"
+        }
+      ]
+    },
+    {
+      "name": "pt-xxs11",
+      "description": "Колонка 11/12, применяется при max-width 375px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*11)",
+          "at": "xxs",
+          "selector": ".container .pt-xxs11"
+        }
+      ]
+    },
+    {
+      "name": "pt-xxs12",
+      "description": "Колонка 12/12, применяется при max-width 375px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*12)",
+          "at": "xxs",
+          "selector": ".container .pt-xxs12"
+        }
+      ]
+    },
+    {
+      "name": "pt-xxs2",
+      "description": "Колонка 2/12, применяется при max-width 375px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*2)",
+          "at": "xxs",
+          "selector": ".container .pt-xxs2"
+        }
+      ]
+    },
+    {
+      "name": "pt-xxs3",
+      "description": "Колонка 3/12, применяется при max-width 375px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*3)",
+          "at": "xxs",
+          "selector": ".container .pt-xxs3"
+        }
+      ]
+    },
+    {
+      "name": "pt-xxs4",
+      "description": "Колонка 4/12, применяется при max-width 375px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*4)",
+          "at": "xxs",
+          "selector": ".container .pt-xxs4"
+        }
+      ]
+    },
+    {
+      "name": "pt-xxs5",
+      "description": "Колонка 5/12, применяется при max-width 375px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*5)",
+          "at": "xxs",
+          "selector": ".container .pt-xxs5"
+        }
+      ]
+    },
+    {
+      "name": "pt-xxs6",
+      "description": "Колонка 6/12, применяется при max-width 375px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*6)",
+          "at": "xxs",
+          "selector": ".container .pt-xxs6"
+        }
+      ]
+    },
+    {
+      "name": "pt-xxs7",
+      "description": "Колонка 7/12, применяется при max-width 375px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*7)",
+          "at": "xxs",
+          "selector": ".container .pt-xxs7"
+        }
+      ]
+    },
+    {
+      "name": "pt-xxs8",
+      "description": "Колонка 8/12, применяется при max-width 375px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*8)",
+          "at": "xxs",
+          "selector": ".container .pt-xxs8"
+        }
+      ]
+    },
+    {
+      "name": "pt-xxs9",
+      "description": "Колонка 9/12, применяется при max-width 375px. Перекрывает базовую pt-* на этом экране.",
+      "needs": ".container",
+      "variants": [
+        {
+          "css": "width: calc(var(--gridmultiplyConst)*9)",
+          "at": "xxs",
+          "selector": ".container .pt-xxs9"
+        }
+      ]
+    },
+    {
+      "name": "radio",
+      "description": "Как .checkbox, но .radio-box круглый, ::after — точка.",
+      "variants": [
+        {
+          "css": "display: flex; align-items: flex-start; gap: 0.5em; cursor: pointer"
+        },
+        {
+          "css": "position: absolute; opacity: 0; pointer-events: none",
+          "selector": ".radio input"
+        },
+        {
+          "css": "background: var(--accent); border-color: var(--accent)",
+          "selector": ".radio input:checked + .radio-box"
+        },
+        {
+          "css": "content: \"\"; display: block; width: 0.45em; height: 0.45em; margin: 0.28em auto 0; border-radius: 50%; background: var(--paper)",
+          "selector": ".radio input:checked + .radio-box::after"
+        },
+        {
+          "css": "outline: 2px solid var(--accent); outline-offset: 2px",
+          "selector": ".radio input:focus-visible + .radio-box"
+        }
+      ]
+    },
+    {
+      "name": "radio-box",
+      "description": "Круг 1.15em, border-radius:50%.",
+      "variants": [
+        {
+          "css": "flex: none; box-sizing: border-box; width: 1.15em; height: 1.15em; margin-top: 0.15em; border: 1px solid #767676; background: var(--paper)"
+        },
+        {
+          "css": "border-radius: 50%"
+        },
+        {
+          "css": "background: var(--accent); border-color: var(--accent)",
+          "selector": ".radio input:checked + .radio-box"
+        },
+        {
+          "css": "content: \"\"; display: block; width: 0.45em; height: 0.45em; margin: 0.28em auto 0; border-radius: 50%; background: var(--paper)",
+          "selector": ".radio input:checked + .radio-box::after"
+        },
+        {
+          "css": "outline: 2px solid var(--accent); outline-offset: 2px",
+          "selector": ".radio input:focus-visible + .radio-box"
+        }
+      ]
+    },
+    {
+      "name": "range",
+      "description": "width:100% + accent-color:var(--accent).",
+      "css": "width: 100%; accent-color: var(--accent)"
+    },
+    {
+      "name": "select",
+      "description": "Как .input + кастомная стрелка через data-URI SVG, appearance:none.",
+      "variants": [
+        {
+          "css": "width: 100%; padding: 0.5em 0.75em; font: inherit; color: inherit; background: var(--paper); border: 1px solid #767676; border-radius: 4px"
+        },
+        {
+          "css": "appearance: none; padding-right: 2em; background-image: url(\"data:image/svg+xml; charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4' fill='none' stroke='%23767676' stroke-width='2'/%3E%3C/svg%3E\"); background-repeat: no-repeat; background-position: right 0.6em center; background-size: 1em"
+        }
+      ]
+    },
+    {
+      "name": "skeleton",
+      "description": "Заглушка контента с shimmer. Под prefers-reduced-motion анимация гасится.",
+      "variants": [
+        {
+          "css": "min-height: 1em; border-radius: 5px; background: linear-gradient(90deg, #ececec 25%, #f5f5f5 50%, #ececec 75%); background-size: 200% 100%; animation: gals-shimmer 1.2s linear infinite"
+        },
+        {
+          "css": "animation: none",
+          "at": "(prefers-reduced-motion: reduce)"
+        }
+      ]
+    },
+    {
+      "name": "space-around",
+      "description": "justify-content:space-around.",
+      "css": "justify-content: space-around"
+    },
+    {
+      "name": "space-between",
+      "description": "justify-content:space-between (без display:flex!).",
+      "css": "justify-content: space-between"
+    },
+    {
+      "name": "space-center",
+      "description": "justify-content:center.",
+      "css": "justify-content: center"
+    },
+    {
+      "name": "switch",
+      "description": "Как .checkbox, но .switch-box — пилюля 2.2em с бегунком.",
+      "variants": [
+        {
+          "css": "display: flex; align-items: flex-start; gap: 0.5em; cursor: pointer"
+        },
+        {
+          "css": "position: absolute; opacity: 0; pointer-events: none",
+          "selector": ".switch input"
+        },
+        {
+          "css": "background: var(--accent); border-color: var(--accent)",
+          "selector": ".switch input:checked + .switch-box"
+        },
+        {
+          "css": "outline: 2px solid var(--accent); outline-offset: 2px",
+          "selector": ".switch input:focus-visible + .switch-box"
+        },
+        {
+          "css": "transform: translateX(1.05em)",
+          "selector": ".switch input:checked + .switch-box::after"
+        }
+      ]
+    },
+    {
+      "name": "switch-box",
+      "description": "Пилюля 2.2em x 1.15em, ::after — бегунок, при :checked сдвиг на 1.05em.",
+      "variants": [
+        {
+          "css": "flex: none; box-sizing: border-box; width: 1.15em; height: 1.15em; margin-top: 0.15em; border: 1px solid #767676; background: var(--paper)"
+        },
+        {
+          "css": "background: var(--accent); border-color: var(--accent)",
+          "selector": ".switch input:checked + .switch-box"
+        },
+        {
+          "css": "outline: 2px solid var(--accent); outline-offset: 2px",
+          "selector": ".switch input:focus-visible + .switch-box"
+        },
+        {
+          "css": "width: 2.2em; height: 1.15em; border-radius: 999px; background: #cdcdcd; border-color: #cdcdcd; transition: background 0.2s"
+        },
+        {
+          "css": "content: \"\"; display: block; width: 0.95em; height: 0.95em; margin: 0.09em 0 0 0.1em; border-radius: 50%; background: var(--paper); transition: transform 0.2s",
+          "selector": ".switch-box::after"
+        },
+        {
+          "css": "transform: translateX(1.05em)",
+          "selector": ".switch input:checked + .switch-box::after"
+        }
+      ]
+    },
+    {
+      "name": "tab-panel",
+      "description": "Панель вкладки. Порядок важен: N-я панель открывается N-м input, обе — прямые дети .tabs.",
+      "variants": [
+        {
+          "css": "display: none; width: 100%; padding: 1em; border: 1px solid var(--line); border-radius: 0 5px 5px 5px"
+        },
+        {
+          "css": "display: block",
+          "selector": ".tabs > input:nth-of-type(1):checked ~ .tab-panel:nth-of-type(1)"
+        },
+        {
+          "css": "display: block",
+          "selector": ".tabs > input:nth-of-type(2):checked ~ .tab-panel:nth-of-type(2)"
+        },
+        {
+          "css": "display: block",
+          "selector": ".tabs > input:nth-of-type(3):checked ~ .tab-panel:nth-of-type(3)"
+        },
+        {
+          "css": "display: block",
+          "selector": ".tabs > input:nth-of-type(4):checked ~ .tab-panel:nth-of-type(4)"
+        },
+        {
+          "css": "display: block",
+          "selector": ".tabs > input:nth-of-type(5):checked ~ .tab-panel:nth-of-type(5)"
+        },
+        {
+          "css": "display: block",
+          "selector": ".tabs > input:nth-of-type(6):checked ~ .tab-panel:nth-of-type(6)"
+        }
+      ]
+    },
+    {
+      "name": "table",
+      "description": "width:100%, border-collapse:collapse, нижние границы у ячеек.",
+      "variants": [
+        {
+          "css": "width: 100%; border-collapse: collapse"
+        },
+        {
+          "css": "padding: 0.5em 0.75em; text-align: left; border-bottom: 1px solid var(--line)",
+          "selector": ".table th"
+        },
+        {
+          "css": "padding: 0.5em 0.75em; text-align: left; border-bottom: 1px solid var(--line)",
+          "selector": ".table td"
+        },
+        {
+          "css": "border-bottom: 2px solid var(--ink)",
+          "selector": ".table thead th"
+        }
+      ]
+    },
+    {
+      "name": "table-bordered",
+      "description": "Полная обводка ячеек. Кладётся рядом с .table.",
+      "variants": [
+        {
+          "css": "border: 1px solid var(--line)",
+          "selector": ".table-bordered th"
+        },
+        {
+          "css": "border: 1px solid var(--line)",
+          "selector": ".table-bordered td"
+        }
+      ]
+    },
+    {
+      "name": "table-responsive",
+      "description": "overflow-x:auto — обёртка для широкой таблицы на телефоне.",
+      "css": "overflow-x: auto"
+    },
+    {
+      "name": "table-striped",
+      "description": "Чередование фона чётных строк tbody. Кладётся рядом с .table.",
+      "variants": [
+        {
+          "css": "background: #f5f5f5",
+          "selector": ".table-striped tbody tr:nth-child(even)"
+        }
+      ]
+    },
+    {
+      "name": "tabs",
+      "description": "CSS-only вкладки на radio + :checked. До 6 вкладок. input скрыт, label — метка, .tab-panel — панель.",
+      "variants": [
+        {
+          "css": "display: flex; flex-wrap: wrap"
+        },
+        {
+          "css": "position: absolute; opacity: 0; pointer-events: none",
+          "selector": ".tabs > input"
+        },
+        {
+          "css": "padding: 0.5em 1em; cursor: pointer; color: #777; border: 1px solid transparent; border-bottom: none; border-radius: 5px 5px 0 0",
+          "selector": ".tabs > label"
+        },
+        {
+          "css": "outline: 2px solid var(--accent); outline-offset: -2px",
+          "selector": ".tabs > input:focus-visible + label"
+        },
+        {
+          "css": "color: var(--ink); font-weight: 600; background: var(--paper); border-color: var(--line)",
+          "selector": ".tabs > input:checked + label"
+        },
+        {
+          "css": "display: block",
+          "selector": ".tabs > input:nth-of-type(1):checked ~ .tab-panel:nth-of-type(1)"
+        },
+        {
+          "css": "display: block",
+          "selector": ".tabs > input:nth-of-type(2):checked ~ .tab-panel:nth-of-type(2)"
+        },
+        {
+          "css": "display: block",
+          "selector": ".tabs > input:nth-of-type(3):checked ~ .tab-panel:nth-of-type(3)"
+        },
+        {
+          "css": "display: block",
+          "selector": ".tabs > input:nth-of-type(4):checked ~ .tab-panel:nth-of-type(4)"
+        },
+        {
+          "css": "display: block",
+          "selector": ".tabs > input:nth-of-type(5):checked ~ .tab-panel:nth-of-type(5)"
+        },
+        {
+          "css": "display: block",
+          "selector": ".tabs > input:nth-of-type(6):checked ~ .tab-panel:nth-of-type(6)"
+        }
+      ]
+    },
+    {
+      "name": "text-center",
+      "description": "text-align:center.",
+      "css": "text-align: center"
+    }
+  ]
+}

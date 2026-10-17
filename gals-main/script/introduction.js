@@ -128,15 +128,16 @@ Task:
 Create a [COMPONENT / PAGE / LAYOUT] that does the following: [DESCRIBE THE FUNCTIONALITY, e.g. "a responsive product card with an image, title, price and a 'Buy' button"].
 
 Strict constraints and rules:
-1. Framework: use ONLY GALS classes and grid. Do not use Bootstrap, Tailwind or other libraries.
-2. Grid: use the .container &gt; .row &gt; .col structure.
-3. Responsiveness: always use GALS breakpoints: xxs (375px), xs (425px), s (770px), m (1025px), l (1439.98px), xl (1440px+). Example: class="col-s-12 col-m-6".
-4. Spacing: use GALS utility classes for spacing (e.g. pt-3, mb-4, px-2).
-5. Styles: if custom styles are needed, use GALS CSS variables (e.g. var(--fs-body), var(--lh-body)).
-6. Output: provide ONLY valid HTML. Include &lt;link rel="stylesheet" href="style.css"&gt; in the &lt;head&gt;. Make sure all tags are closed and accessibility (ARIA) attributes are used.
+1. Framework: use ONLY GALS classes. Do not use Bootstrap, Tailwind or other libraries.
+2. Grid: the structure is .container &gt; .container-block with a pt-N column class. GALS has NO .row and NO .col classes, and pt-N classes only apply inside .container.
+3. Columns: pt-1 .. pt-12 set width in twelfths (pt-6 = 50%). pt-N is a COLUMN width, not padding. GALS has no spacing utilities except .padding-lg.
+4. Responsiveness: override a column per breakpoint with pt-{bp}N, where bp is xl (1440px+), l (max 1439.98px), m (max 1025px), s (max 770px), xs (max 425px), xxs (max 375px). Example: class="pt-6 pt-s12" is 50% on desktop and full width from 770px down. Hide on a breakpoint with pt-{bp}-d_n.
+5. Styles: for custom styles reuse the GALS tokens: var(--accent), var(--ink), var(--paper), var(--ok), var(--warn), var(--err), var(--line), var(--gridmultiplyConst).
+6. Components: header, table, btn, alert, card, accordion, carousel, dropdown, modal, menu, tabs, pagination, popover, progress, loader, skeleton, icon, media, input, select, range, checkbox, radio, switch. If a class is not in this list, do not invent it — write plain CSS instead.
+7. Output: provide ONLY valid HTML. Include &lt;link rel="stylesheet" href="gals/gals.css"&gt; in the &lt;head&gt; and &lt;script src="gals/gals.js" defer&gt;&lt;/script&gt; before &lt;/body&gt;. Make sure all tags are closed and accessibility (ARIA) attributes are used.
 
 Context:
-[OPTIONAL: add specific requirements here, e.g. "Use the .badge-stable class for the 'New' label"].</pre>
+[OPTIONAL: add specific requirements here, e.g. "Use .alert-ok for the success message and .btn-primary for the main action"].</pre>
     </code>
 
     <button class="copy" type="button" data-tooltip="Copy to clipboard" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"

@@ -13,7 +13,9 @@
   "scripts": {
     "build:css": "sass --style=expanded --source-map --no-charset style.scss style.css && postcss style.css --map --use autoprefixer --replace",
     "build:cdn": "sass --style=compressed --no-source-map --no-charset gals/gals.css cdn/gals.min.css && terser gals/gals.js --compress --mangle --comments false --output cdn/gals.min.js",
-    "build": "npm run build:css && npm run build:cdn",
+    "build:llms": "node scripts/build-classes-json.mjs",
+    "build": "npm run build:css && npm run build:cdn && npm run build:llms",
+    "check:demo": "node scripts/check-demo.mjs",
     "test": "node --test \"tests/**/*.test.mjs\""
   },
   "devDependencies": {
