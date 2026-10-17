@@ -451,6 +451,8 @@ const initBoxIndicator = () => {
     box.addEventListener('mousemove', (e) => {
       const el = e.currentTarget;
       arrows.style.top = el.offsetTop + 'px';
+      // Блоки отцентрованы во flex-колонке — без left стрелки уезжают к левому краю.
+      arrows.style.left = el.offsetLeft + 'px';
       arrows.style.width = el.offsetWidth + 'px';
       arrows.textContent = el.offsetWidth + 'px';
       line.style.width = el.offsetWidth + 'px';
@@ -1813,18 +1815,24 @@ if (disc >= 0) {
   <p class="battery-digit">—</p>
   <div class="battery-cap"></div>
 </div>
-<p class="battery-status"></p>
 
-navigator.getBattery().then((battery) => {
-  const render = () => {
-    digit.textContent = Math.round(battery.level * 100) + '%';
-    level.style.width = battery.level * 100 + '%';
-    level.classList.toggle('charging', battery.charging);
-  };
-  render();
-  battery.addEventListener('chargingchange', render);
-  battery.addEventListener('levelchange', render);
-});`,
+const level = document.querySelector('.battery-level');
+const digit = document.querySelector('.battery-digit');
+
+if (!navigator.getBattery) {
+  digit.textContent = 'N/A';          // Firefox и Safari — API нет
+} else {
+  navigator.getBattery().then((battery) => {
+    const render = () => {
+      digit.textContent = Math.round(battery.level * 100) + '%';
+      level.style.width = battery.level * 100 + '%';
+      level.classList.toggle('charging', battery.charging);
+    };
+    render();
+    battery.addEventListener('chargingchange', render);
+    battery.addEventListener('levelchange', render);
+  });
+}`,
     demo: `<style>
   .demo-battery {
     position: relative; width: 100px; height: 50px;
@@ -1910,10 +1918,14 @@ navigator.getBattery().then((battery) => {
   <div class="box"></div>
 </div>
 
+const arrows = document.querySelector('.arrows');
+const boxes = document.querySelectorAll('.box');
+
 boxes.forEach((box) => {
   box.addEventListener('mousemove', (e) => {
     const el = e.currentTarget;
     arrows.style.top = el.offsetTop + 'px';
+    arrows.style.left = el.offsetLeft + 'px';
     arrows.style.width = el.offsetWidth + 'px';
     arrows.textContent = el.offsetWidth + 'px';
   });
@@ -1927,7 +1939,7 @@ boxes.forEach((box) => {
   .demo-ind-arrows {
     position: absolute; top: 20px; left: 0; height: 50px;
     display: flex; align-items: center; justify-content: space-between;
-    color: #fff; font: 13px system-ui; transition: top .3s, width .3s;
+    color: #fff; font: 13px system-ui; transition: top .3s, left .3s, width .3s;
     pointer-events: none; padding: 0 4px; box-sizing: border-box;
   }
   .demo-ind-arrows::before,
@@ -1940,8 +1952,9 @@ boxes.forEach((box) => {
   .demo-ind-box {
     position: relative; width: 100px; height: 50px; border: 1px solid #fff;
   }
-  .demo-ind-box:nth-of-type(3) { width: 150px; }
-  .demo-ind-box:nth-of-type(4) { width: 250px; }
+  /* :nth-of-type считает только div, span со стрелками не в счёт. */
+  .demo-ind-box:nth-of-type(2) { width: 150px; }
+  .demo-ind-box:nth-of-type(3) { width: 250px; }
   .demo-ind-line {
     position: absolute; bottom: 0; left: 0;
     display: flex; justify-content: space-between; align-items: flex-end;
@@ -1967,27 +1980,55 @@ boxes.forEach((box) => {
       'В исходнике слушатель вешался на <code>mousemove</code> каждого блока и читал <code>e.target</code> — при вложенной линии target «промахивался». Здесь используется <code>e.currentTarget</code>.',
       'Стрелки из исходника поворачивались трансформами с translate — в демо заменены на простые <code>rotate(±45/−135deg)</code>, без сдвига.',
       'Линия создаётся один раз и перекладывается <code>appendChild</code> — не плодите DOM-узлы на каждый mousemove.',
+      'В CSS-версии <code>:nth-of-type(3)</code> и <code>(4)</code> не работали, потому что span со стрелками сдвигает нумерацию. Исправлено на <code>:nth-of-type(2)</code> и <code>(3)</code> — стрелки также получают <code>left</code> для центрирования над блоком.',
     ],
   },
   {
     slug: 'grid-canvas',
     title: 'Configurable grid canvas',
     lead: 'Сетка на <code>&lt;canvas&gt;</code>: размер ячейки ползунком, вертикальные линии — чекбоксом. Чёткие линии через сдвиг на 0.5px.',
-    markup: `<input type="range" id="cellSize" min="10" max="100" value="30" step="5">
+    markup: `<canvas id="canvas" width="300" height="300"></canvas>
+<input type="range" id="cellSize" min="10" max="100" value="30" step="5">
 <input type="checkbox" id="showVertical" checked>
-<canvas id="canvas" width="300" height="300"></canvas>
+
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
 
 function drawGrid() {
+  const cell = parseInt(document.getElementById('cellSize').value, 10);
+  const vertical = document.getElementById('showVertical').checked;
+  const W = canvas.width;
+  const H = canvas.height;
+
   ctx.clearRect(0, 0, W, H);
   ctx.save();
   ctx.translate(0.5, 0.5); // crisp 1px lines
-  for (let i = 0; i <= rows; i++) {
+
+  const stroke = (x1, y1, x2, y2) => {
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
+  };
+
+  for (let i = 0; i <= Math.floor(H / cell); i++) {
     ctx.lineWidth = i === 5 ? 3 : 1;
     ctx.strokeStyle = i % 2 === 0 ? 'red' : 'green';
-    line(0, i * cell, W, i * cell);
+    stroke(0, i * cell, W, i * cell);
+  }
+  if (vertical) {
+    for (let i = 0; i <= Math.floor(W / cell); i++) {
+      ctx.lineWidth = i === 5 ? 3 : 1;
+      ctx.strokeStyle = i % 2 === 0 ? 'red' : 'green';
+      stroke(i * cell, 0, i * cell, H);
+    }
   }
   ctx.restore();
-}`,
+}
+
+document.getElementById('cellSize').addEventListener('input', drawGrid);
+document.getElementById('showVertical').addEventListener('change', drawGrid);
+drawGrid();`,
     demo: `<style>
   .demo-grid-controls { text-align: center; margin-bottom: 10px; font: 14px system-ui; }
   .demo-grid-controls label { display: inline-block; margin: 0 10px; }
@@ -2026,15 +2067,31 @@ function drawGrid() {
     title: 'Sliding color palette',
     lead: 'Выезжающая панель с образцами цвета: клик по квадрату красит подложку, кнопка прячет и показывает панель.',
     markup: `<div class="palette" id="palette">
-  <div class="swatch" style="background:red"    onclick="setColor('red')"></div>
-  <div class="swatch" style="background:blue"   onclick="setColor('blue')"></div>
-  <div class="swatch" style="background:green"  onclick="setColor('green')"></div>
+  <div class="swatch" style="background:red"     onclick="setColor('red')"></div>
+  <div class="swatch" style="background:blue"    onclick="setColor('blue')"></div>
+  <div class="swatch" style="background:green"   onclick="setColor('green')"></div>
   <div class="swatch" style="background:#fffff8" onclick="setColor('transparent')"></div>
   <button id="btn" onclick="toggle()">&#128193;</button>
 </div>
 
-/* В исходнике было: cnt.style.left == 0 + 'px' —
-   сравнение строки с числом. Надёжнее класс-тоггл. */`,
+<style>
+  .palette { position: absolute; left: -300px; transition: left 1.4s; }
+  .palette-open { left: 0; }
+</style>
+
+const palette = document.getElementById('palette');
+
+const setColor = (color) => {
+  document.body.style.background = color;
+};
+
+const toggle = () => {
+  const open = palette.classList.toggle('palette-open');
+  document.getElementById('btn').innerHTML = open ? '&#127912;&#128194;' : '&#128193;';
+};
+
+/* В исходнике было: cnt.style.left == 0 + 'px' — сравнение
+   пустой строки с '0px', пока left не задан инлайном. */`,
     demo: `<style>
   .demo-palette-stage {
     position: relative; height: 140px; overflow: hidden;
@@ -2112,7 +2169,9 @@ p  { font-size: clamp(1rem, 2vw, 1.5rem); line-height: 1.6; color: #333; }
     slug: 'person-cards',
     title: 'Person cards + modal',
     lead: 'Карточки из массива: при клике появляется кнопка отмены, поверх — модалка с предупреждением. Всё на классах, без inline-стилей состояния.',
-    markup: `const people = [
+    markup: `const app = document.getElementById('app');
+
+const people = [
   { id: 1, name: 'Tommy',  age: 23 },
   { id: 2, name: 'John',   age: 26 },
   { id: 3, name: 'Rachel', age: 28 },
@@ -2120,6 +2179,7 @@ p  { font-size: clamp(1rem, 2vw, 1.5rem); line-height: 1.6; color: #333; }
   // он ронял рендер (undefined полей). Убран.
 ];
 
+// avatar(p) — заглушка аватара: data-URI c SVG вместо внешнего jpg.
 app.innerHTML = people.map((p) => \`
   <div class="card">
     <img src="\${avatar(p)}" alt="">
@@ -2205,10 +2265,18 @@ app.innerHTML = people.map((p) => \`
 </div>
 <div class="star-bar"><div class="star-bar-inner"></div></div>
 
+const stars = document.querySelectorAll('.star');
+const bar = document.querySelector('.star-bar-inner');
+
 stars.forEach((star) => star.addEventListener('click', (e) => {
   const rating = Number(e.currentTarget.dataset.rating);
-  stars.forEach((s) => s.classList.toggle('rated', s.dataset.rating <= rating));
-  bar.style.width = (barWidth / stars.length) * rating + 'px';
+  // Ширину читаем в момент клика, а не при загрузке — переживает ресайз.
+  const step = bar.parentElement.clientWidth / stars.length;
+
+  stars.forEach((s) => {
+    s.classList.toggle('rated', Number(s.dataset.rating) <= rating);
+  });
+  bar.style.width = step * rating + 'px';
 }));`,
     demo: `<style>
   .demo-stars { font-size: 30px; text-align: center; cursor: pointer; user-select: none; }
@@ -2239,6 +2307,249 @@ stars.forEach((star) => star.addEventListener('click', (e) => {
       'В исходнике ширина бара считалась через <code>clientWidth</code> в момент загрузки — при ресайзе шаг «уезжал». Здесь ширина читается при каждом клике.',
       '<code>data-rating</code> — строка; сравнение <code>&lt;=</code> работало за счёт приведения типов. Заменено на явный <code>Number()</code>.',
       'Чистый <code>yellow</code> на сером не проходит контраст — заменён на <code>#e6b800</code>. Звёзды получили <code>role="button"</code> и <code>aria-label</code>.',
+    ],
+  },
+
+  /* ---------- Нейроморфный лендинг ---------- */
+
+  {
+    slug: 'morphing-style-landing',
+    title: 'Morphing style landing',
+    lead:
+      'Одностраничник в нейроморфном стиле: CSS-переменные в обёртке, <code>:has()</code> вместо JS для переключателей, <code>clamp()</code> для заголовка. Каждый блок — готовая секция.',
+    markup: `<div class="neu-landing">
+  <header class="nl-header">
+    <div class="nl-brand"><span class="nl-mark">S</span>Softly</div>
+    <nav class="nl-nav"><a href="#nl-feat">Features</a><a href="#nl-demo">Demo</a></nav>
+  </header>
+
+  <section class="nl-hero">
+    <h1>Soft UI <b>next generation</b></h1>
+    <p>Neumorphic components: buttons, toggles and sliders.</p>
+    <a class="nl-btn nl-btn-primary" href="#nl-demo">Try it</a>
+  </section>
+
+  <section class="nl-features" id="nl-feat">
+    <div class="nl-feature">
+      <div class="nl-icon">&#10022;</div>
+      <h3>Soft shadows</h3>
+      <p>Two-direction shadows create depth.</p>
+    </div>
+  </section>
+
+  <section class="nl-panel" id="nl-demo">
+    <h2>Interactive slider</h2>
+    <div class="nl-slider-wrap">
+      <input type="range" min="0" max="100" value="50"
+             oninput="document.getElementById('nl-out').textContent = this.value">
+      <span class="nl-bubble" id="nl-out">50</span>
+    </div>
+  </section>
+</div>
+
+<style>
+/* Переменные — на обёртке, не на :root, иначе перекроют стили страницы. */
+.neu-landing {
+  --bg: #ececec; --text: #3a3a3a; --muted: #7a7a7a; --accent: #2ecc71;
+  --shadow-out: -8px -8px 18px rgba(255,255,255,.7), 8px 8px 18px rgba(70,70,70,.15);
+  --shadow-in: inset -6px -6px 14px rgba(255,255,255,.7), inset 6px 6px 14px rgba(70,70,70,.15);
+  --text-3d: -1px -1px 2px rgba(255,255,255,.95), 2px 2px 3px rgba(70,70,70,.35);
+  background: var(--bg); color: var(--text);
+  font-family: system-ui, sans-serif; line-height: 1.55;
+}
+/* ... полный CSS — в Live demo ... */
+</style>`,
+    demo: `<style>
+  .demo-nl {
+    --nl-bg: #ececec; --nl-text: #3a3a3a; --nl-muted: #7a7a7a;
+    --nl-accent: #2ecc71; --nl-accent-soft: #55f696;
+    --nl-out: -8px -8px 18px rgba(255,255,255,.7), 8px 8px 18px rgba(70,70,70,.15);
+    --nl-in: inset -6px -6px 14px rgba(255,255,255,.7), inset 6px 6px 14px rgba(70,70,70,.15);
+    --nl-3d: -1px -1px 2px rgba(255,255,255,.95), 2px 2px 3px rgba(70,70,70,.35);
+    background: var(--nl-bg); color: var(--nl-text);
+    font-family: system-ui, sans-serif; line-height: 1.55;
+    border-radius: 7px; padding: 24px;
+  }
+  /* Шапка */
+  .demo-nl-header { display: flex; align-items: center; justify-content: space-between;
+    gap: 20px; padding: 14px 22px; border-radius: 18px; box-shadow: var(--nl-out);
+    margin-bottom: 36px; flex-wrap: wrap; }
+  .demo-nl-brand { display: flex; align-items: center; gap: 12px;
+    font-weight: 300; font-size: 22px; letter-spacing: 2px;
+    text-transform: uppercase; text-shadow: var(--nl-3d); }
+  .demo-nl-mark { width: 36px; height: 36px; border-radius: 12px;
+    box-shadow: var(--nl-in); display: flex; align-items: center;
+    justify-content: center; color: var(--nl-accent); font-size: 20px; font-weight: 700; }
+  .demo-nl-nav { display: flex; gap: 8px; flex-wrap: wrap; }
+  .demo-nl-nav a { color: var(--nl-muted); text-decoration: none;
+    padding: 8px 14px; border-radius: 10px; font-size: 15px;
+    transition: color .25s, box-shadow .25s; }
+  .demo-nl-nav a:hover { color: var(--nl-text); box-shadow: var(--nl-in); }
+  .demo-nl-nav a:focus-visible { outline: 2px solid var(--nl-accent); outline-offset: 2px; }
+  /* Hero */
+  .demo-nl-hero { text-align: center; padding: 8px 0 48px; }
+  .demo-nl-hero h1 { font-size: clamp(28px, 5vw, 48px); font-weight: 300;
+    letter-spacing: 1px; margin: 0 0 16px; text-shadow: var(--nl-3d); }
+  .demo-nl-hero h1 b { font-weight: 600; color: var(--nl-accent); }
+  .demo-nl-hero p { max-width: 540px; margin: 0 auto 32px; color: var(--nl-muted); font-size: 17px; }
+  .demo-nl-actions { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+  .demo-nl-btn { display: inline-flex; align-items: center; justify-content: center;
+    padding: 16px 32px; font-size: 17px; font-weight: 300; letter-spacing: 1px;
+    color: #555; border-radius: 16px; box-shadow: var(--nl-out); cursor: pointer;
+    text-decoration: none; text-shadow: var(--nl-3d);
+    transition: box-shadow .3s, color .3s, transform .15s; user-select: none; }
+  .demo-nl-btn:hover { transform: translateY(-2px); color: #2c3e50; }
+  .demo-nl-btn:active { box-shadow: var(--nl-in); transform: translateY(0); }
+  .demo-nl-btn:focus-visible { outline: 2px solid var(--nl-accent); outline-offset: 3px; }
+  .demo-nl-btn-primary { color: #1f9d55;
+    text-shadow: -1px -1px 1px rgba(255,255,255,.7), 1px 1px 2px rgba(46,204,113,.35); }
+  /* Toggles — чистый CSS, без JS */
+  .demo-nl-toggles { display: flex; gap: 40px; justify-content: center; flex-wrap: wrap;
+    padding: 32px 20px; border-radius: 22px; box-shadow: var(--nl-in); margin-bottom: 48px; }
+  .demo-nl-tg { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .demo-nl-ind { width: 16px; height: 16px; border-radius: 50%; background: #8a8a8a;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,.25);
+    transition: background .3s, box-shadow .3s, transform .25s; }
+  .demo-nl-tg:has(input:checked) .demo-nl-ind { background: var(--nl-accent-soft);
+    box-shadow: 0 0 12px rgba(85,246,150,.9); transform: scale(1.15); }
+  .demo-nl-toggle { position: relative; display: flex; justify-content: center; align-items: center;
+    width: 120px; height: 120px; border-radius: 20px; box-shadow: var(--nl-out);
+    cursor: pointer; user-select: none; transition: box-shadow .35s, transform .2s; }
+  .demo-nl-toggle:hover { transform: translateY(-2px); }
+  .demo-nl-toggle input { position: absolute; inset: 0; opacity: 0; cursor: pointer; margin: 0; }
+  .demo-nl-tg-label { font-size: 24px; font-weight: 300; letter-spacing: 1px; color: #555;
+    pointer-events: none; text-shadow: var(--nl-3d); transition: color .3s, text-shadow .3s; }
+  .demo-nl-tg:has(input:checked) .demo-nl-toggle { box-shadow: var(--nl-in); transform: none; }
+  .demo-nl-tg:has(input:checked) .demo-nl-tg-label { color: var(--nl-accent);
+    text-shadow: -1px -1px 1px rgba(255,255,255,.6), 1px 1px 2px rgba(46,204,113,.4), 0 0 14px rgba(85,246,150,.7); }
+  .demo-nl-toggle:has(input:focus-visible) { outline: 2px solid var(--nl-accent); outline-offset: 3px; }
+  /* Features */
+  .demo-nl-features { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 24px; margin-bottom: 48px; }
+  .demo-nl-feature { padding: 28px 20px; border-radius: 22px; box-shadow: var(--nl-out);
+    text-align: center; transition: transform .3s; }
+  .demo-nl-feature:hover { transform: translateY(-4px); }
+  .demo-nl-icon { width: 64px; height: 64px; margin: 0 auto 18px; border-radius: 18px;
+    box-shadow: var(--nl-in); display: flex; align-items: center; justify-content: center;
+    font-size: 28px; color: var(--nl-accent); }
+  .demo-nl-feature h3 { font-size: 18px; font-weight: 400; letter-spacing: 1px;
+    margin: 0 0 10px; color: var(--nl-text); text-shadow: var(--nl-3d); }
+  .demo-nl-feature p { margin: 0; color: var(--nl-muted); font-size: 15px; }
+  /* Range panel */
+  .demo-nl-panel { padding: 36px 24px; border-radius: 22px; box-shadow: var(--nl-out);
+    margin-bottom: 40px; text-align: center; }
+  .demo-nl-panel h2 { font-size: 22px; font-weight: 300; letter-spacing: 1px;
+    margin: 0 0 8px; text-shadow: var(--nl-3d); }
+  .demo-nl-hint { color: var(--nl-muted); font-size: 14px; margin: 0 0 28px; }
+  .demo-nl-slider-wrap { display: inline-flex; align-items: center; gap: 16px;
+    padding: 16px 20px; width: min(360px, 100%); border-radius: 40px;
+    box-shadow: var(--nl-in); box-sizing: border-box; }
+  .demo-nl-slider-wrap input[type="range"] {
+    -webkit-appearance: none; appearance: none; flex: 1 1 auto; min-width: 100px;
+    height: 8px; border-radius: 8px; background: var(--nl-bg);
+    box-shadow: inset 2px 2px 5px rgba(70,70,70,.18), inset -2px -2px 5px rgba(255,255,255,.85);
+    outline: none; cursor: pointer; }
+  .demo-nl-slider-wrap input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 28px; height: 28px; border-radius: 50%;
+    background: var(--nl-bg); border: 2px solid var(--nl-bg);
+    box-shadow: -3px -3px 6px rgba(255,255,255,.85), 3px 3px 6px rgba(70,70,70,.18);
+    cursor: pointer; transition: transform .15s; }
+  .demo-nl-slider-wrap input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.1); }
+  .demo-nl-slider-wrap input[type="range"]::-moz-range-thumb {
+    width: 28px; height: 28px; border-radius: 50%; background: var(--nl-bg);
+    border: 2px solid var(--nl-bg);
+    box-shadow: -3px -3px 6px rgba(255,255,255,.85), 3px 3px 6px rgba(70,70,70,.18); cursor: pointer; }
+  .demo-nl-slider-wrap input[type="range"]:focus-visible {
+    box-shadow: inset 2px 2px 5px rgba(70,70,70,.18), inset -2px -2px 5px rgba(255,255,255,.85),
+      0 0 0 3px rgba(46,204,113,.5); }
+  .demo-nl-bubble { flex: 0 0 auto; display: inline-flex; justify-content: center; align-items: center;
+    width: 46px; height: 46px; border-radius: 50%; color: #d1495b; font-weight: 300; font-size: 16px;
+    box-shadow: -5px -5px 10px rgba(255,255,255,.65), 5px 5px 10px rgba(70,70,70,.15),
+      inset -3px -3px 6px rgba(255,255,255,.65), inset 3px 3px 6px rgba(70,70,70,.1);
+    transition: color .3s; }
+  /* Footer */
+  .demo-nl-footer { text-align: center; padding: 22px; border-radius: 16px;
+    box-shadow: var(--nl-in); color: var(--nl-muted); font-size: 14px; letter-spacing: 1px; }
+</style>
+<div class="demo-nl">
+  <header class="demo-nl-header">
+    <div class="demo-nl-brand"><span class="demo-nl-mark" aria-hidden="true">S</span>Softly</div>
+    <nav class="demo-nl-nav" aria-label="Demo navigation">
+      <a href="#nl-feat">Features</a>
+      <a href="#nl-demo">Demo</a>
+    </nav>
+  </header>
+
+  <section class="demo-nl-hero">
+    <h1>Soft interface<br><b>next generation</b></h1>
+    <p>Neumorphic components with morphing: buttons, toggles and sliders respond to every touch.</p>
+    <div class="demo-nl-actions">
+      <a class="demo-nl-btn demo-nl-btn-primary" href="#nl-demo">Try it</a>
+      <a class="demo-nl-btn" href="#nl-feat">Learn more</a>
+    </div>
+  </section>
+
+  <div class="demo-nl-toggles" role="group" aria-label="Toggle switches">
+    <div class="demo-nl-tg">
+      <span class="demo-nl-ind" aria-hidden="true"></span>
+      <label class="demo-nl-toggle">
+        <input type="checkbox" role="switch" aria-label="On">
+        <span class="demo-nl-tg-label">On</span>
+      </label>
+    </div>
+    <div class="demo-nl-tg">
+      <span class="demo-nl-ind" aria-hidden="true"></span>
+      <label class="demo-nl-toggle">
+        <input type="checkbox" role="switch" aria-label="Off">
+        <span class="demo-nl-tg-label">Off</span>
+      </label>
+    </div>
+  </div>
+
+  <section class="demo-nl-features" id="nl-feat">
+    <div class="demo-nl-feature">
+      <div class="demo-nl-icon" aria-hidden="true">&#10022;</div>
+      <h3>Soft shadows</h3>
+      <p>Two-direction shadows create depth without hard borders.</p>
+    </div>
+    <div class="demo-nl-feature">
+      <div class="demo-nl-icon" aria-hidden="true">&#9680;</div>
+      <h3>Morphing</h3>
+      <p>Components sink on press — familiar actions feel tangible.</p>
+    </div>
+    <div class="demo-nl-feature">
+      <div class="demo-nl-icon" aria-hidden="true">&#9672;</div>
+      <h3>Feedback</h3>
+      <p>Smooth transitions on hover, active and checked states.</p>
+    </div>
+  </section>
+
+  <section class="demo-nl-panel" id="nl-demo">
+    <h2>Interactive slider</h2>
+    <p class="demo-nl-hint">Drag the handle — the value updates in real time.</p>
+    <div class="demo-nl-slider-wrap">
+      <input type="range" id="demo-nl-range" min="0" max="100" value="50"
+             aria-label="Demo value"
+             oninput="
+               var o = document.getElementById('demo-nl-out');
+               o.textContent = this.value;
+               o.style.color = 'hsl(' + (this.value * 1.4) + ', 70%, 40%)';
+             ">
+      <span class="demo-nl-bubble" id="demo-nl-out" aria-live="polite" aria-atomic="true">50</span>
+    </div>
+  </section>
+
+  <footer class="demo-nl-footer">&copy; 2026 Softly &middot; neumorphic style demo</footer>
+</div>`,
+    caption: 'Меню шапки ведёт по секциям, переключатели и слайдер работают без JavaScript.',
+    notes: [
+      'В исходном коде был <code>:root</code> — переменные <code>--accent</code> и другие перекрывали токены страницы документации. Переменные перенесены на обёртку <code>.demo-nl</code>.',
+      'В исходном коде были селекторы <code>html, body &#123; margin:0 &#125;</code> и <code>* &#123; box-sizing &#125;</code> — внутри страницы документации это ломает вёрстку сайта. Все селекторы скоуплены.',
+      'Класс <code>.btn</code> в исходнике совпадал с GALS <code>.btn</code> и переопределял его — переименован в <code>.demo-nl-btn</code>. Аналогично <code>.feature</code>, <code>.icon</code>, <code>.nav</code>, <code>.demo</code>.',
+      'Переключатели управлялись JS (<code>classList.toggle</code>). Заменено на чистый CSS <code>:has(input:checked)</code> — браузерные чекбоксы дают фокус, клавиатуру и скринридер бесплатно.',
+      'Добавлены <code>role="switch"</code>, <code>aria-label</code> и <code>:focus-visible</code> — скрытый через <code>opacity:0</code> инпут без кольца фокуса делает навигацию вслепую невозможной.',
+      'Кнопки CTA (<code>&lt;a&gt;</code>) используют <code>:active</code> для вдавливания вместо JS <code>setTimeout</code> — <code>:active</code> работает мгновенно и не требует обработчика.',
+      'В исходном коде <code>id="demo"</code> совпадал с id секции «Live demo» страницы документации — заменён на <code>nl-demo</code>.',
     ],
   },
 ];

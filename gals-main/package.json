@@ -4,16 +4,24 @@
   "description": "GALS (Grid Application Layout Systems) — lightweight flex grid frontend toolkit and its documentation site.",
   "private": true,
   "type": "module",
+  "jsdelivr": "cdn/gals.min.js",
+  "style": "cdn/gals.min.css",
+  "files": [
+    "cdn/",
+    "gals/"
+  ],
   "scripts": {
     "build:css": "sass --style=expanded --source-map --no-charset style.scss style.css && postcss style.css --map --use autoprefixer --replace",
-    "build": "npm run build:css",
+    "build:cdn": "sass --style=compressed --no-source-map --no-charset gals/gals.css cdn/gals.min.css && terser gals/gals.js --compress --mangle --comments false --output cdn/gals.min.js",
+    "build": "npm run build:css && npm run build:cdn",
     "test": "node --test \"tests/**/*.test.mjs\""
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",
     "jsdom": "^25.0.1",
     "postcss-cli": "^11.0.0",
-    "sass": "^1.79.0"
+    "sass": "^1.79.0",
+    "terser": "^5.51.2"
   },
   "browserslist": [
     "> 0.5%",

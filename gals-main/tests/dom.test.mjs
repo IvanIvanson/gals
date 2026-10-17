@@ -76,8 +76,8 @@ describe('левое меню', () => {
 
   test('делегирование: не больше одного слушателя на контейнер', async () => {
     const { counts } = await boot();
-    // 3 клика на сайдбар/версии + 3 кнопки копирования на страницу по умолчанию
-    assert.ok(counts.get('click') <= 8, `слишком много слушателей: ${counts.get('click')}`);
+    // 3 клика на сайдбар/версии + 5 кнопок копирования (4 в Introduction + 1 в CDN)
+    assert.ok(counts.get('click') <= 10, `слишком много слушателей: ${counts.get('click')}`);
   });
 });
 
@@ -96,7 +96,7 @@ describe('реестр страниц документации', () => {
     const document = new JSDOM(readFileSync(`${ROOT}/index.html`, 'utf8')).window.document;
     const items = [...document.querySelectorAll('.container-left .menu-item')];
 
-    assert.equal(items.length, 45, `ожидалось 45 пунктов, найдено ${items.length}`);
+    assert.equal(items.length, 86, `ожидалось 86 пунктов, найдено ${items.length}`);
 
     for (const item of items) {
       const key = item.dataset.action || slug(item.textContent);
@@ -109,8 +109,8 @@ describe('реестр страниц документации', () => {
   test('ключи реестра уникальны и не пересекаются с data-action', async () => {
     const { docPages } = await loadRegistry();
 
-    // 45 пунктов меню минус 3 страницы Getting started с data-action
-    assert.equal(Object.keys(docPages).length, 42, 'часть страниц потерялась при слиянии');
+    // 86 пунктов меню минус 3 страницы Getting started с data-action
+    assert.equal(Object.keys(docPages).length, 83, 'часть страниц потерялась при слиянии');
 
     for (const reserved of ['showIntroduction', 'showDownload', 'showContents']) {
       assert.equal(Object.hasOwn(docPages, reserved), false, `${reserved} занят в docPages`);
@@ -229,5 +229,73 @@ describe('разметка', () => {
 
   test('отладочная обводка borderBlue не используется на сайте', () => {
     assert.equal(document.querySelector('.borderBlue'), null);
+  });
+});
+
+describe('Verification form: ряд ячеек', () => {
+  /** CSS живого примера со страницы verification-form. */
+  const demoCss = async () => {
+    const { default: pages } = await import(pathToFileURL(`${ROOT}/script/docs/components.js`).href);
+    const html = pages['verification-form'].html
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&amp;/g, '&');
+
+    return [...html.matchAll(/<style>([\s\S]*?)<\/style>/g)]
+      .map((m) => m[1])
+      .join('\n');
+  };
+
+  // Тело правила ищется литералом: в шаблонной строке `\s` свернулся бы в «s».
+  const FIELDS_RULE = /\.demo-vf-fields\s*\{([^}]*)\}/;
+  const INPUT_RULE = /\.demo-vf-input\s*\{([^}]*)\}/;
+  const CARD_RULE = /\.demo-vf\s*\{([^}]*)\}/;
+  const STAGE_RULE = /\.demo-vf-stage\s*\{([^}]*)\}/;
+
+  const body = (css, rule, name) => {
+    const match = rule.exec(css);
+    assert.ok(match, `нет правила ${name}`);
+    return match[1];
+  };
+
+  test('ячейки не переносятся: nowrap и резиновая ширина вместо 60px', async () => {
+    const css = await demoCss();
+    const fields = body(css, FIELDS_RULE, '.demo-vf-fields');
+    const input = body(css, INPUT_RULE, '.demo-vf-input');
+
+    assert.match(fields, /display:\s*flex/, 'ряд ячеек не flex');
+    assert.match(fields, /flex-wrap:\s*nowrap/, 'flex-wrap: wrap — ячейки переносятся на вторую строку');
+
+    assert.match(input, /flex:\s*1\s+1\s+0/, 'ячейки должны делить ширину карточки, а не иметь фиксированную');
+    assert.match(input, /min-width:\s*0/, 'без min-width: 0 flex-элемент не сожмётся ниже содержимого');
+    assert.equal(/(?:^|[;\s])width:\s*\d+px/.test(input), false, 'фиксированная ширина ячейки ломает адаптив');
+    assert.equal(/(?:^|[;\s])height:\s*\d+px/.test(input), false, 'фиксированная высота ячейки ломает адаптив');
+  });
+
+  test('четыре ячейки помещаются в карточку на любой ширине', async () => {
+    const css = await demoCss();
+    const fields = body(css, FIELDS_RULE, '.demo-vf-fields');
+    const card = body(css, CARD_RULE, '.demo-vf');
+    const stage = body(css, STAGE_RULE, '.demo-vf-stage');
+
+    const gap = Number(/gap:\s*(\d+)px/.exec(fields)[1]);
+    const cardMax = Number(/max-width:\s*(\d+)px/.exec(card)[1]);
+    const stagePad = Number(/padding:\s*[\d.]+px\s+([\d.]+)px/.exec(stage)[1]);
+    const [padMin, , padMax] = /padding:[^;]*clamp\(([^)]*)\)/
+      .exec(card)[1]
+      .split(',')
+      .map((value) => parseFloat(value));
+
+    for (const viewport of [280, 320, 375, 480, 600, 1200]) {
+      const cardWidth = Math.min(viewport - stagePad * 2, cardMax);
+      const pad = Math.min(Math.max(viewport * 0.07, padMin), padMax);
+      const content = cardWidth - pad * 2;
+      const cell = (content - gap * 3) / 4;
+
+      assert.ok(cell >= 40, `на ${viewport}px ячейка сжалась до ${cell.toFixed(1)}px`);
+    }
+
+    // Историческая причина бага: 4*60 + 3*10 = 270px против 323 - 38*2 = 247px контента.
+    assert.ok(270 > 323 - 38 * 2, 'исходные фиксированные размеры не влезают в карточку — перенос неизбежен');
   });
 });

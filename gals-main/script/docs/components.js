@@ -5,6 +5,233 @@ import { page, codeBlock, demo, table } from './page.js';
  * (и, для аккордеона и scrollspy, поведение из gals.js).
  */
 
+/* ============================================================
+ *  Runtime-хелперы
+ * ============================================================ */
+
+/**
+ * Пара On/Off: нажатой остаётся одна кнопка, вторая сбрасывается.
+ * <script> внутри innerHTML браузером не исполняется, поэтому
+ * обработчик вызывается из inline-атрибута.
+ */
+const toggleMorphPair = (btn) => {
+  const box = btn.closest('.demo-mp-box');
+  if (!box) return;
+
+  const pressed = !btn.classList.contains('is-pressed');
+
+  box.querySelectorAll('.demo-mp-btn').forEach((other) => {
+    const on = other === btn && pressed;
+    other.classList.toggle('is-pressed', on);
+    other.setAttribute('aria-pressed', String(on));
+  });
+};
+
+/* ---------- Пагинация (иконки) ---------- */
+
+/**
+ * Перекрашивает страницы и подсвечивает текущую.
+ * Индекс зажимается краями — за пределы списка выйти нельзя.
+ */
+const paintPagination = (root, index) => {
+  const pages = [...root.querySelectorAll('.demo-pgi-num')];
+  if (!pages.length) return;
+
+  const current = Math.min(Math.max(index, 0), pages.length - 1);
+
+  pages.forEach((page, i) => {
+    const on = i === current;
+    page.classList.toggle('is-active', on);
+    if (on) page.setAttribute('aria-current', 'page');
+    else page.removeAttribute('aria-current');
+  });
+
+  const status = root.querySelector('.demo-pgi-status');
+  if (status) status.textContent = `Page ${current + 1} of ${pages.length}`;
+
+  root.querySelectorAll('[data-pgi-step]').forEach((nav) => {
+    const target = current + Number(nav.dataset.pgiStep);
+    nav.disabled = target < 0 || target >= pages.length;
+  });
+};
+
+const shiftPagination = (btn, step) => {
+  const root = btn.closest('.demo-pgi');
+  if (!root) return;
+
+  const pages = [...root.querySelectorAll('.demo-pgi-num')];
+  const current = pages.findIndex((page) => page.classList.contains('is-active'));
+  paintPagination(root, (current < 0 ? 0 : current) + Number(step));
+};
+
+const selectPagination = (btn) => {
+  const root = btn.closest('.demo-pgi');
+  if (!root) return;
+
+  const pages = [...root.querySelectorAll('.demo-pgi-num')];
+  paintPagination(root, pages.indexOf(btn));
+};
+
+/* ---------- Post & Search ---------- */
+
+const addPost = (root) => {
+  const input = root.querySelector('.demo-ps-input');
+  const list = root.querySelector('.demo-ps-list');
+  if (!input || !list) return;
+
+  const text = input.value.trim();
+  if (!text) return;
+
+  const post = document.createElement('div');
+  post.className = 'demo-ps-post';
+  post.textContent = text;
+  list.prepend(post);
+
+  input.value = '';
+  // Пере-фильтруем: новый пост может не соответствовать активному поиску.
+  searchPosts(root);
+  input.focus();
+};
+
+const searchPosts = (root) => {
+  const field = root.querySelector('input.demo-ps-search-input');
+  const raw = field ? field.value.trim() : '';
+  const needle = raw.toLowerCase();
+  const posts = root.querySelectorAll('.demo-ps-post');
+  let visible = 0;
+
+  posts.forEach((post) => {
+    const match = !needle || post.textContent.toLowerCase().includes(needle);
+    post.classList.toggle('demo-ps-hidden', !match);
+    if (match) visible += 1;
+  });
+
+  const status = root.querySelector('.demo-ps-status');
+  if (!status) return;
+
+  if (!needle) {
+    status.textContent = `${posts.length} ${posts.length === 1 ? 'post' : 'posts'}`;
+  } else {
+    status.textContent =
+      `${visible} of ${posts.length} ${posts.length === 1 ? 'post' : 'posts'} match “${raw}”`;
+  }
+};
+
+/* ---------- Поле верификации ---------- */
+
+const codeFields = (input) => {
+  const root = input.closest('.demo-vf');
+  return root ? [...root.querySelectorAll('.demo-vf-input')] : [];
+};
+
+/**
+ * Подсветка заполненных полей пересчитывается целиком.
+ * Точечный toggle leave разъезжается: вставка, автоподстановка кода из SMS
+ * и Backspace меняют по несколько полей за раз.
+ */
+const paintCode = (input) => {
+  const root = input.closest('.demo-vf');
+  if (!root) return;
+
+  root.querySelectorAll('.demo-vf-input').forEach((field) => {
+    field.classList.toggle('is-filled', field.value !== '');
+  });
+};
+
+const handleCodeInput = (input) => {
+  const fields = codeFields(input);
+  const index = fields.indexOf(input);
+  if (index < 0) return;
+
+  // maxlength="1" не спасает от автоподстановки кода из SMS — цифр может
+  // прийти сразу несколько, раздаём их по следующим полям.
+  const digits = input.value.replace(/\D/g, '');
+  input.value = digits.slice(0, 1);
+
+  let cursor = index;
+  for (let i = 1; i < digits.length && cursor + 1 < fields.length; i += 1) {
+    cursor += 1;
+    fields[cursor].value = digits.charAt(i);
+  }
+
+  paintCode(input);
+
+  if (input.value && cursor + 1 < fields.length) fields[cursor + 1].focus();
+};
+
+const handleCodeKeydown = (input, event) => {
+  const fields = codeFields(input);
+  const index = fields.indexOf(input);
+  if (index < 0) return;
+
+  const last = fields.length - 1;
+
+  if (event.key === 'Backspace' && input.value === '' && index > 0) {
+    fields[index - 1].focus();
+  } else if (event.key === 'ArrowLeft' && index > 0) {
+    fields[index - 1].focus();
+  } else if (event.key === 'ArrowRight' && index < last) {
+    fields[index + 1].focus();
+  }
+};
+
+const handleCodePaste = (input, event) => {
+  const fields = codeFields(input);
+  const index = fields.indexOf(input);
+  if (index < 0) return;
+
+  const digits = event.clipboardData.getData('text').replace(/\D/g, '');
+  if (!digits) return;
+
+  event.preventDefault();
+
+  // Вставка идёт от активного поля, а не всегда с первого.
+  fields.forEach((field, i) => {
+    if (i < index) return;
+    field.value = digits.charAt(i - index) || '';
+  });
+
+  paintCode(input);
+
+  const empty = fields.slice(index).find((field) => field.value === '');
+  (empty || fields[fields.length - 1]).focus();
+};
+
+const confirmCode = (form) => {
+  const root = form.closest('.demo-vf');
+  if (!root) return false;
+
+  const fields = [...root.querySelectorAll('.demo-vf-input')];
+  const status = root.querySelector('.demo-vf-status');
+  const hidden = root.querySelector('.demo-vf-code');
+  const code = fields.map((field) => field.value).join('');
+
+  if (hidden) hidden.value = code;
+
+  if (code.length !== fields.length) {
+    status.className = 'demo-vf-status is-err';
+    status.textContent = 'Enter all four digits.';
+    const empty = fields.find((field) => field.value === '');
+    if (empty) empty.focus();
+    return false;
+  }
+
+  status.className = 'demo-vf-status is-ok';
+  status.textContent = 'Code ' + code + ' confirmed.';
+  return false;
+};
+
+window.__galsComponents = {
+  toggleMorphPair,
+  shiftPagination,
+  selectPagination,
+  addPost,
+  searchPosts,
+  handleCodeInput,
+  handleCodeKeydown,
+  handleCodePaste,
+  confirmCode,
+};
 const DEF = [
   {
     slug: 'accordion',
@@ -225,6 +452,389 @@ const DEF = [
     ],
   },
   {
+    slug: 'post-search',
+    title: 'Post & Search',
+    lead:
+      'Мини-лента: ввод текста, кнопка Post, поиск по созданным постам. <code>textContent</code> вместо <code>innerHTML</code> — XSS-безопасно по умолчанию.',
+    markup: `<div class="post-search" id="feed">
+  <form onsubmit="addPost(document.getElementById('feed')); return false;">
+    <label for="post-input">Write a post</label>
+    <textarea id="post-input" class="post-input"
+              placeholder="Write a post..." rows="3" required></textarea>
+    <button type="submit" class="btn btn-primary">Post</button>
+  </form>
+
+  <div class="search-box">
+    <label for="search-input" class="visually-hidden">Search posts</label>
+    <input type="search" id="search-input" class="search-input"
+           placeholder="Search posts..."
+           oninput="searchPosts(document.getElementById('feed'))">
+  </div>
+
+  <div class="post-list" aria-live="polite"></div>
+  <p class="post-status" role="status">0 posts</p>
+</div>
+
+<style>
+.post-search { max-width: 600px; }
+.post-search form { margin-bottom: 16px; }
+.post-input {
+  width: 100%; padding: 10px; font: inherit;
+  border: 1px solid #ccc; border-radius: 6px; resize: vertical;
+}
+.post-search .btn { margin-top: 8px; }
+.search-box { margin-bottom: 16px; }
+.search-input {
+  width: 100%; padding: 10px; font: inherit;
+  border: 1px solid #ccc; border-radius: 6px;
+}
+.post-list { display: flex; flex-direction: column; gap: 12px; }
+.post-item {
+  background: #f9f9f9; border-left: 4px solid #007acc;
+  padding: 10px 14px; border-radius: 0 6px 6px 0;
+  word-break: break-word;
+}
+.post-hidden { display: none; }
+.post-status { font-size: 14px; color: #777; margin-top: 8px; }
+</style>
+
+<script>
+function addPost(root) {
+  const input = root.querySelector('.post-input');
+  const list = root.querySelector('.post-list');
+  const text = input.value.trim();
+  if (!text) return;
+
+  const post = document.createElement('div');
+  post.className = 'post-item';
+  post.textContent = text;          // не innerHTML: текст пользователя не разбирается как HTML
+  list.prepend(post);
+
+  input.value = '';
+  searchPosts(root);                // новый пост может не подходить под активный фильтр
+  input.focus();
+}
+
+function searchPosts(root) {
+  const raw = root.querySelector('.search-input').value.trim();
+  const needle = raw.toLowerCase();
+  const posts = root.querySelectorAll('.post-item');
+  let visible = 0;
+
+  posts.forEach((post) => {
+    const match = !needle || post.textContent.toLowerCase().includes(needle);
+    post.classList.toggle('post-hidden', !match);   // класс, а не style.display
+    if (match) visible += 1;
+  });
+
+  const status = root.querySelector('.post-status');
+  const one = posts.length === 1 ? ' post' : ' posts';
+  status.textContent = needle
+    ? visible + ' of ' + posts.length + one + ' match "' + raw + '"'
+    : posts.length + one;
+}
+</script>`,
+    demo: `<style>
+  .demo-ps {
+    max-width: 600px; background: #fff; border-radius: 10px;
+    padding: 20px; box-shadow: 0 0 10px rgba(0,0,0,.1);
+  }
+  .demo-ps h2 { text-align: center; margin: 0 0 16px; font-size: 20px; }
+  .demo-ps-input {
+    width: 100%; padding: 10px; font: inherit;
+    border: 1px solid #ccc; border-radius: 6px; resize: vertical;
+  }
+  .demo-ps .btn { margin-top: 8px; }
+  .demo-ps-search { margin: 16px 0; }
+  .demo-ps-search input {
+    width: 100%; padding: 10px; font: inherit;
+    border: 1px solid #ccc; border-radius: 6px;
+  }
+  .demo-ps-list { display: flex; flex-direction: column; gap: 12px; }
+  .demo-ps-post {
+    background: #f9f9f9; border-left: 4px solid #007acc;
+    padding: 10px 14px; border-radius: 0 6px 6px 0;
+    word-break: break-word;
+  }
+  .demo-ps-hidden { display: none; }
+  .demo-ps-status { font-size: 14px; color: #777; margin-top: 8px; }
+</style>
+<div class="demo-ps" id="demo-ps-root">
+  <h2>Post & Search</h2>
+  <form onsubmit="window.__galsComponents.addPost(document.getElementById('demo-ps-root')); return false;">
+    <label for="demo-ps-text" class="visually-hidden">Write a post</label>
+    <textarea id="demo-ps-text" class="demo-ps-input"
+              placeholder="Write a post..." rows="3" required></textarea>
+    <button class="btn btn-primary" type="submit">Post</button>
+  </form>
+
+  <div class="demo-ps-search">
+    <label for="demo-ps-query" class="visually-hidden">Search posts</label>
+    <input type="search" id="demo-ps-query" class="demo-ps-search-input"
+           placeholder="Search posts..."
+           oninput="window.__galsComponents.searchPosts(document.getElementById('demo-ps-root'))">
+  </div>
+
+  <div class="demo-ps-list" aria-live="polite" aria-atomic="false"></div>
+  <p class="demo-ps-status" role="status">0 posts</p>
+</div>`,
+    caption: 'Наберите текст, нажмите Post или Enter. Поиск фильтрует посты мгновенно, без перезагрузки.',
+    notes: [
+      '<code>onkeyup</code> в исходном коде не срабатывал на вставку через контекстное меню и программное изменение значения. Заменено на <code>oninput</code> — стреляет на любое изменение.',
+      '<code>style.display = "none"</code> заменён на <code>classList.toggle(\'demo-ps-hidden\', !match)</code> — класс, а не inline-стиль. Легче переопределить и отладить.',
+      'Класс <code>.hidden</code> определён в CSS, но в JS нигде не использовался — мёртвый код. Теперь класс <code>.demo-ps-hidden</code> реально переключается.',
+      'В исходном коде <code>querySelectorAll(\'.post\')</code> выбирал <em>все</em> элементы с классом <code>.post</code> на странице. Заменено на <code>root.querySelectorAll(\'.demo-ps-post\')</code> — скоупнуто к корню компонента.',
+      'Глобальные селекторы <code>body</code>, <code>.container</code>, <code>button</code>, <code>textarea</code> и <code>.post</code> утекали в документацию. Все скоуплены к <code>.demo-ps-*</code>.',
+      'Добавлен <code>aria-live="polite"</code> на список постов — скринридер объявляет новый пост. Счётчик <code>role="status"</code> объявляет результат поиска.',
+      '<code>&lt;label&gt;</code> скрыт через <code>visually-hidden</code>, но доступен скринридеру. Placeholder — не подпись: он исчезает при вводе.',
+      'Поле поиска — <code>type="search"</code> вместо <code>type="text"</code>: мобильные показывают крестик очистки, скринридер объявляет «search field».',
+      'Форма с <code>onsubmit</code> вместо кнопки с <code>onclick</code>: Enter в textarea отправляет форму, кнопка получает <code>type="submit"</code> бесплатно.',
+      '<code>textContent</code> вместо <code>innerHTML</code> — экранирует HTML автоматически. В исходном коде это было верно, оставлено как есть.',
+      'В исходном коде новый пост, добавленный при активном поиске, появлялся видимым, игнорируя фильтр. Исправлено: <code>addPost</code> вызывает <code>searchPosts</code> после добавления, чтобы скрыть несовпадающие посты.',
+      'Поле ввода очищается после добавления поста и получает фокус — удобнее вводить следующую запись, не кликая мышью.',
+    ],
+  },
+  {
+    slug: 'verification-form',
+    title: 'Verification form',
+    lead:
+      'Код подтверждения из четырёх ячеек: цифры распределяются по полям, Backspace и стрелки переносят фокус, вставка разкладывается по всем ячейкам сразу.',
+    markup: `<div class="verify-code">
+  <h2 id="vc-title">Validation code</h2>
+  <p>We have sent a verification code to your email.</p>
+
+  <form onsubmit="return confirmCode(this)">
+    <div class="code-fields" role="group" aria-labelledby="vc-title">
+      <input class="code-input" type="text" inputmode="numeric"
+             autocomplete="one-time-code" pattern="[0-9]" maxlength="1" required
+             aria-label="Digit 1 of 4"
+             oninput="codeInput(this)"
+             onkeydown="codeKeydown(this, event)"
+             onpaste="codePaste(this, event)">
+      <input class="code-input" type="text" inputmode="numeric"
+             autocomplete="off" pattern="[0-9]" maxlength="1" required
+             aria-label="Digit 2 of 4"
+             oninput="codeInput(this)"
+             onkeydown="codeKeydown(this, event)"
+             onpaste="codePaste(this, event)">
+      <!-- …ещё две ячейки -->
+    </div>
+
+    <!-- Собранный код уходит на сервер одним полем -->
+    <input type="hidden" name="code">
+    <button class="btn btn-primary" type="submit">Confirm</button>
+    <p class="code-status" role="status" aria-live="polite"></p>
+  </form>
+</div>
+
+<style>
+.verify-code { width: 100%; max-width: 323px; }
+.code-fields {
+  display: flex; flex-wrap: nowrap; align-items: flex-start;
+  gap: 10px; margin: 0 0 20px;
+}
+.code-input {
+  flex: 1 1 0; min-width: 0; width: auto; height: auto;
+  min-height: 44px; aspect-ratio: 1; padding: 0;
+  font-size: 20px; text-align: center;
+  border: 2px solid #ddd; border-radius: 15px;
+}
+.code-input.is-filled { border-color: #bd5518; }
+.code-input:focus-visible {
+  outline: 3px solid #6b2705; outline-offset: 2px;
+  border-color: #a8410c;
+}
+.code-status { min-height: 20px; margin: 12px 0 0; font-size: 14px; }
+.code-status.is-ok  { color: #16692c; }
+.code-status.is-err { color: #b3261e; }
+</style>
+
+<script>
+function codeInput(input) {
+  var fields = Array.prototype.slice.call(
+    input.closest('.verify-code').querySelectorAll('.code-input'));
+  var index = fields.indexOf(input);
+
+  // maxlength="1" не спасает от автоподстановки кода из SMS: цифр может
+  // прийти несколько — раздаём их по следующим полям.
+  var digits = input.value.replace(/\D/g, '');
+  input.value = digits.slice(0, 1);
+
+  var cursor = index;
+  for (var i = 1; i < digits.length && cursor + 1 < fields.length; i++) {
+    fields[++cursor].value = digits.charAt(i);
+  }
+
+  fields.forEach(function (f) {
+    f.classList.toggle('is-filled', f.value !== '');
+  });
+  if (input.value && cursor + 1 < fields.length) fields[cursor + 1].focus();
+}
+
+function codeKeydown(input, event) {
+  var fields = Array.prototype.slice.call(
+    input.closest('.verify-code').querySelectorAll('.code-input'));
+  var index = fields.indexOf(input);
+  var last = fields.length - 1;
+
+  if (event.key === 'Backspace' && input.value === '' && index > 0) {
+    fields[index - 1].focus();
+  } else if (event.key === 'ArrowLeft' && index > 0) {
+    fields[index - 1].focus();
+  } else if (event.key === 'ArrowRight' && index < last) {
+    fields[index + 1].focus();
+  }
+}
+
+function codePaste(input, event) {
+  var fields = Array.prototype.slice.call(
+    input.closest('.verify-code').querySelectorAll('.code-input'));
+  var index = fields.indexOf(input);
+  var digits = event.clipboardData.getData('text').replace(/\D/g, '');
+  if (!digits) return;
+
+  event.preventDefault();
+  // Вставка идёт от активного поля, а не всегда с первого.
+  fields.forEach(function (f, i) {
+    if (i >= index) f.value = digits.charAt(i - index) || '';
+  });
+  fields.forEach(function (f) {
+    f.classList.toggle('is-filled', f.value !== '');
+  });
+
+  var empty = fields.slice(index).filter(function (f) { return f.value === ''; })[0];
+  (empty || fields[fields.length - 1]).focus();
+}
+
+function confirmCode(form) {
+  var fields = Array.prototype.slice.call(
+    form.querySelectorAll('.code-input'));
+  var code = fields.map(function (f) { return f.value; }).join('');
+  var status = form.querySelector('.code-status');
+  form.querySelector('[name="code"]').value = code;
+
+  if (code.length !== fields.length) {
+    status.className = 'code-status is-err';
+    status.textContent = 'Enter all four digits.';
+    fields.filter(function (f) { return f.value === ''; })[0].focus();
+    return false;
+  }
+
+  status.className = 'code-status is-ok';
+  status.textContent = 'Code ' + code + ' confirmed.';
+  return false;
+}
+</script>`,
+    demo: `<style>
+  .demo-vf-stage {
+    display: flex; justify-content: center; padding: 28px 12px;
+    background: #fbceb1; border-radius: 7px;
+  }
+  .demo-vf {
+    width: 100%; max-width: 323px; background: #fff;
+    border-radius: 30px; padding: 34px clamp(18px, 7vw, 38px);
+  }
+  .demo-vf h2 { margin: 0 0 12px; font-size: 22px; }
+  .demo-vf-lead {
+    max-width: 220px; margin: 0 0 22px;
+    font-size: 16px; font-weight: 500; color: #6b6b6b;
+  }
+  /*
+   * nowrap + flex: 1 1 0 вместо четырёх фиксированных 60px: ряд всегда делит
+   * ширину карточки на четыре части. Перенос строки физически невозможен —
+   * при flex-wrap: wrap четыре поля по 60px (270px) не влезали в контент
+   * карточки 323 - 38*2 = 247px, и четвёртое перескакивало на вторую строку.
+   */
+  .demo-vf-fields {
+    display: flex; flex-wrap: nowrap; align-items: flex-start;
+    gap: 10px; margin: 0 0 22px;
+  }
+  .demo-vf-input {
+    flex: 1 1 0; min-width: 0; width: auto; height: auto;
+    min-height: 44px; aspect-ratio: 1; padding: 0;
+    font-size: 20px; text-align: center;
+    color: #1c1c1c; background: #fff;
+    border: 2px solid #ddd; border-radius: 15px;
+    transition: border-color .2s;
+  }
+  .demo-vf-input.is-filled { border-color: #bd5518; }
+  .demo-vf-input:focus-visible {
+    outline: 3px solid #6b2705; outline-offset: 2px;
+    border-color: #a8410c;
+  }
+  .demo-vf-btn {
+    width: 100%; border: 0; border-radius: 40px; cursor: pointer;
+    padding: 18px 45px; font: inherit; font-weight: 700; font-size: 18px;
+    color: #fff; box-shadow: 0 9px 14px 0 rgba(168,65,12,.25);
+    background: linear-gradient(180deg, #bd5518 0%, #a8410c 100%);
+  }
+  .demo-vf-btn:hover { background: linear-gradient(180deg, #a8410c 0%, #8f360a 100%); }
+  .demo-vf-btn:focus-visible {
+    outline: 3px solid #6b2705; outline-offset: 3px;
+  }
+  .demo-vf-status { min-height: 20px; margin: 12px 0 0; font-size: 14px; color: #6b6b6b; }
+  .demo-vf-status.is-ok  { color: #16692c; }
+  .demo-vf-status.is-err { color: #b3261e; }
+</style>
+<div class="demo-vf-stage">
+  <div class="demo-vf">
+    <h2 id="demo-vf-title">Validation code</h2>
+    <p class="demo-vf-lead">We have sent a verification code to your email.</p>
+
+    <form onsubmit="return window.__galsComponents.confirmCode(this)">
+      <div class="demo-vf-fields" role="group" aria-labelledby="demo-vf-title">
+        <input class="demo-vf-input" type="text" inputmode="numeric"
+               autocomplete="one-time-code" pattern="[0-9]" maxlength="1" required
+               aria-label="Digit 1 of 4"
+               oninput="window.__galsComponents.handleCodeInput(this)"
+               onkeydown="window.__galsComponents.handleCodeKeydown(this, event)"
+               onpaste="window.__galsComponents.handleCodePaste(this, event)">
+        <input class="demo-vf-input" type="text" inputmode="numeric"
+               autocomplete="off" pattern="[0-9]" maxlength="1" required
+               aria-label="Digit 2 of 4"
+               oninput="window.__galsComponents.handleCodeInput(this)"
+               onkeydown="window.__galsComponents.handleCodeKeydown(this, event)"
+               onpaste="window.__galsComponents.handleCodePaste(this, event)">
+        <input class="demo-vf-input" type="text" inputmode="numeric"
+               autocomplete="off" pattern="[0-9]" maxlength="1" required
+               aria-label="Digit 3 of 4"
+               oninput="window.__galsComponents.handleCodeInput(this)"
+               onkeydown="window.__galsComponents.handleCodeKeydown(this, event)"
+               onpaste="window.__galsComponents.handleCodePaste(this, event)">
+        <input class="demo-vf-input" type="text" inputmode="numeric"
+               autocomplete="off" pattern="[0-9]" maxlength="1" required
+               aria-label="Digit 4 of 4"
+               oninput="window.__galsComponents.handleCodeInput(this)"
+               onkeydown="window.__galsComponents.handleCodeKeydown(this, event)"
+               onpaste="window.__galsComponents.handleCodePaste(this, event)">
+      </div>
+
+      <input type="hidden" class="demo-vf-code" name="code">
+      <button class="demo-vf-btn" type="submit">Confirm</button>
+      <p class="demo-vf-status" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</div>`,
+    caption:
+      'Печатайте — фокус сам переходит вперёд. Backspace на пустой ячейке возвращается назад, вставьте весь код сразу.',
+    notes: [
+      '<strong>Главный баг исходника:</strong> <code>index &lt; index.length - 1</code>. У числа нет свойства <code>length</code>, сравнение <code>0 &lt; undefined</code> всегда <code>false</code> — стрелка <kbd>→</kbd> не работала никогда. Исправлено на <code>index &lt; fields.length - 1</code>.',
+      '<code>document.querySelectorAll(\'input\')</code> выбирал <em>все</em> input страницы — включая поиск в сайдбаре. Заменено на <code>root.querySelectorAll(\'.demo-vf-input\')</code>.',
+      '<code>window.onload</code> в документации не сработал бы: HTML вставляется через <code>innerHTML</code>, и скрипты внутри не исполняются. Обработчики вынесены в <code>window.__galsComponents</code> и вызываются из inline-атрибутов.',
+      '<strong>Вставка игнорировала активное поле:</strong> код всегда ложился в <code>inputs[0..]</code>, поэтому вставка из третьей ячейки перезаписывала первые. Теперь вставка идёт от активного поля.',
+      '<strong>Автоподстановка кода из SMS ломалась:</strong> <code>maxlength="1"</code> плюс <code>.charAt(0)</code> выбрасывали лишние цифры, которые присылает браузер. Теперь пришедшие цифры раздаются по следующим полям. Первому полю добавлен <code>autocomplete="one-time-code"</code> — именно он включает системную подсказку кода на iOS, Android и в Chrome.',
+      'Класс <code>.active</code> разъезжался: paste вешал его на все поля, Backspace снимал только с одного, а правка первой ячейки оставляла подсветку на остальных. Теперь состояние всех ячеек пересчитывается целиком (<code>paintCode</code>).',
+      '<code>outline: none</code> без замены лишал поле видимого фокуса — клавиатурная навигация по коду становилась вслепую. Добавлено кольцо <code>:focus-visible</code>.',
+      'Четыре голых input скринридер объявляет как «edit text» без объяснения. Добавлены <code>aria-label="Digit N of 4"</code> и <code>role="group"</code> с <code>aria-labelledby</code> на контейнер.',
+      'Отправлялся <code>maxlength="1"</code> без <code>name</code> — на сервер не уходило ничего. Добавлено скрытое поле <code>name="code"</code>, куда хелпер складывает собранный код.',
+      'Форма вела на <code>action="#"</code> и ничего не сообщала о результате. Добавлен <code>&lt;p role="status" aria-live="polite"&gt;</code> — он объявляет и ошибку, и успех. Здесь он подтверждает любой код: настоящая проверка живёт на сервере, клиент не может ей доверять.',
+      'Глобальные <code>* { margin:0; padding:0 }</code>, <code>body</code>, <code>h2</code>, <code>p</code>, <code>input</code>, <code>button</code> и <code>form &gt; div</code> обнулили бы отступы и перекрасили формы всей документации. Все селекторы скоуплены к <code>.demo-vf-*</code>.',
+      'Фиксированная <code>height: 350px</code> блоки растягивал текст, масштаб или перевод. Заменена на автовысоту; <code>padding: 90px 38px 38px</code> — на обычный отступ.',
+      'Подпись <code>#b6b6b6</code> на белом — контраст ~2:1, код не читается. Тёмно-оранжевая кнопка с белым текстом (<code>#ff8d4d</code>) давала ~2.3:1. Оба цвета затемнены до ~5:1 и ~4.7:1.',
+      'Мелочи: <code>padding:4</code> без единиц CSS игнорирует (исправлено на <code>0</code>), <code>&lt;button&gt;</code> без <code>type</code> внутри формы отправлял бы её молча — теперь <code>type="submit"</code> явно, а <code>onsubmit</code> возвращает <code>false</code>.',
+    ],
+  },
+  {
     slug: 'tabs',
     title: 'Tabs',
     lead: 'Switching views of one subject without leaving the page — radios and :checked, no JavaScript.',
@@ -280,6 +890,157 @@ const DEF = [
     notes: [
       'Ellipses are <code>aria-hidden</code>; the current page carries <code>aria-current="page"</code>.',
       'Infinite scroll destroys the footer and the sense of position. Use it where scrolling is the activity, not where results are.',
+    ],
+    gallery: [
+      {
+        title: 'Icon pill pagination',
+        lead:
+          'Пилюля с круглыми кнопочками-иконками: активная страница подсвечивается кольцом. Стрелки листают, иконки выбирают страницу напрямую.',
+        markup: `<nav class="icon-pagination" aria-label="Results">
+  <ul>
+    <li><button class="pgi-nav" type="button" data-step="-1"
+                onclick="shiftPagination(this, -1)">&#8249; Prev</button></li>
+    <li><button class="pgi-num is-active" type="button" aria-current="page"
+                aria-label="Home" onclick="selectPagination(this)">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+            <path d="M3 11.5 12 4l9 7.5V21h-6v-6h-6v6H3z"/>
+          </svg>
+        </button></li>
+    <!-- …ещё страницы -->
+    <li><button class="pgi-nav" type="button" data-step="1"
+                onclick="shiftPagination(this, 1)">Next &#8250;</button></li>
+  </ul>
+  <p class="pgi-status" role="status">Page 1 of 5</p>
+</nav>
+
+<style>
+.icon-pagination ul {
+  display: flex; align-items: center; list-style: none; margin: 0;
+  padding: 10px 20px; background: #fff; border-radius: 50px;
+  box-shadow: 0 5px 15px rgba(0,0,0,.2);
+}
+.icon-pagination li { margin: 0 5px; }
+.icon-pagination li:first-child { margin-right: 30px; }
+.icon-pagination li:last-child  { margin-left: 30px; }
+.pgi-nav { border: 0; background: none; cursor: pointer;
+  font: inherit; font-weight: 700; font-size: 20px; color: #4a4a4a; }
+.pgi-nav[disabled] { opacity: .35; cursor: default; }
+.pgi-num {
+  display: flex; align-items: center; justify-content: center;
+  width: 50px; height: 50px; padding: 0; border: 0; border-radius: 50%;
+  background: none; color: #4a4a4a; cursor: pointer; transition: .3s;
+}
+.pgi-num:hover,
+.pgi-num.is-active {
+  background: #86ff3d; color: #123a05;
+  box-shadow: 0 0 0 4px #fff, 0 0 0 6px #86ff3d;
+}
+</style>`,
+        demo: `<style>
+  .demo-pgi {
+    display: flex; flex-direction: column; align-items: center; gap: 14px;
+    background: #cdecb0; padding: 28px 16px; border-radius: 7px;
+  }
+  .demo-pgi-list {
+    display: flex; align-items: center; list-style: none; margin: 0;
+    padding: 10px 20px; background: #fff; border-radius: 50px;
+    box-shadow: 0 5px 15px rgba(0,0,0,.2);
+  }
+  .demo-pgi-list li { margin: 0 5px; }
+  .demo-pgi-list li:first-child { margin-right: 30px; }
+  .demo-pgi-list li:last-child  { margin-left: 30px; }
+  .demo-pgi-nav {
+    border: 0; background: none; cursor: pointer; padding: 0;
+    font: inherit; font-weight: 700; font-size: 18px; color: #4a4a4a;
+  }
+  .demo-pgi-nav[disabled] { opacity: .35; cursor: default; }
+  .demo-pgi-num {
+    display: flex; align-items: center; justify-content: center;
+    width: 50px; height: 50px; padding: 0; border: 0; border-radius: 50%;
+    background: none; color: #4a4a4a; cursor: pointer; transition: .3s;
+  }
+  .demo-pgi-num:hover,
+  .demo-pgi-num.is-active {
+    background: #86ff3d; color: #123a05;
+    box-shadow: 0 0 0 4px #fff, 0 0 0 6px #86ff3d;
+  }
+  .demo-pgi-nav:focus-visible,
+  .demo-pgi-num:focus-visible {
+    outline: 3px solid #2f7d1a; outline-offset: 2px;
+  }
+  .demo-pgi-status { margin: 0; font-size: 14px; color: #2c4a17; }
+</style>
+<nav class="demo-pgi" aria-label="Demo pages">
+  <ul class="demo-pgi-list">
+    <li>
+      <button class="demo-pgi-nav" type="button" data-pgi-step="-1" disabled
+              aria-label="Previous page"
+              onclick="window.__galsComponents.shiftPagination(this, -1)">&#8249; Prev</button>
+    </li>
+    <li>
+      <button class="demo-pgi-num is-active" type="button" aria-current="page" aria-label="Home"
+              onclick="window.__galsComponents.selectPagination(this)">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+          <path d="M3 11.5 12 4l9 7.5V21h-6v-6h-6v6H3z"/>
+        </svg>
+      </button>
+    </li>
+    <li>
+      <button class="demo-pgi-num" type="button" aria-label="Users"
+              onclick="window.__galsComponents.selectPagination(this)">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+          <circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0z"/>
+          <circle cx="17" cy="9" r="2.6"/><path d="M16.4 14.4a5.4 5.4 0 0 1 5.1 5.6h-5.2z"/>
+        </svg>
+      </button>
+    </li>
+    <li>
+      <button class="demo-pgi-num" type="button" aria-label="Docs"
+              onclick="window.__galsComponents.selectPagination(this)">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+          <path d="M4 4h7a2 2 0 0 1 2 2v14a2 2 0 0 0-2-2H4z"/>
+          <path d="M20 4h-7a2 2 0 0 0-2 2v14a2 2 0 0 1 2-2h7z"/>
+        </svg>
+      </button>
+    </li>
+    <li>
+      <button class="demo-pgi-num" type="button" aria-label="Files"
+              onclick="window.__galsComponents.selectPagination(this)">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+          <path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4" fill="#fff" opacity=".35"/>
+        </svg>
+      </button>
+    </li>
+    <li>
+      <button class="demo-pgi-num" type="button" aria-label="Contacts"
+              onclick="window.__galsComponents.selectPagination(this)">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+          <path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11 11 0 0 0 3.6.6 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11 11 0 0 0 .6 3.6 1 1 0 0 1-.25 1z"/>
+        </svg>
+      </button>
+    </li>
+    <li>
+      <button class="demo-pgi-nav" type="button" data-pgi-step="1"
+              aria-label="Next page"
+              onclick="window.__galsComponents.shiftPagination(this, 1)">Next &#8250;</button>
+    </li>
+  </ul>
+  <p class="demo-pgi-status" role="status">Page 1 of 5</p>
+</nav>`,
+        caption:
+          'Стрелки листают по краям и отключаются, иконки выбирают страницу. Скринридер читает «Page N of 5».',
+        notes: [
+          'В исходном jQuery <code>.find(\'.pageNumber.active\')</code> вызывался <em>после</em> <code>.addClass(\'active\')</code> — выбирались обе страницы, а на краю списка класс <code>active</code> попадал на стрелку Next, и пагинация навсегда застревала. Здесь индекс считается числом и зажимается краями.',
+          'jQuery (35 КБ gzip) убран целиком: переключение класса — это <code>classList.toggle</code>, а не повод тянуть библиотеку.',
+          'Класс <code>.pagination</code> в исходнике совпадал с GALS-классом и ломал бы обычную пагинацию на той же странице. Демо использует <code>.demo-pgi-*</code>.',
+          'Глобальные <code>* { margin:0; padding:0 }</code>, <code>body { display:flex }</code> и <code>ul { … }</code> внутри страницы документации обнулили бы отступы и списки всего сайта. Все селекторы скоуплены.',
+          'Ссылки <code>&lt;a href="#"&gt;</code> заменены на <code>&lt;button type="button"&gt;</code>: страница не меняется — это действие, а не переход. Плюс пропало битое <code>href="#"; return false;</code> в разметке.',
+          'Font Awesome 4.7 (CDN) заменён на инлайновые SVG: нет внешнего запроса, иконки наследуют <code>currentColor</code> и не ломаются, если CDN недоступен.',
+          'Белый текст на <code>#86ff3d</code> даёт контраст ~1.6:1 — не читается. Активная страница залита тем же салатовым, но текст тёмный <code>#123a05</code>.',
+          'Иконка без текста непонятна скринридеру: у каждой кнопки <code>aria-label</code>, у текущей — <code>aria-current="page"</code>, у счётчика — <code>role="status"</code>.',
+          '<code>-webkit-box-reflect</code> — вендорная фича WebKit, в Firefox и Edge её нет. Убран; при желании верните как чистую decoration-надстройку.',
+        ],
+      },
     ],
   },
   {
@@ -628,6 +1389,337 @@ draw();
       },
     ],
   },
+
+  /* ---------- Нейроморфные контролы ---------- */
+
+  {
+    slug: 'morphing-range',
+    title: 'Morphing range',
+    lead:
+      'Нейроморфный ползунок: «утопленный» жёлоб и «выпуклый» брусок на одних box-shadow. Значение выводится в <code>&lt;output&gt;</code>.',
+    markup: `<label class="morph-range">
+  Volume
+  <input type="range" min="0" max="100" value="50"
+         oninput="document.getElementById('vol-out').textContent = this.value">
+  <output id="vol-out" for="vol">50</output>
+</label>
+
+<style>
+.morph-range input {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 200px; height: 8px; border-radius: 40px;
+  background: #ececec;
+  box-shadow: -7px -7px 15px rgba(255,255,255,.65),
+ 7px  7px 15px rgba(70,70,70,.12);
+}
+.morph-range input::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 30px; height: 30px; border-radius: 50%;
+  background: #ececec;
+  box-shadow:  7px  7px 15px rgba(255,255,255,.65),
+              -7px -7px 15px rgba(70,70,70,.12),
+       inset  7px  7px 15px rgba(255,255,255,.65),
+       inset -7px -7px 15px rgba(70,70,70,.12);
+}
+.morph-range input::-moz-range-thumb {
+  width: 30px; height: 30px; border: none; border-radius: 50%;
+  background: #ececec;
+  box-shadow:  7px  7px 15px rgba(255,255,255,.65),
+              -7px -7px 15px rgba(70,70,70,.12);
+}
+.morph-range input:focus-visible {
+  box-shadow: -7px -7px 15px rgba(255,255,255,.65), 7px 7px 15px rgba(70,70,70,.12), 0 0 0 3px rgba(133,18,209,.5);
+  outline: none;
+}
+</style>`,
+    demo: `<style>
+  .demo-mr {
+    background: #ececec; padding: 24px; border-radius: 7px;
+    display: flex; flex-direction: column; gap: 24px;
+    font-family: system-ui, sans-serif; color: #3a3a3a;
+  }
+  .demo-mr-row {
+    display: flex; align-items: center; gap: 16px;
+  }
+  .demo-mr-slider {
+    -webkit-appearance: none; appearance: none;
+    width: 200px; height: 8px; border-radius: 40px;
+    background: #ececec;
+    box-shadow: -7px -7px 15px rgba(255,255,255,.65), 7px 7px 15px rgba(70,70,70,.12);
+    outline: none; cursor: pointer;
+  }
+  .demo-mr-slider::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    width: 30px; height: 30px; border-radius: 50%;
+    background: #ececec; border: 1px solid #ececec;
+    box-shadow:  7px  7px 15px rgba(255,255,255,.65),
+                -7px -7px 15px rgba(70,70,70,.12),
+         inset  7px  7px 15px rgba(255,255,255,.65),
+         inset -7px -7px 15px rgba(70,70,70,.12);
+    cursor: pointer;
+  }
+  .demo-mr-slider::-moz-range-thumb {
+    width: 30px; height: 30px; border: 1px solid #ececec; border-radius: 50%;
+    background: #ececec;
+    box-shadow:  7px  7px 15px rgba(255,255,255,.65),
+                -7px -7px 15px rgba(70,70,70,.12);
+  }
+  .demo-mr-slider:focus-visible {
+    box-shadow: 0 0 0 3px rgba(133,18,209,.5);
+    outline: none;
+  }
+  .demo-mr-out {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 40px; height: 40px; border-radius: 50%;
+    color: #d1495b; font-weight: 300;
+    box-shadow: -7px -7px 15px rgba(255,255,255,.65), 7px 7px 15px rgba(70,70,70,.12),
+     inset -7px -7px 15px rgba(255,255,255,.65), inset 7px 7px 15px rgba(70,70,70,.12);
+  }
+</style>
+<div class="demo-mr">
+  <div class="demo-mr-row">
+    <label for="demo-mr-a">Range 0–10</label>
+    <input class="demo-mr-slider" id="demo-mr-a" type="range" min="0" max="10" list="demo-mr-ticks" value="5"
+           oninput="document.getElementById('demo-mr-a-out').textContent = this.value">
+    <span class="demo-mr-out" id="demo-mr-a-out">5</span>
+  </div>
+  <datalist id="demo-mr-ticks">
+    <option value="0" label="0"></option>
+    <option value="5" label="5"></option>
+    <option value="10" label="10"></option>
+  </datalist>
+  <div class="demo-mr-row">
+    <label for="demo-mr-b">Range 0–100</label>
+    <input class="demo-mr-slider" id="demo-mr-b" type="range" min="0" max="100" value="50"
+           oninput="document.getElementById('demo-mr-b-out').textContent = this.value">
+    <span class="demo-mr-out" id="demo-mr-b-out">50</span>
+  </div>
+</div>`,
+    caption: 'Двигайте ползунок — значение обновляется мгновенно.',
+    notes: [
+      'В исходнике ползунок имел высоту жёлоба 0.5px — при appearance:none он практически невидим и неинтерактивен в Firefox. Исправлено до 8px.',
+      'Firefox не поддерживает ::-webkit-slider-thumb — добавлен ::-moz-range-thumb.',
+      'Метка <code>label for="..."</code> обязательна: без неё ползунок недоступен с клавиатуры и скринридера.',
+      'Метки из <code>&lt;option label&gt;</code> рисует только Chromium; в Firefox/WebKit ползунок гладкий.',
+      'В оригинале первый слайдер обновлялся по <code>onchange</code> (только при отпускании) — заменено на <code>oninput</code> для мгновенной обратной связи.',
+      '<code>innerHTML</code> заменён на <code>textContent</code>: значение — число, HTML-тегов нет.',
+    ],
+  },
+  {
+    slug: 'morphing-buttons',
+    title: 'Morphing buttons (On / Off)',
+    lead:
+      'Нейроморфные кнопки-переключатели: «выпуклые» в покое, «утопленные» в нажатом состоянии. Пара On / Off работает как radio — активна только одна.',
+    markup: `<div class="morph-pair">
+  <button class="morph-btn on" type="button" aria-pressed="false"
+          onclick="window.__galsComponents.toggleMorphPair(this)">On</button>
+  <button class="morph-btn off" type="button" aria-pressed="false"
+          onclick="window.__galsComponents.toggleMorphPair(this)">Off</button>
+</div>
+
+<style>
+.morph-pair {
+  display: flex; justify-content: center; align-items: center;
+  gap: 20px; padding: 24px; background: #ececec;
+  border-radius: 7px;
+}
+.morph-btn {
+  height: 80px; width: 80px; border: 5px solid #ececec; border-radius: 20px;
+  background: #ececec;
+  box-shadow: -8px -8px 15px rgba(255,255,255,.65), 8px 8px 15px rgba(70,70,70,.12),
+       inset -8px -8px 15px rgba(255,255,255,.65), inset 7px 7px 15px rgba(70,70,70,.12);
+  font-family: inherit; font-weight: 100; font-size: 25px; color: #555;
+  cursor: pointer; outline: none; transition: box-shadow .3s, color .3s, text-shadow .3s;
+}
+.morph-btn.on:hover { color: #1d4ed8; }
+.morph-btn.off:hover { color: #c0392b; }
+.morph-btn.on.is-pressed {
+  background: rgba(0,0,250,.15); color: #1d4ed8;
+  box-shadow: inset -8px -8px 15px rgba(255,255,255,.65),
+       inset 8px 8px 15px rgba(70,70,70,.12);
+}
+.morph-btn.off.is-pressed {
+  background: rgba(250,0,0,.15); color: #c0392b;
+  box-shadow: inset -8px -8px 15px rgba(255,255,255,.65),
+       inset 8px 8px 15px rgba(70,70,70,.12);
+}
+.morph-btn:focus-visible {
+  box-shadow: 0 0 0 3px rgba(133,18,209,.5);
+  outline: none;
+}
+</style>`,
+    demo: `<style>
+  .demo-mp-box {
+    display: flex; justify-content: center; align-items: center;
+    gap: 20px; height: 120px; width: 250px; max-width: 100%;
+    background: #ececec; border-radius: 5px;
+    box-shadow: -8px -8px 18px rgba(255,255,255,.7), 8px 8px 18px rgba(70,70,70,.15);
+  }
+  .demo-mp-btn {
+    height: 80px; width: 80px; border: 5px solid #ececec; border-radius: 20px;
+    background: #ececec;
+    box-shadow: -8px -8px 15px rgba(255,255,255,.65), 8px 8px 15px rgba(70,70,70,.12),
+     inset -8px -8px 15px rgba(255,255,255,.65), inset 7px 7px 15px rgba(70,70,70,.12);
+    font-family: inherit; font-weight: 100; font-size: 25px; color: #555;
+    cursor: pointer; outline: none; transition: box-shadow .3s, color .3s;
+  }
+  .demo-mp-btn.on:hover { color: #1d4ed8; }
+  .demo-mp-btn.off:hover { color: #c0392b; }
+  .demo-mp-btn.on.is-pressed {
+    background: rgba(0,0,250,.15); color: #1d4ed8;
+    box-shadow: inset -8px -8px 15px rgba(255,255,255,.65), inset 8px 8px 15px rgba(70,70,70,.12);
+  }
+  .demo-mp-btn.off.is-pressed {
+    background: rgba(250,0,0,.15); color: #c0392b;
+    box-shadow: inset -8px -8px 15px rgba(255,255,255,.65), inset 8px 8px 15px rgba(70,70,70,.12);
+  }
+  .demo-mp-btn:focus-visible {
+    box-shadow: 0 0 0 3px rgba(133,18,209,.5);
+    outline: none;
+  }
+</style>
+<div style="display:flex;justify-content:center">
+  <div class="demo-mp-box" id="demo-mp-box">
+    <button class="demo-mp-btn on" type="button" aria-pressed="false"
+            onclick="window.__galsComponents.toggleMorphPair(this)">On</button>
+    <button class="demo-mp-btn off" type="button" aria-pressed="false"
+            onclick="window.__galsComponents.toggleMorphPair(this)">Off</button>
+  </div>
+</div>`,
+    caption: 'Нажмите On или Off — активна только одна кнопка.',
+    notes: [
+      'В исходнике оба кнопки независимы — можно «вдавить» обе одновременно. Здесь пара работает как radio: нажатие одной сбрасывает другую.',
+      'Каждая кнопка имеет <code>aria-pressed</code> для скринридеров. Пару переключает runtime-хелпер <code>toggleMorphPair</code>.',
+      'Исходный код был частью лендинга-демо; в компоненте выделена только пара кнопок — полный лендинг см. в Features «Morphing style landing».',
+      'Цвета blue/red на #ececec проходят AA для крупного текста (25px) — мелкий текст таких цветов требует темнее.',
+    ],
+  },
+  {
+    slug: 'morphing-checked-button',
+    title: 'Morphing checked button',
+    lead:
+      'Нейроморфная кнопка-переключатель с индикатором: <code>:has()</code> без JavaScript — состояние «включено» меняет тень и свечение индикатора.',
+    markup: `<div class="neu-toggle">
+  <span class="indicator" aria-hidden="true"></span>
+  <label class="toggle">
+    <input type="checkbox" role="switch">
+    <span class="label">On</span>
+  </label>
+</div>
+
+<style>
+.neu-toggle {
+  display: flex; flex-direction: column; align-items: center; gap: 16px;
+}
+.indicator {
+  width: 16px; height: 16px; border-radius: 50%;
+  background: #8a8a8a;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,.25);
+  transition: background .3s, box-shadow .3s, transform .25s;
+}
+.neu-toggle:has(input:checked) .indicator {
+  background: #55f696;
+  box-shadow: 0 0 12px rgba(85,246,150,.85);
+  transform: scale(1.15);
+}
+.toggle {
+  width: 140px; height: 140px; background: #ececec;
+  border-radius: 22px;
+  box-shadow: -8px -8px 16px rgba(255,255,255,.7), 8px 8px 16px rgba(70,70,70,.15);
+  cursor: pointer; transition: box-shadow .35s, transform .2s;
+}
+.toggle:hover { transform: translateY(-2px); }
+.toggle:has(input:checked) {
+  box-shadow: inset -6px -6px 12px rgba(255,255,255,.7),
+       inset 6px 6px 12px rgba(70,70,70,.15);
+  transform: translateY(0);
+}
+.toggle input { position: absolute; inset: 0; opacity: 0; cursor: pointer; margin: 0; }
+.toggle .label {
+  position: relative; z-index: 1; font-size: 28px; font-weight: 300;
+  letter-spacing: 1px; color: #555; pointer-events: none;
+  text-shadow: -1px -1px 2px rgba(255,255,255,.95), 2px 2px 3px rgba(70,70,70,.35);
+  transition: color .3s, text-shadow .3s;
+}
+.toggle:has(input:checked) .label {
+  color: #2ecc71;
+  text-shadow: -1px -1px 1px rgba(255,255,255,.6), 1px 1px 2px rgba(46,204,113,.4),
+   0 0 14px rgba(85,246,150,.7);
+}
+.toggle:has(input:focus-visible) {
+  box-shadow: -8px -8px 16px rgba(255,255,255,.7), 8px 8px 16px rgba(70,70,70,.15), 0 0 0 3px rgba(133,18,209,.5);
+  outline: none;
+}
+</style>`,
+    demo: `<style>
+  .demo-mcb {
+    display: flex; flex-wrap: wrap; gap: 36px; justify-content: center;
+    background: #ececec; padding: 32px; border-radius: 7px;
+  }
+  .demo-mcb-group {
+    display: flex; flex-direction: column; align-items: center; gap: 16px;
+  }
+  .demo-mcb-ind {
+    width: 16px; height: 16px; border-radius: 50%;
+    background: #8a8a8a;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,.25);
+    transition: background .3s, box-shadow .3s, transform .25s;
+  }
+  .demo-mcb-group:has(input:checked) .demo-mcb-ind {
+    background: #55f696; box-shadow: 0 0 12px rgba(85,246,150,.85); transform: scale(1.15);
+  }
+  .demo-mcb-btn {
+    width: 140px; height: 140px; background: #ececec; border-radius: 22px;
+    box-shadow: -8px -8px 16px rgba(255,255,255,.7), 8px 8px 16px rgba(70,70,70,.15);
+    cursor: pointer; transition: box-shadow .35s, transform .2s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .demo-mcb-btn:hover { transform: translateY(-2px); }
+  .demo-mcb-btn:has(input:checked) {
+    box-shadow: inset -6px -6px 12px rgba(255,255,255,.7), inset 6px 6px 12px rgba(70,70,70,.15);
+    transform: translateY(0);
+  }
+  .demo-mcb-btn input { position: absolute; inset: 0; opacity: 0; cursor: pointer; margin: 0; }
+  .demo-mcb-btn .label {
+    position: relative; z-index: 1; font-size: 28px; font-weight: 300;
+    letter-spacing: 1px; color: #555; pointer-events: none;
+    text-shadow: -1px -1px 2px rgba(255,255,255,.95), 2px 2px 3px rgba(70,70,70,.35);
+    transition: color .3s, text-shadow .3s;
+  }
+  .demo-mcb-btn:has(input:checked) .label {
+    color: #2ecc71;
+    text-shadow: -1px -1px 1px rgba(255,255,255,.6), 1px 1px 2px rgba(46,204,113,.4), 0 0 14px rgba(85,246,150,.7);
+  }
+  .demo-mcb-btn:has(input:focus-visible) {
+    box-shadow: -8px -8px 16px rgba(255,255,255,.7), 8px 8px 16px rgba(70,70,70,.15), 0 0 0 3px rgba(133,18,209,.5);
+    outline: none;
+  }
+</style>
+<div class="demo-mcb">
+  <div class="demo-mcb-group">
+    <span class="demo-mcb-ind" aria-hidden="true"></span>
+    <label class="demo-mcb-btn">
+      <input type="checkbox" role="switch">
+      <span class="label">On</span>
+    </label>
+  </div>
+  <div class="demo-mcb-group">
+    <span class="demo-mcb-ind" aria-hidden="true"></span>
+    <label class="demo-mcb-btn">
+      <input type="checkbox" role="switch">
+      <span class="label">Off</span>
+    </label>
+  </div>
+</div>`,
+    caption: 'Нажмите — кнопка «вдавливается», индикатор светится.',
+    notes: [
+      'В исходнике состояние переключалось через <code>classList</code> на JS-обработчике — здесь чистый CSS <code>:has()</code> (Chrome 105+, Safari 15.4+, Firefox 121+). В более старом Firefox индикатор не светится, но переключение работает.',
+      '<code>role="switch"</code> сообщает скринридеру, что это переключатель, а не чекбокс с двойным кликом.',
+      'Фокус-кольцо <code>:focus-visible</code> обязательно — инпут скрыт через <code>opacity: 0</code>, без него клавиатурная навигация «слепая».',
+      'Индикатор для Off по умолчанию красный — это стилистический приём, но с точки зрения доступности красный ассоциируется с ошибкой. Для продакшена используйте серый по умолчанию.',
+    ],
+  },
 ];
 
 const makePage = (d, extraBlocks = []) =>
@@ -652,6 +1744,9 @@ const makePage = (d, extraBlocks = []) =>
           (item.run
             ? `<p><button class="btn btn-primary" type="button"
                 onclick="window.__galsFeatures.${item.run}()">Run animation</button></p>`
+            : '') +
+          (item.notes
+            ? item.notes.map((n) => `<p>${n}</p>`).join('\n')
             : ''),
       })),
       ...extraBlocks,
