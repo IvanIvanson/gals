@@ -127,6 +127,23 @@ describe('jsDelivr CDN в документации', () => {
     assert.match(intro, /target="_blank"/, 'внешняя ссылка без target="_blank"');
   });
 
+  test('сниппеты Quick start и CDN подключают CSS как stylesheet', async () => {
+    const { intro, dl } = await pages();
+    for (const html of [intro, dl]) {
+      const doc = new JSDOM(`<div>${html}</div>`).window.document;
+      const stylesheetSnippets = [...doc.querySelectorAll('pre')]
+        .map((pre) => pre.textContent)
+        .filter((text) => /<link\b/.test(text) && /(?:gals\.css|gals\.min\.css)/.test(text));
+
+      assert.ok(stylesheetSnippets.length > 0, 'не найден пример подключения CSS');
+      for (const snippet of stylesheetSnippets) {
+        for (const [, attributes] of snippet.matchAll(/<link\b([^>]*)>/g)) {
+          assert.match(attributes, /\brel="stylesheet"/, `link без rel="stylesheet": ${attributes}`);
+        }
+      }
+    }
+  });
+
   test('CDN-секция рендерится без ошибок в DOM', async () => {
     const { intro } = await pages();
     const dom = new JSDOM(`<div>${intro}</div>`);

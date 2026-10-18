@@ -50,7 +50,7 @@ gals/
 
 <div class="copy-block">
     <code><pre>
-&#60;<span style="color:rgb(212, 38, 38);">link </span><span style="color:rgb(87, 68, 225);">href="https://cdn.jsdelivr.net/gh/IvanIvanson/gals@main/gals-main/cdn/gals.min.css"</span>&#62;
+&#60;<span style="color:rgb(212, 38, 38);">link </span><span style="color:rgb(87, 68, 225);">rel="stylesheet" </span><span style="color:rgb(87, 68, 225);">href="https://cdn.jsdelivr.net/gh/IvanIvanson/gals@main/gals-main/cdn/gals.min.css"</span>&#62;
 &#60;<span style="color:rgb(212, 38, 38);">script </span><span style="color:rgb(87, 68, 225);">src="https://cdn.jsdelivr.net/gh/IvanIvanson/gals@main/gals-main/cdn/gals.min.js"</span>&#62;&#60;<span style="color:rgb(212, 38, 38);">/script</span>&#62;
     </pre></code>
 
@@ -67,7 +67,7 @@ gals/
 
 <div class="copy-block">
         <code><pre>
-&#60;<span style="color:rgb(212, 38, 38);">link </span><span style="color:rgb(87, 68, 225);">href="./gals/gals.css"</span>&#62;
+&#60;<span style="color:rgb(212, 38, 38);">link </span><span style="color:rgb(87, 68, 225);">rel="stylesheet" </span><span style="color:rgb(87, 68, 225);">href="./gals/gals.css"</span>&#62;
 &#60;<span style="color:rgb(212, 38, 38);">script </span><span style="color:rgb(87, 68, 225);">src="./gals/gals.js"</span> <span style="color:rgb(87, 68, 225);">defer</span>&#62;&#60;<span style="color:rgb(212, 38, 38);">/script</span>&#62;
         </pre></code>
 

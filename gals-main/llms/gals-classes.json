@@ -82,7 +82,7 @@
         "name": "menu-show",
         "kind": "class",
         "marker": "menu-show",
-        "description": "Навешается на .menu при открытии и снимается при закрытии. В CSS фреймворка не объявлен — styling на стороне проекта."
+        "description": "Навешивается на .menu при открытии и снимается при закрытии; .menu-collapse раскрывается через CSS фреймворка."
       },
       {
         "name": "accordion-group",
@@ -105,7 +105,7 @@
     ]
   },
   "counts": {
-    "classes": 183,
+    "classes": 186,
     "tokens": 8
   },
   "classes": [
@@ -1032,6 +1032,19 @@
       "css": "width: 32px; height: 32px"
     },
     {
+      "name": "icon-menu",
+      "description": "Кнопка переключения меню. Скрыта на широких экранах, отображается до 767.98px; gals.js синхронизирует aria-expanded.",
+      "variants": [
+        {
+          "css": "display: none; align-items: center; justify-content: center; padding: 0.25em 0.5em; color: inherit; font: inherit; background: transparent; border: 1px solid currentColor; cursor: pointer"
+        },
+        {
+          "css": "display: inline-flex",
+          "at": "(max-width: 767.98px)"
+        }
+      ]
+    },
+    {
       "name": "input",
       "description": "width:100%, паддинги, рамка #767676, border-radius:4px. textarea.input — ресайз по вертикали.",
       "variants": [
@@ -1155,6 +1168,47 @@
         {
           "css": "font-weight: 700",
           "selector": ".menu a[aria-current=\"page\"]"
+        },
+        {
+          "css": "font-weight: 700",
+          "selector": ".menu a[aria-current=\"true\"]"
+        }
+      ]
+    },
+    {
+      "name": "menu-collapse",
+      "description": "Мобильное меню скрыто до открытия. Используйте вместе с .icon-menu и gals.js.",
+      "variants": [
+        {
+          "css": "display: none",
+          "at": "(max-width: 767.98px)",
+          "selector": ".menu-collapse:not(.menu-show)"
+        },
+        {
+          "css": "display: block",
+          "at": "(max-width: 767.98px)",
+          "selector": ".menu-collapse.menu-show"
+        },
+        {
+          "css": "flex-direction: column; align-items: flex-start",
+          "at": "(max-width: 767.98px)",
+          "selector": ".menu-collapse ul"
+        }
+      ]
+    },
+    {
+      "name": "menu-show",
+      "description": "Показывает открытое .menu-collapse на мобильном экране; класс переключает gals.js.",
+      "variants": [
+        {
+          "css": "display: none",
+          "at": "(max-width: 767.98px)",
+          "selector": ".menu-collapse:not(.menu-show)"
+        },
+        {
+          "css": "display: block",
+          "at": "(max-width: 767.98px)",
+          "selector": ".menu-collapse.menu-show"
         }
       ]
     },

@@ -35,7 +35,7 @@ ${onThisPage(sections)}
   &#60;<span style="color:rgb(212, 38, 38);">meta </span><span style="color:rgb(87, 68,225);">charset="utf-8"</span>&#62;
   &#60;<span style="color:rgb(212, 38, 38);">meta </span><span style="color:rgb(87, 68,225);">name="viewport" content="width=device-width,initial-scale=1"</span>&#62;
   &#60;<span style="color:rgb(212, 38, 38);">title</span>&#62;Galsdemo&#60;/<span style="color:rgb(212, 38, 38);">title</span>&#62;
-  &#60;<span style="color:rgb(212, 38, 38);">link </span><span style="color:rgb(87, 68, 225);">href="./gals/gals.css"</span>&#62;
+  &#60;<span style="color:rgb(212, 38, 38);">link </span><span style="color:rgb(87, 68,225);">rel="stylesheet" </span><span style="color:rgb(87, 68,225);">href="./gals/gals.css"</span>&#62;
 &#60;<span style="color:rgb(212, 38, 38);">/head</span>&#62;
 &#60;<span style="color:rgb(212, 38, 38);">body</span>&#62;
   &#60;<span style="color:rgb(212, 38, 38);">h1</span>&#62;Hello, world!&#60;/<span style="color:rgb(212, 38, 38);">h1</span>&#62;
@@ -61,7 +61,7 @@ ${onThisPage(sections)}
                             </span> before all other stylesheets to load our CSS. To ensure that the GALS styles do not interrupt the styles that you will define.
                         </p>
 <div class="copy-block copy-block2">
-    <code><pre>&#60;<span style="color:rgb(212, 38, 38);">link </span><span style="color:rgb(87, 68, 225);">href="./gals/gals.css"</span>&#62;</pre>
+    <code><pre>&#60;<span style="color:rgb(212, 38, 38);">link </span><span style="color:rgb(87, 68, 225);">rel="stylesheet" </span><span style="color:rgb(87, 68, 225);">href="./gals/gals.css"</span>&#62;</pre>
     </code>
 
     <button class="copy" type="button" data-tooltip="Copy to clipboard" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -98,7 +98,7 @@ ${onThisPage(sections)}
 Just point to the <code>cdn/</code> folder in the repository.</p>
 
 <div class="copy-block copy-block-cdn">
-    <code><pre>&#60;<span style="color:rgb(212, 38, 38);">link </span><span style="color:rgb(87, 68, 225);">href="https://cdn.jsdelivr.net/gh/IvanIvanson/gals@main/gals-main/cdn/gals.min.css"</span>&#62;
+    <code><pre>&#60;<span style="color:rgb(212, 38, 38);">link </span><span style="color:rgb(87, 68, 225);">rel="stylesheet" </span><span style="color:rgb(87, 68, 225);">href="https://cdn.jsdelivr.net/gh/IvanIvanson/gals@main/gals-main/cdn/gals.min.css"</span>&#62;
 &#60;<span style="color:rgb(212, 38, 38);">script </span><span style="color:rgb(87, 68, 225);">src="https://cdn.jsdelivr.net/gh/IvanIvanson/gals@main/gals-main/cdn/gals.min.js"</span>&#62;&#60;<span style="color:rgb(212, 38, 38);">/script</span>&#62;</pre>
     </code>
 

@@ -692,8 +692,35 @@
 .menu a:hover{
   color: var(--accent);
 }
-.menu a[aria-current="page"]{
+.menu a[aria-current="page"],
+.menu a[aria-current="true"]{
   font-weight: 700;
+}
+.icon-menu{
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25em 0.5em;
+  color: inherit;
+  font: inherit;
+  background: transparent;
+  border: 1px solid currentColor;
+  cursor: pointer;
+}
+@media (max-width: 767.98px){
+  .icon-menu{
+    display: inline-flex;
+  }
+  .menu-collapse:not(.menu-show){
+    display: none;
+  }
+  .menu-collapse.menu-show{
+    display: block;
+  }
+  .menu-collapse ul{
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 /* ---------- Tabs (radios + :checked) ---------- */
