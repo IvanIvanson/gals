@@ -29,8 +29,8 @@ GALS (Grid Application Layout Systems) — лёгкий frontend-тулкит н
 Через CDN:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/IvanIvanson/gals@main/gals-main/cdn/gals.min.css">
-<script src="https://cdn.jsdelivr.net/gh/IvanIvanson/gals@main/gals-main/cdn/gals.min.js" defer></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/IvanIvanson/gals@v1.2/gals-main/cdn/gals.min.css">
+<script src="https://cdn.jsdelivr.net/gh/IvanIvanson/gals@v1.2/gals-main/cdn/gals.min.js" defer></script>
 ```
 
 ## Сетка (Grid)
