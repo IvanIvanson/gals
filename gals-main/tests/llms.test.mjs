@@ -56,6 +56,24 @@ describe('llms.txt', () => {
   });
 
   // Регрессия на прежнюю версию файла: она обещала API, которого в CSS нет.
+  test('CDN-сниппет не пустой и запиннен на тег', () => {
+    const txt = read(`${REPO}/llms.txt`);
+
+    // Секция «Через CDN» должна содержать `<link` и `<script` — не пустой блок.
+    assert.ok(
+      txt.includes('Через CDN:') && txt.match(/cdn\.jsdelivr\.net.*gals\.min\.css/),
+      'CDN-сниппет пуст или не содержит URL'
+    );
+
+    // Запиннен на тег, а не на @main.
+    assert.equal(
+      /gals@main[/'\s>]/.test(txt),
+      false,
+      'в CDN-сниппете остался @main вместо тега версии'
+    );
+    assert.match(txt, /gals@v\d+\.\d+/, 'CDN-ссылка не запиннена на @vN.N');
+  });
+
   test('не обещает классов, которых нет в GALS', () => {
     const txt = read(`${REPO}/llms.txt`);
 
