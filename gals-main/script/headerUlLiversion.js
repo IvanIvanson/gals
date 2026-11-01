@@ -26,7 +26,7 @@ const versions = function () {
         const number = item.textContent.match(/\d+(?:\.\d+)?/);
 
         if (summaryVersion && number) {
-            summaryVersion.textContent = number[0];
+            summaryVersion.textContent = `v${number[0]}`;
         }
     });
 }

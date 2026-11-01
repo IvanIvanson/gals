@@ -128,6 +128,14 @@ describe('реестр страниц документации', () => {
       assert.ok(center.querySelector('.quick-start'), `нет секций после «${item.textContent.trim()}»`);
     }
   });
+  test('на стартовой странице нет ссылок-заглушек', async () => {
+    const { document } = await boot();
+    const center = document.querySelector('.container-center');
+
+    for (const a of center.querySelectorAll('a[href="#"]')) {
+      assert.fail(`«${a.textContent.trim()}» ведёт в никуда`);
+    }
+  });
 });
 
 describe('переключатель версий', () => {
@@ -138,7 +146,7 @@ describe('переключатель версий', () => {
     click(dom, items[1]);
     assert.equal(document.querySelectorAll('.version li.active').length, 1);
     assert.equal(items[1].classList.contains('active'), true);
-    assert.equal(document.querySelector('.right summary span').textContent, '1.0');
+    assert.equal(document.querySelector('.right summary span').textContent, 'v1.1');
 
     click(dom, items[1]);
     assert.equal(items[1].classList.contains('active'), true, 'повторный клик сбросил выбор');
@@ -213,6 +221,34 @@ describe('разметка', () => {
         assert.ok(document.getElementById(target), `битая ссылка #${target}`);
       }
     }
+  });
+
+  test('ссылка-заглушка встречается только у пунктов с data-action', () => {
+    for (const a of document.querySelectorAll('a[href="#"]')) {
+      assert.ok(a.dataset.action, `«${a.textContent.trim()}» ведёт в никуда`);
+    }
+  });
+
+  test('внешние ссылки открываются безопасно и имеют имя', () => {
+    const externals = [...document.querySelectorAll('a[href^="http"]')];
+    assert.ok(externals.length > 0, 'внешних ссылок нет вообще');
+
+    for (const a of externals) {
+      const title = a.getAttribute('aria-label') || a.textContent.trim();
+      assert.equal(a.getAttribute('target'), '_blank', `нет target у «${title}»`);
+      assert.match(a.getAttribute('rel') || '', /noopener/, `нет rel="noopener" у «${title}»`);
+      assert.ok(title.length > 0, `нет доступного имени у ${a.href}`);
+    }
+  });
+
+  test('кнопка меню озвучена', () => {
+    assert.ok(document.querySelector('.icon-menu').getAttribute('aria-label').trim().length > 0);
+  });
+
+  test('переключатель версий перечисляет только существующие теги', () => {
+    const items = [...document.querySelectorAll('.version li')].map((li) => li.textContent.trim());
+    assert.deepEqual(items, ['v1.2', 'v1.1'], `в шапке выдуманные версии: ${items.join(', ')}`);
+    assert.match(document.querySelector('.right summary span').textContent, /^v\d+\.\d+$/);
   });
 
   test('кнопка меню доступна с клавиатуры', () => {

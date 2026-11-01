@@ -5,23 +5,25 @@ export const sections = [
   { id: 'css', label: 'CSS' },
   { id: 'js', label: 'JS' },
   { id: 'cdn', label: 'jsDelivr CDN' },
+  { id: 'ai', label: 'AI-ready' },
   { id: 'ai-prompt', label: 'AI prompt' },
 ];
 
 const introductionHTML = `
 <div class="content-between align-center">
     <h1>Get started with GALS</h1>
-    <button class="btn" type="button">View on GitHub</button>
+    <a class="btn" href="https://github.com/IvanIvanson/gals" target="_blank" rel="noopener">View on GitHub</a>
 </div>
 
 <div><p><strong>GALS</strong> (Grid Application Layout Systems) is a powerful, feature-packed frontend toolkit. Build anything—from prototype to production—in minutes.</p>
+<p>Every class is also published as machine-readable reference — <a href="./llms.txt">llms.txt</a> and <a href="./llms/gals-classes.json">gals-classes.json</a> — so ChatGPT, Claude or Copilot generate real GALS markup instead of inventing Bootstrap classes. <a href="#ai">How it works ↓</a></p>
 </div>
 ${onThisPage(sections)}
 <div class="quick-start">
      <h3 id="start">Quick start</h3>
 
     <p>Get started by including GALS’s production-ready CSS and JavaScript  without the need for any build steps.
-    See it in practice with this <a href="#">GALS CodePen demo</a>.</p>
+    See it in practice with this <a href="https://codepen.io/IvanIvan/pen/LYVMxGp" target="_blank" rel="noopener">GALS CodePen demo</a>.</p>
     <p>1. <strong>Create a new <span style="color:rgb(212, 38, 38);font-size:16px;">index.html</span> </strong> <strong>file in your project root</strong>. Include the
     <code style="color:rgb(212, 38, 38);">&#60;meta name="viewport"&#62;</code> tag as well for proper responsive behavior in mobile devices. Place the<span style="color:rgb(212, 38, 38);font-size:18px;"> &#60;link&#62; </span>  tag in the <span style="color:rgb(212, 38, 38);font-size:18px;">&#60;head&#62; </span>  for our CSS, and the <span style="color:rgb(212, 38, 38);font-size:18px;">&#60;script&#62; </span>  tag for our JavaScript bundle before the closing <span style="color:rgb(212, 38, 38);font-size:18px;">&#60;/body&#62;</span>.</p>
  
@@ -117,6 +119,17 @@ Just point to the <code>cdn/</code> folder in the repository.</p>
     <a href="https://cdn.jsdelivr.net/gh/IvanIvanson/gals@main/gals-main/cdn/" target="_blank" rel="noopener">Browse CDN files on jsDelivr <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16" style="vertical-align:-2px"><path d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/><path d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0z"/></svg></a>
 </p>
 <!--  -->
+
+<h3 id="ai">Built for AI</h3>
+<p>GALS is written to be read by a model, not only by a person. Three machine-readable files ship with the site, and each one is checked by the test suite, so a model is never handed a class that does not exist.</p>
+
+<ul>
+    <li><strong><a href="./llms.txt">llms.txt</a></strong> — the whole framework as plain text, small enough for a context window.</li>
+    <li><strong><a href="./llms/gals-classes.json">llms/gals-classes.json</a></strong> — 186 classes and 8 design tokens as data: selector, what it does, parent, breakpoints, live example.</li>
+    <li><strong><a href="./AI_PROMPT_TEMPLATE.md">AI_PROMPT_TEMPLATE.md</a></strong> — the same prompt shown below, as a file.</li>
+</ul>
+
+<p>The JSON is generated from <code>gals.css</code> itself and the test suite fails if the two drift apart. It also carries a <code>doesNotExist</code> list (<code>.row</code>, <code>.col</code>, <code>mt-*</code>, <code>mb-*</code>) — the Bootstrap and Tailwind habits a model falls back to by default — so a generated answer can be checked against real mistakes instead of plausible ones.</p>
 
 <h3 id="ai-prompt">Ask AI the right way</h3>
 <p>Copy this prompt template, paste it into ChatGPT, Claude, GitHub Copilot or Cursor, and replace the text in <code>[SQUARE BRACKETS]</code> with your task.</p>
