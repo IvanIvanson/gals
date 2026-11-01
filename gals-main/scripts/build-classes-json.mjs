@@ -423,8 +423,8 @@ const document_ = {
   docs: 'https://ivanivanson.github.io/gals/',
   repository: 'https://github.com/IvanIvanson/gals',
   cdn: {
-    css: 'https://cdn.jsdelivr.net/gh/IvanIvanson/gals@main/gals-main/cdn/gals.min.css',
-    js: 'https://cdn.jsdelivr.net/gh/IvanIvanson/gals@main/gals-main/cdn/gals.min.js',
+    css: 'https://cdn.jsdelivr.net/gh/IvanIvanson/gals@v1.2/gals-main/cdn/gals.min.css',
+    js: 'https://cdn.jsdelivr.net/gh/IvanIvanson/gals@v1.2/gals-main/cdn/gals.min.js',
   },
   grid: {
     model: 'flex',
