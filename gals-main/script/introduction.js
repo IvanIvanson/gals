@@ -7,6 +7,7 @@ export const sections = [
   { id: 'cdn', label: 'jsDelivr CDN' },
   { id: 'ai', label: 'AI-ready' },
   { id: 'ai-prompt', label: 'AI prompt' },
+  { id: 'see-it-work', label: 'See it work' },
 ];
 
 const introductionHTML = `
@@ -18,6 +19,30 @@ const introductionHTML = `
 <div><p><strong>GALS</strong> (Grid Application Layout Systems) is a powerful, feature-packed frontend toolkit. Build anything—from prototype to production—in minutes.</p>
 <p>Every class is also published as machine-readable reference — <a href="./llms.txt">llms.txt</a> and <a href="./llms/gals-classes.json">gals-classes.json</a> — so ChatGPT, Claude or Copilot generate real GALS markup instead of inventing Bootstrap classes. <a href="#ai">How it works ↓</a></p>
 </div>
+
+<h3>See it work</h3>
+<p>Everything below is plain HTML with GALS classes — no React, no build step. Click to try.</p>
+
+<div class="demo">
+    <div class="demo-body">
+        <div class="accordion-group">
+            <details class="accordion" open>
+                <summary>What does a column class look like?</summary>
+                <div class="accordion-body"><code>class="pt-6 pt-s12"</code> — 50% on desktop, full width below 770px. GALS has no <code>.col-*</code> classes.</div>
+            </details>
+            <details class="accordion">
+                <summary>How many classes are there?</summary>
+                <div class="accordion-body">186 classes and 8 design tokens, all documented in <a href="./llms/gals-classes.json">gals-classes.json</a>.</div>
+            </details>
+            <details class="accordion">
+                <summary>Do I need a build step?</summary>
+                <div class="accordion-body">No. One <code>&lt;link&gt;</code> and one <code>&lt;script&gt;</code> tag and you are building.</div>
+            </details>
+        </div>
+    </div>
+    <p class="demo-caption">The accordion above is <code>details.accordion</code> — three lines of HTML, no JavaScript.</p>
+</div>
+
 ${onThisPage(sections)}
 <div class="quick-start">
      <h3 id="start">Quick start</h3>
@@ -100,8 +125,8 @@ ${onThisPage(sections)}
 Just point to the <code>cdn/</code> folder in the repository.</p>
 
 <div class="copy-block copy-block-cdn">
-    <code><pre>&#60;<span style="color:rgb(212, 38, 38);">link </span><span style="color:rgb(87, 68, 225);">rel="stylesheet" </span><span style="color:rgb(87, 68, 225);">href="https://cdn.jsdelivr.net/gh/IvanIvanson/gals@main/gals-main/cdn/gals.min.css"</span>&#62;
-&#60;<span style="color:rgb(212, 38, 38);">script </span><span style="color:rgb(87, 68, 225);">src="https://cdn.jsdelivr.net/gh/IvanIvanson/gals@main/gals-main/cdn/gals.min.js"</span>&#62;&#60;<span style="color:rgb(212, 38, 38);">/script</span>&#62;</pre>
+    <code><pre>&#60;<span style="color:rgb(212, 38, 38);">link </span><span style="color:rgb(87, 68, 225);">rel="stylesheet" </span><span style="color:rgb(87, 68, 225);">href="https://cdn.jsdelivr.net/gh/IvanIvanson/gals@v1.2/gals-main/cdn/gals.min.css"</span>&#62;
+&#60;<span style="color:rgb(212, 38, 38);">script </span><span style="color:rgb(87, 68, 225);">src="https://cdn.jsdelivr.net/gh/IvanIvanson/gals@v1.2/gals-main/cdn/gals.min.js"</span>&#62;&#60;<span style="color:rgb(212, 38, 38);">/script</span>&#62;</pre>
     </code>
 
     <button class="copy" type="button" data-tooltip="Copy to clipboard" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -113,7 +138,7 @@ Just point to the <code>cdn/</code> folder in the repository.</p>
     </svg></button>
 </div>
 
-<p>For production, <strong>pin a tag</strong> instead of <code>@main</code> — <code>@main</code> always points to the latest commit, which can change between deploys. Create a tag with <code>git tag -a v1.2 -m "Release 1.2"</code>, push it, then use <code>@v1.2</code> in your URLs.</p>
+<p>Both links are <strong>pinned to the <code>v1.2</code> tag</strong>, which jsDelivr caches forever — the file you ship today is the file you ship next year. To move to a newer release, change the tag in both URLs. <code>@main</code> also works and always serves the latest commit, but it can change under you between deploys.</p>
 
 <p>
     <a href="https://cdn.jsdelivr.net/gh/IvanIvanson/gals@main/gals-main/cdn/" target="_blank" rel="noopener">Browse CDN files on jsDelivr <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16" style="vertical-align:-2px"><path d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/><path d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0z"/></svg></a>

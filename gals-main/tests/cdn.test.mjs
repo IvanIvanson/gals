@@ -123,7 +123,7 @@ describe('CDN-файлы', () => {
 });
 
 describe('jsDelivr CDN в документации', () => {
-  const jsdelivrRe = /https:\/\/cdn\.jsdelivr\.net\/gh\/IvanIvanson\/gals@main\/gals-main\/cdn\/gals\.min\.(css|js)/g;
+  const jsdelivrRe = /https:\/\/cdn\.jsdelivr\.net\/gh\/IvanIvanson\/gals@[^/]+\/gals-main\/cdn\/gals\.min\.(css|js)/g;
 
   const pages = async () => {
     const intro = await import(pathToFileURL(`${ROOT}/script/introduction.js`).href);
@@ -152,7 +152,7 @@ describe('jsDelivr CDN в документации', () => {
     const { intro, dl } = await pages();
     for (const html of [intro, dl]) {
       // Проверяем только URL на конкретные файлы (не ссылку на просмотр папки).
-      for (const url of html.matchAll(/https:\/\/cdn\.jsdelivr\.net\/gh\/IvanIvanson\/gals@main\/gals-main\/(cdn\/gals\.min\.[^"'<\s]+)/g)) {
+      for (const url of html.matchAll(/https:\/\/cdn\.jsdelivr\.net\/gh\/IvanIvanson\/gals@[^/]+\/gals-main\/(cdn\/gals\.min\.[^"'<\s]+)/g)) {
         assert.match(url[1], /^cdn\/gals\.min\./, `URL ведёт не в cdn/: ${url[1]}`);
       }
     }
@@ -222,10 +222,11 @@ describe('jsDelivr CDN в документации', () => {
       assert.ok(a.getAttribute('rel')?.includes('noopener'), `ссылка ${a.href} без rel="noopener"`);
     }
 
-    // CDN-URL в <link> и <code> корректны.
+    // CDN-URL в <link> и <code> корректны и запиннены на тег, а не на @main.
     const codeText = [...doc.querySelectorAll('code pre')].map((el) => el.textContent).join('\n');
-    assert.match(codeText, /cdn\.jsdelivr\.net\/gh\/IvanIvanson\/gals@main\/gals-main\/cdn\/gals\.min\.css/, 'URL CSS не найден в <code>');
-    assert.match(codeText, /cdn\.jsdelivr\.net\/gh\/IvanIvanson\/gals@main\/gals-main\/cdn\/gals\.min\.js/, 'URL JS не найден в <code>');
+    assert.match(codeText, /cdn\.jsdelivr\.net\/gh\/IvanIvanson\/gals@v\d+\.\d+\/gals-main\/cdn\/gals\.min\.css/, 'URL CSS не запиннен на тег');
+    assert.match(codeText, /cdn\.jsdelivr\.net\/gh\/IvanIvanson\/gals@v\d+\.\d+\/gals-main\/cdn\/gals\.min\.js/, 'URL JS не запиннен на тег');
+    assert.equal(/gals@main[/'"]/.test(codeText), false, 'в копируемом сниппете остались ссылки на @main');
   });
 
   test('в Introduction есть подсказка про production pinning', async () => {
