@@ -9,7 +9,8 @@ import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { JSDOM } from 'jsdom';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const REPO = fileURLToPath(new URL('../..', import.meta.url));
@@ -168,6 +169,75 @@ describe('gals-classes.json', () => {
 
     for (const hook of reference.runtime.hooks) {
       assert.ok(js.includes(hook.marker), `gals.js не упоминает хук ${hook.name}`);
+    }
+  });
+});
+
+/**
+ * Шаблон промпта живёт в двух местах: русская версия в AI_PROMPT_TEMPLATE.md,
+ * английская — в copy-block страницы Introduction. Правила обязан вести один
+ * источник, иначе агенты получают противоречивые инструкции.
+ */
+describe('шаблон промпта для ИИ', async () => {
+  const ru = read(`${ROOT}/AI_PROMPT_TEMPLATE.md`);
+
+  const enHtml = await import(pathToFileURL(`${ROOT}/script/introduction.js`).href).then(
+    (m) => m.default.html,
+  );
+
+  // В copy-block теги записаны HTML-сущностями — декодируем через DOM.
+  const en = [...new JSDOM(`<div>${enHtml}</div>`).window.document.querySelectorAll('pre')]
+    .map((pre) => pre.textContent)
+    .join('\n');
+
+  /** Список компонентов из строки «Components:» / «Компоненты:**». */
+  const componentsOf = (text, marker) => {
+    const at = text.indexOf(marker);
+    assert.ok(at >= 0, `в тексте нет маркера ${marker}`);
+
+    const rest = text.slice(at + marker.length).replace(/^[*\s]+/, '');
+    return rest
+      .slice(0, rest.search(/[^a-z, ]/))
+      .split(',')
+      .map((s) => s.trim())
+      .filter(Boolean);
+  };
+
+  test('русская и английская версии называют одни и те же компоненты', () => {
+    const ruList = componentsOf(ru, 'Компоненты:**');
+    const enList = componentsOf(en, 'Components:');
+
+    assert.ok(ruList.length > 15, `в русской версии подозрительно короткий список: ${ruList}`);
+    assert.deepEqual(enList, ruList, 'списки компонентов в RU и EN версиях промпта разошлись');
+  });
+
+  test('промпт перечисляет ровно те токены, что объявлены в :root', () => {
+    const rootBlock = /:root\s*\{([\s\S]*?)\}/.exec(read(`${ROOT}/gals/gals.css`))[1];
+    const fromCss = [...new Set([...rootBlock.matchAll(/(--[\w-]+)\s*:/g)].map((m) => m[1]))];
+
+    for (const [name, text] of [['RU', ru], ['EN', en]]) {
+      const fromPrompt = [...new Set([...text.matchAll(/var\((--[\w-]+)\)/g)].map((m) => m[1]))];
+
+      assert.ok(fromPrompt.length > 0, `в ${name} версии промпта нет токенов`);
+      assert.deepEqual(
+        [...fromPrompt].sort(),
+        [...fromCss].sort(),
+        `${name} версия промпта ссылается не на те токены, что в gals.css`,
+      );
+    }
+  });
+
+  test('обе версии промпта дают корректные теги подключения', () => {
+    for (const [name, text] of [['RU', ru], ['EN', en]]) {
+      const link = /<link\b[^>]*>/.exec(text);
+      assert.ok(link, `${name}: в промпте нет примера <link>`);
+      assert.match(link[0], /\brel="stylesheet"/, `${name}: <link> без rel="stylesheet"`);
+
+      assert.match(
+        text,
+        /<script\b[^>]*><\/script>/,
+        `${name}: в промпте нет закрытого <script>`,
+      );
     }
   });
 });

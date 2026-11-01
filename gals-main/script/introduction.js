@@ -81,7 +81,7 @@ ${onThisPage(sections)}
                             </span> tag, to enable them.
                         </p>
 <div class="copy-block copy-block3">
-    <code><pre>&#60;<span style="color:rgb(212, 38, 38);">script </span><span style="color:rgb(87, 68, 225);">src="./gals/gals.js"</span>&#62;</pre>
+    <code><pre>&#60;<span style="color:rgb(212, 38, 38);">script </span><span style="color:rgb(87, 68, 225);">src="./gals/gals.js"</span>&#62;&#60;<span style="color:rgb(212, 38, 38);">/script</span>&#62;</pre>
     </code>
 
     <button class="copy" type="button" data-tooltip="Copy to clipboard" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"

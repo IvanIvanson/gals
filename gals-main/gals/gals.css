@@ -474,8 +474,11 @@
   text-decoration: none;
   color: inherit;
 }
+/* aria-current="page" ставит вёрстка, "true" — scrollspy из gals.js:
+   подсветка должна работать в обоих случаях. */
 .header-nav a:hover,
-.header-nav a[aria-current="page"]{
+.header-nav a[aria-current="page"],
+.header-nav a[aria-current="true"]{
   color: var(--accent);
 }
 .header-actions{

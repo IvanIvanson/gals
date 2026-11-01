@@ -182,6 +182,32 @@ describe('jsDelivr CDN в документации', () => {
     }
   });
 
+  // Копипаста `<script src=...>` без `</script>` глушит остаток документа:
+  // каждый сниппет обязан быть самодостаточным.
+  test('каждый <script> в сниппетах закрыт', async () => {
+    const { intro, dl } = await pages();
+
+    for (const [name, html] of [['Introduction', intro], ['Download', dl]]) {
+      const doc = new JSDOM(`<div>${html}</div>`).window.document;
+
+      for (const pre of doc.querySelectorAll('pre')) {
+        const text = pre.textContent;
+        if (!text.includes('<script')) continue;
+
+        const unclosed = text
+          .split('<script')
+          .slice(1)
+          .filter((part) => !part.includes('</script>'));
+
+        assert.deepEqual(
+          unclosed,
+          [],
+          `${name}: <script> без закрывающего </script>: ${text.trim().slice(0, 80)}`,
+        );
+      }
+    }
+  });
+
   test('CDN-секция рендерится без ошибок в DOM', async () => {
     const { intro } = await pages();
     const dom = new JSDOM(`<div>${intro}</div>`);
