@@ -67,7 +67,16 @@ const declared = new Set(
 );
 
 // Классы, которые галс-рантайм навешывает/ожидает из JS, а не из CSS.
-const runtimeOnly = new Set(['menu-show']);
+// Классы, которые JS-рантайм использует как DOM-хуки, а не стилизует.
+// Не добавлять сюда классы для оформления — только селекторы для делегирования кликов и DOM-манипуляций.
+const runtimeOnly = new Set([
+  "menu-show",        // JS навешивает/снимает на .menu при открытии
+  "menu-ul",          // делегирование кликов в headerNav (renderCenterBlock)
+  "version",          // переключатель версий (headerUlLiversion)
+  "details-item",     // стилизация summary details (addStyleDetailsLeft)
+  "list",             // делегирование кликов сайдбара (detailsLeftUlLi)
+  "menu-item",        // делегирование кликов сайдбара (renderCenterBlock)
+]);
 
 const used = new Set();
 const dom = new JSDOM(indexHtml);
