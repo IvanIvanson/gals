@@ -17,7 +17,7 @@ const downloadHTML = `
 ${onThisPage(sections)}
 <div class="quick-start">
     <h3 id="get">Get the source</h3>
-    <p>Grab the latest archive with the grid demo, or take the framework files straight from the
+    <p>Grab the latest archive, or take the framework files straight from the
     <code>gals/</code> folder of the repository.</p>
 
     <div class="copy-block">
@@ -37,10 +37,7 @@ gals/
     </div>
 
     <h3 id="archive">What's inside</h3>
-    <p>The archive contains the standalone grid playground: the same twelve column grid with the
-    responsive prefixes <code>pt-xl</code>, <code>pt-l</code>, <code>pt-m</code>, <code>pt-s</code>,
-    <code>pt-xs</code> and <code>pt-xxs</code>, plus a small script that keeps fluid images sized to
-    their container.</p>
+    <p>The archive contains the two framework files: the grid stylesheet with responsive columns and component styles, and the runtime script for the mobile menu and fluid images.</p>
 
 <h3 id="usage">Use it</h3>
 <p>Drop the stylesheet into the <code>&#60;head&#62;</code> and the script right before the closing

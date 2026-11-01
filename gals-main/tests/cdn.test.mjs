@@ -82,6 +82,44 @@ describe('CDN-файлы', () => {
     assert.match(content, /eol=lf/, 'нет правила eol=lf');
     assert.match(content, /-text/, 'нет правила -text для CDN-файлов');
   });
+
+  // Архив отдаётся кнопкой Download, поэтому обязан совпадать с gals/.
+  test('download/grid.zip собран из актуальных файлов gals/', () => {
+    const archive = `${ROOT}/download/grid.zip`;
+    if (!existsSync(archive)) return;
+
+    const bytes = readFileSync(archive);
+
+    // Мини-парсер central directory ZIP: имя файла -> размер в архиве.
+    const entries = new Map();
+    for (let i = 0; i + 4 <= bytes.length; i++) {
+      if (bytes.readUInt32LE(i) !== 0x02014b50) continue;
+
+      const nameLength = bytes.readUInt16LE(i + 28);
+      const extraLength = bytes.readUInt16LE(i + 30);
+      const commentLength = bytes.readUInt16LE(i + 32);
+      const uncompressed = bytes.readUInt32LE(i + 24);
+      const name = bytes
+        .subarray(i + 46, i + 46 + nameLength)
+        .toString('utf8')
+        .split(String.fromCharCode(92))
+        .join('/');
+
+      entries.set(name, uncompressed);
+      i += 46 + nameLength + extraLength + commentLength - 1;
+    }
+
+    for (const name of ['gals/gals.css', 'gals/gals.js']) {
+      assert.ok(entries.has(name), `в архиве нет ${name}: ${[...entries.keys()]}`);
+
+      const expected = readFileSync(`${ROOT}/${name}`).length;
+      assert.equal(
+        entries.get(name),
+        expected,
+        `${name} в архиве устарел: ${entries.get(name)} байт вместо ${expected}`,
+      );
+    }
+  });
 });
 
 describe('jsDelivr CDN в документации', () => {
