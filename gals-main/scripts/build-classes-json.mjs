@@ -23,6 +23,7 @@ const TXT_SOURCE = `${REPO}/llms.txt`;
 const TXT_TARGET = `${ROOT}/llms.txt`;
 
 const css = readFileSync(`${ROOT}/gals/gals.css`, 'utf8');
+const pkg = JSON.parse(readFileSync(`${ROOT}/package.json`, 'utf8'));
 
 /**
  * Разворачивает CSS в плоский список правил, снимая комментарии.
@@ -334,7 +335,14 @@ const RUNTIME_HOOKS = [
     kind: 'class + tag',
     marker: 'container-fluid',
     description:
-      'Когда <img class="container-fluid"> лежит внутри .container-block, gals.js пересчитывает width/height по родителю.',
+      'Когда <img class="container-fluid"> лежит внутри .container-block, gals.js задаёт width по content-box родителя, высоту оставляет auto и пересчитывает на resize/событии gals:refresh.',
+  },
+  {
+    name: '[popovertarget] + .dropdown',
+    kind: 'attribute + class',
+    marker: '[popovertarget]',
+    description:
+      'Кнопка с popovertarget и связанный .dropdown: gals.js позиционирует меню у триггера, ставит aria-haspopup/aria-expanded и ведёт стрелки/Home/End.',
   },
   {
     name: 'data-scrollspy',
@@ -416,7 +424,8 @@ if (invented.length) {
 
 const document_ = {
   name: 'gals',
-  version: '1.0.0',
+  version: pkg.version,
+  license: pkg.license,
   description:
     'GALS (Grid Application Layout Systems) — лёгкий flexbox-тулкит. Machine-readable справочник классов: сгенерирован из gals/gals.css, поэтому не расходится со сборкой.',
   generatedFrom: { css: 'gals/gals.css', js: 'gals/gals.js' },
@@ -432,13 +441,42 @@ const document_ = {
     columnUnit: 'var(--gridmultiplyConst) = 8.325% (1/12)',
     rule: 'Классы pt-* действуют ТОЛЬКО внутри .container: селектор в CSS — ".container .pt-3".',
     gutter: '.container padding 5px + .container-block padding 5px',
+    boxSizing: 'gals.css applies border-box to .container and its descendants; no global reset is required.',
     columns: 12,
     doesNotExist: [
       '.row',
       '.col',
       '.col-{breakpoint}-{n}',
-      'mt-*/mb-*/px-*/py-* (в GALS нет утилит отступов кроме .padding-lg)',
+      '.d-none / .d-flex / .d-block',
+      '.form-control / .form-select / .form-check / .form-label',
+      '.btn-secondary / .btn-danger / .btn-outline-*',
+      '.alert-danger / .alert-success',
+      '.modal-dialog / .modal-content',
+      '.navbar / .nav / .nav-item',
+      '.badge / .toast / .tooltip',
+      '.spinner-border / .spinner-grow',
+      '.w-100 / .h-100 / .mx-auto',
+      '.gap-* / .justify-content-* / .align-items-*',
+      '.text-muted / .bg-* / .border-*',
+      '.mt-* / .mb-* / .mx-* / .my-* / .px-* / .py-*',
     ],
+    replacements: {
+      '.row': '.container',
+      '.col-6': '.container-block.pt-6',
+      '.col-md-6': '.container-block.pt-m6',
+      '.d-none': '.pt-{bp}-d_n',
+      '.d-flex': '.container-flex / .content-between',
+      '.form-control': '.input',
+      '.form-select': '.select',
+      '.btn-secondary': '.btn (нет варианта; напишите CSS)',
+      '.alert-danger': '.alert-error',
+      '.modal-dialog': '.modal',
+      '.navbar': '.header',
+      '.spinner-border': '.loader',
+      '.w-100': '.pt-12',
+      '.mx-auto': 'margin-inline: auto',
+      '.mt-3': 'margin в своём CSS',
+    },
   },
   breakpoints: Object.entries(prefixes).map(([name, condition]) => ({
     name,

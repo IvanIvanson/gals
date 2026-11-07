@@ -13,6 +13,7 @@ const downloadHTML = `
 </div>
 
 <div><p>GALS ships as two framework files and nothing else. No build step, no dependencies, no configuration.</p>
+<p>Integrity: <a href="./download/grid.zip.sha256">SHA-256 checksum</a> for the archive. License: <a href="./LICENSE">MIT</a>.</p>
 </div>
 ${onThisPage(sections)}
 <div class="quick-start">
@@ -24,7 +25,7 @@ ${onThisPage(sections)}
         <code><pre>
 gals/
     gals.css    <span style="color:rgb(87, 68,225);">/* the grid and helpers */</span>
-    gals.js     <span style="color:rgb(87, 68,225);">/* responsive images + mobile menu */</span>
+    gals.js     <span style="color:rgb(87, 68,225);">/* menu, dropdowns, accordion groups, scrollspy, fluid images */</span>
         </pre></code>
 
         <button class="copy" type="button" data-tooltip="Copy to clipboard" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -37,7 +38,7 @@ gals/
     </div>
 
     <h3 id="archive">What's inside</h3>
-    <p>The archive contains the two framework files: the grid stylesheet with responsive columns and component styles, and the runtime script for the mobile menu and fluid images.</p>
+    <p>The archive contains the two framework files plus a README and the MIT license: the grid stylesheet with responsive columns and component styles, and the runtime script for the mobile menu, accordion groups, scrollspy and fluid images.</p>
 
 <h3 id="usage">Use it</h3>
 <p>Drop the stylesheet into the <code>&#60;head&#62;</code> and the script right before the closing
@@ -60,10 +61,11 @@ gals/
     </svg></button>
 </div>
 
-<p>See <a href="#cdn">jsDelivr CDN</a> on the Introduction page for production tips.</p>
+<p>See <a href="./index.html#cdn">jsDelivr CDN</a> on the Introduction page for production tips.</p>
 
 <div class="copy-block">
         <code><pre>
+&#60;<span style="color:rgb(212, 38, 38);">style</span>&#62;*,*::before,*::after{box-sizing:border-box}&#60;/<span style="color:rgb(212, 38, 38);">style</span>&#62;
 &#60;<span style="color:rgb(212, 38, 38);">link </span><span style="color:rgb(87, 68, 225);">rel="stylesheet" </span><span style="color:rgb(87, 68, 225);">href="./gals/gals.css"</span>&#62;
 &#60;<span style="color:rgb(212, 38, 38);">script </span><span style="color:rgb(87, 68, 225);">src="./gals/gals.js"</span> <span style="color:rgb(87, 68, 225);">defer</span>&#62;&#60;<span style="color:rgb(212, 38, 38);">/script</span>&#62;
         </pre></code>

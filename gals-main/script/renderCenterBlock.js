@@ -34,6 +34,13 @@ const renderCenterBlock = function () {
     containerCenter.innerHTML = page.html;
     containerRight.innerHTML = onThisPage(page.sections);
     copyBlock(containerCenter);
+
+    // gals.js слушает это событие: после замены разметки нужно заново
+    // измерить img.container-fluid, иначе примеры вроде Images остаются
+    // нерастянутыми до следующего resize. Event берём из окна документа:
+    // в jsdom/Node глобальный Event — другой конструктор.
+    const EventCtor = document.defaultView?.Event || Event;
+    document.dispatchEvent(new EventCtor('gals:refresh'));
   };
 
   // Пункт без страницы игнорируется, а не роняет обработчик.

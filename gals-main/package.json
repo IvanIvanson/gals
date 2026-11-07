@@ -1,9 +1,18 @@
 {
   "name": "gals",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "GALS (Grid Application Layout Systems) — lightweight flex grid frontend toolkit and its documentation site.",
+  "license": "MIT",
   "private": true,
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IvanIvanson/gals.git"
+  },
+  "homepage": "https://ivanivanson.github.io/gals/",
+  "bugs": {
+    "url": "https://github.com/IvanIvanson/gals/issues"
+  },
   "jsdelivr": "cdn/gals.min.js",
   "style": "cdn/gals.min.css",
   "files": [
@@ -15,7 +24,8 @@
     "build:cdn": "sass --style=compressed --no-source-map --no-charset gals/gals.css cdn/gals.min.css && terser gals/gals.js --compress --mangle --comments false --output cdn/gals.min.js",
     "build:llms": "node scripts/build-classes-json.mjs",
     "build:prerender": "node scripts/prerender.mjs",
-    "build": "npm run build:css && npm run build:cdn && npm run build:llms && npm run build:prerender",
+    "build:zip": "node scripts/build-zip.mjs",
+    "build": "npm run build:css && npm run build:cdn && npm run build:llms && npm run build:prerender && npm run build:zip",
     "check:demo": "node scripts/check-demo.mjs",
     "check:prerender": "node scripts/prerender.mjs --check",
     "test": "node --test \"tests/**/*.test.mjs\""
@@ -28,11 +38,11 @@
     "terser": "^5.51.2"
   },
   "browserslist": [
-    "> 0.5%",
-    "last 2 versions",
-    "Firefox ESR",
-    "not dead",
-    "Safari >= 12",
-    "iOS >= 12"
+    "Chrome >= 114",
+    "Edge >= 114",
+    "Firefox >= 125",
+    "Safari >= 17",
+    "iOS >= 17",
+    "not dead"
   ]
 }

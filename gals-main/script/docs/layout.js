@@ -7,7 +7,7 @@ import { page, codeBlock, demo, cell, table, notice } from './page.js';
 
 const PREFIXES = [
   ['xl', 'min-width: 1440px', 'pt-xl1 … pt-xl12'],
-  ['l', 'max-width: 1440px', 'pt-l1 … pt-l12'],
+  ['l', 'max-width: 1439.98px', 'pt-l1 … pt-l12'],
   ['m', 'max-width: 1025px', 'pt-m1 … pt-m12'],
   ['s', 'max-width: 770px', 'pt-s1 … pt-s12'],
   ['xs', 'max-width: 425px', 'pt-xs1 … pt-xs12'],
@@ -45,10 +45,10 @@ ${codeBlock(
 </div>`,
 )}
 ${notice(
-  'Overlap at exactly 1440px',
-  'Both <code>pt-xl*</code> (<code>min-width: 1440px</code>) and <code>pt-l*</code> '
-  + '(<code>max-width: 1440px</code>) match a 1440px viewport. The <code>l</code> block is declared '
-  + 'later in the file, so on that one pixel <code>l</code> wins.',
+  'Boundary at 1440px',
+  'The <code>l</code> block ends at <code>1439.98px</code> and <code>xl</code> starts at '
+  + '<code>1440px</code>, so exactly one of them matches at any viewport width. '
+  + 'The base <code>pt-*</code> width still applies everywhere; prefixed classes override it.',
 )}`,
     },
     {
@@ -325,17 +325,18 @@ ${demo(
 const zIndex = page({
   title: 'Z-index',
   lead:
-    'GALS 1.0 ships no stacking utilities. Stacking order is left to the page, and the only rule the '
-    + 'framework sets is a negative one on the documentation layout itself.',
+    'GALS ships no stacking utilities. Stacking order is left to the page; the framework itself sets '
+    + 'a z-index only on .header-sticky, and the documentation layout adds its own local rules.',
   status: 'planned',
   blocks: [
     {
       id: 'status',
       label: 'Status',
       html:
-        '<p>There is no <code>.z-1</code> family and no stacking scale. The stylesheet has a single '
-        + 'stacking declaration, <code>.copy-block</code> and its children, which are positioned '
-        + 'locally and do not leak into your page.</p>',
+        '<p>There is no <code>.z-1</code> family and no stacking scale. The framework uses '
+        + '<code>z-index: 100</code> on <code>.header-sticky</code>; <code>.copy-block</code> and its '
+        + 'children are positioned by the documentation stylesheet, not by GALS, and do not leak into '
+        + 'your page.</p>',
     },
     {
       id: 'today',

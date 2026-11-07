@@ -13,15 +13,14 @@
 
 ## Подключение (jsDelivr, запиннено на тег v1.2)
 
-- [cdn/gals.min.css](https://cdn.jsdelivr.net/gh/IvanIvanson/gals@v1.2/gals-main/cdn/gals.min.css): минифицированный CSS, ~16 КБ (gzip ~12 КБ)
-- [cdn/gals.min.js](https://cdn.jsdelivr.net/gh/IvanIvanson/gals@v1.2/gals-main/cdn/gals.min.js): минимальный рантайм, ~2 КБ (gzip ~1.3 КБ)
+- [cdn/gals.min.css](https://cdn.jsdelivr.net/gh/IvanIvanson/gals@v1.2/gals-main/cdn/gals.min.css): минифицированный CSS, ~16 КБ (gzip ~3,4 КБ)
+- [cdn/gals.min.js](https://cdn.jsdelivr.net/gh/IvanIvanson/gals@v1.2/gals-main/cdn/gals.min.js): минимальный рантайм, ~3,5 КБ (gzip ~1,4 КБ)
 - [gals/gals.css](https://raw.githubusercontent.com/IvanIvanson/gals/main/gals-main/gals/gals.css): исходный CSS, из которого сгенерирован справочник классов
 
 Все ссылки в файле абсолютные (https): его можно вставить в промпт или загрузить в агрегатор — они останутся разрешимыми вне репозитория.
 
 ## Optional
 
-- [demo/trackmetro.html](https://ivanivanson.github.io/gals/demo/trackmetro.html): цельная страница на GALS — пример для чтения кода
 - [robots.txt](https://ivanivanson.github.io/gals/robots.txt) и [sitemap.xml](https://ivanivanson.github.io/gals/sitemap.xml): правила обхода и список страниц
 
 
@@ -34,6 +33,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>GALS demo</title>
+  <style>*,*::before,*::after{box-sizing:border-box}</style>
   <link rel="stylesheet" href="gals/gals.css">
 </head>
 <body>
@@ -41,6 +41,8 @@
 </body>
 </html>
 ```
+
+`gals.css` уже применяет `border-box` внутри `.container`; глобальный reset выше нужен для остальной страницы и рекомендуется всегда.
 
 Через CDN:
 
@@ -68,7 +70,7 @@ Flexbox-сетка из 12 колонок. Шаг колонки — `var(--grid
 | `.container` | Flex-обёртка: `display:flex; flex-wrap:wrap; padding:5px` |
 | `.container-block` | Промежуточная ячейка, даёт gutter (`padding:5px`) |
 | `.pt-1` … `.pt-12` | Колонка шириной N/12 |
-| `.container-fluid` | `flex-grow:1`; на `<img>` gals.js подгоняет размеры по родителю |
+| `.container-fluid` | `flex-grow:1`; на `<img>` gals.js задаёт ширину по content-box родителя и `height:auto` |
 
 В `.row` и `.col` **нет необходимости** — их в GALS нет.
 
@@ -114,8 +116,8 @@ Flexbox-сетка из 12 колонок. Шаг колонки — `var(--grid
 | Card | `.card`, `.card-title`, `.card-body`, `.card-footer` | — |
 | Accordion | `.accordion`, `.accordion-body` на `<details>` | `.accordion-group` |
 | Carousel | `.carousel`, `.carousel-slide` | — |
-| Dropdown | `.dropdown` (для Popover API) | — |
-| Modal | `.modal`, `.modal-body` на `<dialog>` | — |
+| Dropdown | `.dropdown` (для Popover API) | `[popovertarget]` + `.dropdown`: позиционирование, ARIA и стрелки в gals.js |
+| Modal | `.modal`, `.modal-body` на `<dialog>` | `showModal()` вызывает ваш код |
 | Menu | `.menu` | `.icon-menu` → `.menu-show` |
 | Tabs | `.tabs`, `.tab-panel` (radio + `:checked`, до 6 вкладок) | — |
 | Pagination | `.pagination`, активная — `[aria-current="page"]` | — |
@@ -154,24 +156,25 @@ Flexbox-сетка из 12 колонок. Шаг колонки — `var(--grid
 | `.container-flex` | `display:flex` |
 | `.border`, `.borderRed`, `.borderGreen`, `.borderBlue` | `outline` — отладка, layout не трогает |
 
-## Runtime (gals/gals.js, ~5 КБ)
+## Runtime (gals/gals.js, ~9 КБ)
 
 Каждая фича опциональна: нет хука в DOM — код молчит.
 
 | Хук | Поведение |
 |-----|-----------|
 | `.icon-menu` + `.menu` | Клик переключает `.menu-show` на `.menu`, обновляет `aria-expanded` |
-| `img.container-fluid` | При загрузке и на resize (debounce 150 мс) пишет inline width/height по родителю |
+| `[popovertarget]` + `.dropdown` | Позиционирует popover у триггера, ставит `aria-haspopup`/`aria-expanded`, ведёт стрелки/Home/End |
+| `img.container-fluid` | При загрузке, resize и событии `gals:refresh` задаёт width по content-box родителя; высота остаётся auto |
 | `.accordion-group` | Открытие одного `<details class="accordion">` закрывает остальные |
 | `[data-scrollspy]` | Ссылке `a[href="#id"]` заголовка в середине окна ставится `aria-current="true"` |
 
 ## Файлы в репозитории
 
 ```
-gals/gals.css          Сетка, компоненты, хелперы (~21 КБ)
-gals/gals.js           Минимальный рантайм (~5 КБ)
-cdn/gals.min.css       Минифицированный CSS (~16 КБ, gzip ~12 КБ)
-cdn/gals.min.js        Минифицированный JS (~2 КБ, gzip ~1.3 КБ)
+gals/gals.css          Сетка, компоненты, хелперы (~23 КБ)
+gals/gals.js           Минимальный рантайм (~9 КБ)
+cdn/gals.min.css       Минифицированный CSS (~16 КБ, gzip ~3,4 КБ)
+cdn/gals.min.js        Минифицированный JS (~3,5 КБ, gzip ~1,4 КБ)
 llms/gals-classes.json Справочник классов, сгенерирован из gals/gals.css
 ```
 
@@ -180,8 +183,9 @@ llms/gals-classes.json Справочник классов, сгенериров
 1. Используй ТОЛЬКО классы GALS. Не подмешивай Bootstrap, Tailwind или другие библиотеки.
 2. Сетка строится так: `.container` → `.container-block` с классом `pt-N`. Классов `.row` и `.col-*` в GALS **нет**.
 3. `pt-*` — это **колонки** (ширина N/12), а не padding. Классов `mb-*`, `px-*`, `mt-*` в GALS **нет**.
-4. Адаптивность: добавляй префиксные колонки `pt-{bp}N`, где bp ∈ xl, l, m, s, xs, xxs.
-5. Ссылки на CSS в `<head>` раньше остальных стилей, скрипт — перед `</body>` с `defer`.
-6. Если нужен кастомный стиль — бери цвета и шаг сетки из CSS-переменных (`var(--accent)`, `var(--line)`).
-7. Полный список классов с описаниями и реальными CSS-значениями — в [llms/gals-classes.json](https://ivanivanson.github.io/gals/llms/gals-classes.json). Не выдумывай классы, которых там нет.
-8. Используй семантический HTML5 и ARIA-атрибуты: `aria-current`, `aria-expanded`, `aria-invalid`, `aria-label`.
+4. Box model: GALS применяет `border-box` внутри `.container`. Для остальной страницы добавь `*, *::before, *::after { box-sizing: border-box; }` и `min-width: 0` для flex-колонок с длинным содержимым.
+5. Адаптивность: добавляй префиксные колонки `pt-{bp}N`, где bp ∈ xl, l, m, s, xs, xxs.
+6. Ссылки на CSS в `<head>` раньше остальных стилей, скрипт — перед `</body>` с `defer`.
+7. Если нужен кастомный стиль — бери цвета и шаг сетки из CSS-переменных (`var(--accent)`, `var(--line)`).
+8. Полный список классов с описаниями и реальными CSS-значениями — в [llms/gals-classes.json](https://ivanivanson.github.io/gals/llms/gals-classes.json). Не выдумывай классы, которых там нет.
+9. Используй семантический HTML5 и ARIA-атрибуты: `aria-current`, `aria-expanded`, `aria-invalid`, `aria-label`.

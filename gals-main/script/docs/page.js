@@ -104,7 +104,7 @@ export const planned = ({ title, lead, missing, workaround, proposal }) =>
     lead,
     status: 'planned',
     blocks: [
-      { id: 'status', label: 'Status', html: notice('Not in the 1.0 build', missing) },
+      { id: 'status', label: 'Status', html: notice('Not in the current build', missing) },
       { id: 'workaround', label: 'Workaround today', html: workaround },
       { id: 'proposal', label: 'Proposed API', html: proposal },
     ],

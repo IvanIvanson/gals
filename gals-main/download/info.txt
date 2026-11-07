@@ -1,1 +1,35 @@
-Распакуйте grid.zip
+GALS — Grid Application Layout Systems
+======================================
+
+MIT License. See LICENSE.
+
+Files
+-----
+gals/gals.css   grid, components, helpers
+gals/gals.js    optional runtime: menu, dropdowns, accordion groups, scrollspy, fluid images
+
+Quick start
+-----------
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>*,*::before,*::after{box-sizing:border-box}</style>
+  <link rel="stylesheet" href="gals/gals.css">
+</head>
+<body>
+  <div class="container">
+    <div class="container-block pt-12 pt-m6">Full width, then half</div>
+  </div>
+  <script src="gals/gals.js" defer></script>
+</body>
+
+GALS applies border-box inside .container. A global reset is recommended for
+the rest of the page, but the grid works without it.
+
+Columns are .container > .container-block.pt-N. pt-* is a width in twelfths,
+not padding. There are no .row/.col classes, and no spacing utilities except
+.padding-lg.
+
+Documentation: https://ivanivanson.github.io/gals/
+Machine-readable reference: https://ivanivanson.github.io/gals/llms.txt
+AI prompt: https://ivanivanson.github.io/gals/AI_PROMPT_TEMPLATE.md

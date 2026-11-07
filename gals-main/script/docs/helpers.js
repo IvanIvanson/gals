@@ -10,7 +10,7 @@ const HELPERS = [
   ['<code>.container-flex</code>', 'bare <code>display: flex</code>'],
   ['<code>.container-fluid</code> / <code>.flex-grow1</code> / <code>.flex-grow2</code>', 'flex-grow 1 or 2'],
   ['<code>.text-center</code>', 'text-align'],
-  ['<code>.padding-lg</code>', '80px of left and right padding'],
+  ['<code>.padding-lg</code>', 'horizontal clamp(12px, 6vw, 80px)'],
   ['<code>.border</code> / <code>.borderRed</code> / <code>-Green</code> / <code>-Blue</code>', 'outline, for debugging a layout'],
   ['<code>.pt-xl-d_n</code> … <code>.pt-xxs-d_n</code>', 'display: none inside one breakpoint'],
 ];
@@ -19,7 +19,8 @@ const colors = page({
   title: 'Colors collection',
   lead:
     'Eight tokens in :root — the brand colour, a text/ground pair, three feedback states and a hairline. '
-    + 'Every component in the framework reads them, so recolouring GALS is one block.',
+    + 'Components use them as their base palette; a few surface/control shades are still literals. '
+    + 'Recolouring starts with one block, but a complete dark theme needs those literals replaced too.',
   blocks: [
     {
       id: 'tokens',
@@ -40,7 +41,8 @@ const colors = page({
       label: 'Overriding them',
       html: `
 <p>Custom properties inherit — override on <code>:root</code> for the whole page or on any subtree
-for one section. The components follow, because none of them names a colour twice.</p>
+for one section. Most components follow; a few state/surface shades are still literal values and
+will need a follow-up override.</p>
 ${codeBlock(
   `:root {
   --accent: #e3e027;   /* the documentation site’s yellow */
@@ -191,11 +193,11 @@ ${codeBlock(
 </video>`,
 )}
 ${demo(
-  `<video class="media" controls preload="none" poster="../image/gridlsicon.png">
+  `<video class="media" controls preload="none" poster="./image/gridlsicon.png">
     <a href="#usage">Download the clip</a>
   </video>
   <img class="media media-1-1" style="max-width:10em;margin-top:1em"
-       src="../image/gridlsicon.png" alt="The same class on an image">`,
+       src="./image/gridlsicon.png" alt="The same class on an image">`,
   '.media on a video and on an image — the box is the class, not the element.',
 )}`,
     },
