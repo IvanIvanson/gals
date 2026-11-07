@@ -1,4 +1,4 @@
-:root {
+﻿:root {
     --gridmultiplyConst: 8.325%;
     /* Tokens: brand, text/ground pair, feedback states, hairlines.
        Компоненты читают их как базовую палитру; несколько surface/control
@@ -10,6 +10,27 @@
     --warn: #b57d0a;
     --err: #d1495b;
     --line: #cecece;
+}
+
+/* ---------- Dark theme (auto) ---------- */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --ink: #e0e0e0;
+        --paper: #1a1a1a;
+        --line: #3a3a3a;
+        --ok: #4caf50;
+        --warn: #ffc107;
+        --err: #ef5350;
+        --table-stripe: #252525;
+        --alert-bg: #252525;
+        --dropdown-hover: #2d1f40;
+        --progress-track: #333;
+        --skeleton-start: #333;
+        --skeleton-mid: #444;
+        --skeleton-end: #333;
+        --muted: #999;
+        --switch-off: #555;
+    }
 }
 
 /* Box model: колонки заданы процентами, а .container-block добавляет padding.
@@ -109,7 +130,7 @@ img.container-fluid{
   flex-grow: 2;
 }
 .border{
-  outline: solid #333 1px;
+  outline: solid var(--ink) 1px;
 }
 .borderRed{
   outline: solid red 3px;
@@ -156,306 +177,124 @@ img.container-fluid{
 .container .pt-12{
   width: calc(var(--gridmultiplyConst)*12);
 }
-/* pt media queries.
-   Каскад намеренный: базовые pt-* действуют на всех ширинах, а префиксные
-   блоки ниже по файлу перекрывают их на узких экранах. Граница l/xl —
-   1439.98px, чтобы на ровно 1440px не побеждали сразу оба блока. */
-@media(min-width: 1440px){
-  .container .pt-xl1{
-   width: calc(var(--gridmultiplyConst)*1);
-   
-}
-.container .pt-xl2{
-  width: calc(var(--gridmultiplyConst)*2);
-  
-}
-.container .pt-xl3{
-  width: calc(var(--gridmultiplyConst)*3);
- 
-}
-.container .pt-xl4{
-  width: calc(var(--gridmultiplyConst)*4);
- 
-}
-.container .pt-xl5{
-  width: calc(var(--gridmultiplyConst)*5);
- 
-}
-.container .pt-xl6{
-  width: calc(var(--gridmultiplyConst)*6);
- 
-}
-.container .pt-xl7{
-  width: calc(var(--gridmultiplyConst)*7);
-  
-}
-.container .pt-xl8{
-  width: calc(var(--gridmultiplyConst)*8);
-  
-}
-.container .pt-xl9{
-  width: calc(var(--gridmultiplyConst)*9);
-  
-}
-.container .pt-xl10{
-  width: calc(var(--gridmultiplyConst)*10);
-  
-}
-.container .pt-xl11{
-  width: calc(var(--gridmultiplyConst)*11);
-  
-}
-.container .pt-xl12{
-  width: calc(var(--gridmultiplyConst)*12);
-  
-}
-}
-@media(max-width: 1439.98px){
-  .container .pt-l1{
-   width: calc(var(--gridmultiplyConst)*1);
-   
-}
-.container .pt-l2{
-  width: calc(var(--gridmultiplyConst)*2);
-  
-}
-.container .pt-l3{
-  width: calc(var(--gridmultiplyConst)*3);
-  
-}
-.container .pt-l4{
-  width: calc(var(--gridmultiplyConst)*4);
-  
-}
-.container .pt-l5{
-  width: calc(var(--gridmultiplyConst)*5);
-  
-}
-.container .pt-l6{
-  width: calc(var(--gridmultiplyConst)*6);
-  
-}
-.container .pt-l7{
-  width: calc(var(--gridmultiplyConst)*7);
-  
-}
-.container .pt-l8{
-  width: calc(var(--gridmultiplyConst)*8);
- 
-}
-.container .pt-l9{
-  width: calc(var(--gridmultiplyConst)*9);
-  
-}
-.container .pt-l10{
-  width: calc(var(--gridmultiplyConst)*10);
-  
-}
-.container .pt-l11{
-  width: calc(var(--gridmultiplyConst)*11);
-  
-}
-.container .pt-l12{
-  width: calc(var(--gridmultiplyConst)*12);
-  
-}
-}
-@media(max-width: 1025px){
-  .container .pt-m1{
-   width: calc(var(--gridmultiplyConst)*1);
-}
-.container .pt-m2{
-  width: calc(var(--gridmultiplyConst)*2);
-}
-.container .pt-m3{
-  width: calc(var(--gridmultiplyConst)*3);
-}
-.container .pt-m4{
-  width: calc(var(--gridmultiplyConst)*4);
-}
-.container .pt-m5{
-  width: calc(var(--gridmultiplyConst)*5);
-}
-.container .pt-m6{
-  width: calc(var(--gridmultiplyConst)*6);
-}
-.container .pt-m7{
-  width: calc(var(--gridmultiplyConst)*7);
-}
-.container .pt-m8{
-  width: calc(var(--gridmultiplyConst)*8);
-}
-.container .pt-m9{
-  width: calc(var(--gridmultiplyConst)*9);
-}
-.container .pt-m10{
-  width: calc(var(--gridmultiplyConst)*10);
-}
-.container .pt-m11{
-  width: calc(var(--gridmultiplyConst)*11);
-}
-.container .pt-m12{
-  width: calc(var(--gridmultiplyConst)*12);
-}
-}
-@media(max-width: 770px){
-  .container .pt-s1{
-   width: calc(var(--gridmultiplyConst)*1);
-}
-.container .pt-s2{
-  width: calc(var(--gridmultiplyConst)*2);
-}
-.container .pt-s3{
-  width: calc(var(--gridmultiplyConst)*3);
-}
-.container .pt-s4{
-  width: calc(var(--gridmultiplyConst)*4);
-}
-.container .pt-s5{
-  width: calc(var(--gridmultiplyConst)*5);
-}
-.container .pt-s6{
-  width: calc(var(--gridmultiplyConst)*6);
-}
-.container .pt-s7{
-  width: calc(var(--gridmultiplyConst)*7);
-}
-.container .pt-s8{
-  width: calc(var(--gridmultiplyConst)*8);
-}
-.container .pt-s9{
-  width: calc(var(--gridmultiplyConst)*9);
-}
-.container .pt-s10{
-  width: calc(var(--gridmultiplyConst)*10);
-}
-.container .pt-s11{
-  width: calc(var(--gridmultiplyConst)*11);
-}
-.container .pt-s12{
-  width: calc(var(--gridmultiplyConst)*12);
-}
-}
-@media(max-width: 425px){
-.container .pt-xs1{
-   width: calc(var(--gridmultiplyConst)*1);
-   
-}
-.container .pt-xs2{
-  width: calc(var(--gridmultiplyConst)*2);
- 
-}
-.container .pt-xs3{
-  width: calc(var(--gridmultiplyConst)*3);
-  
-}
-.container .pt-xs4{
-  width: calc(var(--gridmultiplyConst)*4);
-  
-}
-.container .pt-xs5{
-  width: calc(var(--gridmultiplyConst)*5);
- 
-}
-.container .pt-xs6{
-  width: calc(var(--gridmultiplyConst)*6);
- 
-}
-.container .pt-xs7{
-  width: calc(var(--gridmultiplyConst)*7);
-  
-}
-.container .pt-xs8{
-  width: calc(var(--gridmultiplyConst)*8);
- 
-}
-.container .pt-xs9{
-  width: calc(var(--gridmultiplyConst)*9);
- 
-}
-.container .pt-xs10{
-  width: calc(var(--gridmultiplyConst)*10);
-  
-}
-.container .pt-xs11{
-  width: calc(var(--gridmultiplyConst)*11);
-  
-}
-.container .pt-xs12{
-  width: calc(var(--gridmultiplyConst)*12);
-  
-}
-}
-@media(max-width: 375px){
-.container .pt-xxs1{
-   width: calc(var(--gridmultiplyConst)*1);
-}
-.container .pt-xxs2{
-  width: calc(var(--gridmultiplyConst)*2);
-}
-.container .pt-xxs3{
-  width: calc(var(--gridmultiplyConst)*3);
-}
-.container .pt-xxs4{
-  width: calc(var(--gridmultiplyConst)*4);
-}
-.container .pt-xxs5{
-  width: calc(var(--gridmultiplyConst)*5);
-}
-.container .pt-xxs6{
-  width: calc(var(--gridmultiplyConst)*6);
-}
-.container .pt-xxs7{
-  width: calc(var(--gridmultiplyConst)*7);
-}
-.container .pt-xxs8{
-  width: calc(var(--gridmultiplyConst)*8);
-}
-.container .pt-xxs9{
-  width: calc(var(--gridmultiplyConst)*9);
-}
-.container .pt-xxs10{
-  width: calc(var(--gridmultiplyConst)*10);
-}
-.container .pt-xxs11{
-  width: calc(var(--gridmultiplyConst)*11);
-}
-.container .pt-xxs12{
-  width: calc(var(--gridmultiplyConst)*12);
-}
+/* Responsive grid — mobile first.
+    Базовые .pt-* действуют на всех экранах.
+    Префиксные классы переопределяют ширину от заданного брейкпоинта
+    вверх (min-width): чем шире экран, тем выше приоритет в каскаде. */
+
+/* XL: ≥ 1440px */
+@media (min-width: 1440px) {
+    .container .pt-xl1 { width: calc(var(--gridmultiplyConst) * 1); }
+    .container .pt-xl2 { width: calc(var(--gridmultiplyConst) * 2); }
+    .container .pt-xl3 { width: calc(var(--gridmultiplyConst) * 3); }
+    .container .pt-xl4 { width: calc(var(--gridmultiplyConst) * 4); }
+    .container .pt-xl5 { width: calc(var(--gridmultiplyConst) * 5); }
+    .container .pt-xl6 { width: calc(var(--gridmultiplyConst) * 6); }
+    .container .pt-xl7 { width: calc(var(--gridmultiplyConst) * 7); }
+    .container .pt-xl8 { width: calc(var(--gridmultiplyConst) * 8); }
+    .container .pt-xl9 { width: calc(var(--gridmultiplyConst) * 9); }
+    .container .pt-xl10 { width: calc(var(--gridmultiplyConst) * 10); }
+    .container .pt-xl11 { width: calc(var(--gridmultiplyConst) * 11); }
+    .container .pt-xl12 { width: calc(var(--gridmultiplyConst) * 12); }
 }
 
-/* display-none for pt media queries */
-@media(min-width: 1440px){
-  .container .pt-xl-d_n{
-   display: none;
-}
+/* L: ≥ 1026px */
+@media (min-width: 1026px) {
+    .container .pt-l1 { width: calc(var(--gridmultiplyConst) * 1); }
+    .container .pt-l2 { width: calc(var(--gridmultiplyConst) * 2); }
+    .container .pt-l3 { width: calc(var(--gridmultiplyConst) * 3); }
+    .container .pt-l4 { width: calc(var(--gridmultiplyConst) * 4); }
+    .container .pt-l5 { width: calc(var(--gridmultiplyConst) * 5); }
+    .container .pt-l6 { width: calc(var(--gridmultiplyConst) * 6); }
+    .container .pt-l7 { width: calc(var(--gridmultiplyConst) * 7); }
+    .container .pt-l8 { width: calc(var(--gridmultiplyConst) * 8); }
+    .container .pt-l9 { width: calc(var(--gridmultiplyConst) * 9); }
+    .container .pt-l10 { width: calc(var(--gridmultiplyConst) * 10); }
+    .container .pt-l11 { width: calc(var(--gridmultiplyConst) * 11); }
+    .container .pt-l12 { width: calc(var(--gridmultiplyConst) * 12); }
 }
 
-@media(max-width: 1439.98px){
-  .container .pt-l-d_n{
-    display: none;
-  }
+/* M: ≥ 771px */
+@media (min-width: 771px) {
+    .container .pt-m1 { width: calc(var(--gridmultiplyConst) * 1); }
+    .container .pt-m2 { width: calc(var(--gridmultiplyConst) * 2); }
+    .container .pt-m3 { width: calc(var(--gridmultiplyConst) * 3); }
+    .container .pt-m4 { width: calc(var(--gridmultiplyConst) * 4); }
+    .container .pt-m5 { width: calc(var(--gridmultiplyConst) * 5); }
+    .container .pt-m6 { width: calc(var(--gridmultiplyConst) * 6); }
+    .container .pt-m7 { width: calc(var(--gridmultiplyConst) * 7); }
+    .container .pt-m8 { width: calc(var(--gridmultiplyConst) * 8); }
+    .container .pt-m9 { width: calc(var(--gridmultiplyConst) * 9); }
+    .container .pt-m10 { width: calc(var(--gridmultiplyConst) * 10); }
+    .container .pt-m11 { width: calc(var(--gridmultiplyConst) * 11); }
+    .container .pt-m12 { width: calc(var(--gridmultiplyConst) * 12); }
 }
-@media(max-width: 1025px){
-  .container .pt-m-d_n{
-   display: none;
+
+/* S: ≥ 426px */
+@media (min-width: 426px) {
+    .container .pt-s1 { width: calc(var(--gridmultiplyConst) * 1); }
+    .container .pt-s2 { width: calc(var(--gridmultiplyConst) * 2); }
+    .container .pt-s3 { width: calc(var(--gridmultiplyConst) * 3); }
+    .container .pt-s4 { width: calc(var(--gridmultiplyConst) * 4); }
+    .container .pt-s5 { width: calc(var(--gridmultiplyConst) * 5); }
+    .container .pt-s6 { width: calc(var(--gridmultiplyConst) * 6); }
+    .container .pt-s7 { width: calc(var(--gridmultiplyConst) * 7); }
+    .container .pt-s8 { width: calc(var(--gridmultiplyConst) * 8); }
+    .container .pt-s9 { width: calc(var(--gridmultiplyConst) * 9); }
+    .container .pt-s10 { width: calc(var(--gridmultiplyConst) * 10); }
+    .container .pt-s11 { width: calc(var(--gridmultiplyConst) * 11); }
+    .container .pt-s12 { width: calc(var(--gridmultiplyConst) * 12); }
 }
+
+/* XS: ≥ 376px */
+@media (min-width: 376px) {
+    .container .pt-xs1 { width: calc(var(--gridmultiplyConst) * 1); }
+    .container .pt-xs2 { width: calc(var(--gridmultiplyConst) * 2); }
+    .container .pt-xs3 { width: calc(var(--gridmultiplyConst) * 3); }
+    .container .pt-xs4 { width: calc(var(--gridmultiplyConst) * 4); }
+    .container .pt-xs5 { width: calc(var(--gridmultiplyConst) * 5); }
+    .container .pt-xs6 { width: calc(var(--gridmultiplyConst) * 6); }
+    .container .pt-xs7 { width: calc(var(--gridmultiplyConst) * 7); }
+    .container .pt-xs8 { width: calc(var(--gridmultiplyConst) * 8); }
+    .container .pt-xs9 { width: calc(var(--gridmultiplyConst) * 9); }
+    .container .pt-xs10 { width: calc(var(--gridmultiplyConst) * 10); }
+    .container .pt-xs11 { width: calc(var(--gridmultiplyConst) * 11); }
+    .container .pt-xs12 { width: calc(var(--gridmultiplyConst) * 12); }
 }
-@media(max-width: 770px){
-  .container .pt-s-d_n{
-   display: none;
+
+/* XXS: ≤ 375px (единственный max-width — для самого узкого экрана) */
+@media (max-width: 375px) {
+    .container .pt-xxs1 { width: calc(var(--gridmultiplyConst) * 1); }
+    .container .pt-xxs2 { width: calc(var(--gridmultiplyConst) * 2); }
+    .container .pt-xxs3 { width: calc(var(--gridmultiplyConst) * 3); }
+    .container .pt-xxs4 { width: calc(var(--gridmultiplyConst) * 4); }
+    .container .pt-xxs5 { width: calc(var(--gridmultiplyConst) * 5); }
+    .container .pt-xxs6 { width: calc(var(--gridmultiplyConst) * 6); }
+    .container .pt-xxs7 { width: calc(var(--gridmultiplyConst) * 7); }
+    .container .pt-xxs8 { width: calc(var(--gridmultiplyConst) * 8); }
+    .container .pt-xxs9 { width: calc(var(--gridmultiplyConst) * 9); }
+    .container .pt-xxs10 { width: calc(var(--gridmultiplyConst) * 10); }
+    .container .pt-xxs11 { width: calc(var(--gridmultiplyConst) * 11); }
+    .container .pt-xxs12 { width: calc(var(--gridmultiplyConst) * 12); }
 }
+/* display-none utilities — mobile first (min-width) */
+@media (max-width: 375px) {
+  .container .pt-xxs-d_n { display: none; }
 }
-@media(max-width: 425px){
-.container .pt-xs-d_n{
-   display: none;
+@media (min-width: 376px) {
+  .container .pt-xs-d_n { display: none; }
 }
+@media (min-width: 426px) {
+  .container .pt-s-d_n { display: none; }
 }
-@media(max-width: 375px){
-.container .pt-xxs-d_n{
-   display: none;
+@media (min-width: 771px) {
+  .container .pt-m-d_n { display: none; }
 }
+@media (min-width: 1026px) {
+  .container .pt-l-d_n { display: none; }
+}
+@media (min-width: 1440px) {
+  .container .pt-xl-d_n { display: none; }
 }
 
 /* ============================================================
@@ -533,7 +372,7 @@ img.container-fluid{
   border: 1px solid var(--line);
 }
 .table-striped tbody tr:nth-child(even){
-  background: #f5f5f5;
+  background: var(--table-stripe, #f5f5f5);
 }
 .table-responsive{
   overflow-x: auto;
@@ -579,7 +418,7 @@ img.container-fluid{
   border: 1px solid var(--line);
   border-left-width: 4px;
   border-radius: 5px;
-  background: #f6f6f6;
+  background: var(--alert-bg, #f6f6f6);
 }
 .alert-ok{ border-left-color: var(--ok); }
 .alert-warn{ border-left-color: var(--warn); }
@@ -693,7 +532,7 @@ img.container-fluid{
   cursor: pointer;
 }
 .dropdown button:hover{
-  background: #f0ecf7;
+  background: var(--dropdown-hover, #f0ecf7);
 }
 
 /* ---------- Modal (<dialog>) ---------- */
@@ -735,7 +574,7 @@ img.container-fluid{
   font-weight: 700;
 }
 .icon-menu{
-  display: none;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: 0.25em 0.5em;
@@ -745,19 +584,27 @@ img.container-fluid{
   border: 1px solid currentColor;
   cursor: pointer;
 }
-@media (max-width: 767.98px){
+/* Mobile first: menu collapsed by default, expands at ≥ 768px */
+.menu-collapse:not(.menu-show){
+  display: none;
+}
+.menu-collapse.menu-show{
+  display: block;
+}
+.menu-collapse ul{
+  flex-direction: column;
+  align-items: flex-start;
+}
+@media (min-width: 768px){
   .icon-menu{
-    display: inline-flex;
-  }
-  .menu-collapse:not(.menu-show){
     display: none;
   }
-  .menu-collapse.menu-show{
-    display: block;
+  .menu-collapse:not(.menu-show){
+    display: flex;
   }
   .menu-collapse ul{
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
   }
 }
 
@@ -774,7 +621,7 @@ img.container-fluid{
 .tabs > label{
   padding: 0.5em 1em;
   cursor: pointer;
-  color: #777;
+  color: var(--muted, #777);
   border: 1px solid transparent;
   border-bottom: none;
   border-radius: 5px 5px 0 0;
@@ -863,7 +710,7 @@ img.container-fluid{
 /* ---------- Progress ---------- */
 .progress{
   height: 0.75em;
-  background: #e5e5e5;
+  background: var(--progress-track, #e5e5e5);
   border-radius: 999px;
   overflow: hidden;
 }
@@ -894,7 +741,7 @@ progress{
 .skeleton{
   min-height: 1em;
   border-radius: 5px;
-  background: linear-gradient(90deg, #ececec 25%, #f5f5f5 50%, #ececec 75%);
+  background: linear-gradient(90deg, var(--skeleton-start, #ececec) 25%, var(--skeleton-mid, #f5f5f5) 50%, var(--skeleton-end, #ececec) 75%);
   background-size: 200% 100%;
   animation: gals-shimmer 1.2s linear infinite;
 }
@@ -940,7 +787,7 @@ progress{
 }
 .field-hint{
   font-size: 0.85em;
-  color: #777;
+  color: var(--muted, #777);
 }
 .field-group{
   margin: 0;
@@ -954,7 +801,7 @@ progress{
   font: inherit;
   color: inherit;
   background: var(--paper);
-  border: 1px solid #767676;
+  border: 1px solid var(--line);
   border-radius: 4px;
 }
 textarea.input{
@@ -1022,7 +869,7 @@ textarea.input{
   width: 1.15em;
   height: 1.15em;
   margin-top: 0.15em;
-  border: 1px solid #767676;
+  border: 1px solid var(--line);
   background: var(--paper);
 }
 .checkbox-box{ border-radius: 3px; }
@@ -1063,8 +910,8 @@ textarea.input{
   width: 2.2em;
   height: 1.15em;
   border-radius: 999px;
-  background: #cdcdcd;
-  border-color: #cdcdcd;
+  background: var(--switch-off, #cdcdcd);
+  border-color: var(--switch-off, #cdcdcd);
   transition: background 0.2s;
 }
 .switch-box::after{

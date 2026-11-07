@@ -98,10 +98,10 @@ const classesOf = (selector) => {
 
 const breakpoints = {
   xl: '(min-width: 1440px)',
-  l: '(max-width: 1439.98px)',
-  m: '(max-width: 1025px)',
-  s: '(max-width: 770px)',
-  xs: '(max-width: 425px)',
+  l: '(min-width: 1026px)',
+  m: '(min-width: 771px)',
+  s: '(min-width: 426px)',
+  xs: '(min-width: 376px)',
   xxs: '(max-width: 375px)',
 };
 
@@ -359,7 +359,7 @@ for (let n = 1; n <= 12; n += 1) {
   DESCRIPTIONS[`input-${n}`] = `Поле формы шириной ${n}/12 — та же шкала, что у колонок.`;
 }
 
-const prefixes = { xl: 'min-width 1440px', l: 'max-width 1439.98px', m: 'max-width 1025px', s: 'max-width 770px', xs: 'max-width 425px', xxs: 'max-width 375px' };
+const prefixes = { xl: '≥ 1440px', l: '≥ 1026px', m: '≥ 771px', s: '≥ 426px', xs: '≥ 376px', xxs: '≤ 375px' };
 
 for (const [bp, cond] of Object.entries(prefixes)) {
   for (let n = 1; n <= 12; n += 1) {

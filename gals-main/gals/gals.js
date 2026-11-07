@@ -216,6 +216,125 @@
     });
   };
 
+  // tabs-a11y: adds role="tablist" / role="tab" / role="tabpanel"
+  // and aria-selected to the CSS-only radio tabs pattern.
+  const initTabs = function () {
+    document.querySelectorAll(".tabs").forEach(function (tabsEl) {
+      if (tabsEl.dataset.galsTabs === "1") {
+        return;
+      }
+      tabsEl.dataset.galsTabs = "1";
+
+      var labels = Array.prototype.slice.call(tabsEl.querySelectorAll(":scope > label"));
+      var panels = Array.prototype.slice.call(tabsEl.querySelectorAll(":scope > .tab-panel"));
+
+      if (!labels.length) {
+        return;
+      }
+
+      labels.forEach(function (label, i) {
+        label.setAttribute("role", "tab");
+        label.setAttribute("aria-selected", "false");
+
+        var input = document.getElementById(label.getAttribute("for"));
+        if (input && input.checked) {
+          label.setAttribute("aria-selected", "true");
+        }
+        if (panels[i]) {
+          label.setAttribute("aria-controls", panels[i].id || ("tab-panel-" + i));
+          if (!panels[i].id) {
+            panels[i].id = "tab-panel-" + i;
+          }
+        }
+      });
+
+      panels.forEach(function (panel, i) {
+        panel.setAttribute("role", "tabpanel");
+        panel.setAttribute("aria-labelledby", labels[i] ? labels[i].htmlFor : "");
+        panel.setAttribute("tabindex", "0");
+      });
+
+      // Update aria-selected when radio changes
+      tabsEl.addEventListener("change", function (event) {
+        if (event.target.type !== "radio") {
+          return;
+        }
+        labels.forEach(function (label, i) {
+          var input = document.getElementById(label.getAttribute("for"));
+          label.setAttribute("aria-selected", input && input.checked ? "true" : "false");
+        });
+      });
+
+      // Arrow keys navigate tabs
+      tabsEl.addEventListener("keydown", function (event) {
+        var focused = document.activeElement;
+        var idx = labels.indexOf(focused);
+        if (idx === -1) {
+          return;
+        }
+
+        var next = -1;
+        if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+          next = (idx + 1) % labels.length;
+        } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+          next = (idx - 1 + labels.length) % labels.length;
+        } else if (event.key === "Home") {
+          next = 0;
+        } else if (event.key === "End") {
+          next = labels.length - 1;
+        }
+
+        if (next !== -1) {
+          event.preventDefault();
+          var input = document.getElementById(labels[next].getAttribute("for"));
+          if (input) {
+            input.checked = true;
+            input.dispatchEvent(new Event("change", { bubbles: true }));
+          }
+          labels[next].focus();
+        }
+      });
+    });
+  };
+
+  // modal-controller: buttons with data-gals-modal="id" open the dialog.
+  // data-gals-modal-close inside the dialog closes it.
+  const initModals = function () {
+    document.querySelectorAll("[data-gals-modal]").forEach(function (trigger) {
+      if (trigger.dataset.galsModalBound === "1") {
+        return;
+      }
+      trigger.dataset.galsModalBound = "1";
+
+      var id = trigger.getAttribute("data-gals-modal");
+      var dialog = id && document.getElementById(id);
+
+      if (!dialog || dialog.tagName !== "DIALOG") {
+        return;
+      }
+
+      trigger.setAttribute("aria-haspopup", "dialog");
+
+      trigger.addEventListener("click", function () {
+        dialog.showModal();
+      });
+
+      // Close buttons inside dialog
+      dialog.querySelectorAll("[data-gals-modal-close]").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          dialog.close();
+        });
+      });
+
+      // Click on backdrop closes
+      dialog.addEventListener("click", function (event) {
+        if (event.target === dialog) {
+          dialog.close();
+        }
+      });
+    });
+  };
+
   // accordion-group: открыть один — закрыть остальные.
   // Событие toggle не всплывает, поэтому слушаем на capture:
   // один делегированный слушатель вместо слушателя на каждый details.
@@ -309,6 +428,8 @@
   const init = function () {
     initMenu();
     initDropdowns();
+    initTabs();
+    initModals();
     fitFluidImages();
     initAccordions();
     initScrollspy();
@@ -328,5 +449,7 @@
   // После вставки новой разметки достаточно сообщить: gals:refresh.
   document.addEventListener("gals:refresh", fitFluidImages);
   document.addEventListener("gals:refresh", initDropdowns);
+  document.addEventListener("gals:refresh", initTabs);
+  document.addEventListener("gals:refresh", initModals);
 })();
  

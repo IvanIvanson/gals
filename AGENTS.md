@@ -12,8 +12,8 @@ GALS is a small, dependency-free flexbox toolkit. Read `gals-main/llms.txt` and
 3. Add a page reset: `*, *::before, *::after { box-sizing: border-box; }`. GALS also scopes
    `border-box` inside `.container`, but the rest of the page needs it.
 4. Give flex columns `min-width: 0` when they contain long words, URLs or tables.
-5. Responsive overrides: `pt-{bp}N` with `xl` (min 1440px), `l` (max 1439.98px), `m` (max 1025px),
-   `s` (max 770px), `xs` (max 425px), `xxs` (max 375px). Hide with `pt-{bp}-d_n`.
+5. Responsive overrides: `pt-{bp}N` with `xl` (≥ 1440px), `l` (≥ 1026px), `m` (≥ 771px),
+   `s` (≥ 426px), `xs` (≥ 376px), `xxs` (≤ 375px). Hide with `pt-{bp}-d_n`.
 6. Do not use inline `onclick`. For modal, call `dialog.showModal()` from a small script; for
    dropdown, use `popovertarget` + `popover` + `.dropdown` and keep the ARIA/keyboard contract.
 7. Use semantic HTML: one `h1`, ordered headings, `label` for controls, `alt` for images,

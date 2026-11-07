@@ -60,32 +60,32 @@
     {
       "name": "xl",
       "prefix": "pt-xl*",
-      "condition": "min-width 1440px"
+      "condition": "≥ 1440px"
     },
     {
       "name": "l",
       "prefix": "pt-l*",
-      "condition": "max-width 1439.98px"
+      "condition": "≥ 1026px"
     },
     {
       "name": "m",
       "prefix": "pt-m*",
-      "condition": "max-width 1025px"
+      "condition": "≥ 771px"
     },
     {
       "name": "s",
       "prefix": "pt-s*",
-      "condition": "max-width 770px"
+      "condition": "≥ 426px"
     },
     {
       "name": "xs",
       "prefix": "pt-xs*",
-      "condition": "max-width 425px"
+      "condition": "≥ 376px"
     },
     {
       "name": "xxs",
       "prefix": "pt-xxs*",
-      "condition": "max-width 375px"
+      "condition": "≤ 375px"
     }
   ],
   "tokens": {
@@ -182,7 +182,7 @@
     {
       "name": "alert",
       "description": "Блок с боковой полосой 4px и серым фоном.",
-      "css": "padding: 0.75em 1em; border: 1px solid var(--line); border-left-width: 4px; border-radius: 5px; background: #f6f6f6"
+      "css": "padding: 0.75em 1em; border: 1px solid var(--line); border-left-width: 4px; border-radius: 5px; background: var(--alert-bg, #f6f6f6)"
     },
     {
       "name": "alert-error",
@@ -247,7 +247,7 @@
     {
       "name": "border",
       "description": "outline solid #333 1px — контур не влияет на layout.",
-      "css": "outline: solid #333 1px"
+      "css": "outline: solid var(--ink) 1px"
     },
     {
       "name": "borderBlue",
@@ -366,7 +366,7 @@
       "description": "Квадратик 1.15em, border-radius:3px. Идёт СРАЗУ после input.",
       "variants": [
         {
-          "css": "flex: none; box-sizing: border-box; width: 1.15em; height: 1.15em; margin-top: 0.15em; border: 1px solid #767676; background: var(--paper)"
+          "css": "flex: none; box-sizing: border-box; width: 1.15em; height: 1.15em; margin-top: 0.15em; border: 1px solid var(--line); background: var(--paper)"
         },
         {
           "css": "border-radius: 3px"
@@ -478,460 +478,442 @@
           "selector": ".container .pt-12"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*1)",
+          "css": "width: calc(var(--gridmultiplyConst) * 1)",
           "at": "xl",
           "needs": ".container",
           "selector": ".container .pt-xl1"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*2)",
+          "css": "width: calc(var(--gridmultiplyConst) * 2)",
           "at": "xl",
           "needs": ".container",
           "selector": ".container .pt-xl2"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*3)",
+          "css": "width: calc(var(--gridmultiplyConst) * 3)",
           "at": "xl",
           "needs": ".container",
           "selector": ".container .pt-xl3"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*4)",
+          "css": "width: calc(var(--gridmultiplyConst) * 4)",
           "at": "xl",
           "needs": ".container",
           "selector": ".container .pt-xl4"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*5)",
+          "css": "width: calc(var(--gridmultiplyConst) * 5)",
           "at": "xl",
           "needs": ".container",
           "selector": ".container .pt-xl5"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*6)",
+          "css": "width: calc(var(--gridmultiplyConst) * 6)",
           "at": "xl",
           "needs": ".container",
           "selector": ".container .pt-xl6"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*7)",
+          "css": "width: calc(var(--gridmultiplyConst) * 7)",
           "at": "xl",
           "needs": ".container",
           "selector": ".container .pt-xl7"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*8)",
+          "css": "width: calc(var(--gridmultiplyConst) * 8)",
           "at": "xl",
           "needs": ".container",
           "selector": ".container .pt-xl8"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*9)",
+          "css": "width: calc(var(--gridmultiplyConst) * 9)",
           "at": "xl",
           "needs": ".container",
           "selector": ".container .pt-xl9"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*10)",
+          "css": "width: calc(var(--gridmultiplyConst) * 10)",
           "at": "xl",
           "needs": ".container",
           "selector": ".container .pt-xl10"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*11)",
+          "css": "width: calc(var(--gridmultiplyConst) * 11)",
           "at": "xl",
           "needs": ".container",
           "selector": ".container .pt-xl11"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*12)",
+          "css": "width: calc(var(--gridmultiplyConst) * 12)",
           "at": "xl",
           "needs": ".container",
           "selector": ".container .pt-xl12"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*1)",
+          "css": "width: calc(var(--gridmultiplyConst) * 1)",
           "at": "l",
           "needs": ".container",
           "selector": ".container .pt-l1"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*2)",
+          "css": "width: calc(var(--gridmultiplyConst) * 2)",
           "at": "l",
           "needs": ".container",
           "selector": ".container .pt-l2"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*3)",
+          "css": "width: calc(var(--gridmultiplyConst) * 3)",
           "at": "l",
           "needs": ".container",
           "selector": ".container .pt-l3"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*4)",
+          "css": "width: calc(var(--gridmultiplyConst) * 4)",
           "at": "l",
           "needs": ".container",
           "selector": ".container .pt-l4"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*5)",
+          "css": "width: calc(var(--gridmultiplyConst) * 5)",
           "at": "l",
           "needs": ".container",
           "selector": ".container .pt-l5"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*6)",
+          "css": "width: calc(var(--gridmultiplyConst) * 6)",
           "at": "l",
           "needs": ".container",
           "selector": ".container .pt-l6"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*7)",
+          "css": "width: calc(var(--gridmultiplyConst) * 7)",
           "at": "l",
           "needs": ".container",
           "selector": ".container .pt-l7"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*8)",
+          "css": "width: calc(var(--gridmultiplyConst) * 8)",
           "at": "l",
           "needs": ".container",
           "selector": ".container .pt-l8"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*9)",
+          "css": "width: calc(var(--gridmultiplyConst) * 9)",
           "at": "l",
           "needs": ".container",
           "selector": ".container .pt-l9"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*10)",
+          "css": "width: calc(var(--gridmultiplyConst) * 10)",
           "at": "l",
           "needs": ".container",
           "selector": ".container .pt-l10"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*11)",
+          "css": "width: calc(var(--gridmultiplyConst) * 11)",
           "at": "l",
           "needs": ".container",
           "selector": ".container .pt-l11"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*12)",
+          "css": "width: calc(var(--gridmultiplyConst) * 12)",
           "at": "l",
           "needs": ".container",
           "selector": ".container .pt-l12"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*1)",
+          "css": "width: calc(var(--gridmultiplyConst) * 1)",
           "at": "m",
           "needs": ".container",
           "selector": ".container .pt-m1"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*2)",
+          "css": "width: calc(var(--gridmultiplyConst) * 2)",
           "at": "m",
           "needs": ".container",
           "selector": ".container .pt-m2"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*3)",
+          "css": "width: calc(var(--gridmultiplyConst) * 3)",
           "at": "m",
           "needs": ".container",
           "selector": ".container .pt-m3"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*4)",
+          "css": "width: calc(var(--gridmultiplyConst) * 4)",
           "at": "m",
           "needs": ".container",
           "selector": ".container .pt-m4"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*5)",
+          "css": "width: calc(var(--gridmultiplyConst) * 5)",
           "at": "m",
           "needs": ".container",
           "selector": ".container .pt-m5"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*6)",
+          "css": "width: calc(var(--gridmultiplyConst) * 6)",
           "at": "m",
           "needs": ".container",
           "selector": ".container .pt-m6"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*7)",
+          "css": "width: calc(var(--gridmultiplyConst) * 7)",
           "at": "m",
           "needs": ".container",
           "selector": ".container .pt-m7"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*8)",
+          "css": "width: calc(var(--gridmultiplyConst) * 8)",
           "at": "m",
           "needs": ".container",
           "selector": ".container .pt-m8"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*9)",
+          "css": "width: calc(var(--gridmultiplyConst) * 9)",
           "at": "m",
           "needs": ".container",
           "selector": ".container .pt-m9"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*10)",
+          "css": "width: calc(var(--gridmultiplyConst) * 10)",
           "at": "m",
           "needs": ".container",
           "selector": ".container .pt-m10"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*11)",
+          "css": "width: calc(var(--gridmultiplyConst) * 11)",
           "at": "m",
           "needs": ".container",
           "selector": ".container .pt-m11"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*12)",
+          "css": "width: calc(var(--gridmultiplyConst) * 12)",
           "at": "m",
           "needs": ".container",
           "selector": ".container .pt-m12"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*1)",
+          "css": "width: calc(var(--gridmultiplyConst) * 1)",
           "at": "s",
           "needs": ".container",
           "selector": ".container .pt-s1"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*2)",
+          "css": "width: calc(var(--gridmultiplyConst) * 2)",
           "at": "s",
           "needs": ".container",
           "selector": ".container .pt-s2"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*3)",
+          "css": "width: calc(var(--gridmultiplyConst) * 3)",
           "at": "s",
           "needs": ".container",
           "selector": ".container .pt-s3"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*4)",
+          "css": "width: calc(var(--gridmultiplyConst) * 4)",
           "at": "s",
           "needs": ".container",
           "selector": ".container .pt-s4"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*5)",
+          "css": "width: calc(var(--gridmultiplyConst) * 5)",
           "at": "s",
           "needs": ".container",
           "selector": ".container .pt-s5"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*6)",
+          "css": "width: calc(var(--gridmultiplyConst) * 6)",
           "at": "s",
           "needs": ".container",
           "selector": ".container .pt-s6"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*7)",
+          "css": "width: calc(var(--gridmultiplyConst) * 7)",
           "at": "s",
           "needs": ".container",
           "selector": ".container .pt-s7"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*8)",
+          "css": "width: calc(var(--gridmultiplyConst) * 8)",
           "at": "s",
           "needs": ".container",
           "selector": ".container .pt-s8"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*9)",
+          "css": "width: calc(var(--gridmultiplyConst) * 9)",
           "at": "s",
           "needs": ".container",
           "selector": ".container .pt-s9"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*10)",
+          "css": "width: calc(var(--gridmultiplyConst) * 10)",
           "at": "s",
           "needs": ".container",
           "selector": ".container .pt-s10"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*11)",
+          "css": "width: calc(var(--gridmultiplyConst) * 11)",
           "at": "s",
           "needs": ".container",
           "selector": ".container .pt-s11"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*12)",
+          "css": "width: calc(var(--gridmultiplyConst) * 12)",
           "at": "s",
           "needs": ".container",
           "selector": ".container .pt-s12"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*1)",
+          "css": "width: calc(var(--gridmultiplyConst) * 1)",
           "at": "xs",
           "needs": ".container",
           "selector": ".container .pt-xs1"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*2)",
+          "css": "width: calc(var(--gridmultiplyConst) * 2)",
           "at": "xs",
           "needs": ".container",
           "selector": ".container .pt-xs2"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*3)",
+          "css": "width: calc(var(--gridmultiplyConst) * 3)",
           "at": "xs",
           "needs": ".container",
           "selector": ".container .pt-xs3"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*4)",
+          "css": "width: calc(var(--gridmultiplyConst) * 4)",
           "at": "xs",
           "needs": ".container",
           "selector": ".container .pt-xs4"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*5)",
+          "css": "width: calc(var(--gridmultiplyConst) * 5)",
           "at": "xs",
           "needs": ".container",
           "selector": ".container .pt-xs5"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*6)",
+          "css": "width: calc(var(--gridmultiplyConst) * 6)",
           "at": "xs",
           "needs": ".container",
           "selector": ".container .pt-xs6"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*7)",
+          "css": "width: calc(var(--gridmultiplyConst) * 7)",
           "at": "xs",
           "needs": ".container",
           "selector": ".container .pt-xs7"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*8)",
+          "css": "width: calc(var(--gridmultiplyConst) * 8)",
           "at": "xs",
           "needs": ".container",
           "selector": ".container .pt-xs8"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*9)",
+          "css": "width: calc(var(--gridmultiplyConst) * 9)",
           "at": "xs",
           "needs": ".container",
           "selector": ".container .pt-xs9"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*10)",
+          "css": "width: calc(var(--gridmultiplyConst) * 10)",
           "at": "xs",
           "needs": ".container",
           "selector": ".container .pt-xs10"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*11)",
+          "css": "width: calc(var(--gridmultiplyConst) * 11)",
           "at": "xs",
           "needs": ".container",
           "selector": ".container .pt-xs11"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*12)",
+          "css": "width: calc(var(--gridmultiplyConst) * 12)",
           "at": "xs",
           "needs": ".container",
           "selector": ".container .pt-xs12"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*1)",
+          "css": "width: calc(var(--gridmultiplyConst) * 1)",
           "at": "xxs",
           "needs": ".container",
           "selector": ".container .pt-xxs1"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*2)",
+          "css": "width: calc(var(--gridmultiplyConst) * 2)",
           "at": "xxs",
           "needs": ".container",
           "selector": ".container .pt-xxs2"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*3)",
+          "css": "width: calc(var(--gridmultiplyConst) * 3)",
           "at": "xxs",
           "needs": ".container",
           "selector": ".container .pt-xxs3"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*4)",
+          "css": "width: calc(var(--gridmultiplyConst) * 4)",
           "at": "xxs",
           "needs": ".container",
           "selector": ".container .pt-xxs4"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*5)",
+          "css": "width: calc(var(--gridmultiplyConst) * 5)",
           "at": "xxs",
           "needs": ".container",
           "selector": ".container .pt-xxs5"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*6)",
+          "css": "width: calc(var(--gridmultiplyConst) * 6)",
           "at": "xxs",
           "needs": ".container",
           "selector": ".container .pt-xxs6"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*7)",
+          "css": "width: calc(var(--gridmultiplyConst) * 7)",
           "at": "xxs",
           "needs": ".container",
           "selector": ".container .pt-xxs7"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*8)",
+          "css": "width: calc(var(--gridmultiplyConst) * 8)",
           "at": "xxs",
           "needs": ".container",
           "selector": ".container .pt-xxs8"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*9)",
+          "css": "width: calc(var(--gridmultiplyConst) * 9)",
           "at": "xxs",
           "needs": ".container",
           "selector": ".container .pt-xxs9"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*10)",
+          "css": "width: calc(var(--gridmultiplyConst) * 10)",
           "at": "xxs",
           "needs": ".container",
           "selector": ".container .pt-xxs10"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*11)",
+          "css": "width: calc(var(--gridmultiplyConst) * 11)",
           "at": "xxs",
           "needs": ".container",
           "selector": ".container .pt-xxs11"
         },
         {
-          "css": "width: calc(var(--gridmultiplyConst)*12)",
+          "css": "width: calc(var(--gridmultiplyConst) * 12)",
           "at": "xxs",
           "needs": ".container",
           "selector": ".container .pt-xxs12"
         },
         {
           "css": "display: none",
-          "at": "xl",
+          "at": "xxs",
           "needs": ".container",
-          "selector": ".container .pt-xl-d_n"
-        },
-        {
-          "css": "display: none",
-          "at": "l",
-          "needs": ".container",
-          "selector": ".container .pt-l-d_n"
-        },
-        {
-          "css": "display: none",
-          "at": "m",
-          "needs": ".container",
-          "selector": ".container .pt-m-d_n"
-        },
-        {
-          "css": "display: none",
-          "at": "s",
-          "needs": ".container",
-          "selector": ".container .pt-s-d_n"
+          "selector": ".container .pt-xxs-d_n"
         },
         {
           "css": "display: none",
@@ -941,9 +923,27 @@
         },
         {
           "css": "display: none",
-          "at": "xxs",
+          "at": "s",
           "needs": ".container",
-          "selector": ".container .pt-xxs-d_n"
+          "selector": ".container .pt-s-d_n"
+        },
+        {
+          "css": "display: none",
+          "at": "m",
+          "needs": ".container",
+          "selector": ".container .pt-m-d_n"
+        },
+        {
+          "css": "display: none",
+          "at": "l",
+          "needs": ".container",
+          "selector": ".container .pt-l-d_n"
+        },
+        {
+          "css": "display: none",
+          "at": "xl",
+          "needs": ".container",
+          "selector": ".container .pt-xl-d_n"
         }
       ]
     },
@@ -1007,7 +1007,7 @@
           "selector": ".dropdown button"
         },
         {
-          "css": "background: #f0ecf7",
+          "css": "background: var(--dropdown-hover, #f0ecf7)",
           "selector": ".dropdown button:hover"
         }
       ]
@@ -1025,7 +1025,7 @@
     {
       "name": "field-hint",
       "description": "Подпись-подсказка: 0.85em, серый.",
-      "css": "font-size: 0.85em; color: #777"
+      "css": "font-size: 0.85em; color: var(--muted, #777)"
     },
     {
       "name": "flex-grow1",
@@ -1108,11 +1108,11 @@
       "description": "Кнопка переключения меню. Скрыта на широких экранах, отображается до 767.98px; gals.js синхронизирует aria-expanded.",
       "variants": [
         {
-          "css": "display: none; align-items: center; justify-content: center; padding: 0.25em 0.5em; color: inherit; font: inherit; background: transparent; border: 1px solid currentColor; cursor: pointer"
+          "css": "display: inline-flex; align-items: center; justify-content: center; padding: 0.25em 0.5em; color: inherit; font: inherit; background: transparent; border: 1px solid currentColor; cursor: pointer"
         },
         {
-          "css": "display: inline-flex",
-          "at": "(max-width: 767.98px)"
+          "css": "display: none",
+          "at": "(min-width: 768px)"
         }
       ]
     },
@@ -1121,7 +1121,7 @@
       "description": "width:100%, паддинги, рамка #767676, border-radius:4px. textarea.input — ресайз по вертикали.",
       "variants": [
         {
-          "css": "width: 100%; padding: 0.5em 0.75em; font: inherit; color: inherit; background: var(--paper); border: 1px solid #767676; border-radius: 4px"
+          "css": "width: 100%; padding: 0.5em 0.75em; font: inherit; color: inherit; background: var(--paper); border: 1px solid var(--line); border-radius: 4px"
         },
         {
           "css": "resize: vertical; min-height: 6em",
@@ -1253,17 +1253,24 @@
       "variants": [
         {
           "css": "display: none",
-          "at": "(max-width: 767.98px)",
           "selector": ".menu-collapse:not(.menu-show)"
         },
         {
           "css": "display: block",
-          "at": "(max-width: 767.98px)",
           "selector": ".menu-collapse.menu-show"
         },
         {
           "css": "flex-direction: column; align-items: flex-start",
-          "at": "(max-width: 767.98px)",
+          "selector": ".menu-collapse ul"
+        },
+        {
+          "css": "display: flex",
+          "at": "(min-width: 768px)",
+          "selector": ".menu-collapse:not(.menu-show)"
+        },
+        {
+          "css": "flex-direction: row; align-items: center",
+          "at": "(min-width: 768px)",
           "selector": ".menu-collapse ul"
         }
       ]
@@ -1274,13 +1281,16 @@
       "variants": [
         {
           "css": "display: none",
-          "at": "(max-width: 767.98px)",
           "selector": ".menu-collapse:not(.menu-show)"
         },
         {
           "css": "display: block",
-          "at": "(max-width: 767.98px)",
           "selector": ".menu-collapse.menu-show"
+        },
+        {
+          "css": "display: flex",
+          "at": "(min-width: 768px)",
+          "selector": ".menu-collapse:not(.menu-show)"
         }
       ]
     },
@@ -1360,7 +1370,7 @@
     {
       "name": "progress",
       "description": "Дорожка высотой 0.75em со скруглением.",
-      "css": "height: 0.75em; background: #e5e5e5; border-radius: 999px; overflow: hidden"
+      "css": "height: 0.75em; background: var(--progress-track, #e5e5e5); border-radius: 999px; overflow: hidden"
     },
     {
       "name": "progress-bar",
@@ -1501,7 +1511,7 @@
     },
     {
       "name": "pt-l-d_n",
-      "description": "display:none при max-width 1439.98px — скрыть колонку на этом экране.",
+      "description": "display:none при ≥ 1026px — скрыть колонку на этом экране.",
       "needs": ".container",
       "variants": [
         {
@@ -1513,11 +1523,11 @@
     },
     {
       "name": "pt-l1",
-      "description": "Колонка 1/12, применяется при max-width 1439.98px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 1/12, применяется при ≥ 1026px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*1)",
+          "css": "width: calc(var(--gridmultiplyConst) * 1)",
           "at": "l",
           "selector": ".container .pt-l1"
         }
@@ -1525,11 +1535,11 @@
     },
     {
       "name": "pt-l10",
-      "description": "Колонка 10/12, применяется при max-width 1439.98px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 10/12, применяется при ≥ 1026px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*10)",
+          "css": "width: calc(var(--gridmultiplyConst) * 10)",
           "at": "l",
           "selector": ".container .pt-l10"
         }
@@ -1537,11 +1547,11 @@
     },
     {
       "name": "pt-l11",
-      "description": "Колонка 11/12, применяется при max-width 1439.98px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 11/12, применяется при ≥ 1026px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*11)",
+          "css": "width: calc(var(--gridmultiplyConst) * 11)",
           "at": "l",
           "selector": ".container .pt-l11"
         }
@@ -1549,11 +1559,11 @@
     },
     {
       "name": "pt-l12",
-      "description": "Колонка 12/12, применяется при max-width 1439.98px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 12/12, применяется при ≥ 1026px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*12)",
+          "css": "width: calc(var(--gridmultiplyConst) * 12)",
           "at": "l",
           "selector": ".container .pt-l12"
         }
@@ -1561,11 +1571,11 @@
     },
     {
       "name": "pt-l2",
-      "description": "Колонка 2/12, применяется при max-width 1439.98px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 2/12, применяется при ≥ 1026px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*2)",
+          "css": "width: calc(var(--gridmultiplyConst) * 2)",
           "at": "l",
           "selector": ".container .pt-l2"
         }
@@ -1573,11 +1583,11 @@
     },
     {
       "name": "pt-l3",
-      "description": "Колонка 3/12, применяется при max-width 1439.98px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 3/12, применяется при ≥ 1026px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*3)",
+          "css": "width: calc(var(--gridmultiplyConst) * 3)",
           "at": "l",
           "selector": ".container .pt-l3"
         }
@@ -1585,11 +1595,11 @@
     },
     {
       "name": "pt-l4",
-      "description": "Колонка 4/12, применяется при max-width 1439.98px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 4/12, применяется при ≥ 1026px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*4)",
+          "css": "width: calc(var(--gridmultiplyConst) * 4)",
           "at": "l",
           "selector": ".container .pt-l4"
         }
@@ -1597,11 +1607,11 @@
     },
     {
       "name": "pt-l5",
-      "description": "Колонка 5/12, применяется при max-width 1439.98px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 5/12, применяется при ≥ 1026px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*5)",
+          "css": "width: calc(var(--gridmultiplyConst) * 5)",
           "at": "l",
           "selector": ".container .pt-l5"
         }
@@ -1609,11 +1619,11 @@
     },
     {
       "name": "pt-l6",
-      "description": "Колонка 6/12, применяется при max-width 1439.98px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 6/12, применяется при ≥ 1026px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*6)",
+          "css": "width: calc(var(--gridmultiplyConst) * 6)",
           "at": "l",
           "selector": ".container .pt-l6"
         }
@@ -1621,11 +1631,11 @@
     },
     {
       "name": "pt-l7",
-      "description": "Колонка 7/12, применяется при max-width 1439.98px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 7/12, применяется при ≥ 1026px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*7)",
+          "css": "width: calc(var(--gridmultiplyConst) * 7)",
           "at": "l",
           "selector": ".container .pt-l7"
         }
@@ -1633,11 +1643,11 @@
     },
     {
       "name": "pt-l8",
-      "description": "Колонка 8/12, применяется при max-width 1439.98px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 8/12, применяется при ≥ 1026px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*8)",
+          "css": "width: calc(var(--gridmultiplyConst) * 8)",
           "at": "l",
           "selector": ".container .pt-l8"
         }
@@ -1645,11 +1655,11 @@
     },
     {
       "name": "pt-l9",
-      "description": "Колонка 9/12, применяется при max-width 1439.98px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 9/12, применяется при ≥ 1026px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*9)",
+          "css": "width: calc(var(--gridmultiplyConst) * 9)",
           "at": "l",
           "selector": ".container .pt-l9"
         }
@@ -1657,7 +1667,7 @@
     },
     {
       "name": "pt-m-d_n",
-      "description": "display:none при max-width 1025px — скрыть колонку на этом экране.",
+      "description": "display:none при ≥ 771px — скрыть колонку на этом экране.",
       "needs": ".container",
       "variants": [
         {
@@ -1669,11 +1679,11 @@
     },
     {
       "name": "pt-m1",
-      "description": "Колонка 1/12, применяется при max-width 1025px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 1/12, применяется при ≥ 771px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*1)",
+          "css": "width: calc(var(--gridmultiplyConst) * 1)",
           "at": "m",
           "selector": ".container .pt-m1"
         }
@@ -1681,11 +1691,11 @@
     },
     {
       "name": "pt-m10",
-      "description": "Колонка 10/12, применяется при max-width 1025px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 10/12, применяется при ≥ 771px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*10)",
+          "css": "width: calc(var(--gridmultiplyConst) * 10)",
           "at": "m",
           "selector": ".container .pt-m10"
         }
@@ -1693,11 +1703,11 @@
     },
     {
       "name": "pt-m11",
-      "description": "Колонка 11/12, применяется при max-width 1025px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 11/12, применяется при ≥ 771px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*11)",
+          "css": "width: calc(var(--gridmultiplyConst) * 11)",
           "at": "m",
           "selector": ".container .pt-m11"
         }
@@ -1705,11 +1715,11 @@
     },
     {
       "name": "pt-m12",
-      "description": "Колонка 12/12, применяется при max-width 1025px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 12/12, применяется при ≥ 771px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*12)",
+          "css": "width: calc(var(--gridmultiplyConst) * 12)",
           "at": "m",
           "selector": ".container .pt-m12"
         }
@@ -1717,11 +1727,11 @@
     },
     {
       "name": "pt-m2",
-      "description": "Колонка 2/12, применяется при max-width 1025px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 2/12, применяется при ≥ 771px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*2)",
+          "css": "width: calc(var(--gridmultiplyConst) * 2)",
           "at": "m",
           "selector": ".container .pt-m2"
         }
@@ -1729,11 +1739,11 @@
     },
     {
       "name": "pt-m3",
-      "description": "Колонка 3/12, применяется при max-width 1025px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 3/12, применяется при ≥ 771px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*3)",
+          "css": "width: calc(var(--gridmultiplyConst) * 3)",
           "at": "m",
           "selector": ".container .pt-m3"
         }
@@ -1741,11 +1751,11 @@
     },
     {
       "name": "pt-m4",
-      "description": "Колонка 4/12, применяется при max-width 1025px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 4/12, применяется при ≥ 771px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*4)",
+          "css": "width: calc(var(--gridmultiplyConst) * 4)",
           "at": "m",
           "selector": ".container .pt-m4"
         }
@@ -1753,11 +1763,11 @@
     },
     {
       "name": "pt-m5",
-      "description": "Колонка 5/12, применяется при max-width 1025px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 5/12, применяется при ≥ 771px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*5)",
+          "css": "width: calc(var(--gridmultiplyConst) * 5)",
           "at": "m",
           "selector": ".container .pt-m5"
         }
@@ -1765,11 +1775,11 @@
     },
     {
       "name": "pt-m6",
-      "description": "Колонка 6/12, применяется при max-width 1025px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 6/12, применяется при ≥ 771px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*6)",
+          "css": "width: calc(var(--gridmultiplyConst) * 6)",
           "at": "m",
           "selector": ".container .pt-m6"
         }
@@ -1777,11 +1787,11 @@
     },
     {
       "name": "pt-m7",
-      "description": "Колонка 7/12, применяется при max-width 1025px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 7/12, применяется при ≥ 771px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*7)",
+          "css": "width: calc(var(--gridmultiplyConst) * 7)",
           "at": "m",
           "selector": ".container .pt-m7"
         }
@@ -1789,11 +1799,11 @@
     },
     {
       "name": "pt-m8",
-      "description": "Колонка 8/12, применяется при max-width 1025px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 8/12, применяется при ≥ 771px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*8)",
+          "css": "width: calc(var(--gridmultiplyConst) * 8)",
           "at": "m",
           "selector": ".container .pt-m8"
         }
@@ -1801,11 +1811,11 @@
     },
     {
       "name": "pt-m9",
-      "description": "Колонка 9/12, применяется при max-width 1025px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 9/12, применяется при ≥ 771px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*9)",
+          "css": "width: calc(var(--gridmultiplyConst) * 9)",
           "at": "m",
           "selector": ".container .pt-m9"
         }
@@ -1813,7 +1823,7 @@
     },
     {
       "name": "pt-s-d_n",
-      "description": "display:none при max-width 770px — скрыть колонку на этом экране.",
+      "description": "display:none при ≥ 426px — скрыть колонку на этом экране.",
       "needs": ".container",
       "variants": [
         {
@@ -1825,11 +1835,11 @@
     },
     {
       "name": "pt-s1",
-      "description": "Колонка 1/12, применяется при max-width 770px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 1/12, применяется при ≥ 426px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*1)",
+          "css": "width: calc(var(--gridmultiplyConst) * 1)",
           "at": "s",
           "selector": ".container .pt-s1"
         }
@@ -1837,11 +1847,11 @@
     },
     {
       "name": "pt-s10",
-      "description": "Колонка 10/12, применяется при max-width 770px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 10/12, применяется при ≥ 426px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*10)",
+          "css": "width: calc(var(--gridmultiplyConst) * 10)",
           "at": "s",
           "selector": ".container .pt-s10"
         }
@@ -1849,11 +1859,11 @@
     },
     {
       "name": "pt-s11",
-      "description": "Колонка 11/12, применяется при max-width 770px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 11/12, применяется при ≥ 426px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*11)",
+          "css": "width: calc(var(--gridmultiplyConst) * 11)",
           "at": "s",
           "selector": ".container .pt-s11"
         }
@@ -1861,11 +1871,11 @@
     },
     {
       "name": "pt-s12",
-      "description": "Колонка 12/12, применяется при max-width 770px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 12/12, применяется при ≥ 426px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*12)",
+          "css": "width: calc(var(--gridmultiplyConst) * 12)",
           "at": "s",
           "selector": ".container .pt-s12"
         }
@@ -1873,11 +1883,11 @@
     },
     {
       "name": "pt-s2",
-      "description": "Колонка 2/12, применяется при max-width 770px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 2/12, применяется при ≥ 426px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*2)",
+          "css": "width: calc(var(--gridmultiplyConst) * 2)",
           "at": "s",
           "selector": ".container .pt-s2"
         }
@@ -1885,11 +1895,11 @@
     },
     {
       "name": "pt-s3",
-      "description": "Колонка 3/12, применяется при max-width 770px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 3/12, применяется при ≥ 426px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*3)",
+          "css": "width: calc(var(--gridmultiplyConst) * 3)",
           "at": "s",
           "selector": ".container .pt-s3"
         }
@@ -1897,11 +1907,11 @@
     },
     {
       "name": "pt-s4",
-      "description": "Колонка 4/12, применяется при max-width 770px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 4/12, применяется при ≥ 426px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*4)",
+          "css": "width: calc(var(--gridmultiplyConst) * 4)",
           "at": "s",
           "selector": ".container .pt-s4"
         }
@@ -1909,11 +1919,11 @@
     },
     {
       "name": "pt-s5",
-      "description": "Колонка 5/12, применяется при max-width 770px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 5/12, применяется при ≥ 426px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*5)",
+          "css": "width: calc(var(--gridmultiplyConst) * 5)",
           "at": "s",
           "selector": ".container .pt-s5"
         }
@@ -1921,11 +1931,11 @@
     },
     {
       "name": "pt-s6",
-      "description": "Колонка 6/12, применяется при max-width 770px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 6/12, применяется при ≥ 426px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*6)",
+          "css": "width: calc(var(--gridmultiplyConst) * 6)",
           "at": "s",
           "selector": ".container .pt-s6"
         }
@@ -1933,11 +1943,11 @@
     },
     {
       "name": "pt-s7",
-      "description": "Колонка 7/12, применяется при max-width 770px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 7/12, применяется при ≥ 426px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*7)",
+          "css": "width: calc(var(--gridmultiplyConst) * 7)",
           "at": "s",
           "selector": ".container .pt-s7"
         }
@@ -1945,11 +1955,11 @@
     },
     {
       "name": "pt-s8",
-      "description": "Колонка 8/12, применяется при max-width 770px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 8/12, применяется при ≥ 426px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*8)",
+          "css": "width: calc(var(--gridmultiplyConst) * 8)",
           "at": "s",
           "selector": ".container .pt-s8"
         }
@@ -1957,11 +1967,11 @@
     },
     {
       "name": "pt-s9",
-      "description": "Колонка 9/12, применяется при max-width 770px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 9/12, применяется при ≥ 426px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*9)",
+          "css": "width: calc(var(--gridmultiplyConst) * 9)",
           "at": "s",
           "selector": ".container .pt-s9"
         }
@@ -1969,7 +1979,7 @@
     },
     {
       "name": "pt-xl-d_n",
-      "description": "display:none при min-width 1440px — скрыть колонку на этом экране.",
+      "description": "display:none при ≥ 1440px — скрыть колонку на этом экране.",
       "needs": ".container",
       "variants": [
         {
@@ -1981,11 +1991,11 @@
     },
     {
       "name": "pt-xl1",
-      "description": "Колонка 1/12, применяется при min-width 1440px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 1/12, применяется при ≥ 1440px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*1)",
+          "css": "width: calc(var(--gridmultiplyConst) * 1)",
           "at": "xl",
           "selector": ".container .pt-xl1"
         }
@@ -1993,11 +2003,11 @@
     },
     {
       "name": "pt-xl10",
-      "description": "Колонка 10/12, применяется при min-width 1440px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 10/12, применяется при ≥ 1440px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*10)",
+          "css": "width: calc(var(--gridmultiplyConst) * 10)",
           "at": "xl",
           "selector": ".container .pt-xl10"
         }
@@ -2005,11 +2015,11 @@
     },
     {
       "name": "pt-xl11",
-      "description": "Колонка 11/12, применяется при min-width 1440px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 11/12, применяется при ≥ 1440px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*11)",
+          "css": "width: calc(var(--gridmultiplyConst) * 11)",
           "at": "xl",
           "selector": ".container .pt-xl11"
         }
@@ -2017,11 +2027,11 @@
     },
     {
       "name": "pt-xl12",
-      "description": "Колонка 12/12, применяется при min-width 1440px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 12/12, применяется при ≥ 1440px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*12)",
+          "css": "width: calc(var(--gridmultiplyConst) * 12)",
           "at": "xl",
           "selector": ".container .pt-xl12"
         }
@@ -2029,11 +2039,11 @@
     },
     {
       "name": "pt-xl2",
-      "description": "Колонка 2/12, применяется при min-width 1440px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 2/12, применяется при ≥ 1440px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*2)",
+          "css": "width: calc(var(--gridmultiplyConst) * 2)",
           "at": "xl",
           "selector": ".container .pt-xl2"
         }
@@ -2041,11 +2051,11 @@
     },
     {
       "name": "pt-xl3",
-      "description": "Колонка 3/12, применяется при min-width 1440px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 3/12, применяется при ≥ 1440px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*3)",
+          "css": "width: calc(var(--gridmultiplyConst) * 3)",
           "at": "xl",
           "selector": ".container .pt-xl3"
         }
@@ -2053,11 +2063,11 @@
     },
     {
       "name": "pt-xl4",
-      "description": "Колонка 4/12, применяется при min-width 1440px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 4/12, применяется при ≥ 1440px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*4)",
+          "css": "width: calc(var(--gridmultiplyConst) * 4)",
           "at": "xl",
           "selector": ".container .pt-xl4"
         }
@@ -2065,11 +2075,11 @@
     },
     {
       "name": "pt-xl5",
-      "description": "Колонка 5/12, применяется при min-width 1440px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 5/12, применяется при ≥ 1440px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*5)",
+          "css": "width: calc(var(--gridmultiplyConst) * 5)",
           "at": "xl",
           "selector": ".container .pt-xl5"
         }
@@ -2077,11 +2087,11 @@
     },
     {
       "name": "pt-xl6",
-      "description": "Колонка 6/12, применяется при min-width 1440px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 6/12, применяется при ≥ 1440px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*6)",
+          "css": "width: calc(var(--gridmultiplyConst) * 6)",
           "at": "xl",
           "selector": ".container .pt-xl6"
         }
@@ -2089,11 +2099,11 @@
     },
     {
       "name": "pt-xl7",
-      "description": "Колонка 7/12, применяется при min-width 1440px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 7/12, применяется при ≥ 1440px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*7)",
+          "css": "width: calc(var(--gridmultiplyConst) * 7)",
           "at": "xl",
           "selector": ".container .pt-xl7"
         }
@@ -2101,11 +2111,11 @@
     },
     {
       "name": "pt-xl8",
-      "description": "Колонка 8/12, применяется при min-width 1440px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 8/12, применяется при ≥ 1440px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*8)",
+          "css": "width: calc(var(--gridmultiplyConst) * 8)",
           "at": "xl",
           "selector": ".container .pt-xl8"
         }
@@ -2113,11 +2123,11 @@
     },
     {
       "name": "pt-xl9",
-      "description": "Колонка 9/12, применяется при min-width 1440px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 9/12, применяется при ≥ 1440px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*9)",
+          "css": "width: calc(var(--gridmultiplyConst) * 9)",
           "at": "xl",
           "selector": ".container .pt-xl9"
         }
@@ -2125,7 +2135,7 @@
     },
     {
       "name": "pt-xs-d_n",
-      "description": "display:none при max-width 425px — скрыть колонку на этом экране.",
+      "description": "display:none при ≥ 376px — скрыть колонку на этом экране.",
       "needs": ".container",
       "variants": [
         {
@@ -2137,11 +2147,11 @@
     },
     {
       "name": "pt-xs1",
-      "description": "Колонка 1/12, применяется при max-width 425px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 1/12, применяется при ≥ 376px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*1)",
+          "css": "width: calc(var(--gridmultiplyConst) * 1)",
           "at": "xs",
           "selector": ".container .pt-xs1"
         }
@@ -2149,11 +2159,11 @@
     },
     {
       "name": "pt-xs10",
-      "description": "Колонка 10/12, применяется при max-width 425px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 10/12, применяется при ≥ 376px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*10)",
+          "css": "width: calc(var(--gridmultiplyConst) * 10)",
           "at": "xs",
           "selector": ".container .pt-xs10"
         }
@@ -2161,11 +2171,11 @@
     },
     {
       "name": "pt-xs11",
-      "description": "Колонка 11/12, применяется при max-width 425px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 11/12, применяется при ≥ 376px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*11)",
+          "css": "width: calc(var(--gridmultiplyConst) * 11)",
           "at": "xs",
           "selector": ".container .pt-xs11"
         }
@@ -2173,11 +2183,11 @@
     },
     {
       "name": "pt-xs12",
-      "description": "Колонка 12/12, применяется при max-width 425px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 12/12, применяется при ≥ 376px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*12)",
+          "css": "width: calc(var(--gridmultiplyConst) * 12)",
           "at": "xs",
           "selector": ".container .pt-xs12"
         }
@@ -2185,11 +2195,11 @@
     },
     {
       "name": "pt-xs2",
-      "description": "Колонка 2/12, применяется при max-width 425px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 2/12, применяется при ≥ 376px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*2)",
+          "css": "width: calc(var(--gridmultiplyConst) * 2)",
           "at": "xs",
           "selector": ".container .pt-xs2"
         }
@@ -2197,11 +2207,11 @@
     },
     {
       "name": "pt-xs3",
-      "description": "Колонка 3/12, применяется при max-width 425px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 3/12, применяется при ≥ 376px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*3)",
+          "css": "width: calc(var(--gridmultiplyConst) * 3)",
           "at": "xs",
           "selector": ".container .pt-xs3"
         }
@@ -2209,11 +2219,11 @@
     },
     {
       "name": "pt-xs4",
-      "description": "Колонка 4/12, применяется при max-width 425px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 4/12, применяется при ≥ 376px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*4)",
+          "css": "width: calc(var(--gridmultiplyConst) * 4)",
           "at": "xs",
           "selector": ".container .pt-xs4"
         }
@@ -2221,11 +2231,11 @@
     },
     {
       "name": "pt-xs5",
-      "description": "Колонка 5/12, применяется при max-width 425px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 5/12, применяется при ≥ 376px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*5)",
+          "css": "width: calc(var(--gridmultiplyConst) * 5)",
           "at": "xs",
           "selector": ".container .pt-xs5"
         }
@@ -2233,11 +2243,11 @@
     },
     {
       "name": "pt-xs6",
-      "description": "Колонка 6/12, применяется при max-width 425px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 6/12, применяется при ≥ 376px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*6)",
+          "css": "width: calc(var(--gridmultiplyConst) * 6)",
           "at": "xs",
           "selector": ".container .pt-xs6"
         }
@@ -2245,11 +2255,11 @@
     },
     {
       "name": "pt-xs7",
-      "description": "Колонка 7/12, применяется при max-width 425px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 7/12, применяется при ≥ 376px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*7)",
+          "css": "width: calc(var(--gridmultiplyConst) * 7)",
           "at": "xs",
           "selector": ".container .pt-xs7"
         }
@@ -2257,11 +2267,11 @@
     },
     {
       "name": "pt-xs8",
-      "description": "Колонка 8/12, применяется при max-width 425px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 8/12, применяется при ≥ 376px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*8)",
+          "css": "width: calc(var(--gridmultiplyConst) * 8)",
           "at": "xs",
           "selector": ".container .pt-xs8"
         }
@@ -2269,11 +2279,11 @@
     },
     {
       "name": "pt-xs9",
-      "description": "Колонка 9/12, применяется при max-width 425px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 9/12, применяется при ≥ 376px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*9)",
+          "css": "width: calc(var(--gridmultiplyConst) * 9)",
           "at": "xs",
           "selector": ".container .pt-xs9"
         }
@@ -2281,7 +2291,7 @@
     },
     {
       "name": "pt-xxs-d_n",
-      "description": "display:none при max-width 375px — скрыть колонку на этом экране.",
+      "description": "display:none при ≤ 375px — скрыть колонку на этом экране.",
       "needs": ".container",
       "variants": [
         {
@@ -2293,11 +2303,11 @@
     },
     {
       "name": "pt-xxs1",
-      "description": "Колонка 1/12, применяется при max-width 375px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 1/12, применяется при ≤ 375px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*1)",
+          "css": "width: calc(var(--gridmultiplyConst) * 1)",
           "at": "xxs",
           "selector": ".container .pt-xxs1"
         }
@@ -2305,11 +2315,11 @@
     },
     {
       "name": "pt-xxs10",
-      "description": "Колонка 10/12, применяется при max-width 375px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 10/12, применяется при ≤ 375px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*10)",
+          "css": "width: calc(var(--gridmultiplyConst) * 10)",
           "at": "xxs",
           "selector": ".container .pt-xxs10"
         }
@@ -2317,11 +2327,11 @@
     },
     {
       "name": "pt-xxs11",
-      "description": "Колонка 11/12, применяется при max-width 375px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 11/12, применяется при ≤ 375px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*11)",
+          "css": "width: calc(var(--gridmultiplyConst) * 11)",
           "at": "xxs",
           "selector": ".container .pt-xxs11"
         }
@@ -2329,11 +2339,11 @@
     },
     {
       "name": "pt-xxs12",
-      "description": "Колонка 12/12, применяется при max-width 375px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 12/12, применяется при ≤ 375px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*12)",
+          "css": "width: calc(var(--gridmultiplyConst) * 12)",
           "at": "xxs",
           "selector": ".container .pt-xxs12"
         }
@@ -2341,11 +2351,11 @@
     },
     {
       "name": "pt-xxs2",
-      "description": "Колонка 2/12, применяется при max-width 375px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 2/12, применяется при ≤ 375px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*2)",
+          "css": "width: calc(var(--gridmultiplyConst) * 2)",
           "at": "xxs",
           "selector": ".container .pt-xxs2"
         }
@@ -2353,11 +2363,11 @@
     },
     {
       "name": "pt-xxs3",
-      "description": "Колонка 3/12, применяется при max-width 375px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 3/12, применяется при ≤ 375px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*3)",
+          "css": "width: calc(var(--gridmultiplyConst) * 3)",
           "at": "xxs",
           "selector": ".container .pt-xxs3"
         }
@@ -2365,11 +2375,11 @@
     },
     {
       "name": "pt-xxs4",
-      "description": "Колонка 4/12, применяется при max-width 375px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 4/12, применяется при ≤ 375px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*4)",
+          "css": "width: calc(var(--gridmultiplyConst) * 4)",
           "at": "xxs",
           "selector": ".container .pt-xxs4"
         }
@@ -2377,11 +2387,11 @@
     },
     {
       "name": "pt-xxs5",
-      "description": "Колонка 5/12, применяется при max-width 375px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 5/12, применяется при ≤ 375px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*5)",
+          "css": "width: calc(var(--gridmultiplyConst) * 5)",
           "at": "xxs",
           "selector": ".container .pt-xxs5"
         }
@@ -2389,11 +2399,11 @@
     },
     {
       "name": "pt-xxs6",
-      "description": "Колонка 6/12, применяется при max-width 375px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 6/12, применяется при ≤ 375px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*6)",
+          "css": "width: calc(var(--gridmultiplyConst) * 6)",
           "at": "xxs",
           "selector": ".container .pt-xxs6"
         }
@@ -2401,11 +2411,11 @@
     },
     {
       "name": "pt-xxs7",
-      "description": "Колонка 7/12, применяется при max-width 375px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 7/12, применяется при ≤ 375px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*7)",
+          "css": "width: calc(var(--gridmultiplyConst) * 7)",
           "at": "xxs",
           "selector": ".container .pt-xxs7"
         }
@@ -2413,11 +2423,11 @@
     },
     {
       "name": "pt-xxs8",
-      "description": "Колонка 8/12, применяется при max-width 375px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 8/12, применяется при ≤ 375px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*8)",
+          "css": "width: calc(var(--gridmultiplyConst) * 8)",
           "at": "xxs",
           "selector": ".container .pt-xxs8"
         }
@@ -2425,11 +2435,11 @@
     },
     {
       "name": "pt-xxs9",
-      "description": "Колонка 9/12, применяется при max-width 375px. Перекрывает базовую pt-* на этом экране.",
+      "description": "Колонка 9/12, применяется при ≤ 375px. Перекрывает базовую pt-* на этом экране.",
       "needs": ".container",
       "variants": [
         {
-          "css": "width: calc(var(--gridmultiplyConst)*9)",
+          "css": "width: calc(var(--gridmultiplyConst) * 9)",
           "at": "xxs",
           "selector": ".container .pt-xxs9"
         }
@@ -2465,7 +2475,7 @@
       "description": "Круг 1.15em, border-radius:50%.",
       "variants": [
         {
-          "css": "flex: none; box-sizing: border-box; width: 1.15em; height: 1.15em; margin-top: 0.15em; border: 1px solid #767676; background: var(--paper)"
+          "css": "flex: none; box-sizing: border-box; width: 1.15em; height: 1.15em; margin-top: 0.15em; border: 1px solid var(--line); background: var(--paper)"
         },
         {
           "css": "border-radius: 50%"
@@ -2494,7 +2504,7 @@
       "description": "Как .input + кастомная стрелка через data-URI SVG, appearance:none.",
       "variants": [
         {
-          "css": "width: 100%; padding: 0.5em 0.75em; font: inherit; color: inherit; background: var(--paper); border: 1px solid #767676; border-radius: 4px"
+          "css": "width: 100%; padding: 0.5em 0.75em; font: inherit; color: inherit; background: var(--paper); border: 1px solid var(--line); border-radius: 4px"
         },
         {
           "css": "appearance: none; padding-right: 2em; background-image: url(\"data:image/svg+xml; charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4' fill='none' stroke='%23767676' stroke-width='2'/%3E%3C/svg%3E\"); background-repeat: no-repeat; background-position: right 0.6em center; background-size: 1em"
@@ -2506,7 +2516,7 @@
       "description": "Заглушка контента с shimmer. Под prefers-reduced-motion анимация гасится.",
       "variants": [
         {
-          "css": "min-height: 1em; border-radius: 5px; background: linear-gradient(90deg, #ececec 25%, #f5f5f5 50%, #ececec 75%); background-size: 200% 100%; animation: gals-shimmer 1.2s linear infinite"
+          "css": "min-height: 1em; border-radius: 5px; background: linear-gradient(90deg, var(--skeleton-start, #ececec) 25%, var(--skeleton-mid, #f5f5f5) 50%, var(--skeleton-end, #ececec) 75%); background-size: 200% 100%; animation: gals-shimmer 1.2s linear infinite"
         },
         {
           "css": "animation: none",
@@ -2559,7 +2569,7 @@
       "description": "Пилюля 2.2em x 1.15em, ::after — бегунок, при :checked сдвиг на 1.05em.",
       "variants": [
         {
-          "css": "flex: none; box-sizing: border-box; width: 1.15em; height: 1.15em; margin-top: 0.15em; border: 1px solid #767676; background: var(--paper)"
+          "css": "flex: none; box-sizing: border-box; width: 1.15em; height: 1.15em; margin-top: 0.15em; border: 1px solid var(--line); background: var(--paper)"
         },
         {
           "css": "background: var(--accent); border-color: var(--accent)",
@@ -2570,7 +2580,7 @@
           "selector": ".switch input:focus-visible + .switch-box"
         },
         {
-          "css": "width: 2.2em; height: 1.15em; border-radius: 999px; background: #cdcdcd; border-color: #cdcdcd; transition: background 0.2s"
+          "css": "width: 2.2em; height: 1.15em; border-radius: 999px; background: var(--switch-off, #cdcdcd); border-color: var(--switch-off, #cdcdcd); transition: background 0.2s"
         },
         {
           "css": "content: \"\"; display: block; width: 0.95em; height: 0.95em; margin: 0.09em 0 0 0.1em; border-radius: 50%; background: var(--paper); transition: transform 0.2s",
@@ -2660,7 +2670,7 @@
       "description": "Чередование фона чётных строк tbody. Кладётся рядом с .table.",
       "variants": [
         {
-          "css": "background: #f5f5f5",
+          "css": "background: var(--table-stripe, #f5f5f5)",
           "selector": ".table-striped tbody tr:nth-child(even)"
         }
       ]
@@ -2677,7 +2687,7 @@
           "selector": ".tabs > input"
         },
         {
-          "css": "padding: 0.5em 1em; cursor: pointer; color: #777; border: 1px solid transparent; border-bottom: none; border-radius: 5px 5px 0 0",
+          "css": "padding: 0.5em 1em; cursor: pointer; color: var(--muted, #777); border: 1px solid transparent; border-bottom: none; border-radius: 5px 5px 0 0",
           "selector": ".tabs > label"
         },
         {
