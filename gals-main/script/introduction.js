@@ -17,7 +17,7 @@ const introductionHTML = `
 </div>
 
 <div><p><strong>GALS</strong> (Grid Application Layout Systems) is a powerful, feature-packed frontend toolkit. Build anything—from prototype to production—in minutes.</p>
-<p>Every class is also published as machine-readable reference — <a href="./llms.txt">llms.txt</a> and <a href="./llms/gals-classes.json">gals-classes.json</a> — so ChatGPT, Claude or Copilot generate real GALS markup instead of inventing Bootstrap classes. <a href="#ai">How it works ↓</a></p>
+<p>Every class is also published as machine-readable reference — <a href="https://ivanivanson.github.io/gals/llms.txt" target="_blank" rel="noopener">llms.txt</a> and <a href="https://ivanivanson.github.io/gals/llms/gals-classes.json" target="_blank" rel="noopener">gals-classes.json</a> — so ChatGPT, Claude or Copilot generate real GALS markup instead of inventing Bootstrap classes. <a href="#ai">How it works ↓</a></p>
 </div>
 
 <h2 id="see-it-work">See it work</h2>
@@ -32,7 +32,7 @@ const introductionHTML = `
             </details>
             <details class="accordion">
                 <summary>How many classes are there?</summary>
-                <div class="accordion-body">186 classes and 8 design tokens, all documented in <a href="./llms/gals-classes.json">gals-classes.json</a>.</div>
+                <div class="accordion-body">186 classes and 8 design tokens, all documented in <a href="https://ivanivanson.github.io/gals/llms/gals-classes.json" target="_blank" rel="noopener">gals-classes.json</a>.</div>
             </details>
             <details class="accordion">
                 <summary>Do I need a build step?</summary>
@@ -150,9 +150,9 @@ Just point to the <code>cdn/</code> folder in the repository.</p>
 <p>GALS is written to be read by a model, not only by a person. Three machine-readable files ship with the site, and each one is checked by the test suite, so a model is never handed a class that does not exist.</p>
 
 <ul>
-    <li><strong><a href="./llms.txt">llms.txt</a></strong> — the whole framework as plain text, small enough for a context window.</li>
-    <li><strong><a href="./llms/gals-classes.json">llms/gals-classes.json</a></strong> — 186 classes and 8 design tokens as data: selector, CSS, parent and breakpoint flags, plus a <code>doesNotExist</code> list and replacement hints.</li>
-    <li><strong><a href="./AI_PROMPT_TEMPLATE.md">AI_PROMPT_TEMPLATE.md</a></strong> — the same prompt shown below, as a file.</li>
+    <li><strong><a href="https://ivanivanson.github.io/gals/llms.txt" target="_blank" rel="noopener">llms.txt</a></strong> — the whole framework as plain text, small enough for a context window.</li>
+    <li><strong><a href="https://ivanivanson.github.io/gals/llms/gals-classes.json" target="_blank" rel="noopener">llms/gals-classes.json</a></strong> — 186 classes and 8 design tokens as data: selector, CSS, parent and breakpoint flags, plus a <code>doesNotExist</code> list and replacement hints.</li>
+    <li><strong><a href="https://ivanivanson.github.io/gals/AI_PROMPT_TEMPLATE.md" target="_blank" rel="noopener">AI_PROMPT_TEMPLATE.md</a></strong> — the same prompt shown below, as a file.</li>
 </ul>
 
 <p>The JSON is generated from <code>gals.css</code> itself and the test suite fails if the two drift apart. It also carries a <code>doesNotExist</code> list (<code>.row</code>, <code>.col</code>, <code>mt-*</code>, <code>mb-*</code>) — the Bootstrap and Tailwind habits a model falls back to by default — so a generated answer can be checked against real mistakes instead of plausible ones.</p>
