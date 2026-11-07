@@ -20,7 +20,7 @@ const introductionHTML = `
 <p>Every class is also published as machine-readable reference — <a href="./llms.txt">llms.txt</a> and <a href="./llms/gals-classes.json">gals-classes.json</a> — so ChatGPT, Claude or Copilot generate real GALS markup instead of inventing Bootstrap classes. <a href="#ai">How it works ↓</a></p>
 </div>
 
-<h3>See it work</h3>
+<h3 id="see-it-work">See it work</h3>
 <p>Everything below is plain HTML with GALS classes — no React, no build step. Click to try.</p>
 
 <div class="demo">
@@ -72,7 +72,7 @@ ${onThisPage(sections)}
     </code>
         
 
-        <button class="copy" type="button" data-tooltip="Copy to clipboard" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard"
+        <button class="copy" type="button" data-tooltip="Copy to clipboard" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
             viewBox="0 0 16 16">
             <path
                 d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
@@ -87,12 +87,12 @@ ${onThisPage(sections)}
                             <span style="color:rgb(212, 38, 38);font-size:18px;"><code>&#60;link&#62;</code></span> into your <span style="color:rgb(212, 38, 38);font-size:18px;"><code>&#60;head&#62;</code> 
                             </span> before all other stylesheets to load our CSS. To ensure that the GALS styles do not interrupt the styles that you will define.
                         </p>
-<div class="copy-block copy-block2">
+ <div class="copy-block">
     <code><pre>&#60;<span style="color:rgb(212, 38, 38);">link </span><span style="color:rgb(87, 68, 225);">rel="stylesheet" </span><span style="color:rgb(87, 68, 225);">href="./gals/gals.css"</span>&#62;</pre>
     </code>
 
     <button class="copy" type="button" data-tooltip="Copy to clipboard" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-            fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+            fill="currentColor" viewBox="0 0 16 16">
             <path
                 d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
             <path
@@ -107,12 +107,12 @@ ${onThisPage(sections)}
                             <span style="color:rgb(212, 38, 38);font-size:18px;"><code >&#60;script&#62;</code></span>near the end of your pages, right before the closing<span style="color:rgb(212, 38, 38);font-size:18px;"><code>&#60;body&#62;</code> 
                             </span> tag, to enable them.
                         </p>
-<div class="copy-block copy-block3">
+<div class="copy-block">
     <code><pre>&#60;<span style="color:rgb(212, 38, 38);">script </span><span style="color:rgb(87, 68, 225);">src="./gals/gals.js"</span>&#62;&#60;<span style="color:rgb(212, 38, 38);">/script</span>&#62;</pre>
     </code>
 
     <button class="copy" type="button" data-tooltip="Copy to clipboard" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-            fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+            fill="currentColor" viewBox="0 0 16 16">
             <path
                 d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
             <path
@@ -124,13 +124,13 @@ ${onThisPage(sections)}
 <p>You can load GALS directly from jsDelivr — no download, no build step.
 Just point to the <code>cdn/</code> folder in the repository.</p>
 
-<div class="copy-block copy-block-cdn">
+<div class="copy-block">
     <code><pre>&#60;<span style="color:rgb(212, 38, 38);">link </span><span style="color:rgb(87, 68, 225);">rel="stylesheet" </span><span style="color:rgb(87, 68, 225);">href="https://cdn.jsdelivr.net/gh/IvanIvanson/gals@v1.2/gals-main/cdn/gals.min.css"</span>&#62;
 &#60;<span style="color:rgb(212, 38, 38);">script </span><span style="color:rgb(87, 68, 225);">src="https://cdn.jsdelivr.net/gh/IvanIvanson/gals@v1.2/gals-main/cdn/gals.min.js"</span>&#62;&#60;<span style="color:rgb(212, 38, 38);">/script</span>&#62;</pre>
     </code>
 
     <button class="copy" type="button" data-tooltip="Copy to clipboard" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-        fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+        fill="currentColor" viewBox="0 0 16 16">
         <path
             d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
         <path
@@ -159,7 +159,7 @@ Just point to the <code>cdn/</code> folder in the repository.</p>
 <h3 id="ai-prompt">Ask AI the right way</h3>
 <p>Copy this prompt template, paste it into ChatGPT, Claude, GitHub Copilot or Cursor, and replace the text in <code>[SQUARE BRACKETS]</code> with your task.</p>
 
-<div class="copy-block copy-block4">
+<div class="copy-block">
     <code><pre>Act as an experienced frontend developer specializing in the GALS framework.
 
 Task:
@@ -179,7 +179,7 @@ Context:
     </code>
 
     <button class="copy" type="button" data-tooltip="Copy to clipboard" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-            fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+            fill="currentColor" viewBox="0 0 16 16">
             <path
                 d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
             <path

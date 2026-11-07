@@ -83,6 +83,8 @@ const runtimeOnly = new Set([
   "details-item",     // стилизация summary details (addStyleDetailsLeft)
   "list",             // делегирование кликов сайдбара (detailsLeftUlLi)
   "menu-item",        // делегирование кликов сайдбара (renderCenterBlock)
+  "accordion-group",  // gals.js: открытие одного details закрывает остальные
+  "copy-block1",      // селектор кнопки копирования в тестах (dom.test.mjs)
 ]);
 
 const used = new Set();

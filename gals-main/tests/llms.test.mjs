@@ -69,6 +69,30 @@ describe('llms.txt', () => {
     );
   });
 
+  // Пустой ```html ``` — главный риск для входной точки ИИ: модель получает
+  // обещание примера без примера и додумывает синтаксис. Проверяем все блоки
+  // во всех llms-артефактах, а не только в каноне.
+  test('ни один fenced-блок не пустой', () => {
+    const sources = {
+      'llms.txt': read(`${REPO}/llms.txt`),
+      'gals-main/llms.txt': read(`${ROOT}/llms.txt`),
+      'AI_PROMPT_TEMPLATE.md': read(`${ROOT}/AI_PROMPT_TEMPLATE.md`),
+    };
+
+    let checked = 0;
+
+    for (const [name, text] of Object.entries(sources)) {
+      const blocks = [...text.matchAll(/```([a-zA-Z]*)\r?\n([\s\S]*?)```/g)];
+
+      const empty = blocks.filter((m) => m[2].trim().length === 0);
+      assert.deepEqual(empty, [], `${name}: пустые блоки кода: ${empty.map((m) => `\`\`\`${m[1]}\`\`\``).join(', ')}`);
+
+      checked += blocks.length;
+    }
+
+    assert.ok(checked >= 4, `проверено слишком мало блоков: ${checked}`);
+  });
+
   // Регрессия на прежнюю версию файла: она обещала API, которого в CSS нет.
   test('CDN-сниппет не пустой и запиннен на тег', () => {
     const txt = read(`${REPO}/llms.txt`);

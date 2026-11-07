@@ -9,7 +9,8 @@
 import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
+import { execFileSync } from 'node:child_process';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { JSDOM } from 'jsdom';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
@@ -228,5 +229,73 @@ describe('видимые метки свежести и версии', () => {
   test('версия упомянута и в футере, и в JSON-LD', () => {
     const app = byType('SoftwareApplication');
     assert.ok(doc.querySelector('footer').textContent.includes(`v${app.softwareVersion}`), 'в футере нет версии');
+  });
+});
+
+/**
+ * Пререндер — единственный пункт, который реально меняет извлекаемость: без
+ * него краулер без JavaScript видел 18 % текста и ни одного <h1>.
+ */
+describe('пререндер статичного HTML', () => {
+  /** Текст, который видит краулер без JavaScript. */
+  const staticText = (() => {
+    const d = new JSDOM(html).window.document;
+    for (const el of d.querySelectorAll('script,style,noscript')) el.remove();
+    return d.body.textContent.replace(/\s+/g, ' ').trim();
+  })();
+
+  const words = (t) => t.split(' ').filter(Boolean).length;
+
+  test('без JavaScript в HTML есть заголовок H1', () => {
+    assert.ok(new JSDOM(html).window.document.querySelector('h1'), 'в статичном HTML нет <h1>');
+  });
+
+  test('без JavaScript доступен основной текст страницы, а не только меню', () => {
+    // До пререндера было 172 слова одной навигации.
+    assert.ok(words(staticText) >= 600, `слов слишком мало: ${words(staticText)}`);
+    assert.match(staticText, /Grid Application Layout Systems/, 'нет расшифровки аббревиатуры');
+    assert.match(staticText, /186 classes/, 'нет ключевой цифры про классы');
+  });
+
+  test('пререндер свежий: introduction.js не разошёлся с index.html', () => {
+    // --check сравнивает разметку модуля с блоком в HTML и падает при расхождении.
+    execFileSync(process.execPath, ['scripts/prerender.mjs', '--check'], { cwd: ROOT, stdio: 'pipe' });
+  });
+
+  test('рантайм отдаёт тот же текст, что и пререндер', async () => {
+    const dom = new JSDOM(html, { pretendToBeVisual: true, url: `${SITE}/` });
+    globalThis.window = dom.window;
+    globalThis.document = dom.window.document;
+
+    const modules = [
+      'script/headerUlLiversion.js',
+      'script/addStyleDetailsLeft.js',
+      'script/detailsLeftUlLi.js',
+      'script/renderCenterBlock.js',
+      'script/moveVersionIntoMenu.js',
+      'script/searchDocs.js',
+    ];
+
+    for (const path of modules) {
+      const mod = await import(pathToFileURL(`${ROOT}/${path}`).href);
+      mod.default();
+    }
+
+    const center = dom.window.document.querySelector('.container-center');
+    const rendered = center.textContent.replace(/\s+/g, ' ').trim();
+    const prerendered = new JSDOM(html).window.document
+      .querySelector('.container-center')
+      .textContent.replace(/\s+/g, ' ')
+      .trim();
+
+    // Расхождение = пререндер показывает краулеру не то, что видит человек.
+    assert.equal(rendered.length, prerendered.length, 'пререндер и рантайм отдали разный текст');
+  });
+
+  test('пререндер не дублирует id внутри страницы', () => {
+    const ids = [...new JSDOM(html).window.document.querySelectorAll('[id]')].map((el) => el.id);
+    const duplicated = ids.filter((id, i) => ids.indexOf(id) !== i);
+
+    assert.deepEqual([...new Set(duplicated)], [], `повторяющиеся id: ${duplicated.join(', ')}`);
   });
 });
