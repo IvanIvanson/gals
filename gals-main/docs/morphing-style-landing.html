@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#8512d1">
+  <title>Morphing style landing — GALS</title>
+  <meta name="description" content="Одностраничник в нейроморфном стиле: CSS-переменные в обёртке, :has() вместо JS для переключателей, clamp() для заголовка. Каждый блок — готовая секция.">
+  <link rel="canonical" href="https://ivanivanson.github.io/gals/docs/morphing-style-landing.html">
+  <link rel="alternate" type="text/plain" href="../llms.txt" title="GALS for LLMs">
+  <link rel="alternate" type="text/plain" href="../llms-full.txt" title="GALS full documentation for LLMs">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="GALS">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:url" content="https://ivanivanson.github.io/gals/docs/morphing-style-landing.html">
+  <meta property="og:title" content="Morphing style landing — GALS">
+  <meta property="og:description" content="Одностраничник в нейроморфном стиле: CSS-переменные в обёртке, :has() вместо JS для переключателей, clamp() для заголовка. Каждый блок — готовая секция.">
+  <meta property="og:image" content="https://ivanivanson.github.io/gals/image/logoGals.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Morphing style landing — GALS">
+  <meta name="twitter:description" content="Одностраничник в нейроморфном стиле: CSS-переменные в обёртке, :has() вместо JS для переключателей, clamp() для заголовка. Каждый блок — готовая секция.">
+  <meta name="twitter:image" content="https://ivanivanson.github.io/gals/image/logoGals.png">
+
+  <link rel="stylesheet" href="../cdn/gals.min.css">
+  <link rel="stylesheet" href="../style.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"TechArticle","headline":"Morphing style landing","description":"Одностраничник в нейроморфном стиле: CSS-переменные в обёртке, :has() вместо JS для переключателей, clamp() для заголовка. Каждый блок — готовая секция.","url":"https://ivanivanson.github.io/gals/docs/morphing-style-landing.html","mainEntityOfPage":"https://ivanivanson.github.io/gals/docs/morphing-style-landing.html","dateModified":"2026-11-07","author":{"@type":"Organization","name":"GALS"},"publisher":{"@type":"Organization","name":"GALS","url":"https://ivanivanson.github.io/gals/"},"isPartOf":{"@type":"WebSite","name":"GALS documentation","url":"https://ivanivanson.github.io/gals/"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"GALS","item":"https://ivanivanson.github.io/gals/"},{"@type":"ListItem","position":2,"name":"Docs","item":"https://ivanivanson.github.io/gals/docs/"},{"@type":"ListItem","position":3,"name":"Morphing style landing","item":"https://ivanivanson.github.io/gals/docs/morphing-style-landing.html"}]}]}</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="header header-sticky docs-header">
+  <a class="header-brand" href="../index.html">GALS</a>
+  <nav class="header-nav" aria-label="Primary">
+    <ul>
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="index.html">Docs</a></li>
+      <li><a href="../llms.txt">llms.txt</a></li>
+    </ul>
+  </nav>
+  <div class="header-actions">
+    <a class="btn" href="../download/grid.zip" download>Download</a>
+  </div>
+</header>
+<div class="wrapper">
+  <div class="content">
+    <main id="main" class="docs-main">
+      <div class="container">
+        <div class="container-block pt-3 pt-s12">
+<nav class="docs-nav" aria-label="Documentation">
+  <p class="docs-nav-title"><a href="../index.html">GALS</a> / <a href="index.html">Docs</a></p>
+
+  <details class="docs-nav-group" open>
+    <summary>Getting started</summary>
+    <ul><li><a href="../index.html">Introduction</a></li><li><a href="download.html">Download</a></li><li><a href="contents.html">Contents</a></li></ul>
+  </details>
+  <details class="docs-nav-group" open>
+    <summary>Settings</summary>
+    <ul><li><a href="css-variables.html">CSS variables</a></li><li><a href="js-modules.html">JS modules</a></li><li><a href="components.html">Components</a></li></ul>
+  </details>
+  <details class="docs-nav-group" open>
+    <summary>Layout</summary>
+    <ul><li><a href="breakpoints.html">Breakpoints</a></li><li><a href="containers.html">Containers</a></li><li><a href="grid.html">Grid</a></li><li><a href="columns.html">Columns</a></li><li><a href="gutters.html">Gutters</a></li><li><a href="z-index.html">Z-index</a></li></ul>
+  </details>
+  <details class="docs-nav-group" open>
+    <summary>Content</summary>
+    <ul><li><a href="header.html">Header</a></li><li><a href="table.html">Table</a></li><li><a href="images.html">Images</a></li><li><a href="charts.html">Charts</a></li><li><a href="icons.html">Icons</a></li></ul>
+  </details>
+  <details class="docs-nav-group" open>
+    <summary>Forms</summary>
+    <ul><li><a href="form-controls.html">Form controls</a></li><li><a href="select.html">Select</a></li><li><a href="checkbox-radio.html">Checkbox&amp;Radio</a></li><li><a href="range.html">Range</a></li></ul>
+  </details>
+  <details class="docs-nav-group" open>
+    <summary>Components</summary>
+    <ul><li><a href="accordion.html">Accordion</a></li><li><a href="alert.html">Alert</a></li><li><a href="buttons.html">Buttons</a></li><li><a href="card.html">Card</a></li><li><a href="carousel.html">Carousel</a></li><li><a href="dropdowns.html">Dropdowns</a></li><li><a href="modal.html">Modal</a></li><li><a href="menu.html">Menu</a></li><li><a href="post-search.html">Post &amp; Search</a></li><li><a href="verification-form.html">Verification form</a></li><li><a href="tabs.html">Tabs</a></li><li><a href="pagination.html">Pagination</a></li><li><a href="popovers.html">Popovers</a></li><li><a href="progress.html">Progress</a></li><li><a href="scrollspy.html">Scrollspy</a></li><li><a href="loaders.html">Loaders</a></li><li><a href="morphing-range.html">Morphing range</a></li><li><a href="morphing-buttons.html">Morphing buttons</a></li><li><a href="morphing-checked-button.html">Morphing checked button</a></li></ul>
+  </details>
+  <details class="docs-nav-group" open>
+    <summary>Features</summary>
+    <ul><li><a href="toast.html">Toast</a></li><li><a href="dismissible-alert.html">Dismissible alert</a></li><li><a href="dropdown-menu.html">Dropdown menu</a></li><li><a href="hamburger.html">Hamburger</a></li><li><a href="tooltip.html">Tooltip</a></li><li><a href="popover.html">Popover</a></li><li><a href="theme-switcher.html">Theme switcher</a></li><li><a href="appearance-animation.html">Appearance animation</a></li><li><a href="basket-counter.html">Basket counter</a></li><li><a href="clipboard.html">Clipboard</a></li><li><a href="toggle.html">Toggle</a></li><li><a href="styled-range.html">Styled range</a></li><li><a href="bounce.html">Bounce</a></li><li><a href="bounce-cube.html">Bounce cube</a></li><li><a href="card-3d.html">Card 3d</a></li><li><a href="card-hover.html">Card hover</a></li><li><a href="card-read-more.html">Card read more</a></li><li><a href="card-vegetables.html">Card vegetables</a></li><li><a href="cards-from-array.html">Cards from array</a></li><li><a href="border-gradient.html">Border gradient</a></li><li><a href="modal-bounce.html">Modal bounce</a></li><li><a href="table-editor.html">Table editor</a></li><li><a href="canvas-chart.html">Canvas chart</a></li><li><a href="chartjs.html">Chartjs</a></li><li><a href="interactive-canvas.html">Interactive canvas</a></li><li><a href="distance-calculator.html">Distance calculator</a></li><li><a href="parabola-drawer.html">Parabola drawer</a></li><li><a href="battery-indicator.html">Battery indicator</a></li><li><a href="gradient-text.html">Gradient text</a></li><li><a href="box-size-indicator.html">Box size indicator</a></li><li><a href="grid-canvas.html">Grid canvas</a></li><li><a href="color-palette.html">Color palette</a></li><li><a href="clamp-font.html">Clamp font</a></li><li><a href="person-cards.html">Person cards</a></li><li><a href="star-rating.html">Star rating</a></li><li><a href="morphing-style-landing.html" aria-current="page">Morphing style landing</a></li></ul>
+  </details>
+  <details class="docs-nav-group" open>
+    <summary>Helpers</summary>
+    <ul><li><a href="colors-collection.html">Colors collection</a></li><li><a href="classes.html">Classes</a></li><li><a href="controls-audio.html">Controls Audio</a></li><li><a href="controls-video.html">Controls Video</a></li><li><a href="controls-visible.html">Controls visible</a></li><li><a href="canvas-for-your-projects.html">Canvas for your projects</a></li></ul>
+  </details>
+  <details class="docs-nav-group" open>
+    <summary>About</summary>
+    <ul><li><a href="history.html">History</a></li><li><a href="team.html">Team</a></li><li><a href="brand.html">Brand</a></li><li><a href="translations.html">Translations</a></li></ul>
+  </details>
+</nav></div>
+        <div class="container-block pt-9 pt-s12 docs-body">
+    <nav class="docs-breadcrumb" aria-label="Breadcrumb">
+      <a href="../index.html">GALS</a> / <a href="index.html">Docs</a> / <span>Morphing style landing</span>
+    </nav>
+    <div class="docs-static-note">
+      Static reading version. Interactive demos and search are on the
+      <a href="../index.html">main documentation page</a>.
+    </div>
+    <nav class="docs-toc" aria-label="On this page">
+  <p class="docs-toc-title">On this page</p>
+  <ul><li><a href="#usage">Usage</a></li><li><a href="#demo">Live demo</a></li><li><a href="#notes">Notes</a></li></ul>
+</nav>
+    <article class="docs-article container-center">
+
+<div class="content-between align-center">
+    <h1>Morphing style landing</h1>
+    <span class="badge badge-stable">Stable</span>
+</div>
+
+<div><p>Одностраничник в нейроморфном стиле: CSS-переменные в обёртке, <code>:has()</code> вместо JS для переключателей, <code>clamp()</code> для заголовка. Каждый блок — готовая секция.</p></div>
+
+
+<div class="quick-start">
+    <h2 id="usage">Usage</h2>
+
+<div class="copy-block">
+    <code><pre>&lt;div class="neu-landing"&gt;
+  &lt;header class="nl-header"&gt;
+    &lt;div class="nl-brand"&gt;&lt;span class="nl-mark"&gt;S&lt;/span&gt;Softly&lt;/div&gt;
+    &lt;nav class="nl-nav"&gt;&lt;a href="#nl-feat"&gt;Features&lt;/a&gt;&lt;a href="#nl-demo"&gt;Demo&lt;/a&gt;&lt;/nav&gt;
+  &lt;/header&gt;
+
+  &lt;section class="nl-hero"&gt;
+    &lt;h1&gt;Soft UI &lt;b&gt;next generation&lt;/b&gt;&lt;/h1&gt;
+    &lt;p&gt;Neumorphic components: buttons, toggles and sliders.&lt;/p&gt;
+    &lt;a class="nl-btn nl-btn-primary" href="#nl-demo"&gt;Try it&lt;/a&gt;
+  &lt;/section&gt;
+
+  &lt;section class="nl-features" id="nl-feat"&gt;
+    &lt;div class="nl-feature"&gt;
+      &lt;div class="nl-icon"&gt;&amp;#10022;&lt;/div&gt;
+      &lt;h3&gt;Soft shadows&lt;/h3&gt;
+      &lt;p&gt;Two-direction shadows create depth.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+
+  &lt;section class="nl-panel" id="nl-demo"&gt;
+    &lt;h2&gt;Interactive slider&lt;/h2&gt;
+    &lt;div class="nl-slider-wrap"&gt;
+      &lt;input type="range" min="0" max="100" value="50"
+             oninput="document.getElementById('nl-out').textContent = this.value"&gt;
+      &lt;span class="nl-bubble" id="nl-out"&gt;50&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+&lt;/div&gt;
+
+&lt;style&gt;
+/* Переменные — на обёртке, не на :root, иначе перекроют стили страницы. */
+.neu-landing {
+  --bg: #ececec; --text: #3a3a3a; --muted: #7a7a7a; --accent: #2ecc71;
+  --shadow-out: -8px -8px 18px rgba(255,255,255,.7), 8px 8px 18px rgba(70,70,70,.15);
+  --shadow-in: inset -6px -6px 14px rgba(255,255,255,.7), inset 6px 6px 14px rgba(70,70,70,.15);
+  --text-3d: -1px -1px 2px rgba(255,255,255,.95), 2px 2px 3px rgba(70,70,70,.35);
+  background: var(--bg); color: var(--text);
+  font-family: system-ui, sans-serif; line-height: 1.55;
+}
+/* ... полный CSS — в Live demo ... */
+&lt;/style&gt;</pre></code>
+    <button class="copy" type="button" data-tooltip="Copy to clipboard" aria-label="Copy to clipboard"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"></path>
+        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"></path>
+    </svg></button>
+</div>
+    <h2 id="demo">Live demo</h2>
+
+<div class="demo">
+    <div class="demo-body"><style>
+  .demo-nl {
+    --nl-bg: #ececec; --nl-text: #3a3a3a; --nl-muted: #7a7a7a;
+    --nl-accent: #2ecc71; --nl-accent-soft: #55f696;
+    --nl-out: -8px -8px 18px rgba(255,255,255,.7), 8px 8px 18px rgba(70,70,70,.15);
+    --nl-in: inset -6px -6px 14px rgba(255,255,255,.7), inset 6px 6px 14px rgba(70,70,70,.15);
+    --nl-3d: -1px -1px 2px rgba(255,255,255,.95), 2px 2px 3px rgba(70,70,70,.35);
+    background: var(--nl-bg); color: var(--nl-text);
+    font-family: system-ui, sans-serif; line-height: 1.55;
+    border-radius: 7px; padding: 24px;
+  }
+  /* Шапка */
+  .demo-nl-header { display: flex; align-items: center; justify-content: space-between;
+    gap: 20px; padding: 14px 22px; border-radius: 18px; box-shadow: var(--nl-out);
+    margin-bottom: 36px; flex-wrap: wrap; }
+  .demo-nl-brand { display: flex; align-items: center; gap: 12px;
+    font-weight: 300; font-size: 22px; letter-spacing: 2px;
+    text-transform: uppercase; text-shadow: var(--nl-3d); }
+  .demo-nl-mark { width: 36px; height: 36px; border-radius: 12px;
+    box-shadow: var(--nl-in); display: flex; align-items: center;
+    justify-content: center; color: var(--nl-accent); font-size: 20px; font-weight: 700; }
+  .demo-nl-nav { display: flex; gap: 8px; flex-wrap: wrap; }
+  .demo-nl-nav a { color: var(--nl-muted); text-decoration: none;
+    padding: 8px 14px; border-radius: 10px; font-size: 15px;
+    transition: color .25s, box-shadow .25s; }
+  .demo-nl-nav a:hover { color: var(--nl-text); box-shadow: var(--nl-in); }
+  .demo-nl-nav a:focus-visible { outline: 2px solid var(--nl-accent); outline-offset: 2px; }
+  /* Hero */
+  .demo-nl-hero { text-align: center; padding: 8px 0 48px; }
+  .demo-nl-hero h1 { font-size: clamp(28px, 5vw, 48px); font-weight: 300;
+    letter-spacing: 1px; margin: 0 0 16px; text-shadow: var(--nl-3d); }
+  .demo-nl-hero h1 b { font-weight: 600; color: var(--nl-accent); }
+  .demo-nl-hero p { max-width: 540px; margin: 0 auto 32px; color: var(--nl-muted); font-size: 17px; }
+  .demo-nl-actions { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+  .demo-nl-btn { display: inline-flex; align-items: center; justify-content: center;
+    padding: 16px 32px; font-size: 17px; font-weight: 300; letter-spacing: 1px;
+    color: #555; border-radius: 16px; box-shadow: var(--nl-out); cursor: pointer;
+    text-decoration: none; text-shadow: var(--nl-3d);
+    transition: box-shadow .3s, color .3s, transform .15s; user-select: none; }
+  .demo-nl-btn:hover { transform: translateY(-2px); color: #2c3e50; }
+  .demo-nl-btn:active { box-shadow: var(--nl-in); transform: translateY(0); }
+  .demo-nl-btn:focus-visible { outline: 2px solid var(--nl-accent); outline-offset: 3px; }
+  .demo-nl-btn-primary { color: #1f9d55;
+    text-shadow: -1px -1px 1px rgba(255,255,255,.7), 1px 1px 2px rgba(46,204,113,.35); }
+  /* Toggles — чистый CSS, без JS */
+  .demo-nl-toggles { display: flex; gap: 40px; justify-content: center; flex-wrap: wrap;
+    padding: 32px 20px; border-radius: 22px; box-shadow: var(--nl-in); margin-bottom: 48px; }
+  .demo-nl-tg { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .demo-nl-ind { width: 16px; height: 16px; border-radius: 50%; background: #8a8a8a;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,.25);
+    transition: background .3s, box-shadow .3s, transform .25s; }
+  .demo-nl-tg:has(input:checked) .demo-nl-ind { background: var(--nl-accent-soft);
+    box-shadow: 0 0 12px rgba(85,246,150,.9); transform: scale(1.15); }
+  .demo-nl-toggle { position: relative; display: flex; justify-content: center; align-items: center;
+    width: 120px; height: 120px; border-radius: 20px; box-shadow: var(--nl-out);
+    cursor: pointer; user-select: none; transition: box-shadow .35s, transform .2s; }
+  .demo-nl-toggle:hover { transform: translateY(-2px); }
+  .demo-nl-toggle input { position: absolute; inset: 0; opacity: 0; cursor: pointer; margin: 0; }
+  .demo-nl-tg-label { font-size: 24px; font-weight: 300; letter-spacing: 1px; color: #555;
+    pointer-events: none; text-shadow: var(--nl-3d); transition: color .3s, text-shadow .3s; }
+  .demo-nl-tg:has(input:checked) .demo-nl-toggle { box-shadow: var(--nl-in); transform: none; }
+  .demo-nl-tg:has(input:checked) .demo-nl-tg-label { color: var(--nl-accent);
+    text-shadow: -1px -1px 1px rgba(255,255,255,.6), 1px 1px 2px rgba(46,204,113,.4), 0 0 14px rgba(85,246,150,.7); }
+  .demo-nl-toggle:has(input:focus-visible) { outline: 2px solid var(--nl-accent); outline-offset: 3px; }
+  /* Features */
+  .demo-nl-features { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 24px; margin-bottom: 48px; }
+  .demo-nl-feature { padding: 28px 20px; border-radius: 22px; box-shadow: var(--nl-out);
+    text-align: center; transition: transform .3s; }
+  .demo-nl-feature:hover { transform: translateY(-4px); }
+  .demo-nl-icon { width: 64px; height: 64px; margin: 0 auto 18px; border-radius: 18px;
+    box-shadow: var(--nl-in); display: flex; align-items: center; justify-content: center;
+    font-size: 28px; color: var(--nl-accent); }
+  .demo-nl-feature h3 { font-size: 18px; font-weight: 400; letter-spacing: 1px;
+    margin: 0 0 10px; color: var(--nl-text); text-shadow: var(--nl-3d); }
+  .demo-nl-feature p { margin: 0; color: var(--nl-muted); font-size: 15px; }
+  /* Range panel */
+  .demo-nl-panel { padding: 36px 24px; border-radius: 22px; box-shadow: var(--nl-out);
+    margin-bottom: 40px; text-align: center; }
+  .demo-nl-panel h2 { font-size: 22px; font-weight: 300; letter-spacing: 1px;
+    margin: 0 0 8px; text-shadow: var(--nl-3d); }
+  .demo-nl-hint { color: var(--nl-muted); font-size: 14px; margin: 0 0 28px; }
+  .demo-nl-slider-wrap { display: inline-flex; align-items: center; gap: 16px;
+    padding: 16px 20px; width: min(360px, 100%); border-radius: 40px;
+    box-shadow: var(--nl-in); box-sizing: border-box; }
+  .demo-nl-slider-wrap input[type="range"] {
+    -webkit-appearance: none; appearance: none; flex: 1 1 auto; min-width: 100px;
+    height: 8px; border-radius: 8px; background: var(--nl-bg);
+    box-shadow: inset 2px 2px 5px rgba(70,70,70,.18), inset -2px -2px 5px rgba(255,255,255,.85);
+    outline: none; cursor: pointer; }
+  .demo-nl-slider-wrap input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 28px; height: 28px; border-radius: 50%;
+    background: var(--nl-bg); border: 2px solid var(--nl-bg);
+    box-shadow: -3px -3px 6px rgba(255,255,255,.85), 3px 3px 6px rgba(70,70,70,.18);
+    cursor: pointer; transition: transform .15s; }
+  .demo-nl-slider-wrap input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.1); }
+  .demo-nl-slider-wrap input[type="range"]::-moz-range-thumb {
+    width: 28px; height: 28px; border-radius: 50%; background: var(--nl-bg);
+    border: 2px solid var(--nl-bg);
+    box-shadow: -3px -3px 6px rgba(255,255,255,.85), 3px 3px 6px rgba(70,70,70,.18); cursor: pointer; }
+  .demo-nl-slider-wrap input[type="range"]:focus-visible {
+    box-shadow: inset 2px 2px 5px rgba(70,70,70,.18), inset -2px -2px 5px rgba(255,255,255,.85),
+      0 0 0 3px rgba(46,204,113,.5); }
+  .demo-nl-bubble { flex: 0 0 auto; display: inline-flex; justify-content: center; align-items: center;
+    width: 46px; height: 46px; border-radius: 50%; color: #d1495b; font-weight: 300; font-size: 16px;
+    box-shadow: -5px -5px 10px rgba(255,255,255,.65), 5px 5px 10px rgba(70,70,70,.15),
+      inset -3px -3px 6px rgba(255,255,255,.65), inset 3px 3px 6px rgba(70,70,70,.1);
+    transition: color .3s; }
+  /* Footer */
+  .demo-nl-footer { text-align: center; padding: 22px; border-radius: 16px;
+    box-shadow: var(--nl-in); color: var(--nl-muted); font-size: 14px; letter-spacing: 1px; }
+</style>
+<div class="demo-nl">
+  <header class="demo-nl-header">
+    <div class="demo-nl-brand"><span class="demo-nl-mark" aria-hidden="true">S</span>Softly</div>
+    <nav class="demo-nl-nav" aria-label="Demo navigation">
+      <a href="#nl-feat">Features</a>
+      <a href="#nl-demo">Demo</a>
+    </nav>
+  </header>
+
+  <section class="demo-nl-hero">
+    <h1>Soft interface<br><b>next generation</b></h1>
+    <p>Neumorphic components with morphing: buttons, toggles and sliders respond to every touch.</p>
+    <div class="demo-nl-actions">
+      <a class="demo-nl-btn demo-nl-btn-primary" href="#nl-demo">Try it</a>
+      <a class="demo-nl-btn" href="#nl-feat">Learn more</a>
+    </div>
+  </section>
+
+  <div class="demo-nl-toggles" role="group" aria-label="Toggle switches">
+    <div class="demo-nl-tg">
+      <span class="demo-nl-ind" aria-hidden="true"></span>
+      <label class="demo-nl-toggle">
+        <input type="checkbox" role="switch" aria-label="On">
+        <span class="demo-nl-tg-label">On</span>
+      </label>
+    </div>
+    <div class="demo-nl-tg">
+      <span class="demo-nl-ind" aria-hidden="true"></span>
+      <label class="demo-nl-toggle">
+        <input type="checkbox" role="switch" aria-label="Off">
+        <span class="demo-nl-tg-label">Off</span>
+      </label>
+    </div>
+  </div>
+
+  <section class="demo-nl-features" id="nl-feat">
+    <div class="demo-nl-feature">
+      <div class="demo-nl-icon" aria-hidden="true">✦</div>
+      <h3>Soft shadows</h3>
+      <p>Two-direction shadows create depth without hard borders.</p>
+    </div>
+    <div class="demo-nl-feature">
+      <div class="demo-nl-icon" aria-hidden="true">◐</div>
+      <h3>Morphing</h3>
+      <p>Components sink on press — familiar actions feel tangible.</p>
+    </div>
+    <div class="demo-nl-feature">
+      <div class="demo-nl-icon" aria-hidden="true">◈</div>
+      <h3>Feedback</h3>
+      <p>Smooth transitions on hover, active and checked states.</p>
+    </div>
+  </section>
+
+  <section class="demo-nl-panel" id="nl-demo">
+    <h2>Interactive slider</h2>
+    <p class="demo-nl-hint">Drag the handle — the value updates in real time.</p>
+    <div class="demo-nl-slider-wrap">
+      <input type="range" id="demo-nl-range" min="0" max="100" value="50" aria-label="Demo value">
+      <span class="demo-nl-bubble" id="demo-nl-out" aria-live="polite" aria-atomic="true">50</span>
+    </div>
+  </section>
+
+  <footer class="demo-nl-footer">© 2026 Softly · neumorphic style demo</footer>
+</div></div>
+    <p class="demo-caption">Меню шапки ведёт по секциям, переключатели и слайдер работают без JavaScript.</p>
+</div>
+    <h2 id="notes">Notes</h2>
+    <p>В исходном коде был <code>:root</code> — переменные <code>--accent</code> и другие перекрывали токены страницы документации. Переменные перенесены на обёртку <code>.demo-nl</code>.</p>
+<p>В исходном коде были селекторы <code>html, body { margin:0 }</code> и <code>* { box-sizing }</code> — внутри страницы документации это ломает вёрстку сайта. Все селекторы скоуплены.</p>
+<p>Класс <code>.btn</code> в исходнике совпадал с GALS <code>.btn</code> и переопределял его — переименован в <code>.demo-nl-btn</code>. Аналогично <code>.feature</code>, <code>.icon</code>, <code>.nav</code>, <code>.demo</code>.</p>
+<p>Переключатели управлялись JS (<code>classList.toggle</code>). Заменено на чистый CSS <code>:has(input:checked)</code> — браузерные чекбоксы дают фокус, клавиатуру и скринридер бесплатно.</p>
+<p>Добавлены <code>role="switch"</code>, <code>aria-label</code> и <code>:focus-visible</code> — скрытый через <code>opacity:0</code> инпут без кольца фокуса делает навигацию вслепую невозможной.</p>
+<p>Кнопки CTA (<code>&lt;a&gt;</code>) используют <code>:active</code> для вдавливания вместо JS <code>setTimeout</code> — <code>:active</code> работает мгновенно и не требует обработчика.</p>
+<p>В исходном коде <code>id="demo"</code> совпадал с id секции «Live demo» страницы документации — заменён на <code>nl-demo</code>.</p>
+</div>
+
+    </article></div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<footer class="docs-footer">
+  GALS v1.2 · <a href="../llms.txt">llms.txt</a> ·
+  <a href="../llms-full.txt">llms-full.txt</a> ·
+  <a href="../AI_PROMPT_TEMPLATE.md">AI prompt</a> ·
+  <a href="../LICENSE">MIT</a>
+</footer>
+<script src="../cdn/gals.min.js" defer></script>
+<script type="module" src="../script/staticDocs.js"></script>
+</body>
+</html>

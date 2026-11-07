@@ -178,7 +178,8 @@ describe('robots.txt и sitemap.xml', () => {
 
   test('каждый URL из sitemap существует в репозитории', () => {
     const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
-    assert.ok(urls.length >= 1, 'в sitemap нет URL');
+    assert.ok(urls.length >= 80, `в sitemap слишком мало URL: ${urls.length}`);
+    assert.ok(urls.some((url) => url.endsWith('/docs/accordion.html')), 'в sitemap нет статических страниц документации');
 
     for (const url of urls) {
       assert.ok(url.startsWith(`${SITE}/`), `${url} вне домена сайта`);
@@ -268,7 +269,6 @@ describe('пререндер статичного HTML', () => {
     globalThis.document = dom.window.document;
 
     const modules = [
-      'script/headerUlLiversion.js',
       'script/addStyleDetailsLeft.js',
       'script/detailsLeftUlLi.js',
       'script/renderCenterBlock.js',

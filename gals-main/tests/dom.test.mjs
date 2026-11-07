@@ -6,7 +6,6 @@ import { JSDOM } from 'jsdom';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const MODULES = [
-  'script/headerUlLiversion.js',
   'script/addStyleDetailsLeft.js',
   'script/detailsLeftUlLi.js',
   'script/renderCenterBlock.js',
@@ -138,18 +137,15 @@ describe('реестр страниц документации', () => {
   });
 });
 
-describe('переключатель версий', () => {
-  test('активна только одна версия, summary обновляется', async () => {
-    const { dom, document } = await boot();
-    const items = [...document.querySelectorAll('.version li')];
+describe('ссылки версий', () => {
+  test('обе версии ведут на существующие теги GitHub', async () => {
+    const { document } = await boot();
+    const links = [...document.querySelectorAll('.version a')];
 
-    click(dom, items[1]);
-    assert.equal(document.querySelectorAll('.version li.active').length, 1);
-    assert.equal(items[1].classList.contains('active'), true);
-    assert.equal(document.querySelector('.right summary span').textContent, 'v1.1');
-
-    click(dom, items[1]);
-    assert.equal(items[1].classList.contains('active'), true, 'повторный клик сбросил выбор');
+    assert.equal(links.length, 2);
+    assert.match(links[0].href, /\/tree\/v1\.2$/);
+    assert.match(links[1].href, /\/tree\/v1\.1$/);
+    assert.match(document.querySelector('.right summary span').textContent, /^v1\.2$/);
   });
 });
 
@@ -223,6 +219,14 @@ describe('разметка', () => {
     }
   });
 
+  test('есть skip-link, main и навигационные ориентиры', () => {
+    assert.ok(document.querySelector('a.skip-link[href="#main"]'), 'нет skip-link');
+    assert.ok(document.querySelector('main#main'), 'нет main#main');
+    assert.ok(document.querySelector('nav[aria-label="Primary"]'), 'нет основной навигации');
+    assert.ok(document.querySelector('nav[aria-label="Documentation"]'), 'нет навигации документации');
+    assert.ok(document.querySelector('.container-center h2'), 'в контенте нет h2 после h1');
+  });
+
   test('ссылка-заглушка встречается только у пунктов с data-action', () => {
     for (const a of document.querySelectorAll('a[href="#"]')) {
       assert.ok(a.dataset.action, `«${a.textContent.trim()}» ведёт в никуда`);
@@ -245,10 +249,13 @@ describe('разметка', () => {
     assert.ok(document.querySelector('.icon-menu').getAttribute('aria-label').trim().length > 0);
   });
 
-  test('переключатель версий перечисляет только существующие теги', () => {
-    const items = [...document.querySelectorAll('.version li')].map((li) => li.textContent.trim());
-    assert.deepEqual(items, ['v1.2', 'v1.1'], `в шапке выдуманные версии: ${items.join(', ')}`);
+  test('ссылки версий перечисляют только существующие теги', () => {
+    const links = [...document.querySelectorAll('.version a')];
+    assert.deepEqual(links.map((a) => a.textContent.trim()), ['v1.2', 'v1.1']);
     assert.match(document.querySelector('.right summary span').textContent, /^v\d+\.\d+$/);
+    for (const link of links) {
+      assert.match(link.href, /github\.com\/IvanIvanson\/gals\/tree\/v\d+\.\d+$/);
+    }
   });
 
   test('кнопка меню доступна с клавиатуры', () => {

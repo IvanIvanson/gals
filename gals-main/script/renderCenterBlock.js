@@ -30,7 +30,7 @@ const renderCenterBlock = function () {
     return null;
   }
 
-  const show = (page) => {
+  const show = (page, { focus = false, updateTitle = false } = {}) => {
     containerCenter.innerHTML = page.html;
     containerRight.innerHTML = onThisPage(page.sections);
     copyBlock(containerCenter);
@@ -41,14 +41,33 @@ const renderCenterBlock = function () {
     // в jsdom/Node глобальный Event — другой конструктор.
     const EventCtor = document.defaultView?.Event || Event;
     document.dispatchEvent(new EventCtor('gals:refresh'));
+
+    if (updateTitle) {
+      const heading = containerCenter.querySelector('h1');
+      document.title = heading
+        ? `${heading.textContent.trim()} — GALS`
+        : 'GALS documentation';
+
+      // SPA-переход должен менять и заголовок, и точку фокуса: иначе
+      // скринридер остаётся на пункте меню, а вкладка браузера — на старом title.
+      if (heading) {
+        heading.setAttribute('tabindex', '-1');
+        heading.focus({ preventScroll: true });
+      }
+
+      // window.scrollTo в jsdom не реализован; прямое присваивание работает
+      // и в браузере, и в тестах.
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }
   };
 
   // Пункт без страницы игнорируется, а не роняет обработчик.
-  const open = (key) => {
+  const open = (key, options = {}) => {
     const page = Object.prototype.hasOwnProperty.call(pages, key) ? pages[key] : null;
 
     if (page) {
-      show(page);
+      show(page, options);
     }
   };
 
@@ -60,7 +79,15 @@ const renderCenterBlock = function () {
       return;
     }
 
-    open(item.dataset.action || slug(item.textContent));
+    sidebar.querySelectorAll('.menu-item[aria-current]').forEach((other) => {
+      other.removeAttribute('aria-current');
+    });
+    item.setAttribute('aria-current', 'page');
+
+    open(item.dataset.action || slug(item.textContent), {
+      focus: true,
+      updateTitle: true,
+    });
   });
 
   // Вкладки шапки переключают тот же центр, что и левый сайдбар.
@@ -74,12 +101,13 @@ const renderCenterBlock = function () {
 
       event.preventDefault();
 
-      headerMenu
-        .querySelectorAll('a')
-        .forEach((other) => other.classList.toggle('active', other === link));
+      headerMenu.querySelectorAll('a').forEach((other) => {
+        other.classList.toggle('active', other === link);
+        other.removeAttribute('aria-current');
+      });
+      link.setAttribute('aria-current', 'page');
 
-      open(link.dataset.action);
-      window.scrollTo(0, 0);
+      open(link.dataset.action, { focus: true, updateTitle: true });
 
       // На телефоне навигация — выезжающий оверлей: после выбора
       // вкладки его надо закрыть, иначе он остаётся поверх контента.
@@ -89,6 +117,13 @@ const renderCenterBlock = function () {
   }
 
   show(pages[DEFAULT_PAGE]);
+
+  // Начальное состояние: Introduction — текущая страница.
+  const current = sidebar.querySelector('[data-action="showIntroduction"]');
+  if (current) {
+    current.setAttribute('aria-current', 'page');
+    current.classList.add('active-list');
+  }
 
   // Наружу отдаём реестр и открытие страницы — ими пользуется поиск.
   return { pages, open };

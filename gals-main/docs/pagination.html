@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#8512d1">
+  <title>Pagination — GALS</title>
+  <meta name="description" content="Numbered links for a list that spans requests.">
+  <link rel="canonical" href="https://ivanivanson.github.io/gals/docs/pagination.html">
+  <link rel="alternate" type="text/plain" href="../llms.txt" title="GALS for LLMs">
+  <link rel="alternate" type="text/plain" href="../llms-full.txt" title="GALS full documentation for LLMs">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="GALS">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:url" content="https://ivanivanson.github.io/gals/docs/pagination.html">
+  <meta property="og:title" content="Pagination — GALS">
+  <meta property="og:description" content="Numbered links for a list that spans requests.">
+  <meta property="og:image" content="https://ivanivanson.github.io/gals/image/logoGals.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Pagination — GALS">
+  <meta name="twitter:description" content="Numbered links for a list that spans requests.">
+  <meta name="twitter:image" content="https://ivanivanson.github.io/gals/image/logoGals.png">
+
+  <link rel="stylesheet" href="../cdn/gals.min.css">
+  <link rel="stylesheet" href="../style.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"TechArticle","headline":"Pagination","description":"Numbered links for a list that spans requests.","url":"https://ivanivanson.github.io/gals/docs/pagination.html","mainEntityOfPage":"https://ivanivanson.github.io/gals/docs/pagination.html","dateModified":"2026-11-07","author":{"@type":"Organization","name":"GALS"},"publisher":{"@type":"Organization","name":"GALS","url":"https://ivanivanson.github.io/gals/"},"isPartOf":{"@type":"WebSite","name":"GALS documentation","url":"https://ivanivanson.github.io/gals/"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"GALS","item":"https://ivanivanson.github.io/gals/"},{"@type":"ListItem","position":2,"name":"Docs","item":"https://ivanivanson.github.io/gals/docs/"},{"@type":"ListItem","position":3,"name":"Pagination","item":"https://ivanivanson.github.io/gals/docs/pagination.html"}]}]}</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="header header-sticky docs-header">
+  <a class="header-brand" href="../index.html">GALS</a>
+  <nav class="header-nav" aria-label="Primary">
+    <ul>
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="index.html">Docs</a></li>
+      <li><a href="../llms.txt">llms.txt</a></li>
+    </ul>
+  </nav>
+  <div class="header-actions">
+    <a class="btn" href="../download/grid.zip" download>Download</a>
+  </div>
+</header>
+<div class="wrapper">
+  <div class="content">
+    <main id="main" class="docs-main">
+      <div class="container">
+        <div class="container-block pt-3 pt-s12">
+<nav class="docs-nav" aria-label="Documentation">
+  <p class="docs-nav-title"><a href="../index.html">GALS</a> / <a href="index.html">Docs</a></p>
+
+  <details class="docs-nav-group" open>
+    <summary>Getting started</summary>
+    <ul><li><a href="../index.html">Introduction</a></li><li><a href="download.html">Download</a></li><li><a href="contents.html">Contents</a></li></ul>
+  </details>
+  <details class="docs-nav-group" open>
+    <summary>Settings</summary>
+    <ul><li><a href="css-variables.html">CSS variables</a></li><li><a href="js-modules.html">JS modules</a></li><li><a href="components.html">Components</a></li></ul>
+  </details>
+  <details class="docs-nav-group" open>
+    <summary>Layout</summary>
+    <ul><li><a href="breakpoints.html">Breakpoints</a></li><li><a href="containers.html">Containers</a></li><li><a href="grid.html">Grid</a></li><li><a href="columns.html">Columns</a></li><li><a href="gutters.html">Gutters</a></li><li><a href="z-index.html">Z-index</a></li></ul>
+  </details>
+  <details class="docs-nav-group" open>
+    <summary>Content</summary>
+    <ul><li><a href="header.html">Header</a></li><li><a href="table.html">Table</a></li><li><a href="images.html">Images</a></li><li><a href="charts.html">Charts</a></li><li><a href="icons.html">Icons</a></li></ul>
+  </details>
+  <details class="docs-nav-group" open>
+    <summary>Forms</summary>
+    <ul><li><a href="form-controls.html">Form controls</a></li><li><a href="select.html">Select</a></li><li><a href="checkbox-radio.html">Checkbox&amp;Radio</a></li><li><a href="range.html">Range</a></li></ul>
+  </details>
+  <details class="docs-nav-group" open>
+    <summary>Components</summary>
+    <ul><li><a href="accordion.html">Accordion</a></li><li><a href="alert.html">Alert</a></li><li><a href="buttons.html">Buttons</a></li><li><a href="card.html">Card</a></li><li><a href="carousel.html">Carousel</a></li><li><a href="dropdowns.html">Dropdowns</a></li><li><a href="modal.html">Modal</a></li><li><a href="menu.html">Menu</a></li><li><a href="post-search.html">Post &amp; Search</a></li><li><a href="verification-form.html">Verification form</a></li><li><a href="tabs.html">Tabs</a></li><li><a href="pagination.html" aria-current="page">Pagination</a></li><li><a href="popovers.html">Popovers</a></li><li><a href="progress.html">Progress</a></li><li><a href="scrollspy.html">Scrollspy</a></li><li><a href="loaders.html">Loaders</a></li><li><a href="morphing-range.html">Morphing range</a></li><li><a href="morphing-buttons.html">Morphing buttons</a></li><li><a href="morphing-checked-button.html">Morphing checked button</a></li></ul>
+  </details>
+  <details class="docs-nav-group" open>
+    <summary>Features</summary>
+    <ul><li><a href="toast.html">Toast</a></li><li><a href="dismissible-alert.html">Dismissible alert</a></li><li><a href="dropdown-menu.html">Dropdown menu</a></li><li><a href="hamburger.html">Hamburger</a></li><li><a href="tooltip.html">Tooltip</a></li><li><a href="popover.html">Popover</a></li><li><a href="theme-switcher.html">Theme switcher</a></li><li><a href="appearance-animation.html">Appearance animation</a></li><li><a href="basket-counter.html">Basket counter</a></li><li><a href="clipboard.html">Clipboard</a></li><li><a href="toggle.html">Toggle</a></li><li><a href="styled-range.html">Styled range</a></li><li><a href="bounce.html">Bounce</a></li><li><a href="bounce-cube.html">Bounce cube</a></li><li><a href="card-3d.html">Card 3d</a></li><li><a href="card-hover.html">Card hover</a></li><li><a href="card-read-more.html">Card read more</a></li><li><a href="card-vegetables.html">Card vegetables</a></li><li><a href="cards-from-array.html">Cards from array</a></li><li><a href="border-gradient.html">Border gradient</a></li><li><a href="modal-bounce.html">Modal bounce</a></li><li><a href="table-editor.html">Table editor</a></li><li><a href="canvas-chart.html">Canvas chart</a></li><li><a href="chartjs.html">Chartjs</a></li><li><a href="interactive-canvas.html">Interactive canvas</a></li><li><a href="distance-calculator.html">Distance calculator</a></li><li><a href="parabola-drawer.html">Parabola drawer</a></li><li><a href="battery-indicator.html">Battery indicator</a></li><li><a href="gradient-text.html">Gradient text</a></li><li><a href="box-size-indicator.html">Box size indicator</a></li><li><a href="grid-canvas.html">Grid canvas</a></li><li><a href="color-palette.html">Color palette</a></li><li><a href="clamp-font.html">Clamp font</a></li><li><a href="person-cards.html">Person cards</a></li><li><a href="star-rating.html">Star rating</a></li><li><a href="morphing-style-landing.html">Morphing style landing</a></li></ul>
+  </details>
+  <details class="docs-nav-group" open>
+    <summary>Helpers</summary>
+    <ul><li><a href="colors-collection.html">Colors collection</a></li><li><a href="classes.html">Classes</a></li><li><a href="controls-audio.html">Controls Audio</a></li><li><a href="controls-video.html">Controls Video</a></li><li><a href="controls-visible.html">Controls visible</a></li><li><a href="canvas-for-your-projects.html">Canvas for your projects</a></li></ul>
+  </details>
+  <details class="docs-nav-group" open>
+    <summary>About</summary>
+    <ul><li><a href="history.html">History</a></li><li><a href="team.html">Team</a></li><li><a href="brand.html">Brand</a></li><li><a href="translations.html">Translations</a></li></ul>
+  </details>
+</nav></div>
+        <div class="container-block pt-9 pt-s12 docs-body">
+    <nav class="docs-breadcrumb" aria-label="Breadcrumb">
+      <a href="../index.html">GALS</a> / <a href="index.html">Docs</a> / <span>Pagination</span>
+    </nav>
+    <div class="docs-static-note">
+      Static reading version. Interactive demos and search are on the
+      <a href="../index.html">main documentation page</a>.
+    </div>
+    <nav class="docs-toc" aria-label="On this page">
+  <p class="docs-toc-title">On this page</p>
+  <ul><li><a href="#usage">Usage</a></li><li><a href="#demo">Live demo</a></li><li><a href="#notes">Notes</a></li><li><a href="#example-1">Icon pill pagination</a></li></ul>
+</nav>
+    <article class="docs-article container-center">
+
+<div class="content-between align-center">
+    <h1>Pagination</h1>
+    <span class="badge badge-stable">Stable</span>
+</div>
+
+<div><p>Numbered links for a list that spans requests.</p></div>
+
+
+<div class="quick-start">
+    <h2 id="usage">Usage</h2>
+
+<div class="copy-block">
+    <code><pre>&lt;nav class="pagination" aria-label="Results"&gt;
+  &lt;a href="?p=4" aria-label="Previous"&gt;&amp;#8249;&lt;/a&gt;
+  &lt;a href="?p=4"&gt;4&lt;/a&gt;
+  &lt;span aria-current="page"&gt;5&lt;/span&gt;
+  &lt;a href="?p=6"&gt;6&lt;/a&gt;
+  &lt;span aria-hidden="true"&gt;&amp;#8230;&lt;/span&gt;
+  &lt;a href="?p=20"&gt;20&lt;/a&gt;
+&lt;/nav&gt;</pre></code>
+    <button class="copy" type="button" data-tooltip="Copy to clipboard" aria-label="Copy to clipboard"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"></path>
+        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"></path>
+    </svg></button>
+</div>
+    <h2 id="demo">Live demo</h2>
+
+<div class="demo">
+    <div class="demo-body"><nav class="pagination" aria-label="Demo results">
+  <a href="#usage" aria-label="Previous">‹</a>
+  <a href="#usage">4</a>
+  <span aria-current="page">5</span>
+  <a href="#usage">6</a>
+  <a href="#usage">7</a>
+  <span aria-hidden="true">…</span>
+  <a href="#usage">20</a>
+</nav></div>
+</div>
+    <h2 id="notes">Notes</h2>
+    <p>Ellipses are <code>aria-hidden</code>; the current page carries <code>aria-current="page"</code>.</p>
+<p>Infinite scroll destroys the footer and the sense of position. Use it where scrolling is the activity, not where results are.</p>
+    <h2 id="example-1">Icon pill pagination</h2>
+    <p>Пилюля с круглыми кнопочками-иконками: активная страница подсвечивается кольцом. Стрелки листают, иконки выбирают страницу напрямую.</p>
+
+<div class="copy-block">
+    <code><pre>&lt;nav class="icon-pagination" aria-label="Results"&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;button class="pgi-nav" type="button" data-step="-1"
+                onclick="shiftPagination(this, -1)"&gt;&amp;#8249; Prev&lt;/button&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;button class="pgi-num is-active" type="button" aria-current="page"
+                aria-label="Home" onclick="selectPagination(this)"&gt;
+          &lt;svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"&gt;
+            &lt;path d="M3 11.5 12 4l9 7.5V21h-6v-6h-6v6H3z"/&gt;
+          &lt;/svg&gt;
+        &lt;/button&gt;&lt;/li&gt;
+    &lt;!-- …ещё страницы --&gt;
+    &lt;li&gt;&lt;button class="pgi-nav" type="button" data-step="1"
+                onclick="shiftPagination(this, 1)"&gt;Next &amp;#8250;&lt;/button&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;p class="pgi-status" role="status"&gt;Page 1 of 5&lt;/p&gt;
+&lt;/nav&gt;
+
+&lt;style&gt;
+.icon-pagination ul {
+  display: flex; align-items: center; list-style: none; margin: 0;
+  padding: 10px 20px; background: #fff; border-radius: 50px;
+  box-shadow: 0 5px 15px rgba(0,0,0,.2);
+}
+.icon-pagination li { margin: 0 5px; }
+.icon-pagination li:first-child { margin-right: 30px; }
+.icon-pagination li:last-child  { margin-left: 30px; }
+.pgi-nav { border: 0; background: none; cursor: pointer;
+  font: inherit; font-weight: 700; font-size: 20px; color: #4a4a4a; }
+.pgi-nav[disabled] { opacity: .35; cursor: default; }
+.pgi-num {
+  display: flex; align-items: center; justify-content: center;
+  width: 50px; height: 50px; padding: 0; border: 0; border-radius: 50%;
+  background: none; color: #4a4a4a; cursor: pointer; transition: .3s;
+}
+.pgi-num:hover,
+.pgi-num.is-active {
+  background: #86ff3d; color: #123a05;
+  box-shadow: 0 0 0 4px #fff, 0 0 0 6px #86ff3d;
+}
+&lt;/style&gt;</pre></code>
+    <button class="copy" type="button" data-tooltip="Copy to clipboard" aria-label="Copy to clipboard"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"></path>
+        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"></path>
+    </svg></button>
+</div>
+<div class="demo">
+    <div class="demo-body"><style>
+  .demo-pgi {
+    display: flex; flex-direction: column; align-items: center; gap: 14px;
+    background: #cdecb0; padding: 28px 16px; border-radius: 7px;
+  }
+  .demo-pgi-list {
+    display: flex; align-items: center; list-style: none; margin: 0;
+    padding: 10px 20px; background: #fff; border-radius: 50px;
+    box-shadow: 0 5px 15px rgba(0,0,0,.2);
+  }
+  .demo-pgi-list li { margin: 0 5px; }
+  .demo-pgi-list li:first-child { margin-right: 30px; }
+  .demo-pgi-list li:last-child  { margin-left: 30px; }
+  .demo-pgi-nav {
+    border: 0; background: none; cursor: pointer; padding: 0;
+    font: inherit; font-weight: 700; font-size: 18px; color: #4a4a4a;
+  }
+  .demo-pgi-nav[disabled] { opacity: .35; cursor: default; }
+  .demo-pgi-num {
+    display: flex; align-items: center; justify-content: center;
+    width: 50px; height: 50px; padding: 0; border: 0; border-radius: 50%;
+    background: none; color: #4a4a4a; cursor: pointer; transition: .3s;
+  }
+  .demo-pgi-num:hover,
+  .demo-pgi-num.is-active {
+    background: #86ff3d; color: #123a05;
+    box-shadow: 0 0 0 4px #fff, 0 0 0 6px #86ff3d;
+  }
+  .demo-pgi-nav:focus-visible,
+  .demo-pgi-num:focus-visible {
+    outline: 3px solid #2f7d1a; outline-offset: 2px;
+  }
+  .demo-pgi-status { margin: 0; font-size: 14px; color: #2c4a17; }
+</style>
+<nav class="demo-pgi" aria-label="Demo pages">
+  <ul class="demo-pgi-list">
+    <li>
+      <button class="demo-pgi-nav" type="button" data-pgi-step="-1" disabled="" aria-label="Previous page">‹ Prev</button>
+    </li>
+    <li>
+      <button class="demo-pgi-num is-active" type="button" aria-current="page" aria-label="Home">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+          <path d="M3 11.5 12 4l9 7.5V21h-6v-6h-6v6H3z"></path>
+        </svg>
+      </button>
+    </li>
+    <li>
+      <button class="demo-pgi-num" type="button" aria-label="Users">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+          <circle cx="9" cy="8" r="3.5"></circle><path d="M2.5 20a6.5 6.5 0 0 1 13 0z"></path>
+          <circle cx="17" cy="9" r="2.6"></circle><path d="M16.4 14.4a5.4 5.4 0 0 1 5.1 5.6h-5.2z"></path>
+        </svg>
+      </button>
+    </li>
+    <li>
+      <button class="demo-pgi-num" type="button" aria-label="Docs">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+          <path d="M4 4h7a2 2 0 0 1 2 2v14a2 2 0 0 0-2-2H4z"></path>
+          <path d="M20 4h-7a2 2 0 0 0-2 2v14a2 2 0 0 1 2-2h7z"></path>
+        </svg>
+      </button>
+    </li>
+    <li>
+      <button class="demo-pgi-num" type="button" aria-label="Files">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+          <path d="M6 2h8l4 4v16H6z"></path><path d="M14 2v4h4" fill="#fff" opacity=".35"></path>
+        </svg>
+      </button>
+    </li>
+    <li>
+      <button class="demo-pgi-num" type="button" aria-label="Contacts">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+          <path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11 11 0 0 0 3.6.6 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11 11 0 0 0 .6 3.6 1 1 0 0 1-.25 1z"></path>
+        </svg>
+      </button>
+    </li>
+    <li>
+      <button class="demo-pgi-nav" type="button" data-pgi-step="1" aria-label="Next page">Next ›</button>
+    </li>
+  </ul>
+  <p class="demo-pgi-status" role="status">Page 1 of 5</p>
+</nav></div>
+    <p class="demo-caption">Стрелки листают по краям и отключаются, иконки выбирают страницу. Скринридер читает «Page N of 5».</p>
+</div><p>В исходном jQuery <code>.find('.pageNumber.active')</code> вызывался <em>после</em> <code>.addClass('active')</code> — выбирались обе страницы, а на краю списка класс <code>active</code> попадал на стрелку Next, и пагинация навсегда застревала. Здесь индекс считается числом и зажимается краями.</p>
+<p>jQuery (35 КБ gzip) убран целиком: переключение класса — это <code>classList.toggle</code>, а не повод тянуть библиотеку.</p>
+<p>Класс <code>.pagination</code> в исходнике совпадал с GALS-классом и ломал бы обычную пагинацию на той же странице. Демо использует <code>.demo-pgi-*</code>.</p>
+<p>Глобальные <code>* { margin:0; padding:0 }</code>, <code>body { display:flex }</code> и <code>ul { … }</code> внутри страницы документации обнулили бы отступы и списки всего сайта. Все селекторы скоуплены.</p>
+<p>Ссылки <code>&lt;a href="#"&gt;</code> заменены на <code>&lt;button type="button"&gt;</code>: страница не меняется — это действие, а не переход. Плюс пропало битое <code>href="#"; return false;</code> в разметке.</p>
+<p>Font Awesome 4.7 (CDN) заменён на инлайновые SVG: нет внешнего запроса, иконки наследуют <code>currentColor</code> и не ломаются, если CDN недоступен.</p>
+<p>Белый текст на <code>#86ff3d</code> даёт контраст ~1.6:1 — не читается. Активная страница залита тем же салатовым, но текст тёмный <code>#123a05</code>.</p>
+<p>Иконка без текста непонятна скринридеру: у каждой кнопки <code>aria-label</code>, у текущей — <code>aria-current="page"</code>, у счётчика — <code>role="status"</code>.</p>
+<p><code>-webkit-box-reflect</code> — вендорная фича WebKit, в Firefox и Edge её нет. Убран; при желании верните как чистую decoration-надстройку.</p>
+</div>
+
+    </article></div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<footer class="docs-footer">
+  GALS v1.2 · <a href="../llms.txt">llms.txt</a> ·
+  <a href="../llms-full.txt">llms-full.txt</a> ·
+  <a href="../AI_PROMPT_TEMPLATE.md">AI prompt</a> ·
+  <a href="../LICENSE">MIT</a>
+</footer>
+<script src="../cdn/gals.min.js" defer></script>
+<script type="module" src="../script/staticDocs.js"></script>
+</body>
+</html>

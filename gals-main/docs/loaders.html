@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#8512d1">
+  <title>Loaders — GALS</title>
+  <meta name="description" content="Feedback for work in progress: spinner, skeleton, and the words that go with them.">
+  <link rel="canonical" href="https://ivanivanson.github.io/gals/docs/loaders.html">
+  <link rel="alternate" type="text/plain" href="../llms.txt" title="GALS for LLMs">
+  <link rel="alternate" type="text/plain" href="../llms-full.txt" title="GALS full documentation for LLMs">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="GALS">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:url" content="https://ivanivanson.github.io/gals/docs/loaders.html">
+  <meta property="og:title" content="Loaders — GALS">
+  <meta property="og:description" content="Feedback for work in progress: spinner, skeleton, and the words that go with them.">
+  <meta property="og:image" content="https://ivanivanson.github.io/gals/image/logoGals.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Loaders — GALS">
+  <meta name="twitter:description" content="Feedback for work in progress: spinner, skeleton, and the words that go with them.">
+  <meta name="twitter:image" content="https://ivanivanson.github.io/gals/image/logoGals.png">
+
+  <link rel="stylesheet" href="../cdn/gals.min.css">
+  <link rel="stylesheet" href="../style.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"TechArticle","headline":"Loaders","description":"Feedback for work in progress: spinner, skeleton, and the words that go with them.","url":"https://ivanivanson.github.io/gals/docs/loaders.html","mainEntityOfPage":"https://ivanivanson.github.io/gals/docs/loaders.html","dateModified":"2026-11-07","author":{"@type":"Organization","name":"GALS"},"publisher":{"@type":"Organization","name":"GALS","url":"https://ivanivanson.github.io/gals/"},"isPartOf":{"@type":"WebSite","name":"GALS documentation","url":"https://ivanivanson.github.io/gals/"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"GALS","item":"https://ivanivanson.github.io/gals/"},{"@type":"ListItem","position":2,"name":"Docs","item":"https://ivanivanson.github.io/gals/docs/"},{"@type":"ListItem","position":3,"name":"Loaders","item":"https://ivanivanson.github.io/gals/docs/loaders.html"}]}]}</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="header header-sticky docs-header">
+  <a class="header-brand" href="../index.html">GALS</a>
+  <nav class="header-nav" aria-label="Primary">
+    <ul>
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="index.html">Docs</a></li>
+      <li><a href="../llms.txt">llms.txt</a></li>
+    </ul>
+  </nav>
+  <div class="header-actions">
+    <a class="btn" href="../download/grid.zip" download>Download</a>
+  </div>
+</header>
+<div class="wrapper">
+  <div class="content">
+    <main id="main" class="docs-main">
+      <div class="container">
+        <div class="container-block pt-3 pt-s12">
+<nav class="docs-nav" aria-label="Documentation">
+  <p class="docs-nav-title"><a href="../index.html">GALS</a> / <a href="index.html">Docs</a></p>
+
+  <details class="docs-nav-group" open>
+    <summary>Getting started</summary>
+    <ul><li><a href="../index.html">Introduction</a></li><li><a href="download.html">Download</a></li><li><a href="contents.html">Contents</a></li></ul>
+  </details>
+  <details class="docs-nav-group" open>
+    <summary>Settings</summary>
+    <ul><li><a href="css-variables.html">CSS variables</a></li><li><a href="js-modules.html">JS modules</a></li><li><a href="components.html">Components</a></li></ul>
+  </details>
+  <details class="docs-nav-group" open>
+    <summary>Layout</summary>
+    <ul><li><a href="breakpoints.html">Breakpoints</a></li><li><a href="containers.html">Containers</a></li><li><a href="grid.html">Grid</a></li><li><a href="columns.html">Columns</a></li><li><a href="gutters.html">Gutters</a></li><li><a href="z-index.html">Z-index</a></li></ul>
+  </details>
+  <details class="docs-nav-group" open>
+    <summary>Content</summary>
+    <ul><li><a href="header.html">Header</a></li><li><a href="table.html">Table</a></li><li><a href="images.html">Images</a></li><li><a href="charts.html">Charts</a></li><li><a href="icons.html">Icons</a></li></ul>
+  </details>
+  <details class="docs-nav-group" open>
+    <summary>Forms</summary>
+    <ul><li><a href="form-controls.html">Form controls</a></li><li><a href="select.html">Select</a></li><li><a href="checkbox-radio.html">Checkbox&amp;Radio</a></li><li><a href="range.html">Range</a></li></ul>
+  </details>
+  <details class="docs-nav-group" open>
+    <summary>Components</summary>
+    <ul><li><a href="accordion.html">Accordion</a></li><li><a href="alert.html">Alert</a></li><li><a href="buttons.html">Buttons</a></li><li><a href="card.html">Card</a></li><li><a href="carousel.html">Carousel</a></li><li><a href="dropdowns.html">Dropdowns</a></li><li><a href="modal.html">Modal</a></li><li><a href="menu.html">Menu</a></li><li><a href="post-search.html">Post &amp; Search</a></li><li><a href="verification-form.html">Verification form</a></li><li><a href="tabs.html">Tabs</a></li><li><a href="pagination.html">Pagination</a></li><li><a href="popovers.html">Popovers</a></li><li><a href="progress.html">Progress</a></li><li><a href="scrollspy.html">Scrollspy</a></li><li><a href="loaders.html" aria-current="page">Loaders</a></li><li><a href="morphing-range.html">Morphing range</a></li><li><a href="morphing-buttons.html">Morphing buttons</a></li><li><a href="morphing-checked-button.html">Morphing checked button</a></li></ul>
+  </details>
+  <details class="docs-nav-group" open>
+    <summary>Features</summary>
+    <ul><li><a href="toast.html">Toast</a></li><li><a href="dismissible-alert.html">Dismissible alert</a></li><li><a href="dropdown-menu.html">Dropdown menu</a></li><li><a href="hamburger.html">Hamburger</a></li><li><a href="tooltip.html">Tooltip</a></li><li><a href="popover.html">Popover</a></li><li><a href="theme-switcher.html">Theme switcher</a></li><li><a href="appearance-animation.html">Appearance animation</a></li><li><a href="basket-counter.html">Basket counter</a></li><li><a href="clipboard.html">Clipboard</a></li><li><a href="toggle.html">Toggle</a></li><li><a href="styled-range.html">Styled range</a></li><li><a href="bounce.html">Bounce</a></li><li><a href="bounce-cube.html">Bounce cube</a></li><li><a href="card-3d.html">Card 3d</a></li><li><a href="card-hover.html">Card hover</a></li><li><a href="card-read-more.html">Card read more</a></li><li><a href="card-vegetables.html">Card vegetables</a></li><li><a href="cards-from-array.html">Cards from array</a></li><li><a href="border-gradient.html">Border gradient</a></li><li><a href="modal-bounce.html">Modal bounce</a></li><li><a href="table-editor.html">Table editor</a></li><li><a href="canvas-chart.html">Canvas chart</a></li><li><a href="chartjs.html">Chartjs</a></li><li><a href="interactive-canvas.html">Interactive canvas</a></li><li><a href="distance-calculator.html">Distance calculator</a></li><li><a href="parabola-drawer.html">Parabola drawer</a></li><li><a href="battery-indicator.html">Battery indicator</a></li><li><a href="gradient-text.html">Gradient text</a></li><li><a href="box-size-indicator.html">Box size indicator</a></li><li><a href="grid-canvas.html">Grid canvas</a></li><li><a href="color-palette.html">Color palette</a></li><li><a href="clamp-font.html">Clamp font</a></li><li><a href="person-cards.html">Person cards</a></li><li><a href="star-rating.html">Star rating</a></li><li><a href="morphing-style-landing.html">Morphing style landing</a></li></ul>
+  </details>
+  <details class="docs-nav-group" open>
+    <summary>Helpers</summary>
+    <ul><li><a href="colors-collection.html">Colors collection</a></li><li><a href="classes.html">Classes</a></li><li><a href="controls-audio.html">Controls Audio</a></li><li><a href="controls-video.html">Controls Video</a></li><li><a href="controls-visible.html">Controls visible</a></li><li><a href="canvas-for-your-projects.html">Canvas for your projects</a></li></ul>
+  </details>
+  <details class="docs-nav-group" open>
+    <summary>About</summary>
+    <ul><li><a href="history.html">History</a></li><li><a href="team.html">Team</a></li><li><a href="brand.html">Brand</a></li><li><a href="translations.html">Translations</a></li></ul>
+  </details>
+</nav></div>
+        <div class="container-block pt-9 pt-s12 docs-body">
+    <nav class="docs-breadcrumb" aria-label="Breadcrumb">
+      <a href="../index.html">GALS</a> / <a href="index.html">Docs</a> / <span>Loaders</span>
+    </nav>
+    <div class="docs-static-note">
+      Static reading version. Interactive demos and search are on the
+      <a href="../index.html">main documentation page</a>.
+    </div>
+    <nav class="docs-toc" aria-label="On this page">
+  <p class="docs-toc-title">On this page</p>
+  <ul><li><a href="#usage">Usage</a></li><li><a href="#demo">Live demo</a></li><li><a href="#notes">Notes</a></li><li><a href="#example-1">Sweep ring</a></li><li><a href="#example-2">Spinning square</a></li><li><a href="#example-3">Ripple rings</a></li><li><a href="#example-4">Wireframe cube (canvas)</a></li></ul>
+</nav>
+    <article class="docs-article container-center">
+
+<div class="content-between align-center">
+    <h1>Loaders</h1>
+    <span class="badge badge-stable">Stable</span>
+</div>
+
+<div><p>Feedback for work in progress: spinner, skeleton, and the words that go with them.</p></div>
+
+
+<div class="quick-start">
+    <h2 id="usage">Usage</h2>
+
+<div class="copy-block">
+    <code><pre>&lt;button class="btn" type="button" aria-busy="true" disabled&gt;
+  &lt;span class="loader" aria-hidden="true"&gt;&lt;/span&gt; Saving…
+&lt;/button&gt;
+
+&lt;div class="skeleton" style="height: 1.2em"&gt;&lt;/div&gt;
+&lt;div class="skeleton" style="height: 6em"&gt;&lt;/div&gt;</pre></code>
+    <button class="copy" type="button" data-tooltip="Copy to clipboard" aria-label="Copy to clipboard"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"></path>
+        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"></path>
+    </svg></button>
+</div>
+    <h2 id="demo">Live demo</h2>
+
+<div class="demo">
+    <div class="demo-body"><button class="btn" type="button" aria-busy="true" disabled="">
+  <span class="loader" aria-hidden="true"></span> Saving…
+</button>
+<div style="margin-top:1em;max-width:32em">
+  <div class="skeleton" style="height: 1.2em; margin-bottom:.6em"></div>
+  <div class="skeleton" style="height: 1.2em; margin-bottom:.6em; width: 80%"></div>
+  <div class="skeleton" style="height: 6em"></div>
+</div></div>
+</div>
+    <h2 id="notes">Notes</h2>
+    <p>A skeleton holds the shape of what is coming, so nothing jumps when it lands — prefer it whenever the layout is predictable.</p>
+<p>Announce completion, not just the wait: <code>role="status"</code> with the final count.</p>
+<p>The spinner keeps spinning under <code>prefers-reduced-motion</code> — it is information; the skeleton shimmer stops.</p>
+    <h2 id="example-1">Sweep ring</h2>
+    <p>A rotating half-gradient sweep with a glowing dot, masked by a dark inner disc. Pure CSS.</p>
+
+<div class="copy-block">
+    <code><pre>&lt;div class="loader-sweep"&gt;
+  &lt;span&gt;&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;style&gt;
+.loader-sweep {
+  position: relative;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: #0d2323;
+  animation: sweep-spin 2s linear infinite;
+}
+@keyframes sweep-spin { to { transform: rotate(360deg); } }
+.loader-sweep::before {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 50%; height: 100%;
+  background: linear-gradient(to top, transparent, rgba(0, 255, 249, .4));
+  background-size: 100px 180px;
+  background-repeat: no-repeat;
+  border-top-left-radius: 100px;
+  border-bottom-left-radius: 100px;
+}
+.loader-sweep::after {
+  content: '';
+  position: absolute; top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 20px; height: 20px;
+  background: #00fff9;
+  border-radius: 50%;
+  box-shadow: 0 0 20px #00fff9, 0 0 40px #00fff9, 0 0 60px #00fff9;
+}
+.loader-sweep span {
+  position: absolute;
+  inset: 20px;
+  border-radius: 50%;
+  background: #102626;
+}
+&lt;/style&gt;</pre></code>
+    <button class="copy" type="button" data-tooltip="Copy to clipboard" aria-label="Copy to clipboard"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"></path>
+        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"></path>
+    </svg></button>
+</div>
+<div class="demo">
+    <div class="demo-body"><style>
+  .demo-sweep-stage { display: flex; justify-content: center; padding: 2em 0; background: #102626; border-radius: 7px; }
+  .demo-sweep {
+    position: relative; width: 200px; height: 200px;
+    border-radius: 50%; background: #0d2323;
+    animation: demo-sweep-spin 2s linear infinite;
+  }
+  @keyframes demo-sweep-spin { to { transform: rotate(360deg); } }
+  .demo-sweep::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 50%; height: 100%;
+    background: linear-gradient(to top, transparent, rgba(0, 255, 249, .4));
+    background-size: 100px 180px; background-repeat: no-repeat;
+    border-top-left-radius: 100px; border-bottom-left-radius: 100px;
+  }
+  .demo-sweep::after {
+    content: ''; position: absolute; top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 20px; height: 20px;
+    background: #00fff9; border-radius: 50%;
+    box-shadow: 0 0 20px #00fff9, 0 0 40px #00fff9, 0 0 60px #00fff9;
+  }
+  .demo-sweep span {
+    position: absolute; inset: 20px;
+    border-radius: 50%; background: #102626;
+  }
+</style>
+<div class="demo-sweep-stage">
+  <div class="demo-sweep" role="status" aria-label="Loading"><span></span></div>
+</div></div>
+</div>
+    <h2 id="example-2">Spinning square</h2>
+    <p>One pseudo-element rotating in steps — the lightest possible loader: no extra markup at all.</p>
+
+<div class="copy-block">
+    <code><pre>&lt;div class="loader-square"&gt;&lt;/div&gt;
+
+&lt;style&gt;
+.loader-square {
+  box-sizing: border-box;
+  width: 200px; height: 200px;
+  position: relative;
+}
+.loader-square::before {
+  content: '';
+  width: 30px; height: 30px;
+  background-color: lightblue;
+  position: absolute; top: 50%; left: 50%;
+  animation: square-rotating 1500ms alternate infinite both;
+}
+@keyframes square-rotating {
+  0%, 30%   { transform: translate(-50%, -50%) rotate(0); }
+  70%, 100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+&lt;/style&gt;</pre></code>
+    <button class="copy" type="button" data-tooltip="Copy to clipboard" aria-label="Copy to clipboard"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"></path>
+        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"></path>
+    </svg></button>
+</div>
+<div class="demo">
+    <div class="demo-body"><style>
+  .demo-square {
+    box-sizing: border-box;
+    width: 200px; height: 200px;
+    position: relative; margin: 0 auto;
+  }
+  .demo-square::before {
+    content: '';
+    width: 30px; height: 30px;
+    background-color: lightblue;
+    position: absolute; top: 50%; left: 50%;
+    animation: demo-square-rotating 1500ms alternate infinite both;
+  }
+  @keyframes demo-square-rotating {
+    0%, 30%   { transform: translate(-50%, -50%) rotate(0); }
+    70%, 100% { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+</style>
+<div class="demo-square" role="status" aria-label="Loading"></div></div>
+</div>
+    <h2 id="example-3">Ripple rings</h2>
+    <p>Twelve nested rings pulsing along the Z axis under a tilted perspective — a 3D wave made of borders.</p>
+
+<div class="copy-block">
+    <code><pre>&lt;div class="loader-ripple"&gt;
+  &lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;
+  &lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;
+  &lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;style&gt;
+.loader-ripple {
+  position: relative;
+  width: 250px; height: 250px;
+  transform-style: preserve-3d;
+  transform: perspective(500px) rotateX(60deg);
+}
+.loader-ripple span {
+  position: absolute;
+  display: block;
+  border: 5px solid #fff;
+  box-shadow: 0 5px 0 #ccc, inset 0 5px 0 #ccc;
+  box-sizing: border-box;
+  border-radius: 50%;
+  animation: ripple 3s ease-in-out infinite;
+}
+@keyframes ripple {
+  0%, 100% { transform: translateZ(-100px); opacity: .1; }
+  50%      { transform: translateZ(100px);  opacity: 1; }
+}
+/* each ring is inset by 10px more and starts .2s later */
+.loader-ripple span:nth-child(1)  { inset: 0;                   animation-delay: 2.4s; }
+.loader-ripple span:nth-child(2)  { inset: 10px;                 animation-delay: 2.2s; }
+/* …and so on up to span:nth-child(12) { inset: 110px; animation-delay: .2s; } */
+&lt;/style&gt;</pre></code>
+    <button class="copy" type="button" data-tooltip="Copy to clipboard" aria-label="Copy to clipboard"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"></path>
+        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"></path>
+    </svg></button>
+</div>
+<div class="demo">
+    <div class="demo-body"><style>
+  .demo-ripple-stage { display: flex; justify-content: center; padding: 1em 0 2em; background: #c0c0f0; border-radius: 7px; }
+  .demo-ripple {
+    position: relative; width: 250px; height: 250px;
+    transform-style: preserve-3d;
+    transform: perspective(500px) rotateX(60deg);
+  }
+  .demo-ripple span {
+    position: absolute; display: block;
+    border: 5px solid #fff;
+    box-shadow: 0 5px 0 #ccc, inset 0 5px 0 #ccc;
+    box-sizing: border-box; border-radius: 50%;
+    animation: demo-ripple-wave 3s ease-in-out infinite;
+  }
+  @keyframes demo-ripple-wave {
+    0%, 100% { transform: translateZ(-100px); opacity: .1; }
+    50%      { transform: translateZ(100px);  opacity: 1; }
+  }
+  .demo-ripple span:nth-child(1)  { inset: 0;     animation-delay: 2.4s; }
+  .demo-ripple span:nth-child(2)  { inset: 10px;  animation-delay: 2.2s; }
+  .demo-ripple span:nth-child(3)  { inset: 20px;  animation-delay: 2s; }
+  .demo-ripple span:nth-child(4)  { inset: 30px;  animation-delay: 1.8s; }
+  .demo-ripple span:nth-child(5)  { inset: 40px;  animation-delay: 1.6s; }
+  .demo-ripple span:nth-child(6)  { inset: 50px;  animation-delay: 1.4s; }
+  .demo-ripple span:nth-child(7)  { inset: 60px;  animation-delay: 1.2s; }
+  .demo-ripple span:nth-child(8)  { inset: 70px;  animation-delay: 1s; }
+  .demo-ripple span:nth-child(9)  { inset: 80px;  animation-delay: .8s; }
+  .demo-ripple span:nth-child(10) { inset: 90px;  animation-delay: .6s; }
+  .demo-ripple span:nth-child(11) { inset: 100px; animation-delay: .4s; }
+  .demo-ripple span:nth-child(12) { inset: 110px; animation-delay: .2s; }
+</style>
+<div class="demo-ripple-stage">
+  <div class="demo-ripple" role="status" aria-label="Loading">
+    <span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span>
+  </div>
+</div></div>
+</div>
+    <h2 id="example-4">Wireframe cube (canvas)</h2>
+    <p>A rotating 3D cube projected onto 2D canvas — for dashboards that want a heavier, sci-fi loading state.</p>
+
+<div class="copy-block">
+    <code><pre>&lt;canvas id="cube" width="400" height="400"&gt;&lt;/canvas&gt;
+
+&lt;script&gt;
+const ctx = document.getElementById('cube').getContext('2d');
+const vertices = [
+  {x:-1,y:-1,z:-1}, {x:1,y:-1,z:-1}, {x:1,y:1,z:-1}, {x:-1,y:1,z:-1},
+  {x:-1,y:-1,z:1},  {x:1,y:-1,z:1},  {x:1,y:1,z:1},  {x:-1,y:1,z:1},
+];
+const edges = [
+  [0,1],[1,2],[2,3],[3,0], [4,5],[5,6],[6,7],[7,4], [0,4],[1,5],[2,6],[3,7],
+];
+let angleX = 0, angleY = 0, angleZ = 0;
+
+function project(p) {
+  const fov = 300;
+  const scale = fov / (fov + p.z);
+  return { x: p.x * scale * 50 + 200, y: p.y * scale * 50 + 200 };
+}
+function rotate(p) {
+  let { x, y, z } = p;
+  [y, z] = [y * Math.cos(angleX) - z * Math.sin(angleX),
+            y * Math.sin(angleX) + z * Math.cos(angleX)];
+  [x, z] = [x * Math.cos(angleY) + z * Math.sin(angleY),
+           -x * Math.sin(angleY) + z * Math.cos(angleY)];
+  [x, y] = [x * Math.cos(angleZ) - y * Math.sin(angleZ),
+            x * Math.sin(angleZ) + y * Math.cos(angleZ)];
+  return { x, y, z };
+}
+function draw() {
+  ctx.clearRect(0, 0, 400, 400);
+  angleX += .02; angleY += .03; angleZ += .01;
+  edges.forEach(([a, b]) =&gt; {
+    const p1 = project(rotate(vertices[a]));
+    const p2 = project(rotate(vertices[b]));
+    ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
+  });
+  requestAnimationFrame(draw);
+}
+draw();
+&lt;/script&gt;</pre></code>
+    <button class="copy" type="button" data-tooltip="Copy to clipboard" aria-label="Copy to clipboard"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"></path>
+        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"></path>
+    </svg></button>
+</div>
+<div class="demo">
+    <div class="demo-body"><div style="display:flex;justify-content:center">
+  <canvas id="demo-cube-loader" width="400" height="400" style="width:100%;max-width:320px;height:auto;border:1px solid var(--line);border-radius:7px" role="status" aria-label="Loading"></canvas>
+</div></div>
+</div><p><button class="btn btn-primary" type="button">Run animation</button></p>
+</div>
+
+    </article></div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<footer class="docs-footer">
+  GALS v1.2 · <a href="../llms.txt">llms.txt</a> ·
+  <a href="../llms-full.txt">llms-full.txt</a> ·
+  <a href="../AI_PROMPT_TEMPLATE.md">AI prompt</a> ·
+  <a href="../LICENSE">MIT</a>
+</footer>
+<script src="../cdn/gals.min.js" defer></script>
+<script type="module" src="../script/staticDocs.js"></script>
+</body>
+</html>

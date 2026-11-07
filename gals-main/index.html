@@ -4,18 +4,20 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#8512d1">
     <title>GALS — flexbox CSS framework, 186 classes, no build step</title>
 
     <meta name="description" content="GALS (Grid Application Layout Systems) is a dependency-free flexbox CSS framework: 12-column grid, 186 classes, 8 design tokens, 6 breakpoints. Two files, no build step.">
     <link rel="canonical" href="https://ivanivanson.github.io/gals/">
     <link rel="alternate" type="text/plain" href="https://ivanivanson.github.io/gals/llms.txt" title="GALS as plain text for LLMs">
+    <link rel="alternate" type="text/plain" href="https://ivanivanson.github.io/gals/llms-full.txt" title="GALS full documentation for LLMs">
 
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="GALS">
     <meta property="og:locale" content="en_US">
     <meta property="og:url" content="https://ivanivanson.github.io/gals/">
     <meta property="og:title" content="GALS — flexbox CSS framework, 186 classes, no build step">
-    <meta property="og:description" content="A dependency-free flexbox toolkit: 12-column grid, 186 classes, 8 design tokens, 6 breakpoints, ~9 KB optional runtime. Two files and you are building.">
+    <meta property="og:description" content="A dependency-free flexbox toolkit: 12-column grid, 186 classes, 8 design tokens, 6 breakpoints, ~10 KB optional runtime. Two files and you are building.">
     <meta property="og:image" content="https://ivanivanson.github.io/gals/image/logoGals.png">
     <meta property="og:image:width" content="1443">
     <meta property="og:image:height" content="1013">
@@ -23,7 +25,7 @@
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="GALS — flexbox CSS framework, 186 classes, no build step">
-    <meta name="twitter:description" content="A dependency-free flexbox toolkit: 12-column grid, 186 classes, 8 design tokens, 6 breakpoints, ~9 KB optional runtime.">
+    <meta name="twitter:description" content="A dependency-free flexbox toolkit: 12-column grid, 186 classes, 8 design tokens, 6 breakpoints, ~10 KB optional runtime.">
     <meta name="twitter:image" content="https://ivanivanson.github.io/gals/image/logoGals.png">
 
     <link rel="stylesheet" href="./cdn/gals.min.css">
@@ -84,7 +86,7 @@
         "6 responsive breakpoints: xl, l, m, s, xs, xxs",
         "8 design tokens exposed as CSS custom properties",
         "186 documented classes: header, table, buttons, alerts, cards, accordion, modal, tabs, forms",
-        "About 9 KB optional runtime for menu, dropdowns, accordion group, scrollspy and image fitting",
+        "About 10 KB optional runtime for menu, dropdowns, accordion group, scrollspy and image fitting",
         "Machine-readable class reference in llms.txt and llms/gals-classes.json"
       ]
     },
@@ -125,6 +127,7 @@
     </script>
 </head>
 <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     <div class="wrapper">
     
         <div class="content">
@@ -134,17 +137,17 @@
                     <div class="header">
                     <div class="logo">
                         <a href="./index.html">
-                             <img src="./image/logoGals.png" alt="logo" style="width: 99px; height: 66px;">
+                             <img src="./image/logoGals.png" alt="GALS — Grid Application Layout Systems" width="99" height="66" style="width: 99px; height: 66px;">
                         </a>
                    
                     </div>
-                    <div class="menu menu-collapse" id="header-menu">
+                    <nav class="menu menu-collapse" id="header-menu" aria-label="Primary">
                         <ul class="menu-ul">
                             <li>
-                                <a class="active" href="#" data-action="showIntroduction">HOME</a>
+                                <a class="active" href="#" data-action="showIntroduction" aria-current="page">HOME</a>
                             </li>
                             <li>
-                                <a href="#" data-action="showContents">DOC`S</a>
+                                <a href="#" data-action="showContents">DOCS</a>
                             </li>
                             <li>
                                 <a href="#" data-action="history">ABOUT</a>
@@ -202,7 +205,7 @@
                                 </a>
                             </li>
                         </ul>
-                    </div>
+                    </nav>
 
                     <button type="button" class="icon-menu menu-toggle" aria-expanded="false" aria-controls="header-menu" aria-label="Toggle navigation menu">
                         &#8801;
@@ -221,8 +224,8 @@
             <summary>GALS <span>v1.2</span></summary>
             <h4>Latest releases</h4>
             <ul class="version">
-                <li>v1.2</li>
-                <li>v1.1</li>
+                <li><a href="https://github.com/IvanIvanson/gals/tree/v1.2" target="_blank" rel="noopener">v1.2</a> (current)</li>
+                <li><a href="https://github.com/IvanIvanson/gals/tree/v1.1" target="_blank" rel="noopener">v1.1</a> (archive)</li>
             </ul>
         </details>
     </div>
@@ -233,10 +236,10 @@
     </div>
            
    
-            <main>
+            <main id="main">
                 <div class="container space-between">
                     <div class="pt-2  wrap-containerleft">
-                        <div class="container-left">
+                        <nav class="container-left" aria-label="Documentation">
                             <details>
                                 <summary class="details-item">Getting started</summary>
                                 <ul class="list" id="introduction">
@@ -381,10 +384,10 @@
                                     <li class="menu-item">Translations</li>
                                 </ul>
                             </details>
-                        </div>
+                        </nav>
                     </div>
 
-                    <div class="pt-8 container-fluid  container-center">
+                    <div class="pt-8 container-fluid  container-center" aria-live="polite">
                     <!-- prerender:start: генерируется `npm run build:prerender`, правка вручную затирается -->
 <div class="content-between align-center">
     <h1>Get started with GALS</h1>
@@ -395,7 +398,7 @@
 <p>Every class is also published as machine-readable reference — <a href="./llms.txt">llms.txt</a> and <a href="./llms/gals-classes.json">gals-classes.json</a> — so ChatGPT, Claude or Copilot generate real GALS markup instead of inventing Bootstrap classes. <a href="#ai">How it works ↓</a></p>
 </div>
 
-<h3 id="see-it-work">See it work</h3>
+<h2 id="see-it-work">See it work</h2>
 <p>Everything below is plain HTML with GALS classes — no React, no build step. Click to try.</p>
 
 <div class="demo">
@@ -433,7 +436,7 @@
     </ul>
 </div>
 <div class="quick-start">
-     <h3 id="start">Quick start</h3>
+     <h2 id="start">Quick start</h2>
 
     <p>Get started by including GALS’s production-ready CSS and JavaScript  without the need for any build steps.
     See it in practice with this <a href="https://codepen.io/IvanIvan/pen/LYVMxGp" target="_blank" rel="noopener">GALS CodePen demo</a>.</p>
@@ -471,7 +474,7 @@
        
     </div>
     <!--  -->
- <p id="css">2. <strong>CSS</strong>.</p>
+ <h2 id="css">2. CSS</h2>
                             <p>Copy-paste the stylesheet
                             <span style="color:rgb(212, 38, 38);font-size:18px;"><code>&#60;link&#62;</code></span> into your <span style="color:rgb(212, 38, 38);font-size:18px;"><code>&#60;head&#62;</code> 
                             </span> before all other stylesheets to load our CSS. To ensure that the GALS styles do not interrupt the styles that you will define.
@@ -491,7 +494,7 @@
 <!--  -->
 
  <!--  -->
- <p id="js">3. <strong>JS</strong>.</p>
+ <h2 id="js">3. JS</h2>
                             <p>Place one of the following
                             <span style="color:rgb(212, 38, 38);font-size:18px;"><code >&#60;script&#62;</code></span>near the end of your pages, right before the closing<span style="color:rgb(212, 38, 38);font-size:18px;"><code>&#60;body&#62;</code> 
                             </span> tag, to enable them.
@@ -509,7 +512,7 @@
         </svg></button>
 </div>
 <!--  -->
-<h3 id="cdn">jsDelivr CDN</h3>
+<h2 id="cdn">jsDelivr CDN</h2>
 <p>You can load GALS directly from jsDelivr — no download, no build step.
 Just point to the <code>cdn/</code> folder in the repository.</p>
 
@@ -534,7 +537,7 @@ Just point to the <code>cdn/</code> folder in the repository.</p>
 </p>
 <!--  -->
 
-<h3 id="ai">Built for AI</h3>
+<h2 id="ai">Built for AI</h2>
 <p>GALS is written to be read by a model, not only by a person. Three machine-readable files ship with the site, and each one is checked by the test suite, so a model is never handed a class that does not exist.</p>
 
 <ul>
@@ -545,7 +548,7 @@ Just point to the <code>cdn/</code> folder in the repository.</p>
 
 <p>The JSON is generated from <code>gals.css</code> itself and the test suite fails if the two drift apart. It also carries a <code>doesNotExist</code> list (<code>.row</code>, <code>.col</code>, <code>mt-*</code>, <code>mb-*</code>) — the Bootstrap and Tailwind habits a model falls back to by default — so a generated answer can be checked against real mistakes instead of plausible ones.</p>
 
-<h3 id="ai-prompt">Ask AI the right way</h3>
+<h2 id="ai-prompt">Ask AI the right way</h2>
 <p>Copy this prompt template, paste it into ChatGPT, Claude, GitHub Copilot or Cursor, and replace the text in <code>[SQUARE BRACKETS]</code> with your task.</p>
 
 <div class="copy-block">
@@ -605,6 +608,7 @@ Context:
                     <time datetime="2026-11-07">7 November 2026</time>
                     &middot; <a href="https://github.com/IvanIvanson/gals/blob/main/CHANGELOG.md" target="_blank" rel="noopener">Release notes</a>
                     &middot; <a href="./llms.txt">llms.txt</a>
+                    &middot; <a href="./docs/">Docs index</a>
                 </p>
             </div>
         </footer>

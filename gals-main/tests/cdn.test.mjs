@@ -232,7 +232,7 @@ describe('jsDelivr CDN в документации', () => {
 
     const cdnSection = doc.querySelector('#cdn');
     assert.ok(cdnSection, 'секция #cdn не найдена в DOM');
-    assert.equal(cdnSection.tagName, 'H3', '#cdn — не h3');
+    assert.equal(cdnSection.tagName, 'H2', '#cdn — не h2');
 
     // Все ссылки с target="_blank" имеют rel="noopener".
     for (const a of doc.querySelectorAll('a[target="_blank"]')) {

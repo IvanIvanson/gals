@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#8512d1">
+  <title>Verification form — GALS</title>
+  <meta name="description" content="Код подтверждения из четырёх ячеек: цифры распределяются по полям, Backspace и стрелки переносят фокус, вставка разкладывается по всем ячейкам сразу.">
+  <link rel="canonical" href="https://ivanivanson.github.io/gals/docs/verification-form.html">
+  <link rel="alternate" type="text/plain" href="../llms.txt" title="GALS for LLMs">
+  <link rel="alternate" type="text/plain" href="../llms-full.txt" title="GALS full documentation for LLMs">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="GALS">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:url" content="https://ivanivanson.github.io/gals/docs/verification-form.html">
+  <meta property="og:title" content="Verification form — GALS">
+  <meta property="og:description" content="Код подтверждения из четырёх ячеек: цифры распределяются по полям, Backspace и стрелки переносят фокус, вставка разкладывается по всем ячейкам сразу.">
+  <meta property="og:image" content="https://ivanivanson.github.io/gals/image/logoGals.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Verification form — GALS">
+  <meta name="twitter:description" content="Код подтверждения из четырёх ячеек: цифры распределяются по полям, Backspace и стрелки переносят фокус, вставка разкладывается по всем ячейкам сразу.">
+  <meta name="twitter:image" content="https://ivanivanson.github.io/gals/image/logoGals.png">
+
+  <link rel="stylesheet" href="../cdn/gals.min.css">
+  <link rel="stylesheet" href="../style.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"TechArticle","headline":"Verification form","description":"Код подтверждения из четырёх ячеек: цифры распределяются по полям, Backspace и стрелки переносят фокус, вставка разкладывается по всем ячейкам сразу.","url":"https://ivanivanson.github.io/gals/docs/verification-form.html","mainEntityOfPage":"https://ivanivanson.github.io/gals/docs/verification-form.html","dateModified":"2026-11-07","author":{"@type":"Organization","name":"GALS"},"publisher":{"@type":"Organization","name":"GALS","url":"https://ivanivanson.github.io/gals/"},"isPartOf":{"@type":"WebSite","name":"GALS documentation","url":"https://ivanivanson.github.io/gals/"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"GALS","item":"https://ivanivanson.github.io/gals/"},{"@type":"ListItem","position":2,"name":"Docs","item":"https://ivanivanson.github.io/gals/docs/"},{"@type":"ListItem","position":3,"name":"Verification form","item":"https://ivanivanson.github.io/gals/docs/verification-form.html"}]}]}</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="header header-sticky docs-header">
+  <a class="header-brand" href="../index.html">GALS</a>
+  <nav class="header-nav" aria-label="Primary">
+    <ul>
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="index.html">Docs</a></li>
+      <li><a href="../llms.txt">llms.txt</a></li>
+    </ul>
+  </nav>
+  <div class="header-actions">
+    <a class="btn" href="../download/grid.zip" download>Download</a>
+  </div>
+</header>
+<div class="wrapper">
+  <div class="content">
+    <main id="main" class="docs-main">
+      <div class="container">
+        <div class="container-block pt-3 pt-s12">
+<nav class="docs-nav" aria-label="Documentation">
+  <p class="docs-nav-title"><a href="../index.html">GALS</a> / <a href="index.html">Docs</a></p>
+
+  <details class="docs-nav-group" open>
+    <summary>Getting started</summary>
+    <ul><li><a href="../index.html">Introduction</a></li><li><a href="download.html">Download</a></li><li><a href="contents.html">Contents</a></li></ul>
+  </details>
+  <details class="docs-nav-group" open>
+    <summary>Settings</summary>
+    <ul><li><a href="css-variables.html">CSS variables</a></li><li><a href="js-modules.html">JS modules</a></li><li><a href="components.html">Components</a></li></ul>
+  </details>
+  <details class="docs-nav-group" open>
+    <summary>Layout</summary>
+    <ul><li><a href="breakpoints.html">Breakpoints</a></li><li><a href="containers.html">Containers</a></li><li><a href="grid.html">Grid</a></li><li><a href="columns.html">Columns</a></li><li><a href="gutters.html">Gutters</a></li><li><a href="z-index.html">Z-index</a></li></ul>
+  </details>
+  <details class="docs-nav-group" open>
+    <summary>Content</summary>
+    <ul><li><a href="header.html">Header</a></li><li><a href="table.html">Table</a></li><li><a href="images.html">Images</a></li><li><a href="charts.html">Charts</a></li><li><a href="icons.html">Icons</a></li></ul>
+  </details>
+  <details class="docs-nav-group" open>
+    <summary>Forms</summary>
+    <ul><li><a href="form-controls.html">Form controls</a></li><li><a href="select.html">Select</a></li><li><a href="checkbox-radio.html">Checkbox&amp;Radio</a></li><li><a href="range.html">Range</a></li></ul>
+  </details>
+  <details class="docs-nav-group" open>
+    <summary>Components</summary>
+    <ul><li><a href="accordion.html">Accordion</a></li><li><a href="alert.html">Alert</a></li><li><a href="buttons.html">Buttons</a></li><li><a href="card.html">Card</a></li><li><a href="carousel.html">Carousel</a></li><li><a href="dropdowns.html">Dropdowns</a></li><li><a href="modal.html">Modal</a></li><li><a href="menu.html">Menu</a></li><li><a href="post-search.html">Post &amp; Search</a></li><li><a href="verification-form.html" aria-current="page">Verification form</a></li><li><a href="tabs.html">Tabs</a></li><li><a href="pagination.html">Pagination</a></li><li><a href="popovers.html">Popovers</a></li><li><a href="progress.html">Progress</a></li><li><a href="scrollspy.html">Scrollspy</a></li><li><a href="loaders.html">Loaders</a></li><li><a href="morphing-range.html">Morphing range</a></li><li><a href="morphing-buttons.html">Morphing buttons</a></li><li><a href="morphing-checked-button.html">Morphing checked button</a></li></ul>
+  </details>
+  <details class="docs-nav-group" open>
+    <summary>Features</summary>
+    <ul><li><a href="toast.html">Toast</a></li><li><a href="dismissible-alert.html">Dismissible alert</a></li><li><a href="dropdown-menu.html">Dropdown menu</a></li><li><a href="hamburger.html">Hamburger</a></li><li><a href="tooltip.html">Tooltip</a></li><li><a href="popover.html">Popover</a></li><li><a href="theme-switcher.html">Theme switcher</a></li><li><a href="appearance-animation.html">Appearance animation</a></li><li><a href="basket-counter.html">Basket counter</a></li><li><a href="clipboard.html">Clipboard</a></li><li><a href="toggle.html">Toggle</a></li><li><a href="styled-range.html">Styled range</a></li><li><a href="bounce.html">Bounce</a></li><li><a href="bounce-cube.html">Bounce cube</a></li><li><a href="card-3d.html">Card 3d</a></li><li><a href="card-hover.html">Card hover</a></li><li><a href="card-read-more.html">Card read more</a></li><li><a href="card-vegetables.html">Card vegetables</a></li><li><a href="cards-from-array.html">Cards from array</a></li><li><a href="border-gradient.html">Border gradient</a></li><li><a href="modal-bounce.html">Modal bounce</a></li><li><a href="table-editor.html">Table editor</a></li><li><a href="canvas-chart.html">Canvas chart</a></li><li><a href="chartjs.html">Chartjs</a></li><li><a href="interactive-canvas.html">Interactive canvas</a></li><li><a href="distance-calculator.html">Distance calculator</a></li><li><a href="parabola-drawer.html">Parabola drawer</a></li><li><a href="battery-indicator.html">Battery indicator</a></li><li><a href="gradient-text.html">Gradient text</a></li><li><a href="box-size-indicator.html">Box size indicator</a></li><li><a href="grid-canvas.html">Grid canvas</a></li><li><a href="color-palette.html">Color palette</a></li><li><a href="clamp-font.html">Clamp font</a></li><li><a href="person-cards.html">Person cards</a></li><li><a href="star-rating.html">Star rating</a></li><li><a href="morphing-style-landing.html">Morphing style landing</a></li></ul>
+  </details>
+  <details class="docs-nav-group" open>
+    <summary>Helpers</summary>
+    <ul><li><a href="colors-collection.html">Colors collection</a></li><li><a href="classes.html">Classes</a></li><li><a href="controls-audio.html">Controls Audio</a></li><li><a href="controls-video.html">Controls Video</a></li><li><a href="controls-visible.html">Controls visible</a></li><li><a href="canvas-for-your-projects.html">Canvas for your projects</a></li></ul>
+  </details>
+  <details class="docs-nav-group" open>
+    <summary>About</summary>
+    <ul><li><a href="history.html">History</a></li><li><a href="team.html">Team</a></li><li><a href="brand.html">Brand</a></li><li><a href="translations.html">Translations</a></li></ul>
+  </details>
+</nav></div>
+        <div class="container-block pt-9 pt-s12 docs-body">
+    <nav class="docs-breadcrumb" aria-label="Breadcrumb">
+      <a href="../index.html">GALS</a> / <a href="index.html">Docs</a> / <span>Verification form</span>
+    </nav>
+    <div class="docs-static-note">
+      Static reading version. Interactive demos and search are on the
+      <a href="../index.html">main documentation page</a>.
+    </div>
+    <nav class="docs-toc" aria-label="On this page">
+  <p class="docs-toc-title">On this page</p>
+  <ul><li><a href="#usage">Usage</a></li><li><a href="#demo">Live demo</a></li><li><a href="#notes">Notes</a></li></ul>
+</nav>
+    <article class="docs-article container-center">
+
+<div class="content-between align-center">
+    <h1>Verification form</h1>
+    <span class="badge badge-stable">Stable</span>
+</div>
+
+<div><p>Код подтверждения из четырёх ячеек: цифры распределяются по полям, Backspace и стрелки переносят фокус, вставка разкладывается по всем ячейкам сразу.</p></div>
+
+
+<div class="quick-start">
+    <h2 id="usage">Usage</h2>
+
+<div class="copy-block">
+    <code><pre>&lt;div class="verify-code"&gt;
+  &lt;h2 id="vc-title"&gt;Validation code&lt;/h2&gt;
+  &lt;p&gt;We have sent a verification code to your email.&lt;/p&gt;
+
+  &lt;form onsubmit="return confirmCode(this)"&gt;
+    &lt;div class="code-fields" role="group" aria-labelledby="vc-title"&gt;
+      &lt;input class="code-input" type="text" inputmode="numeric"
+             autocomplete="one-time-code" pattern="[0-9]" maxlength="1" required
+             aria-label="Digit 1 of 4"
+             oninput="codeInput(this)"
+             onkeydown="codeKeydown(this, event)"
+             onpaste="codePaste(this, event)"&gt;
+      &lt;input class="code-input" type="text" inputmode="numeric"
+             autocomplete="off" pattern="[0-9]" maxlength="1" required
+             aria-label="Digit 2 of 4"
+             oninput="codeInput(this)"
+             onkeydown="codeKeydown(this, event)"
+             onpaste="codePaste(this, event)"&gt;
+      &lt;!-- …ещё две ячейки --&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Собранный код уходит на сервер одним полем --&gt;
+    &lt;input type="hidden" name="code"&gt;
+    &lt;button class="btn btn-primary" type="submit"&gt;Confirm&lt;/button&gt;
+    &lt;p class="code-status" role="status" aria-live="polite"&gt;&lt;/p&gt;
+  &lt;/form&gt;
+&lt;/div&gt;
+
+&lt;style&gt;
+.verify-code { width: 100%; max-width: 323px; }
+.code-fields {
+  display: flex; flex-wrap: nowrap; align-items: flex-start;
+  gap: 10px; margin: 0 0 20px;
+}
+.code-input {
+  flex: 1 1 0; min-width: 0; width: auto; height: auto;
+  min-height: 44px; aspect-ratio: 1; padding: 0;
+  font-size: 20px; text-align: center;
+  border: 2px solid #ddd; border-radius: 15px;
+}
+.code-input.is-filled { border-color: #bd5518; }
+.code-input:focus-visible {
+  outline: 3px solid #6b2705; outline-offset: 2px;
+  border-color: #a8410c;
+}
+.code-status { min-height: 20px; margin: 12px 0 0; font-size: 14px; }
+.code-status.is-ok  { color: #16692c; }
+.code-status.is-err { color: #b3261e; }
+&lt;/style&gt;
+
+&lt;script&gt;
+function codeInput(input) {
+  var fields = Array.prototype.slice.call(
+    input.closest('.verify-code').querySelectorAll('.code-input'));
+  var index = fields.indexOf(input);
+
+  // maxlength="1" не спасает от автоподстановки кода из SMS: цифр может
+  // прийти несколько — раздаём их по следующим полям.
+  var digits = input.value.replace(/D/g, '');
+  input.value = digits.slice(0, 1);
+
+  var cursor = index;
+  for (var i = 1; i &lt; digits.length &amp;&amp; cursor + 1 &lt; fields.length; i++) {
+    fields[++cursor].value = digits.charAt(i);
+  }
+
+  fields.forEach(function (f) {
+    f.classList.toggle('is-filled', f.value !== '');
+  });
+  if (input.value &amp;&amp; cursor + 1 &lt; fields.length) fields[cursor + 1].focus();
+}
+
+function codeKeydown(input, event) {
+  var fields = Array.prototype.slice.call(
+    input.closest('.verify-code').querySelectorAll('.code-input'));
+  var index = fields.indexOf(input);
+  var last = fields.length - 1;
+
+  if (event.key === 'Backspace' &amp;&amp; input.value === '' &amp;&amp; index &gt; 0) {
+    fields[index - 1].focus();
+  } else if (event.key === 'ArrowLeft' &amp;&amp; index &gt; 0) {
+    fields[index - 1].focus();
+  } else if (event.key === 'ArrowRight' &amp;&amp; index &lt; last) {
+    fields[index + 1].focus();
+  }
+}
+
+function codePaste(input, event) {
+  var fields = Array.prototype.slice.call(
+    input.closest('.verify-code').querySelectorAll('.code-input'));
+  var index = fields.indexOf(input);
+  var digits = event.clipboardData.getData('text').replace(/D/g, '');
+  if (!digits) return;
+
+  event.preventDefault();
+  // Вставка идёт от активного поля, а не всегда с первого.
+  fields.forEach(function (f, i) {
+    if (i &gt;= index) f.value = digits.charAt(i - index) || '';
+  });
+  fields.forEach(function (f) {
+    f.classList.toggle('is-filled', f.value !== '');
+  });
+
+  var empty = fields.slice(index).filter(function (f) { return f.value === ''; })[0];
+  (empty || fields[fields.length - 1]).focus();
+}
+
+function confirmCode(form) {
+  var fields = Array.prototype.slice.call(
+    form.querySelectorAll('.code-input'));
+  var code = fields.map(function (f) { return f.value; }).join('');
+  var status = form.querySelector('.code-status');
+  form.querySelector('[name="code"]').value = code;
+
+  if (code.length !== fields.length) {
+    status.className = 'code-status is-err';
+    status.textContent = 'Enter all four digits.';
+    fields.filter(function (f) { return f.value === ''; })[0].focus();
+    return false;
+  }
+
+  status.className = 'code-status is-ok';
+  status.textContent = 'Code ' + code + ' confirmed.';
+  return false;
+}
+&lt;/script&gt;</pre></code>
+    <button class="copy" type="button" data-tooltip="Copy to clipboard" aria-label="Copy to clipboard"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"></path>
+        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"></path>
+    </svg></button>
+</div>
+    <h2 id="demo">Live demo</h2>
+
+<div class="demo">
+    <div class="demo-body"><style>
+  .demo-vf-stage {
+    display: flex; justify-content: center; padding: 28px 12px;
+    background: #fbceb1; border-radius: 7px;
+  }
+  .demo-vf {
+    width: 100%; max-width: 323px; background: #fff;
+    border-radius: 30px; padding: 34px clamp(18px, 7vw, 38px);
+  }
+  .demo-vf h2 { margin: 0 0 12px; font-size: 22px; }
+  .demo-vf-lead {
+    max-width: 220px; margin: 0 0 22px;
+    font-size: 16px; font-weight: 500; color: #6b6b6b;
+  }
+  /*
+   * nowrap + flex: 1 1 0 вместо четырёх фиксированных 60px: ряд всегда делит
+   * ширину карточки на четыре части. Перенос строки физически невозможен —
+   * при flex-wrap: wrap четыре поля по 60px (270px) не влезали в контент
+   * карточки 323 - 38*2 = 247px, и четвёртое перескакивало на вторую строку.
+   */
+  .demo-vf-fields {
+    display: flex; flex-wrap: nowrap; align-items: flex-start;
+    gap: 10px; margin: 0 0 22px;
+  }
+  .demo-vf-input {
+    flex: 1 1 0; min-width: 0; width: auto; height: auto;
+    min-height: 44px; aspect-ratio: 1; padding: 0;
+    font-size: 20px; text-align: center;
+    color: #1c1c1c; background: #fff;
+    border: 2px solid #ddd; border-radius: 15px;
+    transition: border-color .2s;
+  }
+  .demo-vf-input.is-filled { border-color: #bd5518; }
+  .demo-vf-input:focus-visible {
+    outline: 3px solid #6b2705; outline-offset: 2px;
+    border-color: #a8410c;
+  }
+  .demo-vf-btn {
+    width: 100%; border: 0; border-radius: 40px; cursor: pointer;
+    padding: 18px 45px; font: inherit; font-weight: 700; font-size: 18px;
+    color: #fff; box-shadow: 0 9px 14px 0 rgba(168,65,12,.25);
+    background: linear-gradient(180deg, #bd5518 0%, #a8410c 100%);
+  }
+  .demo-vf-btn:hover { background: linear-gradient(180deg, #a8410c 0%, #8f360a 100%); }
+  .demo-vf-btn:focus-visible {
+    outline: 3px solid #6b2705; outline-offset: 3px;
+  }
+  .demo-vf-status { min-height: 20px; margin: 12px 0 0; font-size: 14px; color: #6b6b6b; }
+  .demo-vf-status.is-ok  { color: #16692c; }
+  .demo-vf-status.is-err { color: #b3261e; }
+</style>
+<div class="demo-vf-stage">
+  <div class="demo-vf">
+    <h2 id="demo-vf-title">Validation code</h2>
+    <p class="demo-vf-lead">We have sent a verification code to your email.</p>
+
+    <form>
+      <div class="demo-vf-fields" role="group" aria-labelledby="demo-vf-title">
+        <input class="demo-vf-input" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]" maxlength="1" required="" aria-label="Digit 1 of 4" onpaste="window.__galsComponents.handleCodePaste(this, event)">
+        <input class="demo-vf-input" type="text" inputmode="numeric" autocomplete="off" pattern="[0-9]" maxlength="1" required="" aria-label="Digit 2 of 4" onpaste="window.__galsComponents.handleCodePaste(this, event)">
+        <input class="demo-vf-input" type="text" inputmode="numeric" autocomplete="off" pattern="[0-9]" maxlength="1" required="" aria-label="Digit 3 of 4" onpaste="window.__galsComponents.handleCodePaste(this, event)">
+        <input class="demo-vf-input" type="text" inputmode="numeric" autocomplete="off" pattern="[0-9]" maxlength="1" required="" aria-label="Digit 4 of 4" onpaste="window.__galsComponents.handleCodePaste(this, event)">
+      </div>
+
+      <input type="hidden" class="demo-vf-code" name="code">
+      <button class="demo-vf-btn" type="submit">Confirm</button>
+      <p class="demo-vf-status" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</div></div>
+    <p class="demo-caption">Печатайте — фокус сам переходит вперёд. Backspace на пустой ячейке возвращается назад, вставьте весь код сразу.</p>
+</div>
+    <h2 id="notes">Notes</h2>
+    <p><strong>Главный баг исходника:</strong> <code>index &lt; index.length - 1</code>. У числа нет свойства <code>length</code>, сравнение <code>0 &lt; undefined</code> всегда <code>false</code> — стрелка <kbd>→</kbd> не работала никогда. Исправлено на <code>index &lt; fields.length - 1</code>.</p>
+<p><code>document.querySelectorAll('input')</code> выбирал <em>все</em> input страницы — включая поиск в сайдбаре. Заменено на <code>root.querySelectorAll('.demo-vf-input')</code>.</p>
+<p><code>window.onload</code> в документации не сработал бы: HTML вставляется через <code>innerHTML</code>, и скрипты внутри не исполняются. Обработчики вынесены в <code>window.__galsComponents</code> и вызываются из inline-атрибутов.</p>
+<p><strong>Вставка игнорировала активное поле:</strong> код всегда ложился в <code>inputs[0..]</code>, поэтому вставка из третьей ячейки перезаписывала первые. Теперь вставка идёт от активного поля.</p>
+<p><strong>Автоподстановка кода из SMS ломалась:</strong> <code>maxlength="1"</code> плюс <code>.charAt(0)</code> выбрасывали лишние цифры, которые присылает браузер. Теперь пришедшие цифры раздаются по следующим полям. Первому полю добавлен <code>autocomplete="one-time-code"</code> — именно он включает системную подсказку кода на iOS, Android и в Chrome.</p>
+<p>Класс <code>.active</code> разъезжался: paste вешал его на все поля, Backspace снимал только с одного, а правка первой ячейки оставляла подсветку на остальных. Теперь состояние всех ячеек пересчитывается целиком (<code>paintCode</code>).</p>
+<p><code>outline: none</code> без замены лишал поле видимого фокуса — клавиатурная навигация по коду становилась вслепую. Добавлено кольцо <code>:focus-visible</code>.</p>
+<p>Четыре голых input скринридер объявляет как «edit text» без объяснения. Добавлены <code>aria-label="Digit N of 4"</code> и <code>role="group"</code> с <code>aria-labelledby</code> на контейнер.</p>
+<p>Отправлялся <code>maxlength="1"</code> без <code>name</code> — на сервер не уходило ничего. Добавлено скрытое поле <code>name="code"</code>, куда хелпер складывает собранный код.</p>
+<p>Форма вела на <code>action="#"</code> и ничего не сообщала о результате. Добавлен <code>&lt;p role="status" aria-live="polite"&gt;</code> — он объявляет и ошибку, и успех. Здесь он подтверждает любой код: настоящая проверка живёт на сервере, клиент не может ей доверять.</p>
+<p>Глобальные <code>* { margin:0; padding:0 }</code>, <code>body</code>, <code>h2</code>, <code>p</code>, <code>input</code>, <code>button</code> и <code>form &gt; div</code> обнулили бы отступы и перекрасили формы всей документации. Все селекторы скоуплены к <code>.demo-vf-*</code>.</p>
+<p>Фиксированная <code>height: 350px</code> блоки растягивал текст, масштаб или перевод. Заменена на автовысоту; <code>padding: 90px 38px 38px</code> — на обычный отступ.</p>
+<p>Подпись <code>#b6b6b6</code> на белом — контраст ~2:1, код не читается. Тёмно-оранжевая кнопка с белым текстом (<code>#ff8d4d</code>) давала ~2.3:1. Оба цвета затемнены до ~5:1 и ~4.7:1.</p>
+<p>Мелочи: <code>padding:4</code> без единиц CSS игнорирует (исправлено на <code>0</code>), <code>&lt;button&gt;</code> без <code>type</code> внутри формы отправлял бы её молча — теперь <code>type="submit"</code> явно, а <code>onsubmit</code> возвращает <code>false</code>.</p>
+</div>
+
+    </article></div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<footer class="docs-footer">
+  GALS v1.2 · <a href="../llms.txt">llms.txt</a> ·
+  <a href="../llms-full.txt">llms-full.txt</a> ·
+  <a href="../AI_PROMPT_TEMPLATE.md">AI prompt</a> ·
+  <a href="../LICENSE">MIT</a>
+</footer>
+<script src="../cdn/gals.min.js" defer></script>
+<script type="module" src="../script/staticDocs.js"></script>
+</body>
+</html>

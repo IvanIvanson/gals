@@ -76,7 +76,7 @@ export const page = ({ title, lead, status = 'stable', blocks }) => {
   const sections = blocks.map(({ id, label }) => ({ id, label }));
 
   const body = blocks
-    .map((block) => `\n    <h3 id="${block.id}">${block.label}</h3>\n    ${block.html}`)
+    .map((block) => `\n    <h2 id="${block.id}">${block.label}</h2>\n    ${block.html}`)
     .join('');
 
   const html = `

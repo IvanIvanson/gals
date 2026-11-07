@@ -17,16 +17,57 @@
 
   // menu-------
   const initMenu = function () {
-    const menu = document.querySelector(".menu");
-    const btnIconMenu = document.querySelector(".icon-menu");
+    document.querySelectorAll(".icon-menu").forEach(function (btnIconMenu) {
+      const controlled = btnIconMenu.getAttribute("aria-controls");
+      const menu = controlled
+        ? document.getElementById(controlled)
+        : document.querySelector(".menu");
 
-    if (!menu || !btnIconMenu) {
-      return;
-    }
+      if (!menu) {
+        return;
+      }
 
-    btnIconMenu.addEventListener("click", function () {
-      const opened = menu.classList.toggle("menu-show");
-      btnIconMenu.setAttribute("aria-expanded", String(opened));
+      const setOpen = function (open) {
+        menu.classList.toggle("menu-show", open);
+        btnIconMenu.setAttribute("aria-expanded", String(open));
+
+        if (open) {
+          const first = menu.querySelector("a, button");
+          if (first) {
+            first.focus({ preventScroll: true });
+          }
+        } else if (menu.contains(document.activeElement)) {
+          btnIconMenu.focus({ preventScroll: true });
+        }
+      };
+
+      btnIconMenu.addEventListener("click", function () {
+        setOpen(!menu.classList.contains("menu-show"));
+      });
+
+      // Escape и клик вне меню — базовое поведение disclosure-паттерна.
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape" && btnIconMenu.getAttribute("aria-expanded") === "true") {
+          setOpen(false);
+          btnIconMenu.focus({ preventScroll: true });
+        }
+      });
+
+      document.addEventListener("click", function (event) {
+        if (
+          btnIconMenu.getAttribute("aria-expanded") === "true" &&
+          !menu.contains(event.target) &&
+          !btnIconMenu.contains(event.target)
+        ) {
+          setOpen(false);
+        }
+      });
+
+      menu.addEventListener("click", function (event) {
+        if (event.target.closest("a")) {
+          setOpen(false);
+        }
+      });
     });
   };
 

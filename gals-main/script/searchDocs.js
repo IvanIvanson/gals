@@ -21,6 +21,12 @@ const buildIndex = (pages) =>
       const holder = document.createElement('div');
       holder.innerHTML = page.html;
 
+      // <script>/<style> не являются текстом страницы. Код и примеры
+      // оставляем: поиск по именам классов — основной сценарий документации.
+      holder.querySelectorAll('script, style').forEach((el) => {
+        el.remove();
+      });
+
       const title = collapse(holder.querySelector('h1')?.textContent || key);
       const text = collapse(holder.textContent);
 
@@ -114,11 +120,10 @@ const searchDocs = function ({ pages, open } = {}) {
   };
 
   const choose = (option) => {
-    open(option.key);
+    open(option.key, { focus: true, updateTitle: true });
     input.value = '';
     close();
     input.blur();
-    window.scrollTo(0, 0);
   };
 
   const render = (query) => {

@@ -356,6 +356,15 @@
           color: #333;
         }
 
+        h2 {
+          font-size: var(--fs-h3);
+          line-height: var(--lh-h3);
+          padding-top: 20px;
+          font-family: 'Montserrat', sans-serif;
+          font-weight: 600;
+          color: #333;
+        }
+
         // Только размерная подгонка: рамку, фон и цвета кнопке
         // теперь даёт фреймворк (.btn / .btn-primary в gals.css),
         // поэтому центр колонки их не перекрывает — иначе живые
@@ -381,6 +390,7 @@
         .quick-start {
           @include tooltip;
 
+          h2,
           h3 {
             font-size: var(--fs-h3);
             line-height: var(--lh-h3);

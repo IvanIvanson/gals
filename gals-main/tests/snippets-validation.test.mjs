@@ -6,7 +6,6 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const MODULES = [
-  'script/headerUlLiversion.js',
   'script/addStyleDetailsLeft.js',
   'script/detailsLeftUlLi.js',
   'script/renderCenterBlock.js',

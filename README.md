@@ -3,7 +3,7 @@
 Lightweight flexbox toolkit for rapid prototyping and production.
 
 - 12-column flex grid, 6 breakpoints, 186 class selectors (90 `pt-*` columns, 12 `input-*` widths, 84 component/utility classes).
-- 22.7 KB source CSS → 16.0 KB minified → **3.4 KB gzip**; 9.0 KB JS → 3.5 KB → **1.4 KB gzip**.
+- 22.7 KB source CSS → 16.0 KB minified → **3.4 KB gzip**; 10.4 KB JS → 4.2 KB → **1.5 KB gzip**.
 - Zero runtime dependencies, no build step for users, no framework lock-in.
 
 ## Quick start
@@ -50,8 +50,8 @@ GALS uses `:focus-visible`, `aspect-ratio`, flex `gap`, `<dialog>` and the Popov
 
 ```bash
 npm ci
-npm test            # 102 tests, 18 suites
-npm run build       # site CSS + CDN min + classes JSON + prerender + zip
+npm test            # 105 tests, 18 suites
+npm run build       # site CSS + CDN min + classes JSON + prerender + static docs + zip
 npm run check:demo  # asset existence + class declaration check
 npm run check:prerender
 ```
@@ -79,7 +79,9 @@ The `@main` tag also works and always serves the latest commit, but it can chang
 GALS ships machine-readable reference files:
 
 - [`llms.txt`](https://ivanivanson.github.io/gals/llms.txt) — the whole framework as plain text
+- [`llms-full.txt`](https://ivanivanson.github.io/gals/llms-full.txt) — every documentation page as one text file
 - [`llms/gals-classes.json`](https://ivanivanson.github.io/gals/llms/gals-classes.json) — 186 classes + 8 tokens as structured data, including `doesNotExist` and replacement hints
+- [`docs/`](https://ivanivanson.github.io/gals/docs/) — static, crawlable documentation pages with per-page metadata
 - [`AI_PROMPT_TEMPLATE.md`](https://ivanivanson.github.io/gals/AI_PROMPT_TEMPLATE.md) — the prompt template
 - [`AGENTS.md`](AGENTS.md) — rules for coding agents working in this repository
 

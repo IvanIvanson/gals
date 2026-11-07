@@ -100,7 +100,7 @@ report(missing.length === 0, `${used.size} классов использован
 if (LIVE) {
   console.log('\nGitHub Pages:');
 
-  for (const path of ['/', '/index.html', '/gals/gals.css', '/gals/gals.js', '/style.css', '/index.js', '/llms.txt', '/llms/gals-classes.json']) {
+  for (const path of ['/', '/index.html', '/gals/gals.css', '/gals/gals.js', '/style.css', '/index.js', '/llms.txt', '/llms-full.txt', '/llms/gals-classes.json', '/docs/', '/docs/accordion.html', '/download/grid.zip.sha256']) {
     try {
       const res = await fetch(PAGES + path);
       report(res.ok, path, `${res.status} ${res.headers.get('content-type') || ''}`);

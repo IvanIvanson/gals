@@ -80,7 +80,7 @@ ${notice(
 const jsModules = page({
   title: 'JS modules',
   lead:
-    'gals.js is one immediately invoked function of under three hundred lines. It has no exports, no '
+    'gals.js is one immediately invoked function of about 330 lines. It has no exports, no '
     + 'dependencies and nothing to import — it finds its own hooks in the DOM.',
   blocks: [
     {

@@ -56,6 +56,7 @@ const copy = async (text) => {
 const notify = (block, button, ok) => {
   block.querySelector('.copy-alert')?.remove();
 
+  const label = button.getAttribute('aria-label') || 'Copy code to clipboard';
   const alertBox = document.createElement('div');
   // copy-alert, а не alert: .alert теперь компонент фреймворка
   // со своей рамкой и отступами, попапу копирования они не нужны.
@@ -64,8 +65,12 @@ const notify = (block, button, ok) => {
   alertBox.textContent = ok ? 'Copied!' : 'Copy failed';
   block.appendChild(alertBox);
 
-  setTimeout(() => alertBox.remove(), ALERT_TTL);
   button.setAttribute('aria-label', ok ? 'Copied' : 'Copy failed');
+
+  setTimeout(() => {
+    alertBox.remove();
+    button.setAttribute('aria-label', label);
+  }, ALERT_TTL);
 };
 
 /**

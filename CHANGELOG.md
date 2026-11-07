@@ -1,5 +1,25 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- Static, crawlable documentation pages at `docs/<slug>.html` with unique title, description,
+  canonical, Open Graph and `TechArticle` JSON-LD (`npm run build:docs`).
+- `docs/index.html` documentation index and 87-URL sitemap.
+- `llms-full.txt` — every documentation page as one text file, linked from `llms.txt`.
+- Skip links, `<nav>` landmarks, keyboard-operable sidebar items and `aria-current` in the SPA.
+- Per-page `document.title`, focus and scroll reset on SPA navigation; `aria-live` content region.
+- Mobile menu Escape/outside-click handling and focus return.
+- Search index now excludes `<script>`/`<style>` while keeping class/code search.
+
+### Changed
+
+- Documentation section headings are `h2` after the page `h1` (was `h3`).
+- Version entries are real links to the `v1.2`/`v1.1` tags instead of a fake switcher.
+- Only the Montserrat family is loaded (four weights) instead of nine font families.
+- Copy buttons restore their original `aria-label` after the confirmation timeout.
+
 ## 1.2.0 — 2026-11-07
 
 Documentation and packaging release; no breaking class renames.

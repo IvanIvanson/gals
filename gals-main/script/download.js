@@ -17,7 +17,7 @@ const downloadHTML = `
 </div>
 ${onThisPage(sections)}
 <div class="quick-start">
-    <h3 id="get">Get the source</h3>
+    <h2 id="get">Get the source</h2>
     <p>Grab the latest archive, or take the framework files straight from the
     <code>gals/</code> folder of the repository.</p>
 
@@ -37,10 +37,10 @@ gals/
         </svg></button>
     </div>
 
-    <h3 id="archive">What's inside</h3>
+    <h2 id="archive">What's inside</h2>
     <p>The archive contains the two framework files plus a README and the MIT license: the grid stylesheet with responsive columns and component styles, and the runtime script for the mobile menu, accordion groups, scrollspy and fluid images.</p>
 
-<h3 id="usage">Use it</h3>
+<h2 id="usage">Use it</h2>
 <p>Drop the stylesheet into the <code>&#60;head&#62;</code> and the script right before the closing
 <code>&#60;/body&#62;</code> tag. Everything else is plain HTML.</p>
 

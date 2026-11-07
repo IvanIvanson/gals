@@ -20,7 +20,7 @@ const introductionHTML = `
 <p>Every class is also published as machine-readable reference — <a href="./llms.txt">llms.txt</a> and <a href="./llms/gals-classes.json">gals-classes.json</a> — so ChatGPT, Claude or Copilot generate real GALS markup instead of inventing Bootstrap classes. <a href="#ai">How it works ↓</a></p>
 </div>
 
-<h3 id="see-it-work">See it work</h3>
+<h2 id="see-it-work">See it work</h2>
 <p>Everything below is plain HTML with GALS classes — no React, no build step. Click to try.</p>
 
 <div class="demo">
@@ -45,7 +45,7 @@ const introductionHTML = `
 
 ${onThisPage(sections)}
 <div class="quick-start">
-     <h3 id="start">Quick start</h3>
+     <h2 id="start">Quick start</h2>
 
     <p>Get started by including GALS’s production-ready CSS and JavaScript  without the need for any build steps.
     See it in practice with this <a href="https://codepen.io/IvanIvan/pen/LYVMxGp" target="_blank" rel="noopener">GALS CodePen demo</a>.</p>
@@ -83,7 +83,7 @@ ${onThisPage(sections)}
        
     </div>
     <!--  -->
- <p id="css">2. <strong>CSS</strong>.</p>
+ <h2 id="css">2. CSS</h2>
                             <p>Copy-paste the stylesheet
                             <span style="color:rgb(212, 38, 38);font-size:18px;"><code>&#60;link&#62;</code></span> into your <span style="color:rgb(212, 38, 38);font-size:18px;"><code>&#60;head&#62;</code> 
                             </span> before all other stylesheets to load our CSS. To ensure that the GALS styles do not interrupt the styles that you will define.
@@ -103,7 +103,7 @@ ${onThisPage(sections)}
 <!--  -->
 
  <!--  -->
- <p id="js">3. <strong>JS</strong>.</p>
+ <h2 id="js">3. JS</h2>
                             <p>Place one of the following
                             <span style="color:rgb(212, 38, 38);font-size:18px;"><code >&#60;script&#62;</code></span>near the end of your pages, right before the closing<span style="color:rgb(212, 38, 38);font-size:18px;"><code>&#60;body&#62;</code> 
                             </span> tag, to enable them.
@@ -121,7 +121,7 @@ ${onThisPage(sections)}
         </svg></button>
 </div>
 <!--  -->
-<h3 id="cdn">jsDelivr CDN</h3>
+<h2 id="cdn">jsDelivr CDN</h2>
 <p>You can load GALS directly from jsDelivr — no download, no build step.
 Just point to the <code>cdn/</code> folder in the repository.</p>
 
@@ -146,7 +146,7 @@ Just point to the <code>cdn/</code> folder in the repository.</p>
 </p>
 <!--  -->
 
-<h3 id="ai">Built for AI</h3>
+<h2 id="ai">Built for AI</h2>
 <p>GALS is written to be read by a model, not only by a person. Three machine-readable files ship with the site, and each one is checked by the test suite, so a model is never handed a class that does not exist.</p>
 
 <ul>
@@ -157,7 +157,7 @@ Just point to the <code>cdn/</code> folder in the repository.</p>
 
 <p>The JSON is generated from <code>gals.css</code> itself and the test suite fails if the two drift apart. It also carries a <code>doesNotExist</code> list (<code>.row</code>, <code>.col</code>, <code>mt-*</code>, <code>mb-*</code>) — the Bootstrap and Tailwind habits a model falls back to by default — so a generated answer can be checked against real mistakes instead of plausible ones.</p>
 
-<h3 id="ai-prompt">Ask AI the right way</h3>
+<h2 id="ai-prompt">Ask AI the right way</h2>
 <p>Copy this prompt template, paste it into ChatGPT, Claude, GitHub Copilot or Cursor, and replace the text in <code>[SQUARE BRACKETS]</code> with your task.</p>
 
 <div class="copy-block">

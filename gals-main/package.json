@@ -24,8 +24,9 @@
     "build:cdn": "sass --style=compressed --no-source-map --no-charset gals/gals.css cdn/gals.min.css && terser gals/gals.js --compress --mangle --comments false --output cdn/gals.min.js",
     "build:llms": "node scripts/build-classes-json.mjs",
     "build:prerender": "node scripts/prerender.mjs",
+    "build:docs": "node scripts/build-docs.mjs",
     "build:zip": "node scripts/build-zip.mjs",
-    "build": "npm run build:css && npm run build:cdn && npm run build:llms && npm run build:prerender && npm run build:zip",
+    "build": "npm run build:css && npm run build:cdn && npm run build:llms && npm run build:prerender && npm run build:docs && npm run build:zip",
     "check:demo": "node scripts/check-demo.mjs",
     "check:prerender": "node scripts/prerender.mjs --check",
     "test": "node --test \"tests/**/*.test.mjs\""

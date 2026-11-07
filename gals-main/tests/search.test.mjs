@@ -17,7 +17,6 @@ async function boot() {
   globalThis.document = dom.window.document;
 
   // Модули рендера, которые тоже вызываются из index.js.
-  (await import(pathToFileURL(`${ROOT}/script/headerUlLiversion.js`).href)).default();
   (await import(pathToFileURL(`${ROOT}/script/addStyleDetailsLeft.js`).href)).default();
   (await import(pathToFileURL(`${ROOT}/script/detailsLeftUlLi.js`).href)).default();
   const docs = (await import(pathToFileURL(`${ROOT}/script/renderCenterBlock.js`).href)).default();

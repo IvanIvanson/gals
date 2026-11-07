@@ -8,21 +8,18 @@
 - [Этот файл, llms.txt](https://ivanivanson.github.io/gals/llms.txt): весь фреймворк текстом — помещается в контекст целиком
 - [GitHub Pages](https://ivanivanson.github.io/gals/): документация с живыми примерами и поиском по классам
 - [llms/gals-classes.json](https://ivanivanson.github.io/gals/llms/gals-classes.json): машиночитаемый JSON — 186 классов с реальными CSS-значениями, 8 токенов, брейкпоинты, runtime-хуки
+- [llms-full.txt](https://ivanivanson.github.io/gals/llms-full.txt): вся документация одним текстом, включая примеры и разделы
+- [docs/](https://ivanivanson.github.io/gals/docs/): статические страницы документации для поисковиков и AI
 - [AI_PROMPT_TEMPLATE.md](https://ivanivanson.github.io/gals/AI_PROMPT_TEMPLATE.md): готовый шаблон промпта для генерации разметки GALS
 - [GitHub](https://github.com/IvanIvanson/gals): исходный код, issues, релизы
 
 ## Подключение (jsDelivr, запиннено на тег v1.2)
 
 - [cdn/gals.min.css](https://cdn.jsdelivr.net/gh/IvanIvanson/gals@v1.2/gals-main/cdn/gals.min.css): минифицированный CSS, ~16 КБ (gzip ~3,4 КБ)
-- [cdn/gals.min.js](https://cdn.jsdelivr.net/gh/IvanIvanson/gals@v1.2/gals-main/cdn/gals.min.js): минимальный рантайм, ~3,5 КБ (gzip ~1,4 КБ)
+- [cdn/gals.min.js](https://cdn.jsdelivr.net/gh/IvanIvanson/gals@v1.2/gals-main/cdn/gals.min.js): минимальный рантайм, ~4,2 КБ (gzip ~1,5 КБ)
 - [gals/gals.css](https://raw.githubusercontent.com/IvanIvanson/gals/main/gals-main/gals/gals.css): исходный CSS, из которого сгенерирован справочник классов
 
 Все ссылки в файле абсолютные (https): его можно вставить в промпт или загрузить в агрегатор — они останутся разрешимыми вне репозитория.
-
-## Optional
-
-- [robots.txt](https://ivanivanson.github.io/gals/robots.txt) и [sitemap.xml](https://ivanivanson.github.io/gals/sitemap.xml): правила обхода и список страниц
-
 
 ## Быстрый старт
 
@@ -156,7 +153,7 @@ Flexbox-сетка из 12 колонок. Шаг колонки — `var(--grid
 | `.container-flex` | `display:flex` |
 | `.border`, `.borderRed`, `.borderGreen`, `.borderBlue` | `outline` — отладка, layout не трогает |
 
-## Runtime (gals/gals.js, ~9 КБ)
+## Runtime (gals/gals.js, ~10 КБ)
 
 Каждая фича опциональна: нет хука в DOM — код молчит.
 
@@ -172,9 +169,9 @@ Flexbox-сетка из 12 колонок. Шаг колонки — `var(--grid
 
 ```
 gals/gals.css          Сетка, компоненты, хелперы (~23 КБ)
-gals/gals.js           Минимальный рантайм (~9 КБ)
+gals/gals.js           Минимальный рантайм (~10 КБ)
 cdn/gals.min.css       Минифицированный CSS (~16 КБ, gzip ~3,4 КБ)
-cdn/gals.min.js        Минифицированный JS (~3,5 КБ, gzip ~1,4 КБ)
+cdn/gals.min.js        Минифицированный JS (~4,2 КБ, gzip ~1,5 КБ)
 llms/gals-classes.json Справочник классов, сгенерирован из gals/gals.css
 ```
 
@@ -189,3 +186,9 @@ llms/gals-classes.json Справочник классов, сгенериров
 7. Если нужен кастомный стиль — бери цвета и шаг сетки из CSS-переменных (`var(--accent)`, `var(--line)`).
 8. Полный список классов с описаниями и реальными CSS-значениями — в [llms/gals-classes.json](https://ivanivanson.github.io/gals/llms/gals-classes.json). Не выдумывай классы, которых там нет.
 9. Используй семантический HTML5 и ARIA-атрибуты: `aria-current`, `aria-expanded`, `aria-invalid`, `aria-label`.
+
+## Optional
+
+- [robots.txt](https://ivanivanson.github.io/gals/robots.txt) и [sitemap.xml](https://ivanivanson.github.io/gals/sitemap.xml): правила обхода и список страниц
+- [docs/](https://ivanivanson.github.io/gals/docs/): статические страницы документации с собственными title/description/canonical
+- [llms-full.txt](https://ivanivanson.github.io/gals/llms-full.txt): вся документация одним файлом

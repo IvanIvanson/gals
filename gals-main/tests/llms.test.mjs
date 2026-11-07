@@ -209,6 +209,26 @@ describe('gals-classes.json', () => {
     assert.equal(ptM6.variants[0].at, 'm', 'у варианта pt-m6 не указан брейкпоинт');
   });
 
+  test('llms-full.txt есть, совпадает в корне и на сайте и содержит страницы', () => {
+    assert.ok(existsSync(`${REPO}/llms-full.txt`), 'нет llms-full.txt в корне');
+    assert.ok(existsSync(`${ROOT}/llms-full.txt`), 'нет llms-full.txt в gals-main');
+    assert.equal(
+      read(`${ROOT}/llms-full.txt`),
+      read(`${REPO}/llms-full.txt`),
+      'копии llms-full.txt разошлись — выполните npm run build:docs',
+    );
+    const full = read(`${ROOT}/llms-full.txt`);
+    assert.ok(full.includes('## Accordion'), 'в llms-full.txt нет страницы Accordion');
+    assert.ok(full.includes('https://ivanivanson.github.io/gals/docs/accordion.html'), 'в llms-full.txt нет ссылки на статическую страницу');
+  });
+
+  test('статические страницы документации и sitemap сгенерированы', () => {
+    assert.ok(existsSync(`${ROOT}/docs/index.html`), 'нет docs/index.html');
+    assert.ok(existsSync(`${ROOT}/docs/accordion.html`), 'нет docs/accordion.html');
+    const sitemap = read(`${ROOT}/sitemap.xml`);
+    assert.ok(sitemap.includes('/docs/accordion.html'), 'sitemap не содержит docs/accordion.html');
+  });
+
   test('версия и лицензия совпадают с package.json', () => {
     const pkg = JSON.parse(read(`${ROOT}/package.json`));
     assert.equal(reference.version, pkg.version, 'version в gals-classes.json не совпадает с package.json');
