@@ -1,7 +1,8 @@
 :root {
     --gridmultiplyConst: 8.325%;
     /* Tokens: brand, text/ground pair, feedback states, hairlines.
-       Компоненты ниже читают только эти переменные. */
+       Компоненты читают их как базовую палитру; несколько surface/control
+       оттенков пока остаются литералами (см. --surface в будущем). */
     --accent: #8512d1;
     --ink: #222222;
     --paper: #ffffff;
@@ -10,6 +11,24 @@
     --err: #d1495b;
     --line: #cecece;
 }
+
+/* Box model: колонки заданы процентами, а .container-block добавляет padding.
+   Без border-box padding прибавляется к ширине, и ряд переносится раньше
+   времени (2 × pt-6 уже не влезают в строку). Сбрасываем box-sizing только
+   внутри .container, чтобы не менять box model всего сайта. */
+.container,
+.container *,
+.container *::before,
+.container *::after {
+  box-sizing: border-box;
+}
+
+/* flex-элемент по умолчанию не сжимается ниже min-content: длинное слово
+   или широкая таблица распирают колонку за её процент. */
+.container > * {
+  min-width: 0;
+}
+
 .container {
   display: flex;
   flex-wrap: wrap;
@@ -75,6 +94,13 @@
 }
 .container-fluid{
   flex-grow: 1;
+}
+/* Fallback: картинка не должна вылезать за колонку, даже если gals.js
+   не успел/не смог её измерить. */
+img.container-fluid{
+  display: block;
+  max-width: 100%;
+  height: auto;
 }
 .flex-grow1{
   flex-grow: 1;
@@ -644,6 +670,15 @@
   border: 1px solid var(--line);
   border-radius: 7px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+/* Popover UA stylesheet ставит inset:0. Убираем центрирование; точные
+   координаты у триггера ставит gals.js (без JS останется верхний левый угол). */
+.dropdown[popover]{
+  position: fixed;
+  inset: auto;
+  margin: 0;
+  max-height: min(60vh, 24em);
+  overflow-y: auto;
 }
 .dropdown button{
   display: block;

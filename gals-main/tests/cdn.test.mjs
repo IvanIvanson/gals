@@ -5,6 +5,7 @@
 import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { JSDOM } from 'jsdom';
 
@@ -19,6 +20,12 @@ describe('CDN-файлы', () => {
       const size = readFileSync(`${ROOT}/${f}`).length;
       assert.ok(size > 0, `${f} пустой`);
     }
+  });
+
+  test('gals.css содержит scoped border-box и min-width для сетки', () => {
+    const css = readFileSync(`${ROOT}/gals/gals.css`, 'utf8');
+    assert.match(css, /box-sizing:\s*border-box/, 'нет border-box: сетка сломается в content-box');
+    assert.match(css, /min-width:\s*0/, 'нет min-width: 0 для flex-колонок');
   });
 
   test('gals.min.js — валидный JS и меньше исходника', () => {
@@ -86,7 +93,7 @@ describe('CDN-файлы', () => {
   // Архив отдаётся кнопкой Download, поэтому обязан совпадать с gals/.
   test('download/grid.zip собран из актуальных файлов gals/', () => {
     const archive = `${ROOT}/download/grid.zip`;
-    if (!existsSync(archive)) return;
+    assert.ok(existsSync(archive), 'нет download/grid.zip — выполните npm run build:zip');
 
     const bytes = readFileSync(archive);
 
@@ -109,16 +116,26 @@ describe('CDN-файлы', () => {
       i += 46 + nameLength + extraLength + commentLength - 1;
     }
 
-    for (const name of ['gals/gals.css', 'gals/gals.js']) {
-      assert.ok(entries.has(name), `в архиве нет ${name}: ${[...entries.keys()]}`);
+    const expected = new Map([
+      ['README.txt', `${ROOT}/download/info.txt`],
+      ['LICENSE', `${ROOT}/../LICENSE`],
+      ['gals/gals.css', `${ROOT}/gals/gals.css`],
+      ['gals/gals.js', `${ROOT}/gals/gals.js`],
+    ]);
 
-      const expected = readFileSync(`${ROOT}/${name}`).length;
+    for (const [name, file] of expected) {
+      assert.ok(entries.has(name), `в архиве нет ${name}: ${[...entries.keys()]}`);
       assert.equal(
         entries.get(name),
-        expected,
-        `${name} в архиве устарел: ${entries.get(name)} байт вместо ${expected}`,
+        readFileSync(file).length,
+        `${name} в архиве устарел: ${entries.get(name)} байт вместо ${readFileSync(file).length}`,
       );
     }
+
+    const checksumFile = `${archive}.sha256`;
+    assert.ok(existsSync(checksumFile), 'нет download/grid.zip.sha256');
+    const checksum = createHash('sha256').update(bytes).digest('hex');
+    assert.match(readFileSync(checksumFile, 'utf8'), new RegExp(`^${checksum}  grid\\.zip`));
   });
 });
 

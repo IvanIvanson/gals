@@ -42,7 +42,6 @@ html {
   flex: 1 0 auto;
 }
 .wrapper .content .wrapper-header {
-  position: -webkit-sticky;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -505,7 +504,6 @@ html {
   position: relative;
 }
 .wrapper main .container .wrap-containerleft .container-left {
-  position: -webkit-sticky;
   position: sticky;
   top: 160px;
   overflow-y: auto;
@@ -766,7 +764,6 @@ html {
   position: relative;
 }
 .wrapper main .container .wrap-containerright .container-right {
-  position: -webkit-sticky;
   position: sticky;
   top: 160px;
   padding: 20px;

@@ -2,28 +2,61 @@
 
 Lightweight flexbox toolkit for rapid prototyping and production.
 
+- 12-column flex grid, 6 breakpoints, 186 class selectors (90 `pt-*` columns, 12 `input-*` widths, 84 component/utility classes).
+- 22.7 KB source CSS → 16.0 KB minified → **3.4 KB gzip**; 9.0 KB JS → 3.5 KB → **1.4 KB gzip**.
+- Zero runtime dependencies, no build step for users, no framework lock-in.
+
 ## Quick start
 
 ```html
-<link rel="stylesheet" href="cdn/gals.min.css">
-<script src="cdn/gals.min.js" defer></script>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GALS demo</title>
+  <style>*,*::before,*::after{box-sizing:border-box}</style>
+  <link rel="stylesheet" href="gals/gals.css">
+</head>
+<body>
+  <div class="container">
+    <div class="container-block pt-12 pt-m6">Full width, then half</div>
+  </div>
+  <script src="gals/gals.js" defer></script>
+</body>
+</html>
 ```
 
+`gals.css` applies `box-sizing: border-box` to `.container` and its descendants, so no global reset is required for the grid. If you want `border-box` everywhere (recommended for app shells), add your own reset before `gals.css`:
+
+```css
+*, *::before, *::after { box-sizing: border-box; }
+```
+
+Columns must live inside `.container`: the selector is `.container .pt-*`. Use `.container-block` when you want the 5px gutter; a column without it still gets its width, but no padding.
+
 Or via jsDelivr (pinned to tag — immutable cache):
+
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/IvanIvanson/gals@v1.2/gals-main/cdn/gals.min.css">
 <script src="https://cdn.jsdelivr.net/gh/IvanIvanson/gals@v1.2/gals-main/cdn/gals.min.js" defer></script>
 ```
 
+## Browser support
+
+GALS uses `:focus-visible`, `aspect-ratio`, flex `gap`, `<dialog>` and the Popover API. Practical minimum: **Chrome/Edge 114+, Firefox 125+, Safari 17+, iOS Safari 17+**. Older browsers get the layout but lose some component behaviour; add your own fallbacks if you need them.
+
 ## Development
 
 ```bash
-npm install
-npm test          # 70 tests, 13 suites
+npm ci
+npm test            # 102 tests, 18 suites
+npm run build       # site CSS + CDN min + classes JSON + prerender + zip
 npm run check:demo  # asset existence + class declaration check
-npm run build       # CSS + CDN min + classes JSON
-npm run build:llms  # regenerate gals-classes.json
+npm run check:prerender
 ```
+
+`npm run build` must produce no diff; CI enforces it.
 
 ## Cache headers (GitHub Pages)
 
@@ -46,7 +79,12 @@ The `@main` tag also works and always serves the latest commit, but it can chang
 GALS ships machine-readable reference files:
 
 - [`llms.txt`](https://ivanivanson.github.io/gals/llms.txt) — the whole framework as plain text
-- [`llms/gals-classes.json`](https://ivanivanson.github.io/gals/llms/gals-classes.json) — 186 classes + 8 tokens as structured data
+- [`llms/gals-classes.json`](https://ivanivanson.github.io/gals/llms/gals-classes.json) — 186 classes + 8 tokens as structured data, including `doesNotExist` and replacement hints
 - [`AI_PROMPT_TEMPLATE.md`](https://ivanivanson.github.io/gals/AI_PROMPT_TEMPLATE.md) — the prompt template
+- [`AGENTS.md`](AGENTS.md) — rules for coding agents working in this repository
 
 The JSON is generated from `gals.css` itself and the test suite fails if the two drift apart.
+
+## License
+
+[MIT](LICENSE) © 2024-2026 Ivan Ivanson.

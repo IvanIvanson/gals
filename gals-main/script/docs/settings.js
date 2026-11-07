@@ -80,7 +80,7 @@ ${notice(
 const jsModules = page({
   title: 'JS modules',
   lead:
-    'gals.js is one immediately invoked function of under two hundred lines. It has no exports, no '
+    'gals.js is one immediately invoked function of under three hundred lines. It has no exports, no '
     + 'dependencies and nothing to import — it finds its own hooks in the DOM.',
   blocks: [
     {
@@ -95,9 +95,14 @@ const jsModules = page({
             'toggles <code>.menu-show</code> on <code>.menu</code> and syncs <code>aria-expanded</code>',
           ],
           [
+            '<code>initDropdowns()</code>',
+            '<code>[popovertarget]</code> + <code>.dropdown</code>',
+            'positions the popover at the trigger, sets <code>aria-haspopup</code>/<code>aria-expanded</code> and handles arrows/Home/End',
+          ],
+          [
             '<code>fitFluidImages()</code>',
-            'ready, then resize',
-            'writes the parent box size into <code>img.container-fluid</code>',
+            'ready, resize, <code>gals:refresh</code>',
+            'sets width by the parent content box and <code>height:auto</code> on <code>img.container-fluid</code>',
           ],
           [
             '<code>initAccordions()</code>',
@@ -148,8 +153,9 @@ ${codeBlock(
       label: 'Fluid images',
       html: `
 <p>For every <code>img.container-fluid</code>, the script measures the parent block, subtracts its
-borders and writes <code>width</code> and <code>height</code> into the inline style. Inline style is
-deliberate: attributes would be overridden by the stylesheet and did nothing.</p>
+horizontal padding and writes <code>width</code> plus <code>height: auto</code> into the inline
+style. Inline style is deliberate: attributes would be overridden by the stylesheet and did
+nothing. Dispatch <code>gals:refresh</code> after replacing markup without a page reload.</p>
 ${codeBlock(
   `<figure class="container-block">
   <img class="container-fluid" src="cover.svg" alt="">

@@ -209,6 +209,12 @@ describe('gals-classes.json', () => {
     assert.equal(ptM6.variants[0].at, 'm', 'у варианта pt-m6 не указан брейкпоинт');
   });
 
+  test('версия и лицензия совпадают с package.json', () => {
+    const pkg = JSON.parse(read(`${ROOT}/package.json`));
+    assert.equal(reference.version, pkg.version, 'version в gals-classes.json не совпадает с package.json');
+    assert.equal(reference.license, pkg.license, 'license в gals-classes.json не совпадает с package.json');
+  });
+
   test('токены совпадают с :root в CSS', () => {
     const css = read(`${ROOT}/gals/gals.css`);
     const rootBlock = /:root\s*\{([\s\S]*?)\}/.exec(css)[1];

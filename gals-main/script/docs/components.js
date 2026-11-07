@@ -385,9 +385,9 @@ const DEF = [
   <button type="button">Duplicate</button>
   <button type="button">Delete</button>
 </div>`,
-    caption: 'The Popover API: top layer, light dismiss and Escape, with zero script.',
+    caption: 'The Popover API gives top layer, light dismiss and Escape; gals.js adds anchoring and arrow-key navigation.',
     notes: [
-      'The trigger keeps <code>aria-haspopup="menu"</code> and a live <code>aria-expanded</code>.',
+      'The trigger keeps <code>aria-haspopup="menu"</code> and a live <code>aria-expanded</code> when gals.js is loaded.',
       'Arrow keys move through items; <kbd>Tab</kbd> leaves the menu.',
       'Closing returns focus to the trigger — the browser does this for popover, hand-rolled menus usually do not.',
     ],

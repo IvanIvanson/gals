@@ -27,7 +27,7 @@ ${onThisPage(sections)}
     <h3 id="layout">Layout</h3>
     <p>The grid is a twelve column flex container. Each column takes
     <code>calc(var(--gridmultiplyConst) * n)</code>, and every prefix maps to one breakpoint:
-    <code>xl</code> 1440px and up, <code>l</code> 1440px, <code>m</code> 1025px, <code>s</code> 770px,
+    <code>xl</code> 1440px and up, <code>l</code> up to 1439.98px, <code>m</code> 1025px, <code>s</code> 770px,
     <code>xs</code> 425px, <code>xxs</code> 375px.</p>
 ${group('Breakpoints and grid', [
   'Breakpoints',

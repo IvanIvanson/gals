@@ -134,15 +134,16 @@ ${codeBlock(
       id: 'measure',
       label: 'What is measured',
       html: `
-<p>Parent <code>offsetWidth</code> and <code>offsetHeight</code>, minus twice the parent's
-<code>clientLeft</code> to drop its borders. The result lands in <code>style.width</code> and
-<code>style.height</code>, because inline styles beat the <code>width</code> and <code>height</code>
-attributes — writing attributes left the image untouched.</p>
+<p>Parent <code>clientWidth</code> minus its computed horizontal padding. The result lands in
+<code>style.width</code>; <code>style.height</code> stays <code>auto</code> so the image keeps its
+aspect ratio. Inline style is deliberate: attributes would be overridden by the stylesheet and did
+nothing.</p>
 ${table(
   ['Runs on', 'When'],
   [
     ['<code>DOMContentLoaded</code>', 'first paint, or immediately if the DOM is already parsed'],
     ['<code>resize</code>', '150ms after the last resize event'],
+    ['<code>gals:refresh</code>', 'after SPA-style content replacement'],
   ],
 )}`,
     },
@@ -151,13 +152,13 @@ ${table(
       label: 'Caveats',
       html: `
 <p>A parent with zero width is skipped rather than collapsing the image to nothing, so an image inside
-a hidden tab keeps its natural size until it becomes visible. Nothing re-runs when the content
-changes without a resize — call your own measure after injecting markup.</p>
+a hidden tab keeps its natural size until it becomes visible. After injecting markup without a
+resize, dispatch <code>gals:refresh</code> (the documentation renderer does this for you).</p>
 ${demo(
   `<div class="container">
     <div class="container-block pt-6">
       <div class="demo-cell">
-        <img class="container-fluid" alt="GALS grid sample" src="../image/gridlsicon.png">
+        <img class="container-fluid" alt="GALS grid sample" src="./image/gridlsicon.png">
       </div>
     </div>
     ${cell('pt-6', 'pt-6')}

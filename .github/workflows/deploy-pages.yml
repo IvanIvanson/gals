@@ -3,6 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -23,10 +24,43 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: gals-main/package-lock.json
+
+      - name: Install
+        run: npm ci
+        working-directory: gals-main
+
+      - name: Test
+        run: npm test
+        working-directory: gals-main
+
+      - name: Build
+        run: npm run build
+        working-directory: gals-main
+
+      - name: Build is reproducible
+        run: git diff --exit-code
+
+      - name: Check demo assets and classes
+        run: npm run check:demo
+        working-directory: gals-main
+
       - name: Prepare site files
         run: |
           mkdir -p _site
-          cp -r gals-main/* _site/     # ← замените "gals" на нужную папку
+          rsync -a \
+            --exclude node_modules \
+            --exclude tests \
+            --exclude scripts \
+            --exclude package.json \
+            --exclude package-lock.json \
+            --exclude .tmp-diff \
+            gals-main/ _site/
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

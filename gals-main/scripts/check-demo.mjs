@@ -47,11 +47,9 @@ const indexHtml = readFileSync(`${ROOT}/index.html`, 'utf8');
 const { local, remote } = assetUrls(indexHtml);
 
 for (const url of local) {
-  // download/grid.zip собирается отдельно, его в дереве может не быть.
   const file = `${ROOT}/${url.replace(/^\.\//, '').split('#')[0]}`;
-  const optional = url.endsWith('.zip');
   const found = existsSync(file);
-  report(found || optional, url, found ? 'на месте' : optional ? 'нет (опционально)' : 'НЕТ ФАЙЛА');
+  report(found, url, found ? 'на месте' : 'НЕТ ФАЙЛА');
 }
 
 // ---------- 2. Скрипты документации ----------
@@ -102,7 +100,7 @@ report(missing.length === 0, `${used.size} классов использован
 if (LIVE) {
   console.log('\nGitHub Pages:');
 
-  for (const path of ['/', '/index.html', '/gals/gals.css', '/gals/gals.js', '/style.css', '/index.js', '/demo/trackmetro.html']) {
+  for (const path of ['/', '/index.html', '/gals/gals.css', '/gals/gals.js', '/style.css', '/index.js', '/llms.txt', '/llms/gals-classes.json']) {
     try {
       const res = await fetch(PAGES + path);
       report(res.ok, path, `${res.status} ${res.headers.get('content-type') || ''}`);

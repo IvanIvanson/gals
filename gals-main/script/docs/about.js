@@ -30,7 +30,7 @@ const history = page({
 ${table(
   ['Decision', 'Consequence'],
   [
-    ['Percent widths from one constant', 'a full row is 99.9%, so rounding never wraps it'],
+    ['Percent widths from one constant', 'with border-box a full row is 99.9%, so rounding never wraps it'],
     ['Gutters as padding, <code>gap: 0</code>', 'requires <code>border-box</code>, see Gutters'],
     ['No build step in the shipped files', 'the framework is readable and editable in place'],
     ['Nothing exported from <code>gals.js</code>', 'the file is meant to be copied, not imported'],
@@ -45,8 +45,8 @@ ${table(
 — every hook is additive — but never lose one that already works.</p>
 ${notice(
   'Versioning',
-  'The header lists V1.0 ultra-light, light and optimus. Only <strong>ultra-light</strong> is the '
-  + 'file in this repository; the other two are labels for work that has not landed.',
+  'The header lists the public releases <strong>v1.2</strong> and <strong>v1.1</strong>. '
+  + 'The package version is 1.2.0; the older “ultra-light / light / optimus” labels are retired.',
 )}</p>`,
     },
   ],
@@ -108,8 +108,10 @@ const brand = page({
       html: `
 <p>The framework ships seven colour tokens — <code>--accent</code>, <code>--ink</code>,
 <code>--paper</code>, <code>--ok</code>, <code>--warn</code>, <code>--err</code> and
-<code>--line</code> — and every component reads them. The yellow, black and white below are this
-page’s own stylesheet, layered on top of the same tokens rather than replacing them.</p>
+<code>--line</code>. Components use them as their base palette; a few surface and control shades
+are still concrete values, so a complete dark theme is not a one-block override yet. The yellow,
+black and white below are this page’s own stylesheet, layered on top of the same tokens rather
+than replacing them.</p>
 ${codeBlock(
   `/* gals.css — the framework tokens */
 --accent: #8512d1;   /* brand, primary, focus */
@@ -160,7 +162,7 @@ ${notice(
         ['Language', 'State'],
         [
           ['English', 'source of truth'],
-          ['Russian', 'not started — the site chrome is already partly Russian'],
+          ['Russian', 'partial — some feature pages are already in Russian'],
           ['other', 'welcome, as a copy of the English page'],
         ],
       ),
