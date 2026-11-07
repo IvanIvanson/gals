@@ -4,9 +4,125 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GALS</title>
+    <title>GALS — flexbox CSS framework, 186 classes, no build step</title>
+
+    <meta name="description" content="GALS (Grid Application Layout Systems) is a dependency-free flexbox CSS framework: 12-column grid, 186 classes, 8 design tokens, 6 breakpoints. Two files, no build step.">
+    <link rel="canonical" href="https://ivanivanson.github.io/gals/">
+    <link rel="alternate" type="text/plain" href="https://ivanivanson.github.io/gals/llms.txt" title="GALS as plain text for LLMs">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="GALS">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:url" content="https://ivanivanson.github.io/gals/">
+    <meta property="og:title" content="GALS — flexbox CSS framework, 186 classes, no build step">
+    <meta property="og:description" content="A dependency-free flexbox toolkit: 12-column grid, 186 classes, 8 design tokens, 6 breakpoints, ~5 KB runtime. Two files and you are building.">
+    <meta property="og:image" content="https://ivanivanson.github.io/gals/image/logoGals.png">
+    <meta property="og:image:width" content="1443">
+    <meta property="og:image:height" content="1013">
+    <meta property="og:image:alt" content="GALS logo — Grid Application Layout Systems">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="GALS — flexbox CSS framework, 186 classes, no build step">
+    <meta name="twitter:description" content="A dependency-free flexbox toolkit: 12-column grid, 186 classes, 8 design tokens, 6 breakpoints, ~5 KB runtime.">
+    <meta name="twitter:image" content="https://ivanivanson.github.io/gals/image/logoGals.png">
+
     <link rel="stylesheet" href="./cdn/gals.min.css">
     <link rel="stylesheet" href="./style.css">
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://ivanivanson.github.io/gals/#organization",
+      "name": "GALS",
+      "url": "https://ivanivanson.github.io/gals/",
+      "logo": "https://ivanivanson.github.io/gals/image/logoGals.png",
+      "sameAs": [
+        "https://github.com/IvanIvanson/gals",
+        "https://t.me/+Goz4IofWzD02ODZi",
+        "https://codepen.io/IvanIvan/pen/LYVMxGp"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://ivanivanson.github.io/gals/#website",
+      "name": "GALS documentation",
+      "url": "https://ivanivanson.github.io/gals/",
+      "description": "Documentation for GALS, a dependency-free flexbox CSS framework: grid, breakpoints, components, forms, helpers and runtime hooks.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://ivanivanson.github.io/gals/#organization" },
+      "dateModified": "2026-11-07"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://ivanivanson.github.io/gals/#software",
+      "name": "GALS",
+      "alternateName": "Grid Application Layout Systems",
+      "url": "https://ivanivanson.github.io/gals/",
+      "description": "GALS is a dependency-free frontend toolkit built on flexbox: a 12-column grid, 186 classes, 8 design tokens and 6 breakpoints in two files, with no build step and no framework lock-in.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Any",
+      "programmingLanguage": ["CSS", "JavaScript"],
+      "softwareVersion": "1.2",
+      "datePublished": "2024-06-09",
+      "dateModified": "2026-11-07",
+      "codeRepository": "https://github.com/IvanIvanson/gals",
+      "image": "https://ivanivanson.github.io/gals/image/logoGals.png",
+      "creator": { "@id": "https://ivanivanson.github.io/gals/#organization" },
+      "publisher": { "@id": "https://ivanivanson.github.io/gals/#organization" },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "url": "https://github.com/IvanIvanson/gals"
+      },
+      "featureList": [
+        "12-column flexbox grid with pt-1 .. pt-12 width classes",
+        "6 responsive breakpoints: xl, l, m, s, xs, xxs",
+        "8 design tokens exposed as CSS custom properties",
+        "186 documented classes: header, table, buttons, alerts, cards, accordion, modal, tabs, forms",
+        "About 5 KB optional runtime for menu, accordion group, scrollspy and image fitting",
+        "Machine-readable class reference in llms.txt and llms/gals-classes.json"
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ivanivanson.github.io/gals/#faq",
+      "publisher": { "@id": "https://ivanivanson.github.io/gals/#organization" },
+      "dateModified": "2026-11-07",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What does a column class look like?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A GALS column class sets a width in twelfths and only applies inside .container: class=\"pt-6 pt-s12\" renders 50% on desktop and full width below 770px. GALS has no .col-* classes, and pt-N is a column width, not padding."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many classes are there?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "GALS v1.2 ships 186 CSS classes and 8 design tokens. Every class is published as machine-readable data with its real CSS value, parent selector and breakpoints in llms/gals-classes.json, which is generated from gals.css and checked by the test suite."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need a build step?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. GALS needs no build step and no package manager: one <link rel=\"stylesheet\"> for the CSS and one <script defer> for the JavaScript are enough. Sass, PostCSS and minification are used only to build the library itself, and the minified files are published ready to use."
+          }
+        }
+      ]
+    }
+  ]
+}
+    </script>
 </head>
 <body>
     <div class="wrapper">
@@ -292,7 +408,14 @@
    
     
         <footer>
-            <div class="footer"></div>
+            <div class="footer">
+                <p class="footer-meta">
+                    GALS v1.2 &middot; Last updated
+                    <time datetime="2026-11-07">7 November 2026</time>
+                    &middot; <a href="https://github.com/IvanIvanson/gals/releases" target="_blank" rel="noopener">Release notes</a>
+                    &middot; <a href="./llms.txt">llms.txt</a>
+                </p>
+            </div>
         </footer>
     
     </div>

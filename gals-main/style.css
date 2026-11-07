@@ -977,5 +977,13 @@ html {
   background: linear-gradient(rgb(133, 18, 209), rgb(83, 6, 84));
   padding: 20px;
 }
+.wrapper footer .footer .footer-meta {
+  margin: 0;
+  font-size: 14px;
+  color: #fff;
+}
+.wrapper footer .footer .footer-meta a {
+  color: #fff;
+}
 
 /*# sourceMappingURL=style.css.map */

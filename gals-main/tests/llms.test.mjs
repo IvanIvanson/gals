@@ -55,6 +55,20 @@ describe('llms.txt', () => {
     }
   });
 
+  // Спецификация llms.txt: H1, затем blockquote-теглайн, затем H2 со ссылками.
+  // \r? нужен из-за CRLF в файле: иначе «пустая строка» не находится.
+  test('соблюдена каноническая структура: H1, blockquote-теглайн, H2 со ссылками', () => {
+    const txt = read(`${REPO}/llms.txt`);
+    const [head] = txt.split(/^## /m);
+
+    assert.match(head, /^> .+/m, 'после H1 нет blockquote с теглайном');
+    assert.match(
+      txt,
+      /^## [^\r\n]+\r?\n\r?\n- \[[^\]]+\]\(https:\/\/[^)]+\): .+/m,
+      'H2-секция не начинается с аннотированной ссылки вида [имя](https://...): описание',
+    );
+  });
+
   // Регрессия на прежнюю версию файла: она обещала API, которого в CSS нет.
   test('CDN-сниппет не пустой и запиннен на тег', () => {
     const txt = read(`${REPO}/llms.txt`);
@@ -114,6 +128,17 @@ describe('llms.txt', () => {
     const txt = read(`${REPO}/llms.txt`);
     assert.match(txt, /llms\/gals-classes\.json/, 'нет ссылки на JSON');
     assert.ok(existsSync(`${REPO}/llms/gals-classes.json`), 'по указанной ссылке файла нет');
+  });
+
+  // Относительная ссылка живёт только рядом с файлом: в промпте или агрегаторе она никуда не ведёт.
+  test('все markdown-ссылки абсолютные', () => {
+    const txt = read(`${REPO}/llms.txt`);
+
+    const relative = [...txt.matchAll(/\]\(([^)\s]+)\)/g)]
+      .map((m) => m[1])
+      .filter((url) => !url.startsWith('https://'));
+
+    assert.deepEqual(relative, [], `в llms.txt относительные ссылки: ${relative.join(', ')}`);
   });
 });
 

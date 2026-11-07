@@ -8,6 +8,17 @@
         .footer{
             background: linear-gradient($mainColorLight, $mainColorDark);
             padding: 20px;
+
+            // Версия и дата обновления: статичный HTML, читается без JavaScript.
+            .footer-meta{
+                margin: 0;
+                font-size: $mainFontSize;
+                color: #fff;
+
+                a{
+                    color: #fff;
+                }
+            }
         }
     }
 }

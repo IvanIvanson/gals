@@ -13,19 +13,24 @@ const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const PAGES = 'https://ivanivanson.github.io/gals';
 const LIVE = process.argv.includes('--live');
 
-/** Собирает все URL ресурсов из разметки. */
+/**
+ * Собирает все URL ресурсов из разметки, разделяя локальные файлы и внешние
+ * адреса: canonical и rel="alternate" указывают на публичный домен, их нельзя
+ * искать на диске — их проверяет --live.
+ */
 const assetUrls = (html) => {
   const dom = new JSDOM(html);
-  const urls = new Set();
+  const local = new Set();
+  const remote = new Set();
 
   for (const el of dom.window.document.querySelectorAll('link[href], script[src], img[src]')) {
     const url = el.getAttribute('href') || el.getAttribute('src');
-    if (url && !/^(https?:)?#/.test(url) && !url.startsWith('data:')) {
-      urls.add(url);
-    }
+    if (!url || url.startsWith('#') || url.startsWith('data:')) continue;
+
+    (/^https?:\/\//.test(url) ? remote : local).add(url);
   }
 
-  return urls;
+  return { local, remote };
 };
 
 const problems = [];
@@ -39,7 +44,9 @@ console.log('\nЛокальные ресурсы index.html:');
 
 const indexHtml = readFileSync(`${ROOT}/index.html`, 'utf8');
 
-for (const url of assetUrls(indexHtml)) {
+const { local, remote } = assetUrls(indexHtml);
+
+for (const url of local) {
   // download/grid.zip собирается отдельно, его в дереве может не быть.
   const file = `${ROOT}/${url.replace(/^\.\//, '').split('#')[0]}`;
   const optional = url.endsWith('.zip');
@@ -112,6 +119,17 @@ if (LIVE) {
       report(res.ok && body.length > 0, f, `${res.status}, ${body.length} bytes`);
     } catch (error) {
       report(false, f, error.message);
+    }
+  }
+
+  console.log('\nВнешние адреса из разметки (canonical, rel="alternate"):');
+
+  for (const url of remote) {
+    try {
+      const res = await fetch(url);
+      report(res.ok, url, `${res.status} ${res.headers.get('content-type') || ''}`);
+    } catch (error) {
+      report(false, url, error.message);
     }
   }
 }

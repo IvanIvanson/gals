@@ -1,0 +1,25 @@
+# GALS documentation — https://ivanivanson.github.io/gals/
+
+User-agent: *
+Allow: /
+
+# AI crawlers are welcome: llms.txt and llms/gals-classes.json exist for them.
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: ccbot
+Allow: /
+
+Sitemap: https://ivanivanson.github.io/gals/sitemap.xml
