@@ -46,6 +46,22 @@
 </html>
 ```
 
+Что внутри (текстовая расшифровка для инструментов, вырезающих HTML-теги):
+
+```text
+body
+  main.container    обёртка сетки: flex + flex-wrap
+    div.container-block.pt-12  строка 12/12: h1 «GALS demo»
+    div.container-block.pt-3   колонка 3/12 = 25%
+    div.container-block.pt-9   колонка 9/12 = 75%
+  script src="gals/gals.js" defer  рантайм в конце body
+head
+  meta charset, meta viewport
+  title «GALS demo»
+  style        глобальный reset border-box
+  link rel="stylesheet" href="gals/gals.css"  стили фреймворка
+```
+
 `gals.css` уже применяет `border-box` внутри `.container`; глобальный reset выше нужен для остальной страницы и рекомендуется всегда.
 
 Через CDN:
@@ -53,6 +69,13 @@
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/IvanIvanson/gals@v1.2/gals-main/cdn/gals.min.css">
 <script src="https://cdn.jsdelivr.net/gh/IvanIvanson/gals@v1.2/gals-main/cdn/gals.min.js" defer></script>
+```
+
+Что внутри:
+
+```text
+head  link rel="stylesheet"  https://cdn.jsdelivr.net/gh/IvanIvanson/gals@v1.2/gals-main/cdn/gals.min.css
+body  script src=... defer    https://cdn.jsdelivr.net/gh/IvanIvanson/gals@v1.2/gals-main/cdn/gals.min.js
 ```
 
 ## Сетка (Grid)
