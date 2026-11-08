@@ -46,5 +46,21 @@
 </html>
 ```
 
+Что внутри (текстовая расшифровка для инструментов, вырезающих HTML-теги):
+
+```text
+head
+  meta charset, meta viewport
+  title
+  style                                   глобальный reset border-box
+  link rel="stylesheet" href="gals/gals.css"
+body
+  main.container                          обёртка сетки: flex + flex-wrap
+    div.container-block.pt-12             строка 12/12: h1 «[Заголовок]»
+    div.container-block.pt-3              колонка 3/12 = [25%]
+    div.container-block.pt-9              колонка 9/12 = [75%]
+  script src="gals/gals.js" defer         рантайм в конце body
+```
+
 **Контекст:**
 [НЕОБЯЗАТЕЛЬНО: Добавьте сюда специфические требования, например: "Используй .alert-ok для сообщения об успехе и .btn-primary для основной кнопки"].

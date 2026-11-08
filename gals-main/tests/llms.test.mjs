@@ -176,6 +176,20 @@ describe('llms.txt', () => {
     assert.match(section, /container-block pt-\d+/, 'нет колонок .container-block в блоке HTML');
   });
 
+  // Инструменты ревьюеров вырезают угловые скобки, поэтому структура
+  // продублирована текстом без них: так она доходит до модели в любом случае.
+  test('структура продублирована текстом без угловых скобок', () => {
+    const txt = read(`${REPO}/llms.txt`);
+    const tpl = read(`${ROOT}/AI_PROMPT_TEMPLATE.md`);
+
+    for (const [name, text] of [['llms.txt', txt], ['AI_PROMPT_TEMPLATE.md', tpl]]) {
+      assert.match(text, /main\.container/, `${name}: нет текстовой расшифровки main.container`);
+      assert.match(text, /div\.container-block\.pt-3/, `${name}: нет текстовой расшифровки div.container-block.pt-3`);
+      assert.match(text, /link rel="stylesheet"/, `${name}: нет текстовой расшифровки link rel=stylesheet`);
+      assert.match(text, /script src=/, `${name}: нет текстовой расшифровки script src`);
+    }
+  });
+
   // Ревьюер ИИ-агрегаторов видит пустые блоки: теги внутри строки промпта
   // теряются при HTML-стриппинге. Держим копируемые fenced-блоки.
   test('шаблон промпта содержит копируемые fenced-блоки с тегами подключения', () => {
