@@ -21,5 +21,30 @@
 7. **Компоненты:** header, table, btn, alert, card, accordion, carousel, dropdown, modal, menu, tabs, pagination, popover, progress, loader, skeleton, icon, media, input, select, range, checkbox, radio, switch. Если класса нет в этом списке — не выдумывай его, напиши plain CSS. Для работоспособности: dropdown — `popovertarget` + `popover` + доступное позиционирование и стрелки; modal — `dialog.showModal()`; tabs — порядок input/label/panel; menu — `.icon-menu` + `.menu.menu-collapse` с `aria-controls`/`aria-expanded`.
 8. **Вывод:** Предоставь ТОЛЬКО валидный HTML-код. Включи `<link rel="stylesheet" href="gals/gals.css">` в `<head>` и `<script src="gals/gals.js" defer></script>` перед `</body>`. Убедись, что все теги закрыты и использованы атрибуты доступности (ARIA).
 
+**Минимальная структура ответа (скопируйте и замените содержимое):**
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page</title>
+  <style>*,*::before,*::after{box-sizing:border-box}</style>
+  <link rel="stylesheet" href="gals/gals.css">
+</head>
+<body>
+  <main class="container">
+    <div class="container-block pt-12">
+      <h1>[Заголовок]</h1>
+    </div>
+    <div class="container-block pt-3">[25%]</div>
+    <div class="container-block pt-9">[75%]</div>
+  </main>
+  <script src="gals/gals.js" defer></script>
+</body>
+</html>
+```
+
 **Контекст:**
 [НЕОБЯЗАТЕЛЬНО: Добавьте сюда специфические требования, например: "Используй .alert-ok для сообщения об успехе и .btn-primary для основной кнопки"].
