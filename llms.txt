@@ -39,6 +39,15 @@
 </html>
 ```
 
+Реальный макет с классами GALS:
+
+```html
+<div class="container">
+  <div class="container-block pt-3">25%</div>
+  <div class="container-block pt-9">75%</div>
+</div>
+```
+
 `gals.css` уже применяет `border-box` внутри `.container`; глобальный reset выше нужен для остальной страницы и рекомендуется всегда.
 
 Через CDN:
