@@ -164,6 +164,29 @@ describe('llms.txt', () => {
 
     assert.deepEqual(relative, [], `в llms.txt относительные ссылки: ${relative.join(', ')}`);
   });
+
+  // Ревьюер ИИ-агрегаторов видит пустые блоки: теги внутри строки промпта
+  // теряются при HTML-стриппинге. Держим копируемые fenced-блоки.
+  test('«Быстрый старт» содержит классы GALS внутри шаблона', () => {
+    const txt = read(`${REPO}/llms.txt`);
+    const start = txt.indexOf('## Быстрый старт');
+    assert.ok(start >= 0);
+    const section = txt.slice(start, txt.indexOf('## Сетка'));
+    assert.match(section, /class="container"/, 'нет класса .container в блоке HTML');
+    assert.match(section, /container-block pt-\d+/, 'нет колонок .container-block в блоке HTML');
+  });
+
+  // Ревьюер ИИ-агрегаторов видит пустые блоки: теги внутри строки промпта
+  // теряются при HTML-стриппинге. Держим копируемые fenced-блоки.
+  test('шаблон промпта содержит копируемые fenced-блоки с тегами подключения', () => {
+    const tpl = read(`${ROOT}/AI_PROMPT_TEMPLATE.md`);
+    const blocks = [...tpl.matchAll(/```html\r?\n([\s\S]*?)```/g)].map((m) => m[1]);
+
+    assert.ok(blocks.length >= 1, `ожидалось минимум 1 html-блок, найдено ${blocks.length}`);
+    assert.ok(blocks.some((b) => /<link\b[^>]*>/.test(b)), 'нет fenced-блока с <link>');
+    assert.ok(blocks.some((b) => /<script\b[^>]*><\/script>/.test(b)), 'нет fenced-блока с <script>');
+    assert.ok(blocks.some((b) => /class="container"/.test(b)), 'нет fenced-блока с .container');
+  });
 });
 
 describe('gals-classes.json', () => {
