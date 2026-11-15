@@ -934,6 +934,9 @@ html {
     max-height: 40vh;
     padding: 0 5px;
   }
+  .wrapper main .container .wrap-containerright {
+    display: none;
+  }
   .wrapper main .container .container-center {
     width: 100%;
     order: 2;

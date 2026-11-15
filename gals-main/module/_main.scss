@@ -508,12 +508,16 @@
           }
         }
 
+        .wrap-containerright {
+          display: none;
+        }
+
         .container-center {
           width: 100%;
           order: 2;
           padding: 10px;
 
-          // Правая колонка на этой ширине скрыта классом pt-s-d_n,
+          // Правая колонка скрыта на этой ширине,
           // поэтому «On this page» показываем внутри контента.
           .inthisPage {
             display: block;
